@@ -74,3 +74,48 @@ assert(l3Slides >= 18, `Must have at least 18 slides for L03, currently has ${l3
 
 console.log('✓ Task 2 Verification Passed for Presentation 02!');
 
+console.log('Testing Task 3: Lecture 4 Content & Scope Diagrams...');
+
+// Lecture 4 Title
+assert(html.toLowerCase().includes('lecture 4') && html.toLowerCase().includes('functions'), 'Must include Lecture 4 title');
+
+// Core functions concepts
+assert(html.includes('my_abs') || html.includes('absolute value'), 'Must include absolute value function my_abs');
+assert(html.includes('get_pi') || html.includes('3.1415'), 'Must include get_pi function without arguments');
+assert(html.includes('get_bmi') && (html.includes('w, h') || html.includes('w,h') || html.includes('w, &nbsp;h')), 'Must include get_bmi function with multiple arguments');
+
+// Random module & Simulation
+assert(html.includes('random.random') && html.includes('random.randrange'), 'Must include random module functions');
+assert(html.includes('roll_two_dice'), 'Must include roll_two_dice simulation');
+
+// Tuples & Multiple return values
+assert(html.includes('tuple') || html.includes('Tuple'), 'Must include tuple explanation');
+assert(html.includes('my_first_roll') && html.includes('my_second_roll'), 'Must include tuple unpacking example');
+
+// Modules & Math
+assert(html.includes('Standard Library') || html.includes('standard library'), 'Must include Python Standard Library');
+assert(html.includes('math.sqrt'), 'Must include math module and sqrt()');
+
+// Default parameters & Keyword arguments
+assert(html.includes('h=1.7') || html.includes('h = 1.7'), 'Must include default parameter values');
+assert(html.includes('h=1.76') || html.includes('w=70'), 'Must include keyword arguments');
+
+// Object methods
+assert(html.includes('.upper()') || html.includes('upper()'), 'Must include object methods');
+
+// Variable Scope & Lifetime
+assert(html.toLowerCase().includes('scope') && (html.includes('local') || html.includes('global')), 'Must include variable scope');
+assert(html.includes('my_global_name') || html.includes('my_local_name'), 'Must include scope variables');
+assert(html.includes('global keyword') || html.includes('global my_global_name') || html.includes('global'), 'Must include global keyword');
+assert(html.toLowerCase().includes('by reference') || html.toLowerCase().includes('reference'), 'Must include pass-by-reference object model');
+
+// Scope SVG diagram
+assert((html.match(/<svg/g) || []).length >= 2, 'Must include at least 2 inline vector SVGs (flowchart + scope diagram)');
+
+// Total slides >= 35
+const totalSlides = (html.match(/class="slide/g) || []).length;
+assert(totalSlides >= 35, `Must have at least 35 slides total, currently has ${totalSlides}`);
+
+console.log('✓ Task 3 Verification Passed for Presentation 02!');
+
+

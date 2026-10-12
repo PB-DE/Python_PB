@@ -1007,6 +1007,677 @@
             </div>
           </div>
         </div>
+      <!-- Slide 19: Lecture 4 Title Slide -->
+      <section class="slide" id="slide-19">
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 4</div>
+        <h1 class="slide-title">Functions &amp; Modular Program Architecture</h1>
+        <h2 class="slide-subtitle">Inputs, Outputs, Random Simulation, Modules, Scope &amp; Object References</h2>
+        <div class="grid-equal" style="margin-top: 1rem;">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 4 Curriculum</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>Function Anatomy:</strong> The <code class="inline-code">def</code> keyword, arguments, and <code class="inline-code">return</code></li>
+              <li><strong>Simulation:</strong> <code class="inline-code">random</code> module, rolling dice, and tuple unpacking</li>
+              <li><strong>Standard Library:</strong> <code class="inline-code">math</code> module, default parameters, and keyword arguments</li>
+              <li><strong>Memory &amp; Scope:</strong> Local vs. global namespaces, <code class="inline-code">global</code> keyword, and object references</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Key Takeaways</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>DRY Principle:</strong> Don't Repeat Yourself — encapsulate logic into reusable units</li>
+              <li><strong>Black-Box Abstraction:</strong> Separate <em>what</em> a function does from <em>how</em> it computes</li>
+              <li><strong>Tuple Returns:</strong> Seamlessly return multiple outputs with unpacking</li>
+              <li><strong>Scope Safety:</strong> Protect state by respecting variable lifetimes</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 20: Functions Key Ingredient -->
+      <section class="slide" id="slide-20">
+        <div class="eyebrow">Modular Programming</div>
+        <h1 class="slide-title">Functions: A Key Ingredient of Programs</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>Functions</strong> are self-contained blocks of code designed to perform a specific computational task.</p>
+            <ul class="bullet-list">
+              <li><strong>Reusability:</strong> Write once, test once, call everywhere throughout your codebase.</li>
+              <li><strong>Decomposition:</strong> Break down large, intimidating problems into manageable sub-tasks.</li>
+              <li><strong>Abstraction:</strong> Callers only need to know required inputs and returned outputs, not inner implementation details.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 0.75rem;">The Black-Box Model</h3>
+            <div style="background: #1e1e1e; border: 1px solid #333333; border-radius: 6px; padding: 1.25rem; text-align: center; margin-bottom: 1rem;">
+              <div style="display: flex; justify-content: space-around; align-items: center; font-size: 0.95rem;">
+                <div style="background: #252526; padding: 0.5rem 0.8rem; border-radius: 4px; border: 1px solid var(--accent-cyan); color: var(--accent-cyan);">Inputs<br><small style="color:#858585;">(Arguments)</small></div>
+                <div style="color: var(--text-muted); font-size: 1.2rem;">➔</div>
+                <div style="background: #252526; padding: 0.6rem 1rem; border-radius: 4px; border: 1px solid var(--accent); color: #ffffff; font-weight: 600;">Function<br><small style="color:var(--accent-gold);">Process / Logic</small></div>
+                <div style="color: var(--text-muted); font-size: 1.2rem;">➔</div>
+                <div style="background: #252526; padding: 0.5rem 0.8rem; border-radius: 4px; border: 1px solid #4ec9b0; color: #4ec9b0;">Output<br><small style="color:#858585;">(return value)</small></div>
+              </div>
+            </div>
+            <p style="font-size: 0.95rem; color: #b0b0b0; line-height: 1.5;">Functions insulate callers from algorithmic complexity, creating cleaner, modular systems.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 21: Defining Functions -->
+      <section class="slide" id="slide-21">
+        <div class="eyebrow">Syntax &amp; Definition</div>
+        <h1 class="slide-title">Defining Functions: The def Keyword</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The <code class="inline-code">def</code> keyword informs Python that you are defining a new callable function.</p>
+            <ul class="bullet-list">
+              <li>Header begins with <code class="inline-code">def</code>, followed by the function name, parameter list in parentheses, and a colon (<code class="inline-code">:</code>).</li>
+              <li>The indented body suite runs whenever the function is invoked.</li>
+              <li>The <code class="inline-code">return</code> statement sends a computed value back to the caller.</li>
+              <li><strong>Example:</strong> Absolute value function <code class="inline-code">my_abs(x)</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — absolute_val.py</span><span>Function Definition</span></div>
+            <div class="code-box-body"><span class="token-kw">def</span> <span class="token-fn">my_abs</span>(<span class="token-var">x</span>):
+    <span class="token-str">"""Return the absolute value of x."""</span>
+    <span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">&lt;</span> <span class="token-num">0</span>:
+        <span class="token-kw">return</span> <span class="token-op">-</span><span class="token-var">x</span>
+    <span class="token-kw">else</span>:
+        <span class="token-kw">return</span> <span class="token-var">x</span>
+
+<span class="token-com"># Calling the function with different inputs</span>
+<span class="token-fn">print</span>(<span class="token-str">'The absolute value of 3 is'</span>, <span class="token-fn">my_abs</span>(<span class="token-num">3</span>))
+<span class="token-fn">print</span>(<span class="token-str">'The absolute value of -7 is'</span>, <span class="token-fn">my_abs</span>(<span class="token-op">-</span><span class="token-num">7</span>))</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>The absolute value of 3 is 3</div>
+              <div>The absolute value of -7 is 7</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 22: Functions With No Arguments -->
+      <section class="slide" id="slide-22">
+        <div class="eyebrow">Parameter Variations</div>
+        <h1 class="slide-title">Functions With No Arguments</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Not every function requires parameters. Functions can serve as pure value generators, sensors, or procedural routines.</p>
+            <ul class="bullet-list">
+              <li>Parentheses <code class="inline-code">()</code> remain mandatory in both the definition header and caller invocation.</li>
+              <li>Omitting parentheses when calling references the function object itself rather than executing it!</li>
+              <li><strong>Case Study:</strong> <code class="inline-code">get_pi()</code> returning $\pi \approx 3.1415$ to compute circle area.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — circle_area.py</span><span>Zero-argument Function</span></div>
+            <div class="code-box-body"><span class="token-kw">def</span> <span class="token-fn">get_pi</span>():
+    <span class="token-kw">return</span> <span class="token-num">3.1415</span>
+
+<span class="token-com"># Using get_pi() to compute the area of a circle</span>
+<span class="token-var">radius</span> <span class="token-op">=</span> <span class="token-num">5</span>
+<span class="token-var">area</span> <span class="token-op">=</span> <span class="token-fn">get_pi</span>() <span class="token-op">*</span> (<span class="token-var">radius</span> <span class="token-op">**</span> <span class="token-num">2</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">f'Radius: {radius}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Circle Area: {area:0.2f}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Radius: 5</div>
+              <div>Circle Area: 78.54</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 23: Multiple Arguments -->
+      <section class="slide" id="slide-23">
+        <div class="eyebrow">Parameters &amp; Logic</div>
+        <h1 class="slide-title">Functions With Multiple Arguments: BMI Calculation</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Functions frequently consume multiple inputs, listed as comma-separated parameters in the header.</p>
+            <ul class="bullet-list">
+              <li><strong>Body Mass Index (BMI):</strong>
+                $$\text{BMI} = \frac{\text{weight (kg)}}{\text{height (m)}^2}$$</li>
+              <li>Requires two distinct inputs: weight in kilograms (<code class="inline-code">w</code>) and height in meters (<code class="inline-code">h</code>).</li>
+              <li>Inputs are matched sequentially by position.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — bmi_calc.py</span><span>Multiple Arguments</span></div>
+            <div class="code-box-body"><span class="token-kw">def</span> <span class="token-fn">get_bmi</span>(<span class="token-var">w</span>, <span class="token-var">h</span>):
+    <span class="token-str">"""Compute Body Mass Index from weight (kg) and height (m)."""</span>
+    <span class="token-kw">return</span> <span class="token-var">w</span> <span class="token-op">/</span> (<span class="token-var">h</span> <span class="token-op">**</span> <span class="token-num">2</span>)
+
+<span class="token-var">my_weight_kg</span> <span class="token-op">=</span> <span class="token-num">77</span>
+<span class="token-var">my_height_m</span> <span class="token-op">=</span> <span class="token-num">1.76</span>
+
+<span class="token-var">my_bmi</span> <span class="token-op">=</span> <span class="token-fn">get_bmi</span>(<span class="token-var">my_weight_kg</span>, <span class="token-var">my_height_m</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">f'Weight: {my_weight_kg} kg, Height: {my_height_m} m'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Calculated BMI: {my_bmi:0.2f}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Weight: 77 kg, Height: 1.76 m</div>
+              <div>Calculated BMI: 24.86</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 24: Random Number Generation -->
+      <section class="slide" id="slide-24">
+        <div class="eyebrow">Pseudo-Random Numbers</div>
+        <h1 class="slide-title">Random Number Generation: The random Module</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Computers are deterministic machines. To model stochastic events (games, simulations, cryptography), Python uses pseudo-random algorithms.</p>
+            <ul class="bullet-list">
+              <li>Load capabilities using <code class="inline-code">import random</code>.</li>
+              <li>Access module functions using dot notation: <code class="inline-code">random.random()</code>.</li>
+              <li><code class="inline-code">random.random()</code> returns a floating-point number in the half-open interval $[0.0, 1.0)$.</li>
+              <li>Each call generates an unpredictable subsequent value in the sequence.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — random_floats.py</span><span>random.random()</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">random</span>
+
+<span class="token-com"># Generating uniform float between 0.0 and 1.0</span>
+<span class="token-var">r1</span> <span class="token-op">=</span> <span class="token-var">random</span>.<span class="token-fn">random</span>()
+<span class="token-var">r2</span> <span class="token-op">=</span> <span class="token-var">random</span>.<span class="token-fn">random</span>()
+<span class="token-var">r3</span> <span class="token-op">=</span> <span class="token-var">random</span>.<span class="token-fn">random</span>()
+
+<span class="token-fn">print</span>(<span class="token-str">f'Roll 1: {r1:0.4f}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Roll 2: {r2:0.4f}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Roll 3: {r3:0.4f}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Representative Output</div>
+              <div>Roll 1: 0.7382</div>
+              <div>Roll 2: 0.1945</div>
+              <div>Roll 3: 0.9023</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 25: Generating Random Integers -->
+      <section class="slide" id="slide-25">
+        <div class="eyebrow">Discrete Randomness</div>
+        <h1 class="slide-title">Generating Random Integers: random.randrange()</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">To generate whole numbers within a specific range, use <code class="inline-code">random.randrange()</code>.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">random.randrange(start, stop)</code>:
+                <ul>
+                  <li><code class="inline-code">start</code>: inclusive lower bound.</li>
+                  <li><code class="inline-code">stop</code>: exclusive upper bound.</li>
+                </ul>
+              </li>
+              <li><code class="inline-code">random.randrange(1, 11)</code> selects from $\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}$.</li>
+              <li>A 6-sided die roll uses <code class="inline-code">random.randrange(1, 7)</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — random_ints.py</span><span>random.randrange()</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">random</span>
+
+<span class="token-com"># Random number between 1 and 10</span>
+<span class="token-var">val</span> <span class="token-op">=</span> <span class="token-var">random</span>.<span class="token-fn">randrange</span>(<span class="token-num">1</span>, <span class="token-num">11</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Random integer (1-10):'</span>, <span class="token-var">val</span>)
+
+<span class="token-com"># Generating 5 independent die rolls (1 to 6)</span>
+<span class="token-fn">print</span>(<span class="token-str">'Five die rolls:'</span>, <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">' '</span>)
+<span class="token-kw">for</span> <span class="token-var">_</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">5</span>):
+    <span class="token-fn">print</span>(<span class="token-var">random</span>.<span class="token-fn">randrange</span>(<span class="token-num">1</span>, <span class="token-num">7</span>), <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">' '</span>)
+<span class="token-fn">print</span>()</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Random integer (1-10): 7</div>
+              <div>Five die rolls: 3 6 1 4 2 </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 26: Simulating Dice Rolls -->
+      <section class="slide" id="slide-26">
+        <div class="eyebrow">Stochastic Simulation</div>
+        <h1 class="slide-title">Simulating the Roll of Two Dice</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Simulate physical probabilistic experiments by combining custom functions with random generation.</p>
+            <ul class="bullet-list">
+              <li>Function <code class="inline-code">roll_two_dice()</code> simulates rolling two 6-sided dice and summing them.</li>
+              <li><strong>Statistical Question:</strong> What is the most likely outcome when rolling two dice?
+                <ul>
+                  <li><strong>7</strong> is the most probable outcome ($6/36 \approx 16.67\%$).</li>
+                  <li>Combinations: $(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)$.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — dice_sim.py</span><span>Simulation Loop</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">random</span>
+
+<span class="token-kw">def</span> <span class="token-fn">roll_two_dice</span>():
+    <span class="token-str">"""Simulate rolling two dice and returning their sum."""</span>
+    <span class="token-var">die1</span> <span class="token-op">=</span> <span class="token-var">random</span>.<span class="token-fn">randrange</span>(<span class="token-num">1</span>, <span class="token-num">7</span>)
+    <span class="token-var">die2</span> <span class="token-op">=</span> <span class="token-var">random</span>.<span class="token-fn">randrange</span>(<span class="token-num">1</span>, <span class="token-num">7</span>)
+    <span class="token-kw">return</span> <span class="token-var">die1</span> <span class="token-op">+</span> <span class="token-var">die2</span>
+
+<span class="token-fn">print</span>(<span class="token-str">'Simulating 10 rolls of two dice:'</span>)
+<span class="token-kw">for</span> <span class="token-var">i</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">10</span>):
+    <span class="token-fn">print</span>(<span class="token-fn">roll_two_dice</span>(), <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">' '</span>)
+<span class="token-fn">print</span>()</div>
+            <div class="output-box">
+              <div class="out-label">10 Sample Simulated Outcomes</div>
+              <div>Simulating 10 rolls of two dice:</div>
+              <div>7 4 9 7 11 6 8 7 5 10 </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 27: Tuples and Unpacking -->
+      <section class="slide" id="slide-27">
+        <div class="eyebrow">Data Structures &amp; Returns</div>
+        <h1 class="slide-title">Returning Multiple Outputs via Tuples</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">In Python, a function can return multiple values simultaneously by returning an immutable <strong>tuple</strong>.</p>
+            <ul class="bullet-list">
+              <li>A <strong>tuple</strong> is an ordered, comma-separated sequence: <code class="inline-code">(r1, r2)</code>.</li>
+              <li><strong>Tuple Unpacking:</strong> Capture each returned value directly into distinct variables on the left side of the assignment.</li>
+              <li>The number of receiving variables must exactly match the number of elements in the tuple, or Python raises a <code class="inline-code">ValueError</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — tuple_return.py</span><span>Tuple Unpacking</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">random</span>
+
+<span class="token-kw">def</span> <span class="token-fn">roll_two_dice</span>():
+    <span class="token-str">"""Return the outcome of each die as a tuple."""</span>
+    <span class="token-var">r1</span> <span class="token-op">=</span> <span class="token-var">random</span>.<span class="token-fn">randrange</span>(<span class="token-num">1</span>, <span class="token-num">7</span>)
+    <span class="token-var">r2</span> <span class="token-op">=</span> <span class="token-var">random</span>.<span class="token-fn">randrange</span>(<span class="token-num">1</span>, <span class="token-num">7</span>)
+    <span class="token-kw">return</span> (<span class="token-var">r1</span>, <span class="token-var">r2</span>)
+
+<span class="token-com"># Unpack tuple into two distinct variables:</span>
+<span class="token-var">my_first_roll</span>, <span class="token-var">my_second_roll</span> <span class="token-op">=</span> <span class="token-fn">roll_two_dice</span>()
+
+<span class="token-fn">print</span>(<span class="token-str">f'First Die:  {my_first_roll}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Second Die: {my_second_roll}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Sum:        {my_first_roll + my_second_roll}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>First Die:  4</div>
+              <div>Second Die: 3</div>
+              <div>Sum:        7</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 28: Python Modules -->
+      <section class="slide" id="slide-28">
+        <div class="eyebrow">Modular Architecture</div>
+        <h1 class="slide-title">Python Modules &amp; The Standard Library</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A <strong>module</strong> in Python is simply a file with a <code class="inline-code">.py</code> extension containing Python definitions and statements.</p>
+            <ul class="bullet-list">
+              <li><strong>Namespacing:</strong> Prevents name collisions between different libraries.</li>
+              <li><strong>The Python Standard Library:</strong> Python's famous "batteries included" philosophy provides robust built-in modules:
+                <ul>
+                  <li><code class="inline-code">math</code>: Advanced numerical routines</li>
+                  <li><code class="inline-code">random</code>: Stochastic simulations</li>
+                  <li><code class="inline-code">statistics</code>: Mathematical statistics</li>
+                  <li><code class="inline-code">datetime</code>, <code class="inline-code">os</code>, <code class="inline-code">sys</code>, <code class="inline-code">json</code></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 0.75rem;">Import Styles</h3>
+            <div class="code-box" style="margin-bottom: 0.75rem;">
+              <div class="code-box-body" style="padding: 0.8rem;"><span class="token-com"># Style 1: Import full module (Recommended)</span>
+<span class="token-kw">import</span> <span class="token-var">math</span>
+<span class="token-var">x</span> <span class="token-op">=</span> <span class="token-var">math</span>.<span class="token-fn">sqrt</span>(<span class="token-num">16</span>)
+
+<span class="token-com"># Style 2: Import specific function</span>
+<span class="token-kw">from</span> <span class="token-var">math</span> <span class="token-kw">import</span> <span class="token-var">sqrt</span>, <span class="token-var">pi</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-fn">sqrt</span>(<span class="token-num">25</span>)</div>
+            </div>
+            <p style="font-size: 0.85rem; color: #858585;">Using <code class="inline-code">math.sqrt</code> maintains clear namespace provenance.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 29: The Math Module -->
+      <section class="slide" id="slide-29">
+        <div class="eyebrow">Scientific Computation</div>
+        <h1 class="slide-title">The math Module: Square Roots &amp; Operations</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The <code class="inline-code">math</code> module delivers high-performance C-level implementations of standard mathematical functions.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">math.sqrt(x)</code>: Computes the square root $\sqrt{x}$ for any non-negative number.</li>
+              <li><code class="inline-code">math.pi</code>: High-precision representation of $\pi \approx 3.1415926535...$</li>
+              <li><code class="inline-code">math.e</code>: Euler's number $e \approx 2.71828...$</li>
+              <li>Trigonometric, logarithmic, and power functions (<code class="inline-code">math.sin</code>, <code class="inline-code">math.log</code>, <code class="inline-code">math.floor</code>).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — math_demo.py</span><span>math.sqrt()</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">math</span>
+
+<span class="token-com"># Square root calculation</span>
+<span class="token-var">val</span> <span class="token-op">=</span> <span class="token-num">81</span>
+<span class="token-fn">print</span>(<span class="token-str">f'Square root of {val}:'</span>, <span class="token-var">math</span>.<span class="token-fn">sqrt</span>(<span class="token-var">val</span>))
+
+<span class="token-com"># Calculating hypotenuse of right triangle: sqrt(a^2 + b^2)</span>
+<span class="token-var">a</span>, <span class="token-var">b</span> <span class="token-op">=</span> <span class="token-num">3</span>, <span class="token-num">4</span>
+<span class="token-var">hypotenuse</span> <span class="token-op">=</span> <span class="token-var">math</span>.<span class="token-fn">sqrt</span>(<span class="token-var">a</span><span class="token-op">**</span><span class="token-num">2</span> <span class="token-op">+</span> <span class="token-var">b</span><span class="token-op">**</span><span class="token-num">2</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Hypotenuse for 3, 4:'</span>, <span class="token-var">hypotenuse</span>)
+
+<span class="token-com"># Pi constant</span>
+<span class="token-fn">print</span>(<span class="token-str">f'Pi constant:'</span>, <span class="token-var">math</span>.<span class="token-var">pi</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Square root of 81: 9.0</div>
+              <div>Hypotenuse for 3, 4: 5.0</div>
+              <div>Pi constant: 3.141592653589793</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 30: Default Parameter Values -->
+      <section class="slide" id="slide-30">
+        <div class="eyebrow">Parameter Customization</div>
+        <h1 class="slide-title">Default Parameter Values</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python allows you to specify <strong>default values</strong> for parameters in the function definition header.</p>
+            <ul class="bullet-list">
+              <li>Header syntax: <code class="inline-code">def get_bmi(w, h=1.7):</code></li>
+              <li>If the caller supplies <code class="inline-code">h</code>, Python uses the caller's argument.</li>
+              <li>If the caller omits <code class="inline-code">h</code>, Python automatically falls back to <code class="inline-code">1.7</code>.</li>
+              <li><strong style="color: var(--accent-gold);">Rule:</strong> All parameters with default values must appear <em>after</em> all parameters without default values.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — default_params.py</span><span>Default Arguments</span></div>
+            <div class="code-box-body"><span class="token-kw">def</span> <span class="token-fn">get_bmi</span>(<span class="token-var">w</span>, <span class="token-var">h</span><span class="token-op">=</span><span class="token-num">1.7</span>):
+    <span class="token-str">"""Compute BMI with height defaulting to 1.7 meters."""</span>
+    <span class="token-kw">return</span> <span class="token-var">w</span> <span class="token-op">/</span> (<span class="token-var">h</span> <span class="token-op">**</span> <span class="token-num">2</span>)
+
+<span class="token-com"># Call 1: relying on default h=1.7</span>
+<span class="token-var">bmi_default</span> <span class="token-op">=</span> <span class="token-fn">get_bmi</span>(<span class="token-num">70</span>)
+
+<span class="token-com"># Call 2: overriding default height with 1.85</span>
+<span class="token-var">bmi_custom</span> <span class="token-op">=</span> <span class="token-fn">get_bmi</span>(<span class="token-num">70</span>, <span class="token-num">1.85</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">f'BMI with default height (1.7m): {bmi_default:0.2f}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'BMI with custom height (1.85m): {bmi_custom:0.2f}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>BMI with default height (1.7m): 24.22</div>
+              <div>BMI with custom height (1.85m): 20.45</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 31: Keyword Arguments -->
+      <section class="slide" id="slide-31">
+        <div class="eyebrow">Function Invocation</div>
+        <h1 class="slide-title">Keyword Arguments: Order-Independent Calls</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">By default, arguments are matched by <em>position</em>. <strong>Keyword arguments</strong> let callers bind arguments explicitly by parameter name.</p>
+            <ul class="bullet-list">
+              <li>Call syntax: <code class="inline-code">get_bmi(h=1.76, w=70)</code></li>
+              <li>Arguments can be provided in <strong>any arbitrary order</strong>.</li>
+              <li>Eliminates confusion when calling functions with many numeric parameters.</li>
+              <li>Self-documenting: reading the call makes parameter meanings immediately apparent.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — keyword_args.py</span><span>Named Invocation</span></div>
+            <div class="code-box-body"><span class="token-kw">def</span> <span class="token-fn">get_bmi</span>(<span class="token-var">w</span>, <span class="token-var">h</span>):
+    <span class="token-kw">return</span> <span class="token-var">w</span> <span class="token-op">/</span> (<span class="token-var">h</span> <span class="token-op">**</span> <span class="token-num">2</span>)
+
+<span class="token-com"># Calling with keyword arguments in reverse parameter order:</span>
+<span class="token-var">result1</span> <span class="token-op">=</span> <span class="token-fn">get_bmi</span>(<span class="token-var">h</span><span class="token-op">=</span><span class="token-num">1.76</span>, <span class="token-var">w</span><span class="token-op">=</span><span class="token-num">70</span>)
+
+<span class="token-com"># Identical to positional call:</span>
+<span class="token-var">result2</span> <span class="token-op">=</span> <span class="token-fn">get_bmi</span>(<span class="token-num">70</span>, <span class="token-num">1.76</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">f'Keyword call:  {result1:0.2f}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Positional call: {result2:0.2f}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Keyword call:  22.60</div>
+              <div>Positional call: 22.60</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 32: Object Methods -->
+      <section class="slide" id="slide-32">
+        <div class="eyebrow">Object-Oriented Python</div>
+        <h1 class="slide-title">Functions that Belong to Objects: Methods</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">In Python, data types are implemented as classes. A function that belongs to an object is known as a <strong>method</strong>.</p>
+            <ul class="bullet-list">
+              <li>Invoked with dot notation: <code class="inline-code">object.method()</code>.</li>
+              <li>Strings are objects bundled with rich built-in methods:
+                <ul>
+                  <li><code class="inline-code">.upper()</code>: returns an uppercase copy.</li>
+                  <li><code class="inline-code">.lower()</code>: returns a lowercase copy.</li>
+                  <li><code class="inline-code">.title()</code>: capitalizes first letter of each word.</li>
+                </ul>
+              </li>
+              <li>Strings are immutable: methods return fresh string objects.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — object_methods.py</span><span>String Methods</span></div>
+            <div class="code-box-body"><span class="token-var">my_name</span> <span class="token-op">=</span> <span class="token-str">'Loquacious D'</span>
+
+<span class="token-com"># Calling methods bound to the string object</span>
+<span class="token-fn">print</span>(<span class="token-str">'Original:'</span>, <span class="token-var">my_name</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Upper:   '</span>, <span class="token-var">my_name</span>.<span class="token-fn">upper</span>())
+<span class="token-fn">print</span>(<span class="token-str">'Lower:   '</span>, <span class="token-var">my_name</span>.<span class="token-fn">lower</span>())
+
+<span class="token-com"># Original object remains intact</span>
+<span class="token-fn">print</span>(<span class="token-str">'After methods:'</span>, <span class="token-var">my_name</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Original: Loquacious D</div>
+              <div>Upper:    LOQUACIOUS D</div>
+              <div>Lower:    loquacious d</div>
+              <div>After methods: Loquacious D</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 33: The Scope of a Variable -->
+      <section class="slide" id="slide-33">
+        <div class="eyebrow">Namespaces &amp; Visibility</div>
+        <h1 class="slide-title">The Scope of a Variable: Local vs. Global</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A variable's <strong>scope</strong> is the portion of a program where that variable can be accessed and referenced.</p>
+            <ul class="bullet-list">
+              <li><strong>Global Scope:</strong> Variables declared outside of any function. Accessible anywhere in the module.</li>
+              <li><strong>Local Scope:</strong> Variables declared inside a function (including parameters). Accessible <em>only</em> inside that specific function call.</li>
+              <li><strong>NameError:</strong> Attempting to access a local variable from outside its enclosing function crashes with an immediate <code class="inline-code">NameError</code>!</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — scope_demo.py</span><span>Variable Scope</span></div>
+            <div class="code-box-body"><span class="token-var">my_global_name</span> <span class="token-op">=</span> <span class="token-str">'Loquacious'</span>
+
+<span class="token-kw">def</span> <span class="token-fn">my_function</span>():
+    <span class="token-var">my_local_name</span> <span class="token-op">=</span> <span class="token-str">'Special Local'</span>
+    <span class="token-fn">print</span>(<span class="token-str">'Inside function (global):'</span>, <span class="token-var">my_global_name</span>)
+    <span class="token-fn">print</span>(<span class="token-str">'Inside function (local):'</span>, <span class="token-var">my_local_name</span>)
+
+<span class="token-fn">my_function</span>()
+
+<span class="token-com"># Accessing global works:</span>
+<span class="token-fn">print</span>(<span class="token-str">'Outside function (global):'</span>, <span class="token-var">my_global_name</span>)
+
+<span class="token-com"># Accessing local fails:</span>
+<span class="token-com"># print(my_local_name)  # -&gt; NameError: name 'my_local_name' is not defined</span></div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Inside function (global): Loquacious</div>
+              <div>Inside function (local): Special Local</div>
+              <div>Outside function (global): Loquacious</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 34: Scope Vector Diagram -->
+      <section class="slide" id="slide-34">
+        <div class="eyebrow">Memory Model</div>
+        <h1 class="slide-title">Visualizing Scope: Local Stack Frame Isolation</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Understanding the stack frame boundary prevents accidental state contamination between functions.</p>
+            <ul class="bullet-list">
+              <li>Every time a function is called, Python allocates a brand-new <strong>local stack frame</strong>.</li>
+              <li>Local variables exist strictly for the lifespan of that function execution.</li>
+              <li>Inner scopes can see outer global scopes, but outer global scopes can never look inside an active frame.</li>
+            </ul>
+          </div>
+          <div>
+            <svg viewBox="0 0 540 320" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
+              <!-- Global scope outer box -->
+              <rect x="15" y="15" width="510" height="290" rx="8" fill="#1e1e1e" stroke="#007acc" stroke-width="2"/>
+              <text x="35" y="42" fill="#4fc1ff" font-size="14" font-weight="700" font-family="system-ui">Global Scope (Module Level)</text>
+
+              <!-- Global variables in global scope -->
+              <rect x="35" y="60" width="210" height="70" rx="6" fill="#252526" stroke="#333333" stroke-width="1.5"/>
+              <text x="48" y="86" fill="#9cdcfe" font-size="12" font-weight="600" font-family="monospace">my_global_name</text>
+              <text x="48" y="112" fill="#ce9178" font-size="13" font-family="monospace">"Loquacious"</text>
+
+              <rect x="35" y="145" width="210" height="65" rx="6" fill="#252526" stroke="#333333" stroke-width="1.5"/>
+              <text x="48" y="170" fill="#dcdcaa" font-size="12" font-weight="600" font-family="monospace">my_function()</text>
+              <text x="48" y="195" fill="#858585" font-size="11" font-family="system-ui">&lt;function object ref&gt;</text>
+
+              <!-- Local scope stack frame container -->
+              <rect x="270" y="55" width="240" height="235" rx="8" fill="#2d2d30" stroke="#4ec9b0" stroke-width="2" stroke-dasharray="4 2"/>
+              <text x="285" y="80" fill="#4ec9b0" font-size="13" font-weight="700" font-family="system-ui">Function Local Frame</text>
+              <text x="285" y="98" fill="#858585" font-size="10" font-family="system-ui">(Created on call, destroyed on return)</text>
+
+              <!-- Local variable inside local frame -->
+              <rect x="285" y="115" width="210" height="60" rx="6" fill="#1e1e1e" stroke="#333333" stroke-width="1.5"/>
+              <text x="298" y="138" fill="#9cdcfe" font-size="12" font-weight="600" font-family="monospace">my_local_name</text>
+              <text x="298" y="160" fill="#ce9178" font-size="13" font-family="monospace">"Special Local"</text>
+
+              <!-- Reading global from inside local (allowed) -->
+              <path d="M 285 210 C 240 210, 210 135, 160 135" fill="none" stroke="#4ec9b0" stroke-width="2" stroke-dasharray="2 2"/>
+              <text x="285" y="205" fill="#4ec9b0" font-size="11" font-weight="600" font-family="system-ui">✓ Can READ Global Scope</text>
+
+              <!-- Reading local from global (blocked / NameError) -->
+              <line x1="225" y1="255" x2="270" y2="255" stroke="#f48771" stroke-width="2"/>
+              <circle cx="270" cy="255" r="4" fill="#f48771"/>
+              <text x="50" y="260" fill="#f48771" font-size="11" font-weight="700" font-family="system-ui">✗ NameError: Cannot see local from outside</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 35: Modifying Global Variables -->
+      <section class="slide" id="slide-35">
+        <div class="eyebrow">State Management</div>
+        <h1 class="slide-title">Modifying Global Variables: The global Keyword</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">By default, assigning to a variable inside a function creates a <strong>local variable</strong> with the same name, leaving the global untouched (shadowing).</p>
+            <ul class="bullet-list">
+              <li>To modify a global variable inside a function, explicitly declare it with the <code class="inline-code">global</code> keyword.</li>
+              <li>Syntax: <code class="inline-code">global my_global_name</code>.</li>
+              <li>Tells Python: "Do not create a local variable; write directly to the module-level variable."</li>
+              <li><strong>Best Practice:</strong> Minimize modifying globals directly; prefer passing inputs and returning outputs!</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — global_keyword.py</span><span>global keyword</span></div>
+            <div class="code-box-body"><span class="token-var">my_global_name</span> <span class="token-op">=</span> <span class="token-str">'Loquacious'</span>
+
+<span class="token-com"># Without global keyword: creates local shadow</span>
+<span class="token-kw">def</span> <span class="token-fn">shadow_demo</span>():
+    <span class="token-var">my_global_name</span> <span class="token-op">=</span> <span class="token-str">'Temporarily Local'</span>
+
+<span class="token-fn">shadow_demo</span>()
+<span class="token-fn">print</span>(<span class="token-str">'After shadow:'</span>, <span class="token-var">my_global_name</span>)  <span class="token-com"># Still 'Loquacious'</span>
+
+<span class="token-com"># With global keyword: modifies global namespace</span>
+<span class="token-kw">def</span> <span class="token-fn">convert_to_all_cap</span>():
+    <span class="token-kw">global</span> <span class="token-var">my_global_name</span>
+    <span class="token-var">my_global_name</span> <span class="token-op">=</span> <span class="token-var">my_global_name</span>.<span class="token-fn">upper</span>()
+
+<span class="token-fn">convert_to_all_cap</span>()
+<span class="token-fn">print</span>(<span class="token-str">'After global:'</span>, <span class="token-var">my_global_name</span>)  <span class="token-com"># 'LOQUACIOUS'</span></div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>After shadow: Loquacious</div>
+              <div>After global: LOQUACIOUS</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 36: Parameter Passing by Reference & Summary -->
+      <section class="slide" id="slide-36">
+        <div class="eyebrow">Object Model &amp; Summary</div>
+        <h1 class="slide-title">Parameter Passing: By Value vs. By Reference</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">In Python, arguments are always passed <strong>by object reference</strong> (call-by-sharing).</p>
+            <ul class="bullet-list">
+              <li><strong>Immutable objects</strong> (numbers, strings, tuples): Rebinding a parameter inside a function re-points a local name; caller's value is unaffected.</li>
+              <li><strong>Mutable objects</strong> (lists, dictionaries): Mutating the object in-place (e.g. <code class="inline-code">list.append()</code>) directly alters the caller's data!</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Lectures 3 &amp; 4 Mastered Concepts</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.95rem;">
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-cyan);">
+                <strong>Control Statements:</strong><br>
+                <code class="inline-code">if</code>, <code class="inline-code">elif</code>, <code class="inline-code">else</code>, truthiness, ternary operators
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent);">
+                <strong>Iteration &amp; Loops:</strong><br>
+                <code class="inline-code">while</code>, <code class="inline-code">for</code>, <code class="inline-code">range()</code>, <code class="inline-code">break</code>, <code class="inline-code">continue</code>
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid #4ec9b0;">
+                <strong>Functions &amp; Returns:</strong><br>
+                <code class="inline-code">def</code>, multiple inputs, tuples, unpacking
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-gold);">
+                <strong>Modules &amp; Memory:</strong><br>
+                <code class="inline-code">random</code>, <code class="inline-code">math</code>, namespaces, and scope
+              </div>
+            </div>
+            <div style="margin-top: 1rem; color: #858585; font-size: 0.85rem; text-align: center;">
+              Civil Aviation Training Center (CATC) • Ready for Lecture 5 &amp; 6
+            </div>
+          </div>
+        </div>
       </section>
     </div>
 
