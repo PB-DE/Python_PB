@@ -446,7 +446,7 @@
             <p class="lead">Lists are <strong>mutable</strong>: their elements can be modified, replaced, or deleted in place after creation without changing the list's identity.</p>
             <ul class="bullet-list">
               <li>Assignment via index: <code class="inline-code">my_list[0] = 99</code> replaces the element directly.</li>
-              <li><strong>IndexError (Out of range):</strong> Attempting to access an index $\ge \text{len}$ or $&lt; -\text{len}$ triggers a fatal <code class="inline-code">IndexError</code>.</li>
+              <li><strong>IndexError (Out of range):</strong> Attempting to access an index <code class="inline-code">&ge; len</code> or <code class="inline-code">&lt; -len</code> triggers a fatal <code class="inline-code">IndexError</code>.</li>
               <li>You cannot append by assigning to a non-existent index!</li>
             </ul>
           </div>
@@ -1027,7 +1027,7 @@
           <div class="card">
             <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Core Design Patterns</h3>
             <ul class="bullet-list" style="font-size: 1.05rem;">
-              <li><strong>$O(1)$ Hash Lookups:</strong> Instant retrieval regardless of collection scale</li>
+              <li><strong>O(1) Hash Lookups:</strong> Instant retrieval regardless of collection scale</li>
               <li><strong>Key Invariance:</strong> Keys must be hashable and immutable</li>
               <li><strong>Set Algebra:</strong> Declarative data deduplication and set Venn logic</li>
               <li><strong>Type Flexibility:</strong> Dynamic values with zero schema friction</li>
@@ -1301,7 +1301,7 @@
             <ul class="bullet-list">
               <li><strong>Automatic Deduplication:</strong> Duplicate values are discarded instantly upon insertion.</li>
               <li><strong>Unordered:</strong> Elements have no index; you cannot access items via <code class="inline-code">s[0]</code>!</li>
-              <li>Fast $O(1)$ membership testing with <code class="inline-code">in</code>.</li>
+              <li>Fast <code class="inline-code">O(1)</code> membership testing with <code class="inline-code">in</code>.</li>
               <li><code class="inline-code">len(s)</code> counts unique members.</li>
             </ul>
           </div>
@@ -1375,7 +1375,7 @@
             <p class="lead">Compare the relational inclusion between sets using operators and methods.</p>
             <ul class="bullet-list">
               <li><strong>Subset (<code class="inline-code">&lt;=</code> or <code class="inline-code">.issubset()</code>):</strong> Returns <code class="inline-code">True</code> if every element in set A is present in set B.</li>
-              <li><strong>Proper Subset (<code class="inline-code">&lt;</code>):</strong> True if set A is a subset of set B and $A \neq B$.</li>
+              <li><strong>Proper Subset (<code class="inline-code">&lt;</code>):</strong> True if set A is a subset of set B and <code class="inline-code">A &ne; B</code>.</li>
               <li><strong>Superset (<code class="inline-code">&gt;=</code> or <code class="inline-code">.issuperset()</code>):</strong> Returns <code class="inline-code">True</code> if set B contains all elements of set A.</li>
             </ul>
           </div>
@@ -1409,9 +1409,9 @@
           <div>
             <p class="lead">Mathematical set theory defines fundamental relational operations between sets.</p>
             <ul class="bullet-list">
-              <li><strong>Union ($A \cup B$):</strong> All elements present in set A, set B, or both.</li>
-              <li><strong>Intersection ($A \cap B$):</strong> Elements present in <em>both</em> sets simultaneously.</li>
-              <li><strong>Difference ($A - B$):</strong> Elements belonging to set A but <em>not</em> in set B.</li>
+              <li><strong>Union (A &cup; B):</strong> All elements present in set A, set B, or both.</li>
+              <li><strong>Intersection (A &cap; B):</strong> Elements present in <em>both</em> sets simultaneously.</li>
+              <li><strong>Difference (A &minus; B):</strong> Elements belonging to set A but <em>not</em> in set B.</li>
             </ul>
           </div>
           <div>
