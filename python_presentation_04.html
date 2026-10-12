@@ -453,7 +453,7 @@
             <ul class="bullet-list">
               <li><code class="inline-code">.shape</code>: A tuple of integers giving the size of the array along each axis (e.g. <code class="inline-code">(2, 4)</code>).</li>
               <li><code class="inline-code">.ndim</code>: The number of axes / dimensions (1 for vector, 2 for 2D matrix).</li>
-              <li><code class="inline-code">.size</code>: The total count of elements across all dimensions ($2 \times 4 = 8$).</li>
+              <li><code class="inline-code">.size</code>: The total count of elements across all dimensions (2 &times; 4 = 8).</li>
             </ul>
           </div>
           <div class="code-box">
@@ -856,8 +856,8 @@
           <div>
             <p class="lead">The <code class="inline-code">axis</code> parameter controls the direction along which an aggregation collapses dimensions.</p>
             <ul class="bullet-list">
-              <li><code class="inline-code">axis=0</code> (Vertical): Collapses across rows $\rightarrow$ Computes <strong>sum of each column</strong>.</li>
-              <li><code class="inline-code">axis=1</code> (Horizontal): Collapses across columns $\rightarrow$ Computes <strong>sum of each row</strong>.</li>
+              <li><code class="inline-code">axis=0</code> (Vertical): Collapses across rows &rarr; Computes <strong>sum of each column</strong>.</li>
+              <li><code class="inline-code">axis=1</code> (Horizontal): Collapses across columns &rarr; Computes <strong>sum of each row</strong>.</li>
               <li>Rule of thumb: The specified axis is the dimension that gets <em>eliminated</em> during the operation.</li>
             </ul>
           </div>
@@ -1051,7 +1051,7 @@
             <p class="lead">Format specifiers after the colon <code class="inline-code">:</code> enforce strict type checking and binary representation.</p>
             <ul class="bullet-list">
               <li><strong>Decimal Integer (<code class="inline-code">:d</code>):</strong> Formats integer values as base-10 decimals:
-                <br><code class="inline-code">f'{1979:d}'</code> $\rightarrow$ <code class="inline-code">'1979'</code>.</li>
+                <br><code class="inline-code">f'{1979:d}'</code> &rarr; <code class="inline-code">'1979'</code>.</li>
               <li><strong>Type Safety:</strong> Passing a floating-point value to <code class="inline-code">:d</code> raises a fatal <code class="inline-code">ValueError</code>.</li>
               <li><strong>Character Code (<code class="inline-code">:c</code>):</strong> Converts an integer ordinal into its corresponding Unicode/ASCII character.</li>
             </ul>
@@ -1083,9 +1083,9 @@
             <p class="lead">Control decimal places and large numbers for scientific and financial formatting.</p>
             <ul class="bullet-list">
               <li><strong>Fixed Precision (<code class="inline-code">:.2f</code>):</strong> Rounds to specified decimal digits:
-                <br><code class="inline-code">f'{3.14156:0.2f}'</code> $\rightarrow$ <code class="inline-code">'3.14'</code>.</li>
+                <br><code class="inline-code">f'{3.14156:0.2f}'</code> &rarr; <code class="inline-code">'3.14'</code>.</li>
               <li><strong>Scientific Notation (<code class="inline-code">:.2e</code>):</strong> Formats numbers using powers of 10 exponential notation:
-                <br><code class="inline-code">f'{300000000:.2e}'</code> $\rightarrow$ <code class="inline-code">'3.00e+08'</code>.</li>
+                <br><code class="inline-code">f'{300000000:.2e}'</code> &rarr; <code class="inline-code">'3.00e+08'</code>.</li>
               <li>Formatting does not alter the underlying floating-point variable in memory.</li>
             </ul>
           </div>
@@ -1422,8 +1422,8 @@
             <ul class="bullet-list">
               <li><strong>Syntax:</strong> <code class="inline-code">'delimiter'.join(iterable)</code></li>
               <li>Example: <code class="inline-code">' '.join(tokens)</code> or <code class="inline-code">', '.join(tokens)</code>.</li>
-              <li><strong>Performance Invariant:</strong> Using <code class="inline-code">+=</code> in a loop triggers $O(N^2)$ repeated memory reallocations due to immutability.</li>
-              <li><code class="inline-code">join()</code> pre-calculates the exact buffer size, executing in optimal $O(N)$ linear time!</li>
+              <li><strong>Performance Invariant:</strong> Using <code class="inline-code">+=</code> in a loop triggers O(N&sup2;) repeated memory reallocations due to immutability.</li>
+              <li><code class="inline-code">join()</code> pre-calculates the exact buffer size, executing in optimal O(N) linear time!</li>
             </ul>
           </div>
           <div class="code-box">
@@ -1611,7 +1611,7 @@ is stranger than the myth"""</span>
                 <strong style="color: var(--accent);">f-strings:</strong> Evaluated in bytecode, format specifiers (<code class="inline-code">:d</code>, <code class="inline-code">:.2f</code>)
               </div>
               <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--token-type);">
-                <strong style="color: var(--token-type);">Split &amp; Join:</strong> Linear $O(N)$ text tokenization and clean joining
+                <strong style="color: var(--token-type);">Split &amp; Join:</strong> Linear O(N) text tokenization and clean joining
               </div>
               <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-gold);">
                 <strong style="color: var(--accent-gold);">re Module:</strong> Deterministic pattern validation with character sets
