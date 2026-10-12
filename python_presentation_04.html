@@ -982,6 +982,647 @@
           </div>
         </div>
       </section>
+
+      <!-- Slide 19: Lecture 8 Title Slide -->
+      <section class="slide" id="slide-19">
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 8</div>
+        <h1 class="slide-title">Strings &amp; Regular Expressions</h1>
+        <h2 class="slide-subtitle">Modern Formatting, Immutability, Tokenization &amp; Pattern Matching</h2>
+        <div class="grid-equal" style="margin-top: 1rem;">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 8 Curriculum</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>String Formatting:</strong> Modern f-strings, decimal <code class="inline-code">:d</code>, character <code class="inline-code">:c</code>, precision <code class="inline-code">:.2f</code>, and scientific <code class="inline-code">:.2e</code></li>
+              <li><strong>Transformations:</strong> Concatenation, repetition, whitespace <code class="inline-code">strip()</code>, and case normalization</li>
+              <li><strong>Substrings &amp; Splitting:</strong> <code class="inline-code">count()</code>, <code class="inline-code">find()</code>, <code class="inline-code">replace()</code>, <code class="inline-code">split()</code>, and <code class="inline-code">join()</code></li>
+              <li><strong>Pattern Matching:</strong> Regular expressions with <code class="inline-code">re.fullmatch()</code>, postal codes, and character classes</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Core Design Patterns</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>Immutable Sequences:</strong> Strings cannot be mutated in place; operations return new objects</li>
+              <li><strong>F-String Speed:</strong> Evaluated at runtime directly into bytecode with zero parsing overhead</li>
+              <li><strong>Token Pipelines:</strong> Splitting raw delimited input into arrays and reassembling cleanly</li>
+              <li><strong>Deterministic Regex:</strong> Validating structured text with finite automata patterns</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 20: String Formatting Evolution -->
+      <section class="slide" id="slide-20">
+        <div class="eyebrow">Text Templating</div>
+        <h1 class="slide-title">Modern String Formatting: The Power of f-strings</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python introduced formatted string literals (<strong>f-strings</strong>) in Python 3.6, replacing legacy formatting methods.</p>
+            <ul class="bullet-list">
+              <li><strong>Legacy <code class="inline-code">%</code> Operator:</strong> C-style <code class="inline-code">'%0.2f' % 3.14156</code> (error-prone with complex types).</li>
+              <li><strong>Legacy <code class="inline-code">str.format()</code>:</strong> <code class="inline-code">'{:0.2f}'.format(3.14156)</code> (verbose syntax).</li>
+              <li><strong>Modern f-strings:</strong> Prefix string with <code class="inline-code">f'...'</code> and embed expressions directly in curly braces: <code class="inline-code">f'{val:specifier}'</code>.</li>
+              <li>Faster, concise, and evaluated directly in Python bytecode.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — fstrings_intro.py</span><span>f-string Syntax</span></div>
+            <div class="code-box-body"><span class="token-var">pi</span> <span class="token-op">=</span> <span class="token-num">3.14156</span>
+
+<span class="token-com"># Modern f-string</span>
+<span class="token-fn">print</span>(<span class="token-str">f'</span><span class="token-var">{pi:0.2f}</span><span class="token-str">'</span>)
+
+<span class="token-com"># Older str.format() method</span>
+<span class="token-fn">print</span>(<span class="token-str">'{:0.2f}'</span>.<span class="token-fn">format</span>(<span class="token-var">pi</span>))</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>3.14</div>
+              <div>3.14</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 21: Integer & Character Specifiers -->
+      <section class="slide" id="slide-21">
+        <div class="eyebrow">Type Formatting</div>
+        <h1 class="slide-title">Integer &amp; Character Specifiers: <code class="inline-code">:d</code> and <code class="inline-code">:c</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Format specifiers after the colon <code class="inline-code">:</code> enforce strict type checking and binary representation.</p>
+            <ul class="bullet-list">
+              <li><strong>Decimal Integer (<code class="inline-code">:d</code>):</strong> Formats integer values as base-10 decimals:
+                <br><code class="inline-code">f'{1979:d}'</code> $\rightarrow$ <code class="inline-code">'1979'</code>.</li>
+              <li><strong>Type Safety:</strong> Passing a floating-point value to <code class="inline-code">:d</code> raises a fatal <code class="inline-code">ValueError</code>.</li>
+              <li><strong>Character Code (<code class="inline-code">:c</code>):</strong> Converts an integer ordinal into its corresponding Unicode/ASCII character.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — format_types.py</span><span>d and c Specifiers</span></div>
+            <div class="code-box-body"><span class="token-com"># Integer formatting</span>
+<span class="token-fn">print</span>(<span class="token-str">'Decimal:'</span>, <span class="token-str">f'</span><span class="token-var">{1979:d}</span><span class="token-str">'</span>)
+
+<span class="token-com"># Converting ASCII integer codes to characters</span>
+<span class="token-com"># 76 = 'L', 111 = 'o', 113 = 'q', 68 = 'D'</span>
+<span class="token-var">char_str</span> <span class="token-op">=</span> <span class="token-str">f'</span><span class="token-var">{76:c}</span><span class="token-var">{79+32:c}</span><span class="token-var">{81+32:c}</span><span class="token-var">{68:c}</span><span class="token-str">'</span>
+<span class="token-fn">print</span>(<span class="token-str">'Constructed string:'</span>, <span class="token-var">char_str</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Decimal: 1979</div>
+              <div>Constructed string: LoqD</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 22: Precision & Scientific Notation -->
+      <section class="slide" id="slide-22">
+        <div class="eyebrow">Numeric Precision</div>
+        <h1 class="slide-title">Float Precision &amp; Scientific Notation: <code class="inline-code">:.2f</code> &amp; <code class="inline-code">:.2e</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Control decimal places and large numbers for scientific and financial formatting.</p>
+            <ul class="bullet-list">
+              <li><strong>Fixed Precision (<code class="inline-code">:.2f</code>):</strong> Rounds to specified decimal digits:
+                <br><code class="inline-code">f'{3.14156:0.2f}'</code> $\rightarrow$ <code class="inline-code">'3.14'</code>.</li>
+              <li><strong>Scientific Notation (<code class="inline-code">:.2e</code>):</strong> Formats numbers using powers of 10 exponential notation:
+                <br><code class="inline-code">f'{300000000:.2e}'</code> $\rightarrow$ <code class="inline-code">'3.00e+08'</code>.</li>
+              <li>Formatting does not alter the underlying floating-point variable in memory.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — float_format.py</span><span>Precision &amp; Exponents</span></div>
+            <div class="code-box-body"><span class="token-var">pi</span> <span class="token-op">=</span> <span class="token-num">3.14156</span>
+<span class="token-var">speed_of_light</span> <span class="token-op">=</span> <span class="token-num">300000000</span>
+
+<span class="token-fn">print</span>(<span class="token-str">'Fixed 2 decimals: '</span>, <span class="token-str">f'</span><span class="token-var">{pi:0.2f}</span><span class="token-str">'</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Fixed 4 decimals: '</span>, <span class="token-str">f'</span><span class="token-var">{pi:0.4f}</span><span class="token-str">'</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Scientific 2 dec: '</span>, <span class="token-str">f'</span><span class="token-var">{speed_of_light:.2e}</span><span class="token-str">'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Fixed 2 decimals:  3.14</div>
+              <div>Fixed 4 decimals:  3.1416</div>
+              <div>Scientific 2 dec:  3.00e+08</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 23: Field Widths & Alignment -->
+      <section class="slide" id="slide-23">
+        <div class="eyebrow">Tabular Formatting</div>
+        <h1 class="slide-title">Field Widths &amp; Column Alignment: <code class="inline-code">:10f</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Align output into neat tabular columns by specifying minimum field widths.</p>
+            <ul class="bullet-list">
+              <li><strong>Field Width (<code class="inline-code">:10f</code>):</strong> Guarantees output occupies at least 10 characters, padding with leading whitespace if needed.</li>
+              <li>Alignment specifiers:
+                <br>• Right align: <code class="inline-code">&gt;</code> (default for numbers)
+                <br>• Left align: <code class="inline-code">&lt;</code> (default for text)
+                <br>• Center align: <code class="inline-code">^</code></li>
+              <li>Crucial for command-line dashboards and flight schedule tables.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — field_widths.py</span><span>Column Alignment</span></div>
+            <div class="code-box-body"><span class="token-var">val</span> <span class="token-op">=</span> <span class="token-num">3.141592</span>
+
+<span class="token-fn">print</span>(<span class="token-str">'Width 10 default:'</span>, <span class="token-str">f'['</span>, <span class="token-str">f'</span><span class="token-var">{val:10f}</span><span class="token-str">'</span>, <span class="token-str">f']'</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Width 10 2-dec:  '</span>, <span class="token-str">f'['</span>, <span class="token-str">f'</span><span class="token-var">{val:10.2f}</span><span class="token-str">'</span>, <span class="token-str">f']'</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Left align text: '</span>, <span class="token-str">f'['</span>, <span class="token-str">f'</span><span class="token-var">{"LoqD":&lt;10}</span><span class="token-str">'</span>, <span class="token-str">f']'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Width 10 default: [   3.141592 ]</div>
+              <div>Width 10 2-dec:   [       3.14 ]</div>
+              <div>Left align text:  [ LoqD       ]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 24: Immutability, Concat & Repeat -->
+      <section class="slide" id="slide-24">
+        <div class="eyebrow">Sequence Mechanics</div>
+        <h1 class="slide-title">String Operators: Concatenation (<code class="inline-code">+</code>) &amp; Repetition (<code class="inline-code">*</code>)</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Strings are immutable sequences: operations never mutate existing strings in-place, but construct brand new string instances.</p>
+            <ul class="bullet-list">
+              <li><strong>Concatenation (<code class="inline-code">+</code>, <code class="inline-code">+=</code>):</strong> Glues strings together end-to-end.</li>
+              <li><strong>Sequence Repetition (<code class="inline-code">*</code>):</strong> Multiplies a string by an integer, duplicating content repeatedly.
+                <br>E.g. <code class="inline-code">'LoqD ' * 5</code></li>
+              <li>Index assignment <code class="inline-code">s[0] = 'X'</code> triggers a <code class="inline-code">TypeError</code>!</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — concat_repeat.py</span><span>Operators</span></div>
+            <div class="code-box-body"><span class="token-var">s1</span> <span class="token-op">=</span> <span class="token-str">'Loquacious'</span>
+<span class="token-var">s2</span> <span class="token-op">=</span> <span class="token-str">'D is in da house'</span>
+
+<span class="token-com"># Concatenation with +=</span>
+<span class="token-var">s1</span> <span class="token-op">+=</span> <span class="token-var">s2</span>
+<span class="token-fn">print</span>(<span class="token-str">'Concatenated:'</span>, <span class="token-var">s1</span>)
+
+<span class="token-com"># Repetition with * operator</span>
+<span class="token-var">tag</span> <span class="token-op">=</span> <span class="token-str">'LoqD '</span>
+<span class="token-var">repeated</span> <span class="token-op">=</span> <span class="token-var">tag</span> <span class="token-op">*</span> <span class="token-num">5</span>
+<span class="token-fn">print</span>(<span class="token-str">'Repeated 5x: '</span>, <span class="token-var">repeated</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Concatenated: LoquaciousD is in da house</div>
+              <div>Repeated 5x:  LoqD LoqD LoqD LoqD LoqD </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 25: Whitespace Sanitization -->
+      <section class="slide" id="slide-25">
+        <div class="eyebrow">Data Cleaning</div>
+        <h1 class="slide-title">Whitespace Sanitization: <code class="inline-code">strip()</code>, <code class="inline-code">lstrip()</code> &amp; <code class="inline-code">rstrip()</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Raw user input, web scrapes, and file headers frequently contain unintended whitespace, spaces, and newline characters.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">s.strip()</code>: Removes whitespace from <em>both</em> the leading and trailing ends.</li>
+              <li><code class="inline-code">s.lstrip()</code>: Removes only leading (left-hand) whitespace.</li>
+              <li><code class="inline-code">s.rstrip()</code>: Removes only trailing (right-hand) whitespace.</li>
+              <li>Internal spaces between words are left completely untouched.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — whitespace.py</span><span>Trimming Whitespace</span></div>
+            <div class="code-box-body"><span class="token-var">s1</span> <span class="token-op">=</span> <span class="token-str">'  CATC Aviation Student  '</span>
+
+<span class="token-fn">print</span>(<span class="token-str">'Original length:'</span>, <span class="token-fn">len</span>(<span class="token-var">s1</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Stripped text:  '</span>, <span class="token-str">f"'"</span> <span class="token-op">+</span> <span class="token-var">s1</span>.<span class="token-fn">strip</span>() <span class="token-op">+</span> <span class="token-str">"'"</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Stripped length:'</span>, <span class="token-fn">len</span>(<span class="token-var">s1</span>.<span class="token-fn">strip</span>()))
+<span class="token-fn">print</span>(<span class="token-str">'Removed spaces: '</span>, <span class="token-fn">len</span>(<span class="token-var">s1</span>) <span class="token-op">-</span> <span class="token-fn">len</span>(<span class="token-var">s1</span>.<span class="token-fn">strip</span>()))</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Original length: 25</div>
+              <div>Stripped text:   'CATC Aviation Student'</div>
+              <div>Stripped length: 21</div>
+              <div>Removed spaces:  4</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 26: Case Modification & Comparisons -->
+      <section class="slide" id="slide-26">
+        <div class="eyebrow">Case Normalization</div>
+        <h1 class="slide-title">Case Normalization &amp; String Comparisons</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python string comparisons are case-sensitive and follow lexicographical Unicode code point ordering.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">.lower()</code>: Converts all letters to lowercase.</li>
+              <li><code class="inline-code">.upper()</code>: Converts all letters to uppercase.</li>
+              <li><code class="inline-code">.title()</code> &amp; <code class="inline-code">.capitalize()</code>: Capitalizes leading word letters.</li>
+              <li><strong>Case-Insensitive Equality:</strong> Always convert both operands using <code class="inline-code">.upper()</code> or <code class="inline-code">.lower()</code> prior to checking <code class="inline-code">==</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — case_compare.py</span><span>Case Methods</span></div>
+            <div class="code-box-body"><span class="token-var">s1</span> <span class="token-op">=</span> <span class="token-str">'Loquacious D'</span>
+<span class="token-var">s2</span> <span class="token-op">=</span> <span class="token-str">'loquacious d'</span>
+
+<span class="token-fn">print</span>(<span class="token-str">'Direct equality (s1 == s2):  '</span>, <span class="token-var">s1</span> <span class="token-op">==</span> <span class="token-var">s2</span>)
+
+<span class="token-com"># Case-normalized comparison</span>
+<span class="token-fn">print</span>(<span class="token-str">'s1.upper() == s2.upper():      '</span>, <span class="token-var">s1</span>.<span class="token-fn">upper</span>() <span class="token-op">==</span> <span class="token-var">s2</span>.<span class="token-fn">upper</span>())
+<span class="token-fn">print</span>(<span class="token-str">'Title case:                   '</span>, <span class="token-var">s2</span>.<span class="token-fn">title</span>())</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Direct equality (s1 == s2):   False</div>
+              <div>s1.upper() == s2.upper():       True</div>
+              <div>Title case:                    Loquacious D</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 27: Substring Searching -->
+      <section class="slide" id="slide-27">
+        <div class="eyebrow">Pattern Queries</div>
+        <h1 class="slide-title">Substring Searching: <code class="inline-code">count()</code>, <code class="inline-code">find()</code> &amp; <code class="inline-code">in</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Locate targets and count frequencies of specific character subsequences.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">s.count(sub)</code>: Returns integer count of non-overlapping occurrences of <code class="inline-code">sub</code>.</li>
+              <li><code class="inline-code">s.find(sub)</code>: Returns first starting index, or <code class="inline-code">-1</code> if not found (safe lookup).</li>
+              <li><code class="inline-code">s.index(sub)</code>: Returns starting index, but raises <code class="inline-code">ValueError</code> if not found.</li>
+              <li><code class="inline-code">sub in s</code>: Fast boolean membership test.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — search_substring.py</span><span>Locating Substrings</span></div>
+            <div class="code-box-body"><span class="token-var">s</span> <span class="token-op">=</span> <span class="token-str">'She sells seashells by the seashore'</span>
+
+<span class="token-fn">print</span>(<span class="token-str">"Occurrences of 'sea':"</span>, <span class="token-var">s</span>.<span class="token-fn">count</span>(<span class="token-str">'sea'</span>))
+<span class="token-fn">print</span>(<span class="token-str">"Index of 'sea':      "</span>, <span class="token-var">s</span>.<span class="token-fn">index</span>(<span class="token-str">'sea'</span>))
+<span class="token-fn">print</span>(<span class="token-str">"Slice verification:   "</span>, <span class="token-var">s</span>[<span class="token-num">10</span>:<span class="token-num">13</span>])
+<span class="token-fn">print</span>(<span class="token-str">"'sea' in string:     "</span>, <span class="token-str">'sea'</span> <span class="token-kw">in</span> <span class="token-var">s</span>)
+<span class="token-fn">print</span>(<span class="token-str">"'CATC' in string:    "</span>, <span class="token-str">'CATC'</span> <span class="token-kw">in</span> <span class="token-var">s</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Occurrences of 'sea': 2</div>
+              <div>Index of 'sea':       10</div>
+              <div>Slice verification:    sea</div>
+              <div>'sea' in string:      True</div>
+              <div>'CATC' in string:     False</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 28: Substring Replacement -->
+      <section class="slide" id="slide-28">
+        <div class="eyebrow">Text Substitution</div>
+        <h1 class="slide-title">Substring Replacement: The <code class="inline-code">.replace()</code> Method</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Replace all occurrences of a search substring with replacement text without modifying the source string.</p>
+            <ul class="bullet-list">
+              <li><strong>Syntax:</strong> <code class="inline-code">s.replace(old, new, count)</code></li>
+              <li>Replaces all occurrences by default unless optional <code class="inline-code">count</code> limit is supplied.</li>
+              <li>Common uses: Delimiter swapping (CSV commas to tabs/spaces), URL slug generation, and sanitizing inputs.</li>
+              <li>Non-mutating: Original string remains intact in memory.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — replace_sub.py</span><span>replace() Method</span></div>
+            <div class="code-box-body"><span class="token-var">data</span> <span class="token-op">=</span> <span class="token-str">'12,34,45,56,67'</span>
+
+<span class="token-com"># Replace commas with spaces</span>
+<span class="token-var">spaced</span> <span class="token-op">=</span> <span class="token-var">data</span>.<span class="token-fn">replace</span>(<span class="token-str">','</span>, <span class="token-str">' '</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Before replace:'</span>, <span class="token-var">data</span>)
+<span class="token-fn">print</span>(<span class="token-str">'After replace: '</span>, <span class="token-var">spaced</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Before replace: 12,34,45,56,67</div>
+              <div>After replace:  12 34 45 56 67</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 29: Tokenization with split() -->
+      <section class="slide" id="slide-29">
+        <div class="eyebrow">Parsing Text</div>
+        <h1 class="slide-title">Tokenizing Text: The <code class="inline-code">.split()</code> Method</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>Tokenization</strong> breaks a continuous string into a Python list of distinct substrings based on a delimiter.</p>
+            <ul class="bullet-list">
+              <li><strong>Delimited Splitting:</strong> <code class="inline-code">s.split(';')</code> breaks on every semicolon, discarding delimiter characters.</li>
+              <li><strong>Default Whitespace Splitting:</strong> <code class="inline-code">s.split()</code> splits on any sequence of consecutive spaces, tabs, or newlines.</li>
+              <li>Returns a mutable <code class="inline-code">list</code> of strings.</li>
+              <li>Core foundation for reading CSV and data tables.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — tokenization.py</span><span>split() Method</span></div>
+            <div class="code-box-body"><span class="token-var">names</span> <span class="token-op">=</span> <span class="token-str">"Billy;Bob;Cassie;Delilah;Earnest"</span>
+
+<span class="token-com"># Tokenize into list</span>
+<span class="token-var">tokens</span> <span class="token-op">=</span> <span class="token-var">names</span>.<span class="token-fn">split</span>(<span class="token-str">';'</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Tokens list:'</span>, <span class="token-var">tokens</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Type:       '</span>, <span class="token-fn">type</span>(<span class="token-var">tokens</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Item count: '</span>, <span class="token-fn">len</span>(<span class="token-var">tokens</span>))</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Tokens list: ['Billy', 'Bob', 'Cassie', 'Delilah', 'Earnest']</div>
+              <div>Type:        &lt;class 'list'&gt;</div>
+              <div>Item count:  5</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 30: Vector Diagram: Tokenization Pipeline SVG -->
+      <section class="slide" id="slide-30">
+        <div class="eyebrow">Pipeline Architecture</div>
+        <h1 class="slide-title">Text Processing Pipeline: Split &amp; Join Operations</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Parsing, filtering, and reassembling structured strings follows a clean, repeatable two-phase pipeline.</p>
+            <ul class="bullet-list">
+              <li><strong>Phase 1 — Tokenize:</strong> <code class="inline-code">.split(';')</code> consumes the raw input string and produces a list of clean tokens.</li>
+              <li><strong>Phase 2 — Transform:</strong> Filter, capitalize, or reorder elements within standard Python list workflows.</li>
+              <li><strong>Phase 3 — Reassemble:</strong> <code class="inline-code">' '.join(tokens)</code> glues items into the desired target format with custom delimiters.</li>
+            </ul>
+          </div>
+          <div>
+            <svg viewBox="0 0 540 330" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
+              <defs>
+                <marker id="pipe-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#4fc1ff" />
+                </marker>
+              </defs>
+
+              <text x="270" y="24" fill="#4fc1ff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui">Tokenization &amp; Joining Pipeline</text>
+
+              <!-- Step 1: Input String -->
+              <rect x="50" y="42" width="440" height="42" rx="6" fill="#1e1e1e" stroke="#569cd6" stroke-width="1.5"/>
+              <text x="70" y="68" fill="#858585" font-size="11" font-family="system-ui">Input String:</text>
+              <text x="175" y="68" fill="#ce9178" font-size="13" font-weight="600" font-family="monospace">"Billy;Bob;Cassie;Delilah;Earnest"</text>
+
+              <!-- Down arrow 1 -->
+              <line x1="270" y1="84" x2="270" y2="120" stroke="#4fc1ff" stroke-width="2" marker-end="url(#pipe-arrow)"/>
+              <rect x="290" y="94" width="130" height="20" rx="3" fill="#1e1e1e" stroke="#333333" stroke-width="1"/>
+              <text x="355" y="108" fill="#4ec9b0" font-size="10" font-weight="600" text-anchor="middle" font-family="monospace">.split(';')</text>
+
+              <!-- Step 2: List of Tokens -->
+              <rect x="30" y="125" width="480" height="65" rx="6" fill="#1e1e1e" stroke="#4ec9b0" stroke-width="1.5"/>
+              <text x="270" y="145" fill="#858585" font-size="11" text-anchor="middle" font-family="system-ui">Intermediate Token List: <tspan fill="#4ec9b0" font-weight="700">&lt;class 'list'&gt;</tspan></text>
+              
+              <rect x="42" y="153" width="78" height="28" rx="4" fill="#2d2d30" stroke="#333333" stroke-width="1"/>
+              <text x="81" y="172" fill="#ce9178" font-size="12" text-anchor="middle" font-family="monospace">'Billy'</text>
+
+              <rect x="132" y="153" width="68" height="28" rx="4" fill="#2d2d30" stroke="#333333" stroke-width="1"/>
+              <text x="166" y="172" fill="#ce9178" font-size="12" text-anchor="middle" font-family="monospace">'Bob'</text>
+
+              <rect x="212" y="153" width="85" height="28" rx="4" fill="#2d2d30" stroke="#333333" stroke-width="1"/>
+              <text x="254" y="172" fill="#ce9178" font-size="12" text-anchor="middle" font-family="monospace">'Cassie'</text>
+
+              <rect x="309" y="153" width="88" height="28" rx="4" fill="#2d2d30" stroke="#333333" stroke-width="1"/>
+              <text x="353" y="172" fill="#ce9178" font-size="12" text-anchor="middle" font-family="monospace">'Delilah'</text>
+
+              <rect x="409" y="153" width="90" height="28" rx="4" fill="#2d2d30" stroke="#333333" stroke-width="1"/>
+              <text x="454" y="172" fill="#ce9178" font-size="12" text-anchor="middle" font-family="monospace">'Earnest'</text>
+
+              <!-- Down arrow 2 -->
+              <line x1="270" y1="190" x2="270" y2="230" stroke="#4fc1ff" stroke-width="2" marker-end="url(#pipe-arrow)"/>
+              <rect x="290" y="202" width="130" height="20" rx="3" fill="#1e1e1e" stroke="#333333" stroke-width="1"/>
+              <text x="355" y="216" fill="#dcdcaa" font-size="10" font-weight="600" text-anchor="middle" font-family="monospace">' '.join(tokens)</text>
+
+              <!-- Step 3: Reassembled String -->
+              <rect x="50" y="235" width="440" height="42" rx="6" fill="#1e1e1e" stroke="#dcdcaa" stroke-width="1.5"/>
+              <text x="70" y="261" fill="#858585" font-size="11" font-family="system-ui">Final String:</text>
+              <text x="175" y="261" fill="#ce9178" font-size="13" font-weight="600" font-family="monospace">"Billy Bob Cassie Delilah Earnest"</text>
+
+              <text x="270" y="305" fill="#858585" font-size="10" text-anchor="middle" font-family="monospace">Single memory allocation • O(N) runtime performance</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 31: Reassembling Strings with join() -->
+      <section class="slide" id="slide-31">
+        <div class="eyebrow">Memory Efficiency</div>
+        <h1 class="slide-title">Reassembling Text: The <code class="inline-code">.join()</code> Method</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The reverse of <code class="inline-code">.split()</code>, combining an iterable of strings into a single cohesive string using a separator.</p>
+            <ul class="bullet-list">
+              <li><strong>Syntax:</strong> <code class="inline-code">'delimiter'.join(iterable)</code></li>
+              <li>Example: <code class="inline-code">' '.join(tokens)</code> or <code class="inline-code">', '.join(tokens)</code>.</li>
+              <li><strong>Performance Invariant:</strong> Using <code class="inline-code">+=</code> in a loop triggers $O(N^2)$ repeated memory reallocations due to immutability.</li>
+              <li><code class="inline-code">join()</code> pre-calculates the exact buffer size, executing in optimal $O(N)$ linear time!</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — string_join.py</span><span>join() Method</span></div>
+            <div class="code-box-body"><span class="token-var">tokens</span> <span class="token-op">=</span> [<span class="token-str">'Billy'</span>, <span class="token-str">'Bob'</span>, <span class="token-str">'Cassie'</span>, <span class="token-str">'Delilah'</span>, <span class="token-str">'Earnest'</span>]
+
+<span class="token-com"># Join with single space</span>
+<span class="token-var">sentence</span> <span class="token-op">=</span> <span class="token-str">' '</span>.<span class="token-fn">join</span>(<span class="token-var">tokens</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Space joined: '</span>, <span class="token-var">sentence</span>)
+
+<span class="token-com"># Join with comma and space</span>
+<span class="token-var">csv_style</span> <span class="token-op">=</span> <span class="token-str">', '</span>.<span class="token-fn">join</span>(<span class="token-var">tokens</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Comma joined: '</span>, <span class="token-var">csv_style</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Space joined:  Billy Bob Cassie Delilah Earnest</div>
+              <div>Comma joined:  Billy, Bob, Cassie, Delilah, Earnest</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 32: Multiline Processing with splitlines() -->
+      <section class="slide" id="slide-32">
+        <div class="eyebrow">File &amp; Document Parsing</div>
+        <h1 class="slide-title">Multiline Strings &amp; <code class="inline-code">.splitlines()</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Parse multiline texts, server logs, poetry, and flight manifest files with <code class="inline-code">.splitlines()</code>.</p>
+            <ul class="bullet-list">
+              <li>Splits on universal line break characters (<code class="inline-code">\n</code>, <code class="inline-code">\r\n</code>, <code class="inline-code">\r</code>).</li>
+              <li>Automatically strips trailing newline markers from the resulting strings.</li>
+              <li>Enables clean line-by-line processing without manual strip indexing.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — splitlines.py</span><span>Multiline Handling</span></div>
+            <div class="code-box-body"><span class="token-var">poem</span> <span class="token-op">=</span> <span class="token-str">"""Loquacious D is
+just a name but the man
+is stranger than the myth"""</span>
+
+<span class="token-var">lines</span> <span class="token-op">=</span> <span class="token-var">poem</span>.<span class="token-fn">splitlines</span>()
+<span class="token-fn">print</span>(<span class="token-str">'Total lines:'</span>, <span class="token-fn">len</span>(<span class="token-var">lines</span>))
+
+<span class="token-kw">for</span> <span class="token-var">i</span>, <span class="token-var">line</span> <span class="token-kw">in</span> <span class="token-fn">enumerate</span>(<span class="token-var">lines</span>, <span class="token-num">1</span>):
+    <span class="token-fn">print</span>(<span class="token-str">f'Line {i}: '</span>, <span class="token-var">line</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Total lines: 3</div>
+              <div>Line 1:  Loquacious D is</div>
+              <div>Line 2:  just a name but the man</div>
+              <div>Line 3:  is stranger than the myth</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 33: Regular Expressions Intro -->
+      <section class="slide" id="slide-33">
+        <div class="eyebrow">Pattern Formalism</div>
+        <h1 class="slide-title">Regular Expressions: The <code class="inline-code">re</code> Module</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>Regular Expressions</strong> (regex) define formal pattern templates to validate, search, and extract complex text structures.</p>
+            <ul class="bullet-list">
+              <li>Standard library: <code class="inline-code">import re</code></li>
+              <li><code class="inline-code">re.fullmatch(pattern, string)</code>: Checks if the <em>entire</em> string conforms to the regex specification.
+                <br>Returns a match object on success, or <code class="inline-code">None</code> on failure.</li>
+              <li><code class="inline-code">re.search(pattern, string)</code>: Searches for first occurrence anywhere.</li>
+              <li>Always use Python raw strings (<code class="inline-code">r'...'</code>) to avoid backslash escaping issues.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — regex_intro.py</span><span>re Module Basics</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">re</span>
+
+<span class="token-var">pattern</span> <span class="token-op">=</span> <span class="token-str">r'02-\d{3}-\d{4}'</span>  <span class="token-com"># Bangkok phone number</span>
+<span class="token-var">phone</span> <span class="token-op">=</span> <span class="token-str">'02-272-5300'</span>
+
+<span class="token-kw">if</span> <span class="token-var">re</span>.<span class="token-fn">fullmatch</span>(<span class="token-var">pattern</span>, <span class="token-var">phone</span>):
+    <span class="token-fn">print</span>(<span class="token-str">f'{phone} is a valid phone format'</span>)
+<span class="token-kw">else</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Invalid phone format'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>02-272-5300 is a valid phone format</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 34: Regex Quantifiers & Zip Codes -->
+      <section class="slide" id="slide-34">
+        <div class="eyebrow">Quantifiers &amp; Anchors</div>
+        <h1 class="slide-title">Regex Validation: Postal Codes &amp; Quantifiers</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Quantifiers specify the exact number of times a preceding character or group may repeat.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">\d</code>: Matches any decimal digit character (<code class="inline-code">[0-9]</code>).</li>
+              <li><code class="inline-code">{5}</code>: Exact quantifier: matches exactly 5 times.</li>
+              <li><code class="inline-code">r'^\d{5}$'</code>: Enforces exactly 5 digits from string start (<code class="inline-code">^</code>) to end (<code class="inline-code">$</code>).</li>
+              <li>Matches <code class="inline-code">'90210'</code> and <code class="inline-code">'10031'</code>; rejects <code class="inline-code">'9486'</code> (too short) or letters.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — zip_validation.py</span><span>Zip Code Match</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">re</span>
+
+<span class="token-var">zip_pattern</span> <span class="token-op">=</span> <span class="token-str">r'^\d{5}$'</span>
+<span class="token-var">samples</span> <span class="token-op">=</span> [<span class="token-str">'90210'</span>, <span class="token-str">'10031'</span>, <span class="token-str">'9486'</span>, <span class="token-str">'CATC1'</span>]
+
+<span class="token-kw">for</span> <span class="token-var">z</span> <span class="token-kw">in</span> <span class="token-var">samples</span>:
+    <span class="token-var">result</span> <span class="token-op">=</span> <span class="token-str">'VALID'</span> <span class="token-kw">if</span> <span class="token-var">re</span>.<span class="token-fn">fullmatch</span>(<span class="token-var">zip_pattern</span>, <span class="token-var">z</span>) <span class="token-kw">else</span> <span class="token-str">'INVALID'</span>
+    <span class="token-fn">print</span>(<span class="token-str">f'{z:8} -&gt; {result} zip code'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>90210    -&gt; VALID zip code</div>
+              <div>10031    -&gt; VALID zip code</div>
+              <div>9486     -&gt; INVALID zip code</div>
+              <div>CATC1    -&gt; INVALID zip code</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 35: Character Classes & Handles -->
+      <section class="slide" id="slide-35">
+        <div class="eyebrow">Custom Sets</div>
+        <h1 class="slide-title">Character Classes &amp; Twitter Handle Validation</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Character classes enclosed in square brackets <code class="inline-code">[...]</code> match any single character belonging to a custom set.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">[A-Za-z0-9_]</code>: Matches any alphanumeric character or underscore (equivalent to <code class="inline-code">\w</code>).</li>
+              <li><code class="inline-code">{3,}</code>: Range quantifier: matches 3 or more occurrences.</li>
+              <li>Pattern <code class="inline-code">r'^@[A-Za-z0-9_]{3,}$'</code>: Validates handles starting with <code class="inline-code">@</code> followed by at least 3 valid identifier characters.</li>
+              <li>Rejects invalid prefix characters (e.g. <code class="inline-code">#</code>) or handles that are too short (<code class="inline-code">@A</code>).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — handle_regex.py</span><span>Character Classes</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">re</span>
+
+<span class="token-var">handle_pattern</span> <span class="token-op">=</span> <span class="token-str">r'^@[A-Za-z0-9_]{3,}$'</span>
+<span class="token-var">candidates</span> <span class="token-op">=</span> [<span class="token-str">'@the_loquacious_one'</span>, <span class="token-str">'@CATC_Aviation'</span>, <span class="token-str">'@A'</span>, <span class="token-str">'#loquacious'</span>]
+
+<span class="token-kw">for</span> <span class="token-var">c</span> <span class="token-kw">in</span> <span class="token-var">candidates</span>:
+    <span class="token-kw">if</span> <span class="token-var">re</span>.<span class="token-fn">fullmatch</span>(<span class="token-var">handle_pattern</span>, <span class="token-var">c</span>):
+        <span class="token-fn">print</span>(<span class="token-str">f'{c} is a valid Twitter handle'</span>)
+    <span class="token-kw">else</span>:
+        <span class="token-fn">print</span>(<span class="token-str">f'{c} is NOT a valid Twitter handle'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>@the_loquacious_one is a valid Twitter handle</div>
+              <div>@CATC_Aviation is a valid Twitter handle</div>
+              <div>@A is NOT a valid Twitter handle</div>
+              <div>#loquacious is NOT a valid Twitter handle</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 36: Course Synthesis -->
+      <section class="slide" id="slide-36">
+        <div class="eyebrow">Curriculum Synthesis</div>
+        <h1 class="slide-title">Numerical &amp; Text Processing: Architecture Matrix</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Harness the right computational abstraction for numerical tensors vs. structured text workflows.</p>
+            <ul class="bullet-list">
+              <li><strong>Dense numerical data?</strong> Use NumPy <code class="inline-code">ndarray</code> for SIMD speed and multidimensional matrix slicing.</li>
+              <li><strong>Dynamic text output?</strong> Use formatted f-strings (<code class="inline-code">f'{val:spec}'</code>) for instant, clean templating.</li>
+              <li><strong>Delimited streams &amp; records?</strong> Combine <code class="inline-code">.split()</code>, token transformations, and <code class="inline-code">.join()</code>.</li>
+              <li><strong>Rigorous input validation?</strong> Employ regular expressions (<code class="inline-code">re</code>) with character classes and anchors.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Tooling Matrix</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.95rem;">
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-cyan);">
+                <strong style="color: var(--accent-cyan);">NumPy:</strong> Contiguous C memory, broadcasting, axis reductions
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent);">
+                <strong style="color: var(--accent);">f-strings:</strong> Evaluated in bytecode, format specifiers (<code class="inline-code">:d</code>, <code class="inline-code">:.2f</code>)
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--token-type);">
+                <strong style="color: var(--token-type);">Split &amp; Join:</strong> Linear $O(N)$ text tokenization and clean joining
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-gold);">
+                <strong style="color: var(--accent-gold);">re Module:</strong> Deterministic pattern validation with character sets
+              </div>
+            </div>
+            <div style="margin-top: 1rem; color: #858585; font-size: 0.85rem; text-align: center;">
+              Civil Aviation Training Center (CATC) • Ready for Lecture 9 &amp; 10
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- Footer -->

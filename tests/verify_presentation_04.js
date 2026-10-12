@@ -74,8 +74,53 @@ assert(html.includes('transpose') || html.includes('.T'), 'Must include transpos
 assert(html.includes('<svg') && (html.includes('List') || html.includes('list')) && (html.includes('NumPy') || html.includes('ndarray')), 'Must include vector SVG comparing Python list vs NumPy ndarray');
 
 // Slide count >= 18
-const l7Slides = (html.match(/class="slide/g) || []).length;
+const l7Slides = (html.match(/<section class="slide/g) || []).length;
 assert(l7Slides >= 18, `Must have at least 18 slides for L07, currently has ${l7Slides}`);
 
 console.log('✓ Task 2 Verification Passed for Presentation 04!');
+
+console.log('Testing Task 3: Lecture 8 Content & String Tokenization/Regex Pipeline...');
+
+// Lecture 8 Title & Strings
+assert(html.toLowerCase().includes('lecture 8') && html.toLowerCase().includes('strings'), 'Must include Lecture 8 title');
+
+// Modern f-string formatting specifiers
+assert(html.includes(':0.2f') || html.includes(':.2f'), 'Must include float precision specifier');
+assert(html.includes(':d') || html.includes(':1d'), 'Must include integer decimal specifier');
+assert(html.includes(':c'), 'Must include character code specifier');
+assert(html.includes(':.2e') || html.includes(':0.2e'), 'Must include scientific notation specifier');
+assert(html.includes(':10f') || html.includes('field width') || html.includes('Field Width'), 'Must include field width formatting');
+
+// Immutability, concatenation & repetition
+assert(html.includes('concat') || html.includes('Concat') || html.includes('+='), 'Must include string concatenation');
+assert(html.includes('repetition') || html.includes('Repetition') || html.includes(' * '), 'Must include string repetition');
+
+// Whitespace trimming & Case
+assert(html.includes('.strip()') || html.includes('strip()'), 'Must include strip() method');
+assert(html.includes('.upper()') && html.includes('.lower()'), 'Must include upper() and lower() methods');
+
+// Substring methods
+assert(html.includes('.count(') || html.includes('count('), 'Must include count() method');
+assert(html.includes('.index(') || html.includes('.find('), 'Must include substring location find() or index()');
+assert(html.includes('.replace(') || html.includes('replace('), 'Must include replace() method');
+
+// Tokenization & joining
+assert(html.includes('.split(') || html.includes('split('), 'Must include split() method');
+assert(html.includes('.join(') || html.includes('join('), 'Must include join() method');
+assert(html.includes('.splitlines(') || html.includes('splitlines('), 'Must include splitlines() method');
+
+// Regular expressions & pattern validation
+assert(html.includes('import re') || html.includes('re.fullmatch'), 'Must include re module and matching');
+assert(html.includes('zip code') || html.includes('Zip code') || html.includes('\\d{5}'), 'Must include zip code regex validation');
+assert(html.includes('Twitter') || html.includes('handle') || html.includes('character class') || html.includes('Character class'), 'Must include character class validation');
+
+// Vector SVG for Tokenization Pipeline
+assert((html.match(/<svg/g) || []).length >= 2, 'Must include at least 2 inline vector SVGs (Memory Diagram + Tokenization Pipeline)');
+
+// Exactly 36 slides
+const totalSlides = (html.match(/<section class="slide/g) || []).length;
+assert.strictEqual(totalSlides, 36, `Expected exactly 36 slides total, currently has ${totalSlides}`);
+
+console.log('✓ Task 3 Verification Passed for Presentation 04!');
+
 
