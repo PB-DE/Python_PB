@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Programming — Lectures 9 &amp; 10 (CATC)</title>
+  <style>
+    :root {
+      --bg: #1e1e1e;
+      --code-bg: #252526;
+      --card-bg: #252526;
+      --border: #333333;
+      --text: #d4d4d4;
+      --text-bright: #ffffff;
+      --text-muted: #858585;
+      --accent: #007acc;
+      --accent-cyan: #4fc1ff;
+      --accent-gold: #dcdcaa;
+      --danger: #f48771;
+      
+      /* VS Code Dark+ Syntax Tokens */
+      --token-kw: #569cd6;
+      --token-var: #9cdcfe;
+      --token-num: #b5cea8;
+      --token-str: #ce9178;
+      --token-com: #6a9955;
+      --token-fn: #dcdcaa;
+      --token-op: #d4d4d4;
+      --token-type: #4ec9b0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #121212;
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+
+    /* Widescreen 16:9 Presentation Stage */
+    #stage {
+      position: relative;
+      width: min(96vw, 170.66vh);
+      height: min(54vw, 96vh);
+      background-color: var(--bg);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    /* Progress Bar */
+    .progress-bar-container {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 10;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-cyan));
+      width: 0%;
+      transition: width 0.25s ease-out;
+    }
+
+    /* Deck and Slides */
+    #deck {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 3rem 4rem 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    /* Typography */
+    .eyebrow {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-cyan);
+      margin-bottom: 0.4rem;
+    }
+
+    .slide-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .lead {
+      font-size: 1.12rem;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .bullet-list {
+      list-style: none;
+      margin-top: 0.5rem;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.85rem;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: -0.05rem;
+      color: var(--accent-cyan);
+      font-size: 1.3rem;
+    }
+
+    /* VS Code Code Box */
+    .code-box {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      font-size: 0.96rem;
+      line-height: 1.5;
+      margin-top: 0.5rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+
+    .code-box-header {
+      background: #1e1e1e;
+      padding: 0.45rem 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-box-body {
+      padding: 1rem 1.2rem;
+      color: #d4d4d4;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .output-box {
+      margin-top: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: #181818;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.88rem;
+      color: #9cdcfe;
+      line-height: 1.45;
+    }
+
+    .out-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    /* Syntax Highlighting Classes */
+    .token-kw { color: var(--token-kw); font-weight: 600; }
+    .token-var { color: var(--token-var); }
+    .token-num { color: var(--token-num); }
+    .token-str { color: var(--token-str); }
+    .token-com { color: var(--token-com); font-style: italic; }
+    .token-fn { color: var(--token-fn); }
+    .token-op { color: var(--token-op); }
+    .token-type { color: var(--token-type); }
+
+    .inline-code {
+      background: #2d2d30;
+      color: #ce9178;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9em;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Grids */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+      width: 100%;
+    }
+
+    .grid-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Footer Controls */
+    footer {
+      height: 48px;
+      background: #181818;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 1.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      z-index: 10;
+    }
+
+    .branding {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      letter-spacing: 0.03em;
+    }
+
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .btn {
+      background: #252526;
+      border: 1px solid #3c3c3c;
+      color: var(--text);
+      padding: 0.3rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn:hover {
+      background: #333333;
+      color: var(--text-bright);
+      border-color: #555555;
+    }
+
+    .slide-counter {
+      font-variant-numeric: tabular-nums;
+      font-weight: 600;
+      color: var(--text-bright);
+      margin-left: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="stage">
+    <div class="progress-bar-container">
+      <div class="progress-bar" id="progress"></div>
+    </div>
+
+    <div id="deck">
+      <!-- Slide 1: Deck Opener (Scaffold) -->
+      <section class="slide active" id="slide-1">
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 9</div>
+        <h1 class="slide-title">Files &amp; Exceptions</h1>
+        <div class="slide-subtitle">Persistence, Streams, JSON Data Interchange &amp; Defensive Error Handling</div>
+        
+        <div class="grid-equal" style="margin-top: 1rem;">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); margin-bottom: 0.75rem; font-size: 1.15rem;">Lecture 9 Curriculum</h3>
+            <ul class="bullet-list">
+              <li><strong>Persistence:</strong> Volatile RAM vs. Non-volatile disk files.</li>
+              <li><strong>Streams:</strong> Reading and writing text byte streams.</li>
+              <li><strong>Context Managers:</strong> Deterministic file closing with <code class="inline-code">with</code>.</li>
+              <li><strong>JSON Format:</strong> Web data interchange with nested records.</li>
+              <li><strong>Defensive Coding:</strong> Structured <code class="inline-code">try</code>, <code class="inline-code">except</code>, <code class="inline-code">else</code>, and <code class="inline-code">finally</code> blocks.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--token-type); margin-bottom: 0.75rem; font-size: 1.15rem;">Lecture 10 Curriculum</h3>
+            <ul class="bullet-list">
+              <li><strong>OOP Paradigm:</strong> "Everything is an object" in Python.</li>
+              <li><strong>Classes &amp; Objects:</strong> Blueprints vs. heap instances.</li>
+              <li><strong>Constructors:</strong> Object initialization with <code class="inline-code">__init__</code> and <code class="inline-code">self</code>.</li>
+              <li><strong>Encapsulation:</strong> Methods, composition, and internal state.</li>
+              <li><strong>Magic Methods:</strong> String representations with <code class="inline-code">__str__</code> and <code class="inline-code">__repr__</code>.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <footer>
+      <div class="branding">Civil Aviation Training Center (CATC)</div>
+      <div class="controls">
+        <button class="btn" id="btn-prev" onclick="SlideDeck.prev()">&#9664; Prev</button>
+        <button class="btn" id="btn-next" onclick="SlideDeck.next()">Next &#9654;</button>
+        <button class="btn" id="btn-fs" onclick="SlideDeck.toggleFullscreen()">&#x26F6; Fullscreen</button>
+        <span class="slide-counter" id="counter">1 / 1</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    const SlideDeck = (function() {
+      let currentIndex = 0;
+      let slides = [];
+      let counterEl, progressEl;
+
+      function init() {
+        slides = Array.from(document.querySelectorAll('.slide'));
+        counterEl = document.getElementById('counter');
+        progressEl = document.getElementById('progress');
+
+        window.addEventListener('keydown', handleKeydown);
+        window.addEventListener('hashchange', handleHashChange);
+        window.addEventListener('resize', handleResize);
+
+        handleResize();
+
+        if (window.location.hash) {
+          handleHashChange();
+        } else {
+          updateView();
+        }
+      }
+
+      function handleResize() {
+        // Auto-scale 16:9 stage
+      }
+
+      function handleKeydown(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        switch(e.code) {
+          case 'ArrowRight':
+          case 'Space':
+          case 'KeyL':
+            e.preventDefault();
+            next();
+            break;
+          case 'ArrowLeft':
+          case 'KeyH':
+            e.preventDefault();
+            prev();
+            break;
+          case 'Home':
+            e.preventDefault();
+            goTo(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            goTo(slides.length - 1);
+            break;
+          case 'KeyF':
+            e.preventDefault();
+            toggleFullscreen();
+            break;
+        }
+      }
+
+      function handleHashChange() {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#slide-')) {
+          const idx = parseInt(hash.replace('#slide-', ''), 10) - 1;
+          if (!isNaN(idx) && idx >= 0 && idx < slides.length && idx !== currentIndex) {
+            currentIndex = idx;
+            updateView();
+          }
+        }
+      }
+
+      function goTo(index) {
+        if (index < 0 || index >= slides.length) return;
+        currentIndex = index;
+        updateView();
+        window.location.hash = `slide-${currentIndex + 1}`;
+      }
+
+      function next() {
+        if (currentIndex < slides.length - 1) {
+          goTo(currentIndex + 1);
+        }
+      }
+
+      function prev() {
+        if (currentIndex > 0) {
+          goTo(currentIndex - 1);
+        }
+      }
+
+      function updateView() {
+        slides.forEach((slide, idx) => {
+          if (idx === currentIndex) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        });
+
+        if (counterEl) {
+          counterEl.textContent = `${currentIndex + 1} / ${slides.length}`;
+        }
+        if (progressEl) {
+          const pct = slides.length > 1 ? ((currentIndex) / (slides.length - 1)) * 100 : 100;
+          progressEl.style.width = `${pct}%`;
+        }
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+
+      return {
+        init,
+        next,
+        prev,
+        goTo,
+        toggleFullscreen
+      };
+    })();
+
+    document.addEventListener('DOMContentLoaded', SlideDeck.init);
+  </script>
+</body>
+</html>
