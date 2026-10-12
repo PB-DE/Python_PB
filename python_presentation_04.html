@@ -341,6 +341,647 @@
           </div>
         </div>
       </section>
+
+      <!-- Slide 2: Array Foundations -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow">High-Performance Computing</div>
+        <h1 class="slide-title">Array Processing with NumPy</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>NumPy</strong> (Numerical Python) is the foundation of the scientific Python ecosystem, engineered for high-throughput mathematical array computing.</p>
+            <ul class="bullet-list">
+              <li><strong>Python Lists:</strong> General-purpose containers storing pointers to separate heap objects with dynamic typing overhead.</li>
+              <li><strong>NumPy Arrays (<code class="inline-code">ndarray</code>):</strong> Store homogeneous, densely packed data in contiguous C-level memory blocks.</li>
+              <li><strong>Vectorization:</strong> Mathematical operations execute natively in C without Python loop overhead.</li>
+              <li>Standard convention: <code class="inline-code">import numpy as np</code></li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — import_numpy.py</span><span>Import &amp; Type</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">my_array</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([<span class="token-num">0</span>, <span class="token-num">1</span>, <span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">8</span>])
+
+<span class="token-fn">print</span>(<span class="token-str">'Type of array:'</span>, <span class="token-fn">type</span>(<span class="token-var">my_array</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Contents:     '</span>, <span class="token-var">my_array</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Type of array: &lt;class 'numpy.ndarray'&gt;</div>
+              <div>Contents:      [0 1 1 2 3 5 8]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: 1-D vs. 2-D Arrays -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow">Multidimensional Tensors</div>
+        <h1 class="slide-title">Creating 1-D and 2-D Arrays</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The core data structure is <code class="inline-code">numpy.ndarray</code>, representing n-dimensional arrays of arbitrary rank.</p>
+            <ul class="bullet-list">
+              <li><strong>1-D Array (Vector):</strong> Created from a single Python list:
+                <br><code class="inline-code">np.array([0, 1, 1, 2, 3, 5, 8])</code></li>
+              <li><strong>2-D Array (Matrix):</strong> Created from nested Python lists representing rows and columns:
+                <br><code class="inline-code">np.array([[0, 1, 1, 2], [3, 5, 8, 11]])</code></li>
+              <li>Inner lists must have equal lengths to form a regular grid.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — arrays_2d.py</span><span>1D vs 2D Arrays</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-com"># 2-D array with 2 rows and 4 columns</span>
+<span class="token-var">my_2d_array</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([
+    [<span class="token-num">0</span>, <span class="token-num">1</span>, <span class="token-num">1</span>, <span class="token-num">2</span>],
+    [<span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">8</span>, <span class="token-num">11</span>]
+])
+
+<span class="token-fn">print</span>(<span class="token-var">my_2d_array</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>[[ 0  1  1  2]</div>
+              <div> [ 3  5  8 11]]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Data Types (dtype) -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow">Memory Homogeneity</div>
+        <h1 class="slide-title">Array Data Types: The <code class="inline-code">dtype</code> Attribute</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Unlike Python lists which allow mixed types, every element in a NumPy array must share the identical scalar data type.</p>
+            <ul class="bullet-list">
+              <li><strong>Type Inference:</strong> NumPy determines the most efficient native C type automatically upon construction.</li>
+              <li>Integers default to 64-bit signed integers (<code class="inline-code">int64</code>).</li>
+              <li>Floats default to 64-bit IEEE floating-point numbers (<code class="inline-code">float64</code>).</li>
+              <li>Mixed integer and float arrays are coerced up to <code class="inline-code">float64</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — array_dtype.py</span><span>Type Introspection</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+<span class="token-kw">import</span> <span class="token-var">math</span>
+
+<span class="token-var">int_arr</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>])
+<span class="token-var">irr_arr</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([<span class="token-var">math</span>.<span class="token-fn">sqrt</span>(<span class="token-num">2</span>), <span class="token-var">math</span>.<span class="token-fn">sqrt</span>(<span class="token-num">3</span>), <span class="token-var">math</span>.<span class="token-fn">sqrt</span>(<span class="token-num">5</span>)])
+
+<span class="token-fn">print</span>(<span class="token-str">'int_arr.dtype:'</span>, <span class="token-var">int_arr</span>.<span class="token-var">dtype</span>)
+<span class="token-fn">print</span>(<span class="token-str">'irr_arr.dtype:'</span>, <span class="token-var">irr_arr</span>.<span class="token-var">dtype</span>)
+<span class="token-fn">print</span>(<span class="token-str">'irr_arr values:'</span>, <span class="token-var">irr_arr</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>int_arr.dtype: int64</div>
+              <div>irr_arr.dtype: float64</div>
+              <div>irr_arr values: [1.41421356 1.73205081 2.23606798]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Shape, Ndim & Size -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow">Structural Metadata</div>
+        <h1 class="slide-title">Array Dimensions: <code class="inline-code">shape</code>, <code class="inline-code">ndim</code> &amp; <code class="inline-code">size</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Three intrinsic attributes describe the geometry and capacity of an <code class="inline-code">ndarray</code> without inspecting its items.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">.shape</code>: A tuple of integers giving the size of the array along each axis (e.g. <code class="inline-code">(2, 4)</code>).</li>
+              <li><code class="inline-code">.ndim</code>: The number of axes / dimensions (1 for vector, 2 for 2D matrix).</li>
+              <li><code class="inline-code">.size</code>: The total count of elements across all dimensions ($2 \times 4 = 8$).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — array_props.py</span><span>Geometric Attributes</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">matrix</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([[<span class="token-num">0</span>, <span class="token-num">1</span>, <span class="token-num">1</span>, <span class="token-num">2</span>], [<span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">8</span>, <span class="token-num">11</span>]])
+
+<span class="token-fn">print</span>(<span class="token-str">'Dimensions (ndim): '</span>, <span class="token-var">matrix</span>.<span class="token-var">ndim</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Shape (rows, cols):'</span>, <span class="token-var">matrix</span>.<span class="token-var">shape</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Total elements (size):'</span>, <span class="token-var">matrix</span>.<span class="token-var">size</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Dimensions (ndim):  2</div>
+              <div>Shape (rows, cols): (2, 4)</div>
+              <div>Total elements (size): 8</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Vector Memory Layout SVG -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow">Hardware Architecture</div>
+        <h1 class="slide-title">Memory Layout: Python List vs. NumPy <code class="inline-code">ndarray</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Why is NumPy exponentially faster for numerical workloads than standard Python lists?</p>
+            <ul class="bullet-list">
+              <li><strong>Python List:</strong> Array of 64-bit memory pointers referencing separate boxed <code class="inline-code">PyObject</code> structures scattered on the heap. Poor CPU cache locality.</li>
+              <li><strong>NumPy ndarray:</strong> Contiguous buffer of unboxed raw binary values with a small metadata header.</li>
+              <li>Enables direct SIMD hardware vectorization and cache pre-fetching.</li>
+            </ul>
+          </div>
+          <div>
+            <svg viewBox="0 0 540 330" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
+              <defs>
+                <marker id="list-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#f48771" />
+                </marker>
+              </defs>
+
+              <!-- Top: Python List -->
+              <text x="270" y="24" fill="#f48771" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui">Standard Python List: Pointer Overhead &amp; Scattered Heap</text>
+              
+              <!-- Pointer array -->
+              <rect x="50" y="38" width="85" height="36" rx="4" fill="#1e1e1e" stroke="#555555" stroke-width="1.5"/>
+              <text x="92" y="60" fill="#9cdcfe" font-size="11" text-anchor="middle" font-family="monospace">ptr[0]</text>
+              <line x1="92" y1="74" x2="92" y2="105" stroke="#f48771" stroke-width="1.5" marker-end="url(#list-arrow)"/>
+
+              <rect x="150" y="38" width="85" height="36" rx="4" fill="#1e1e1e" stroke="#555555" stroke-width="1.5"/>
+              <text x="192" y="60" fill="#9cdcfe" font-size="11" text-anchor="middle" font-family="monospace">ptr[1]</text>
+              <line x1="192" y1="74" x2="215" y2="105" stroke="#f48771" stroke-width="1.5" marker-end="url(#list-arrow)"/>
+
+              <rect x="250" y="38" width="85" height="36" rx="4" fill="#1e1e1e" stroke="#555555" stroke-width="1.5"/>
+              <text x="292" y="60" fill="#9cdcfe" font-size="11" text-anchor="middle" font-family="monospace">ptr[2]</text>
+              <line x1="292" y1="74" x2="335" y2="105" stroke="#f48771" stroke-width="1.5" marker-end="url(#list-arrow)"/>
+
+              <rect x="350" y="38" width="85" height="36" rx="4" fill="#1e1e1e" stroke="#555555" stroke-width="1.5"/>
+              <text x="392" y="60" fill="#9cdcfe" font-size="11" text-anchor="middle" font-family="monospace">ptr[3]</text>
+              <line x1="392" y1="74" x2="445" y2="105" stroke="#f48771" stroke-width="1.5" marker-end="url(#list-arrow)"/>
+
+              <!-- Boxed objects -->
+              <rect x="55" y="110" width="75" height="40" rx="4" fill="#2d2d30" stroke="#f48771" stroke-width="1"/>
+              <text x="92" y="127" fill="#858585" font-size="9" text-anchor="middle" font-family="system-ui">PyObject</text>
+              <text x="92" y="142" fill="#b5cea8" font-size="12" font-weight="700" text-anchor="middle" font-family="monospace">14</text>
+
+              <rect x="180" y="110" width="75" height="40" rx="4" fill="#2d2d30" stroke="#f48771" stroke-width="1"/>
+              <text x="217" y="127" fill="#858585" font-size="9" text-anchor="middle" font-family="system-ui">PyObject</text>
+              <text x="217" y="142" fill="#b5cea8" font-size="12" font-weight="700" text-anchor="middle" font-family="monospace">42</text>
+
+              <rect x="300" y="110" width="75" height="40" rx="4" fill="#2d2d30" stroke="#f48771" stroke-width="1"/>
+              <text x="337" y="127" fill="#858585" font-size="9" text-anchor="middle" font-family="system-ui">PyObject</text>
+              <text x="337" y="142" fill="#b5cea8" font-size="12" font-weight="700" text-anchor="middle" font-family="monospace">9</text>
+
+              <rect x="410" y="110" width="75" height="40" rx="4" fill="#2d2d30" stroke="#f48771" stroke-width="1"/>
+              <text x="447" y="127" fill="#858585" font-size="9" text-anchor="middle" font-family="system-ui">PyObject</text>
+              <text x="447" y="142" fill="#b5cea8" font-size="12" font-weight="700" text-anchor="middle" font-family="monospace">77</text>
+
+              <!-- Divider -->
+              <line x1="30" y1="175" x2="510" y2="175" stroke="#333333" stroke-width="1" stroke-dasharray="4"/>
+
+              <!-- Bottom: NumPy ndarray -->
+              <text x="270" y="205" fill="#4fc1ff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui">NumPy ndarray: Single Contiguous C Buffer (High Cache Locality)</text>
+
+              <!-- Header -->
+              <rect x="50" y="225" width="110" height="60" rx="4" fill="#1e1e1e" stroke="#007acc" stroke-width="1.5"/>
+              <text x="105" y="247" fill="#4fc1ff" font-size="11" font-weight="700" text-anchor="middle" font-family="system-ui">Array Header</text>
+              <text x="105" y="265" fill="#858585" font-size="9.5" text-anchor="middle" font-family="monospace">dtype: int64</text>
+              <text x="105" y="278" fill="#858585" font-size="9.5" text-anchor="middle" font-family="monospace">shape: (4,)</text>
+
+              <!-- Contiguous memory block -->
+              <rect x="175" y="225" width="80" height="60" fill="#252526" stroke="#4ec9b0" stroke-width="2"/>
+              <text x="215" y="252" fill="#4ec9b0" font-size="10" text-anchor="middle" font-family="system-ui">int64 [0]</text>
+              <text x="215" y="272" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">14</text>
+
+              <rect x="255" y="225" width="80" height="60" fill="#252526" stroke="#4ec9b0" stroke-width="2"/>
+              <text x="295" y="252" fill="#4ec9b0" font-size="10" text-anchor="middle" font-family="system-ui">int64 [1]</text>
+              <text x="295" y="272" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">42</text>
+
+              <rect x="335" y="225" width="80" height="60" fill="#252526" stroke="#4ec9b0" stroke-width="2"/>
+              <text x="375" y="252" fill="#4ec9b0" font-size="10" text-anchor="middle" font-family="system-ui">int64 [2]</text>
+              <text x="375" y="272" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">9</text>
+
+              <rect x="415" y="225" width="80" height="60" fill="#252526" stroke="#4ec9b0" stroke-width="2"/>
+              <text x="455" y="252" fill="#4ec9b0" font-size="10" text-anchor="middle" font-family="system-ui">int64 [3]</text>
+              <text x="455" y="272" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">77</text>
+
+              <text x="335" y="305" fill="#858585" font-size="10" text-anchor="middle" font-family="monospace">Stride = 8 bytes • Contiguous physical RAM address</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Iterating Multi-dimensional Arrays -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow">Traversal Techniques</div>
+        <h1 class="slide-title">Iterating Arrays: Row-by-Row vs. <code class="inline-code">.flat</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">NumPy provides multiple mechanisms for looping over multidimensional array structures.</p>
+            <ul class="bullet-list">
+              <li><strong>Row-by-Row Iteration:</strong> A standard <code class="inline-code">for row in arr:</code> loop traverses along the primary outer axis (axis 0), yielding 1D row subarrays.</li>
+              <li><strong>Flattened Iteration:</strong> The <code class="inline-code">.flat</code> attribute provides a 1-D iterator over all elements in memory order without reshaping or copying.</li>
+              <li>Avoid nested manual loops whenever vectorized operations are possible.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — array_iteration.py</span><span>Iterators</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">arr</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([[<span class="token-num">0</span>, <span class="token-num">1</span>, <span class="token-num">1</span>, <span class="token-num">2</span>], [<span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">8</span>, <span class="token-num">11</span>]])
+
+<span class="token-fn">print</span>(<span class="token-str">'Row traversal:'</span>)
+<span class="token-kw">for</span> <span class="token-var">row</span> <span class="token-kw">in</span> <span class="token-var">arr</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Row:'</span>, <span class="token-var">row</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Flat traversal: '</span>, <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">''</span>)
+<span class="token-kw">for</span> <span class="token-var">element</span> <span class="token-kw">in</span> <span class="token-var">arr</span>.<span class="token-var">flat</span>:
+    <span class="token-fn">print</span>(<span class="token-var">element</span>, <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">' '</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Row traversal:</div>
+              <div>Row: [0 1 1 2]</div>
+              <div>Row: [ 3  5  8 11]</div>
+              <div>Flat traversal: 0 1 1 2 3 5 8 11</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 8: Array Creation Utilities -->
+      <section class="slide" id="slide-8">
+        <div class="eyebrow">Constructor Helpers</div>
+        <h1 class="slide-title">Array Initializers: <code class="inline-code">zeros</code>, <code class="inline-code">ones</code> &amp; <code class="inline-code">full</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Rapidly construct arrays of predetermined shape and initial values without manually typing out lists.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">np.zeros(shape)</code>: Populates array with <code class="inline-code">0.0</code> (defaults to <code class="inline-code">float64</code>).</li>
+              <li><code class="inline-code">np.ones(shape)</code>: Populates array with <code class="inline-code">1.0</code> (defaults to <code class="inline-code">float64</code>).</li>
+              <li><code class="inline-code">np.full(shape, val)</code>: Fills array with specified constant value. Inherits value type (e.g., integer 5 yields <code class="inline-code">int64</code>).</li>
+              <li>Pass dimensions as a shape tuple (e.g. <code class="inline-code">(3, 4)</code>).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — array_factories.py</span><span>Initializers</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-fn">print</span>(<span class="token-str">'np.zeros((2, 3)):'</span>)
+<span class="token-fn">print</span>(<span class="token-var">np</span>.<span class="token-fn">zeros</span>((<span class="token-num">2</span>, <span class="token-num">3</span>)))
+
+<span class="token-fn">print</span>(<span class="token-str">'np.ones((2, 3)):'</span>)
+<span class="token-fn">print</span>(<span class="token-var">np</span>.<span class="token-fn">ones</span>((<span class="token-num">2</span>, <span class="token-num">3</span>)))
+
+<span class="token-fn">print</span>(<span class="token-str">'np.full((2, 3), 7):'</span>)
+<span class="token-fn">print</span>(<span class="token-var">np</span>.<span class="token-fn">full</span>((<span class="token-num">2</span>, <span class="token-num">3</span>), <span class="token-num">7</span>))</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>[[0. 0. 0.] [0. 0. 0.]]</div>
+              <div>[[1. 1. 1.] [1. 1. 1.]]</div>
+              <div>[[7 7 7] [7 7 7]]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Range Generators -->
+      <section class="slide" id="slide-9">
+        <div class="eyebrow">Sequence Generators</div>
+        <h1 class="slide-title">Numerical Sequences: <code class="inline-code">arange</code> vs. <code class="inline-code">linspace</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Generate continuous sequences with specified step sizes or exact element counts.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">np.arange(start, stop, step)</code>: Generates numbers with fixed step size up to, but not including, <code class="inline-code">stop</code>.
+                <br>Supports integer and floating-point strides.</li>
+              <li><code class="inline-code">np.linspace(start, stop, num)</code>: Generates <code class="inline-code">num</code> evenly spaced samples over the <strong>closed interval</strong> <code class="inline-code">[start, stop]</code> (inclusive!).</li>
+              <li>Essential for plotting mathematical functions.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — ranges.py</span><span>arange &amp; linspace</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-com"># Integer steps</span>
+<span class="token-var">odds</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">arange</span>(<span class="token-num">1</span>, <span class="token-num">10</span>, <span class="token-num">2</span>)
+<span class="token-fn">print</span>(<span class="token-str">'arange(1, 10, 2):'</span>, <span class="token-var">odds</span>)
+
+<span class="token-com"># Exactly 6 evenly spaced points from 0 to 1 inclusive</span>
+<span class="token-var">line</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">linspace</span>(<span class="token-num">0</span>, <span class="token-num">1</span>, <span class="token-num">6</span>)
+<span class="token-fn">print</span>(<span class="token-str">'linspace(0, 1, 6):'</span>, <span class="token-var">line</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>arange(1, 10, 2):  [1 3 5 7 9]</div>
+              <div>linspace(0, 1, 6): [0.  0.2 0.4 0.6 0.8 1. ]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 10: Reshaping Arrays -->
+      <section class="slide" id="slide-10">
+        <div class="eyebrow">Tensor Restructuring</div>
+        <h1 class="slide-title">Array Reshaping: The <code class="inline-code">.reshape()</code> Method</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Change the shape of an array without modifying its underlying data or reallocating memory.</p>
+            <ul class="bullet-list">
+              <li><strong>Invariant Rule:</strong> Total elements must match:
+                <br><code class="inline-code">rows * cols == total_size</code>.</li>
+              <li>Example: 24 elements can reshape to <code class="inline-code">(4, 6)</code>, <code class="inline-code">(2, 12)</code>, or <code class="inline-code">(1, 24)</code>.</li>
+              <li>Note: A 1-D vector with shape <code class="inline-code">(24,)</code> is distinct from a 2-D single-row matrix <code class="inline-code">(1, 24)</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — reshape.py</span><span>Dimensional Reorganization</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">my_1d</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">arange</span>(<span class="token-num">1</span>, <span class="token-num">25</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Original 1D shape:'</span>, <span class="token-var">my_1d</span>.<span class="token-var">shape</span>)
+
+<span class="token-com"># Reshape into a 4x6 2-D matrix</span>
+<span class="token-var">my_2d</span> <span class="token-op">=</span> <span class="token-var">my_1d</span>.<span class="token-fn">reshape</span>((<span class="token-num">4</span>, <span class="token-num">6</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Reshaped 2D shape:'</span>, <span class="token-var">my_2d</span>.<span class="token-var">shape</span>)
+<span class="token-fn">print</span>(<span class="token-var">my_2d</span>[<span class="token-num">0</span>])</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Original 1D shape: (24,)</div>
+              <div>Reshaped 2D shape: (4, 6)</div>
+              <div>[1 2 3 4 5 6]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 11: Element-wise Arithmetic & Broadcasting -->
+      <section class="slide" id="slide-11">
+        <div class="eyebrow">Vectorization</div>
+        <h1 class="slide-title">Element-wise Arithmetic &amp; Scalar Broadcasting</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Arithmetic operations apply element-by-element without requiring explicit iteration loops.</p>
+            <ul class="bullet-list">
+              <li><strong>Scalar Broadcasting:</strong> When combining an array with a scalar, NumPy automatically "broadcasts" the scalar across every element.</li>
+              <li>Addition: <code class="inline-code">arr + 2</code> increments every element.</li>
+              <li>Multiplication: <code class="inline-code">arr * 2</code> doubles every element.</li>
+              <li>Exponentiation: <code class="inline-code">arr ** 2</code> squares every element.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — broadcasting.py</span><span>Scalar Operations</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">arr</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([[<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>], [<span class="token-num">4</span>, <span class="token-num">5</span>, <span class="token-num">6</span>]])
+
+<span class="token-fn">print</span>(<span class="token-str">'arr + 2:\n'</span>, <span class="token-var">arr</span> <span class="token-op">+</span> <span class="token-num">2</span>)
+<span class="token-fn">print</span>(<span class="token-str">'arr * 2:\n'</span>, <span class="token-var">arr</span> <span class="token-op">*</span> <span class="token-num">2</span>)
+<span class="token-fn">print</span>(<span class="token-str">'arr ** 2:\n'</span>, <span class="token-var">arr</span> <span class="token-op">**</span> <span class="token-num">2</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>arr + 2: [[3 4 5] [6 7 8]]</div>
+              <div>arr * 2: [[ 2  4  6] [ 8 10 12]]</div>
+              <div>arr ** 2: [[ 1  4  9] [16 25 36]]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 12: Array-Array Arithmetic -->
+      <section class="slide" id="slide-12">
+        <div class="eyebrow">Matrix Math</div>
+        <h1 class="slide-title">Array-Array Arithmetic: Element-by-Element</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Combining two arrays of compatible shapes performs pairwise element-by-element mathematical operations.</p>
+            <ul class="bullet-list">
+              <li><strong>Element-wise Addition (<code class="inline-code">a1 + a2</code>):</strong> Adds corresponding coordinates together.</li>
+              <li><strong>Hadamard Multiplication (<code class="inline-code">a1 * a2</code>):</strong> Multiplies corresponding elements.
+                <br><em>Note:</em> Use <code class="inline-code">@</code> or <code class="inline-code">np.dot()</code> for linear algebra dot product!</li>
+              <li>Arrays must have identical shapes or be broadcastable.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — matrix_math.py</span><span>Pairwise Operators</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">a1</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([[<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>], [<span class="token-num">4</span>, <span class="token-num">5</span>, <span class="token-num">6</span>]])
+<span class="token-var">a2</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">full</span>((<span class="token-num">2</span>, <span class="token-num">3</span>), <span class="token-num">2</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'a1 * a2:\n'</span>, <span class="token-var">a1</span> <span class="token-op">*</span> <span class="token-var">a2</span>)
+<span class="token-fn">print</span>(<span class="token-str">'a1 + a2:\n'</span>, <span class="token-var">a1</span> <span class="token-op">+</span> <span class="token-var">a2</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>a1 * a2: [[ 2  4  6] [ 8 10 12]]</div>
+              <div>a1 + a2: [[3 4 5] [6 7 8]]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 13: Relational Operators & Boolean Masks -->
+      <section class="slide" id="slide-13">
+        <div class="eyebrow">Conditional Filtering</div>
+        <h1 class="slide-title">Relational Operators &amp; Boolean Masks</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Comparison operators applied to arrays yield boolean arrays with <code class="inline-code">dtype=bool</code>.</p>
+            <ul class="bullet-list">
+              <li><strong>Modulo &amp; Parity Check:</strong> <code class="inline-code">(a3 % 2) == 0</code> creates a boolean mask indicating even elements.</li>
+              <li><strong>Comparing Arrays:</strong> <code class="inline-code">a1 &gt; a2</code> produces <code class="inline-code">True</code> wherever an element in <code class="inline-code">a1</code> exceeds the corresponding element in <code class="inline-code">a2</code>.</li>
+              <li>Boolean masks are the basis for conditional data querying in NumPy and Pandas.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — boolean_masks.py</span><span>Logical Masking</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">arr</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([[<span class="token-num">3</span>, <span class="token-num">4</span>, <span class="token-num">5</span>], [<span class="token-num">6</span>, <span class="token-num">7</span>, <span class="token-num">8</span>]])
+
+<span class="token-var">is_even</span> <span class="token-op">=</span> (<span class="token-var">arr</span> <span class="token-op">%</span> <span class="token-num">2</span>) <span class="token-op">==</span> <span class="token-num">0</span>
+<span class="token-fn">print</span>(<span class="token-str">'Is even boolean mask:\n'</span>, <span class="token-var">is_even</span>)
+
+<span class="token-com"># Comparing against scalar threshold</span>
+<span class="token-fn">print</span>(<span class="token-str">'Greater than 5:\n'</span>, <span class="token-var">arr</span> <span class="token-op">&gt;</span> <span class="token-num">5</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Is even boolean mask:</div>
+              <div>[[False  True False] [ True False  True]]</div>
+              <div>Greater than 5:</div>
+              <div>[[False False False] [ True  True  True]]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 14: Global Aggregations -->
+      <section class="slide" id="slide-14">
+        <div class="eyebrow">Statistical Reductions</div>
+        <h1 class="slide-title">Global Aggregations: Sum, Mean, Min &amp; Max</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">NumPy provides lightning-fast aggregation methods executed directly in optimized compiled C code.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">arr.sum()</code>: Calculates total sum of all elements.</li>
+              <li><code class="inline-code">arr.mean()</code>: Arithmetic average across array.</li>
+              <li><code class="inline-code">arr.min()</code> &amp; <code class="inline-code">arr.max()</code>: Extreme values.</li>
+              <li><code class="inline-code">arr.std()</code> &amp; <code class="inline-code">arr.var()</code>: Standard deviation and variance.</li>
+              <li>Reductions default to aggregating the entire flattened tensor into a single scalar.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — aggregations.py</span><span>Statistical Methods</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">arr</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">arange</span>(<span class="token-num">10</span>).<span class="token-fn">reshape</span>((<span class="token-num">2</span>, <span class="token-num">5</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Array:\n'</span>, <span class="token-var">arr</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Sum: '</span>, <span class="token-var">arr</span>.<span class="token-fn">sum</span>())
+<span class="token-fn">print</span>(<span class="token-str">'Mean:'</span>, <span class="token-var">arr</span>.<span class="token-fn">mean</span>())
+<span class="token-fn">print</span>(<span class="token-str">'Min: '</span>, <span class="token-var">arr</span>.<span class="token-fn">min</span>())
+<span class="token-fn">print</span>(<span class="token-str">'Max: '</span>, <span class="token-var">arr</span>.<span class="token-fn">max</span>())</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Array: [[0 1 2 3 4] [5 6 7 8 9]]</div>
+              <div>Sum:  45</div>
+              <div>Mean: 4.5</div>
+              <div>Min:  0</div>
+              <div>Max:  9</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 15: Axis-Based Reductions -->
+      <section class="slide" id="slide-15">
+        <div class="eyebrow">Directional Reductions</div>
+        <h1 class="slide-title">Axis-Based Reductions: Row Sums vs. Column Sums</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The <code class="inline-code">axis</code> parameter controls the direction along which an aggregation collapses dimensions.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">axis=0</code> (Vertical): Collapses across rows $\rightarrow$ Computes <strong>sum of each column</strong>.</li>
+              <li><code class="inline-code">axis=1</code> (Horizontal): Collapses across columns $\rightarrow$ Computes <strong>sum of each row</strong>.</li>
+              <li>Rule of thumb: The specified axis is the dimension that gets <em>eliminated</em> during the operation.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — axis_reductions.py</span><span>Directional Sums</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">my_2d</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">arange</span>(<span class="token-num">1</span>, <span class="token-num">25</span>).<span class="token-fn">reshape</span>((<span class="token-num">4</span>, <span class="token-num">6</span>))
+
+<span class="token-com"># Sum of each column (collapse axis 0)</span>
+<span class="token-var">col_sums</span> <span class="token-op">=</span> <span class="token-var">my_2d</span>.<span class="token-fn">sum</span>(<span class="token-var">axis</span><span class="token-op">=</span><span class="token-num">0</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Column sums (axis=0):'</span>, <span class="token-var">col_sums</span>)
+
+<span class="token-com"># Sum of each row (collapse axis 1)</span>
+<span class="token-var">row_sums</span> <span class="token-op">=</span> <span class="token-var">my_2d</span>.<span class="token-fn">sum</span>(<span class="token-var">axis</span><span class="token-op">=</span><span class="token-num">1</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Row sums    (axis=1):'</span>, <span class="token-var">row_sums</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Column sums (axis=0): [40 44 48 52 56 60]</div>
+              <div>Row sums    (axis=1): [ 21  57  93 129]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 16: Multidimensional Indexing -->
+      <section class="slide" id="slide-16">
+        <div class="eyebrow">Coordinate Subsetting</div>
+        <h1 class="slide-title">2D Indexing &amp; Row Slicing: <code class="inline-code">arr[row, col]</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">NumPy uses a clean comma-separated coordinate syntax for indexing multidimensional arrays.</p>
+            <ul class="bullet-list">
+              <li><strong>Single Cell:</strong> <code class="inline-code">arr[row, col]</code>:
+                <br>E.g. <code class="inline-code">arr[1, 2]</code> selects row 1, column 2 (much faster than Python's chained <code class="inline-code">list[row][col]</code>).</li>
+              <li><strong>Extract Row:</strong> <code class="inline-code">arr[0, :]</code> selects entire row 0 as a 1D array.</li>
+              <li><strong>Row Slice:</strong> <code class="inline-code">arr[0:2, :]</code> extracts rows 0 and 1 across all columns.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — indexing_2d.py</span><span>Coordinate Lookups</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">grid</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">arange</span>(<span class="token-num">1</span>, <span class="token-num">21</span>).<span class="token-fn">reshape</span>((<span class="token-num">4</span>, <span class="token-num">5</span>))
+
+<span class="token-fn">print</span>(<span class="token-str">'Element at [1, 2]:  '</span>, <span class="token-var">grid</span>[<span class="token-num">1</span>, <span class="token-num">2</span>])
+<span class="token-fn">print</span>(<span class="token-str">'Entire row 0 [0, :]:'</span>, <span class="token-var">grid</span>[<span class="token-num">0</span>, :])
+<span class="token-fn">print</span>(<span class="token-str">'Rows 0 &amp; 1 [0:2, :]:\n'</span>, <span class="token-var">grid</span>[<span class="token-num">0</span>:<span class="token-num">2</span>, :])</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Element at [1, 2]:   8</div>
+              <div>Entire row 0 [0, :]: [1 2 3 4 5]</div>
+              <div>Rows 0 &amp; 1 [0:2, :]: [[ 1  2  3  4  5] [ 6  7  8  9 10]]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 17: Advanced Slicing & Strides -->
+      <section class="slide" id="slide-17">
+        <div class="eyebrow">Advanced Subsetting</div>
+        <h1 class="slide-title">Column Slicing &amp; Non-Contiguous Index Lists</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Slice along column axes and extract arbitrary non-contiguous subsets of rows or columns.</p>
+            <ul class="bullet-list">
+              <li><strong>Column Range:</strong> <code class="inline-code">arr[:, 0:2]</code> takes columns 0 and 1 across all rows.</li>
+              <li><strong>Non-Contiguous Columns:</strong> <code class="inline-code">arr[:, [0, 3]]</code> picks specific columns 0 and 3.</li>
+              <li><strong>Non-Contiguous Rows:</strong> <code class="inline-code">arr[[0, 2, 3], :]</code> extracts rows 0, 2, and 3.</li>
+              <li><strong>Last Column:</strong> <code class="inline-code">arr[:, -1]</code> extracts final column.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — advanced_slicing.py</span><span>Column Slices</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">grid</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">arange</span>(<span class="token-num">1</span>, <span class="token-num">21</span>).<span class="token-fn">reshape</span>((<span class="token-num">4</span>, <span class="token-num">5</span>))
+
+<span class="token-fn">print</span>(<span class="token-str">'Columns 0:2 [:, 0:2]:\n'</span>, <span class="token-var">grid</span>[:, <span class="token-num">0</span>:<span class="token-num">2</span>])
+<span class="token-fn">print</span>(<span class="token-str">'Columns [0, 3]:\n'</span>, <span class="token-var">grid</span>[:, [<span class="token-num">0</span>, <span class="token-num">3</span>]])
+<span class="token-fn">print</span>(<span class="token-str">'Last column [:, -1]: '</span>, <span class="token-var">grid</span>[:, <span class="token-op">-</span><span class="token-num">1</span>])</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Columns 0:2: [[ 1  2] [ 6  7] [11 12] [16 17]]</div>
+              <div>Columns [0, 3]: [[ 1  4] [ 6  9] [11 14] [16 19]]</div>
+              <div>Last column [:, -1]: [ 5 10 15 20]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 18: Matrix Transposition -->
+      <section class="slide" id="slide-18">
+        <div class="eyebrow">Linear Algebra</div>
+        <h1 class="slide-title">Matrix Transposition: <code class="inline-code">np.transpose()</code> &amp; <code class="inline-code">.T</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Transposing flips a 2D matrix over its main diagonal, switching its row and column dimensions.</p>
+            <ul class="bullet-list">
+              <li><strong>Syntax:</strong> <code class="inline-code">np.transpose(arr)</code> or property shorthand <code class="inline-code">arr.T</code>.</li>
+              <li>Shape inversion: A matrix with shape <code class="inline-code">(2, 3)</code> transposes to shape <code class="inline-code">(3, 2)</code>.</li>
+              <li>Data at coordinate <code class="inline-code">[i, j]</code> moves to coordinate <code class="inline-code">[j, i]</code>.</li>
+              <li>Implemented as a zero-copy memory stride view in NumPy.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — transpose.py</span><span>Transposing Arrays</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
+
+<span class="token-var">arr</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">array</span>([[<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>], [<span class="token-num">4</span>, <span class="token-num">5</span>, <span class="token-num">6</span>]])
+<span class="token-var">transposed</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">transpose</span>(<span class="token-var">arr</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Original (shape '</span>, <span class="token-var">arr</span>.<span class="token-var">shape</span>, <span class="token-str">'):\n'</span>, <span class="token-var">arr</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Transposed (shape '</span>, <span class="token-var">transposed</span>.<span class="token-var">shape</span>, <span class="token-str">'):\n'</span>, <span class="token-var">transposed</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Original (shape (2, 3)):</div>
+              <div>[[1 2 3] [4 5 6]]</div>
+              <div>Transposed (shape (3, 2)):</div>
+              <div>[[1 4] [2 5] [3 6]]</div>
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- Footer -->
