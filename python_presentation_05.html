@@ -324,31 +324,610 @@
     </div>
 
     <div id="deck">
-      <!-- Slide 1: Deck Opener (Scaffold) -->
+      <!-- Slide 1: Deck Opener -->
       <section class="slide active" id="slide-1">
         <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 9</div>
         <h1 class="slide-title">Files &amp; Exceptions</h1>
-        <div class="slide-subtitle">Persistence, Streams, JSON Data Interchange &amp; Defensive Error Handling</div>
+        <div class="slide-subtitle">Data Persistence, Stream I/O, JSON Serialization &amp; Defensive Error Handling</div>
         
         <div class="grid-equal" style="margin-top: 1rem;">
           <div class="card">
             <h3 style="color: var(--accent-cyan); margin-bottom: 0.75rem; font-size: 1.15rem;">Lecture 9 Curriculum</h3>
             <ul class="bullet-list">
-              <li><strong>Persistence:</strong> Volatile RAM vs. Non-volatile disk files.</li>
-              <li><strong>Streams:</strong> Reading and writing text byte streams.</li>
-              <li><strong>Context Managers:</strong> Deterministic file closing with <code class="inline-code">with</code>.</li>
-              <li><strong>JSON Format:</strong> Web data interchange with nested records.</li>
-              <li><strong>Defensive Coding:</strong> Structured <code class="inline-code">try</code>, <code class="inline-code">except</code>, <code class="inline-code">else</code>, and <code class="inline-code">finally</code> blocks.</li>
+              <li><strong>Data Persistence:</strong> Volatile RAM vs. Non-volatile disk files.</li>
+              <li><strong>Stream I/O:</strong> Sequential byte streams, encodings &amp; line delimiters.</li>
+              <li><strong>Safe File Handling:</strong> The <code class="inline-code">with</code> context manager &amp; auto-close.</li>
+              <li><strong>JSON Standard:</strong> Web data interchange with nested dictionary structures.</li>
+              <li><strong>Defensive Programming:</strong> Robust <code class="inline-code">try</code>, <code class="inline-code">except</code>, <code class="inline-code">else</code>, and <code class="inline-code">finally</code> handling.</li>
             </ul>
           </div>
           <div class="card">
-            <h3 style="color: var(--token-type); margin-bottom: 0.75rem; font-size: 1.15rem;">Lecture 10 Curriculum</h3>
+            <h3 style="color: var(--token-type); margin-bottom: 0.75rem; font-size: 1.15rem;">Core Design Invariants</h3>
             <ul class="bullet-list">
-              <li><strong>OOP Paradigm:</strong> "Everything is an object" in Python.</li>
-              <li><strong>Classes &amp; Objects:</strong> Blueprints vs. heap instances.</li>
-              <li><strong>Constructors:</strong> Object initialization with <code class="inline-code">__init__</code> and <code class="inline-code">self</code>.</li>
-              <li><strong>Encapsulation:</strong> Methods, composition, and internal state.</li>
-              <li><strong>Magic Methods:</strong> String representations with <code class="inline-code">__str__</code> and <code class="inline-code">__repr__</code>.</li>
+              <li><strong>Deterministic Cleanup:</strong> Never rely on manual <code class="inline-code">.close()</code>; always use context managers to prevent descriptor leaks.</li>
+              <li><strong>Lazy Streaming:</strong> Iterate over file handles line-by-line rather than loading gigabyte files into RAM.</li>
+              <li><strong>Structured Interchange:</strong> Map nested memory objects to standard JSON schemas.</li>
+              <li><strong>Resilient Recovery:</strong> Trap anticipated runtime faults without crashing critical aviation applications.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Volatile vs. Persistent Data -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow">Memory Architecture</div>
+        <h1 class="slide-title">Volatile RAM vs. Persistent Storage</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Variables in Python exist exclusively in volatile memory (RAM) and evaporate the moment the process terminates.</p>
+            <ul class="bullet-list">
+              <li><strong>Transient Lifetime:</strong> Data structures like lists and dictionaries live only during script execution.</li>
+              <li><strong>Permanent Need:</strong> Flight logs, sensor metrics, and user configurations must survive application restarts.</li>
+              <li><strong>Files as Solution:</strong> Writing bytes to non-volatile secondary storage (SSD / HDD) enables durable data persistence across sessions.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — volatile_demo.py</span><span>RAM Lifecycle</span></div>
+            <div class="code-box-body"><span class="token-com"># This list exists only in volatile RAM</span>
+<span class="token-var">fibonacci</span> <span class="token-op">=</span> [<span class="token-num">0</span>, <span class="token-num">1</span>, <span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">8</span>]
+
+<span class="token-fn">print</span>(<span class="token-str">'In-memory fibonacci:'</span>, <span class="token-var">fibonacci</span>)
+<span class="token-com"># Once program terminates, fibonacci disappears!</span>
+<span class="token-com"># To persist, we must write it to disk storage.</span></div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>In-memory fibonacci: [0, 1, 1, 2, 3, 5, 8]</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Process terminates &rarr; RAM memory reclaimed by OS</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Files as Byte Streams -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow">Storage Abstraction</div>
+        <h1 class="slide-title">Files as Sequences of Bytes</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">At the operating system level, every file is an ordered sequential stream of bytes.</p>
+            <ul class="bullet-list">
+              <li><strong>Encoding:</strong> In text files, byte sequences are mapped to characters via encodings such as UTF-8 or ASCII.</li>
+              <li><strong>Line Delimiters:</strong> Newline characters (<code class="inline-code">\n</code>) delimit individual records within text streams.</li>
+              <li><strong>End-of-File (EOF):</strong> The operating system tracks the stream position and signals EOF when no more bytes remain.</li>
+              <li><strong>File Pointer:</strong> An internal cursor tracks the current reading/writing position within the byte stream.</li>
+            </ul>
+          </div>
+          <div class="card" style="justify-content: center;">
+            <h4 style="color: var(--accent-cyan); margin-bottom: 0.75rem;">Byte Stream Model</h4>
+            <div style="background: #181818; padding: 1rem; border-radius: 4px; border: 1px solid var(--border); font-family: ui-monospace, monospace; font-size: 0.9rem;">
+              <div style="color: var(--accent-gold); margin-bottom: 0.5rem;">[Offset 0x00] &rarr; [Offset 0x08] &rarr; [Offset 0x10] &rarr; [EOF]</div>
+              <div style="display: flex; gap: 0.3rem; margin-bottom: 0.75rem;">
+                <span style="background: #252526; padding: 0.2rem 0.4rem; border: 1px solid #3c3c3c; border-radius: 3px;">J</span>
+                <span style="background: #252526; padding: 0.2rem 0.4rem; border: 1px solid #3c3c3c; border-radius: 3px;">a</span>
+                <span style="background: #252526; padding: 0.2rem 0.4rem; border: 1px solid #3c3c3c; border-radius: 3px;">c</span>
+                <span style="background: #252526; padding: 0.2rem 0.4rem; border: 1px solid #3c3c3c; border-radius: 3px;">e</span>
+                <span style="background: #252526; padding: 0.2rem 0.4rem; border: 1px solid #3c3c3c; border-radius: 3px;">k</span>
+                <span style="background: #333333; color: var(--accent-cyan); padding: 0.2rem 0.4rem; border: 1px solid #3c3c3c; border-radius: 3px;">\t</span>
+                <span style="background: #252526; padding: 0.2rem 0.4rem; border: 1px solid #3c3c3c; border-radius: 3px;">4</span>
+                <span style="background: #252526; padding: 0.2rem 0.4rem; border: 1px solid #3c3c3c; border-radius: 3px;">3</span>
+                <span style="background: #333333; color: var(--danger); padding: 0.2rem 0.4rem; border: 1px solid #3c3c3c; border-radius: 3px;">\n</span>
+              </div>
+              <div style="color: var(--text-muted); font-size: 0.8rem;">Text streams translate raw binary words into structured character sequences.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Writing Data to a Text File -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow">File Output</div>
+        <h1 class="slide-title">Writing Data to a Text File: <code class="inline-code">mode='w'</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python's built-in <code class="inline-code">open()</code> function binds a physical file on disk to a Python stream object.</p>
+            <ul class="bullet-list">
+              <li><strong>Write Mode (<code class="inline-code">mode='w'</code>):</strong> Creates the file if it does not exist; <em>truncates/overwrites</em> existing content if it does!</li>
+              <li><strong>Writing Lines:</strong> Use the file handle's <code class="inline-code">.write(string)</code> method to append string buffers.</li>
+              <li><strong>Explicit Formatting:</strong> Unlike <code class="inline-code">print()</code>, <code class="inline-code">write()</code> does not automatically append newlines—you must include <code class="inline-code">'\n'</code> explicitly.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — write_records.py</span><span>Generating Text Files</span></div>
+            <div class="code-box-body"><span class="token-com"># Writing 3 structured user records</span>
+<span class="token-var">records</span> <span class="token-op">=</span> [
+    (<span class="token-str">'Jacek'</span>, <span class="token-str">'43'</span>, <span class="token-str">'@jdmochow'</span>),
+    (<span class="token-str">'Alice'</span>, <span class="token-str">'29'</span>, <span class="token-str">'@alice_dev'</span>),
+    (<span class="token-str">'Bob'</span>, <span class="token-str">'35'</span>, <span class="token-str">'@bob_pilot'</span>)
+]
+
+<span class="token-kw">with</span> <span class="token-fn">open</span>(<span class="token-str">'sample_data.txt'</span>, <span class="token-var">mode</span><span class="token-op">=</span><span class="token-str">'w'</span>) <span class="token-kw">as</span> <span class="token-var">data</span>:
+    <span class="token-kw">for</span> <span class="token-var">name</span>, <span class="token-var">age</span>, <span class="token-var">handle</span> <span class="token-kw">in</span> <span class="token-var">records</span>:
+        <span class="token-var">data</span>.<span class="token-fn">write</span>(<span class="token-var">name</span> <span class="token-op">+</span> <span class="token-str">'\t'</span> <span class="token-op">+</span> <span class="token-var">age</span> <span class="token-op">+</span> <span class="token-str">'\t'</span> <span class="token-op">+</span> <span class="token-var">handle</span> <span class="token-op">+</span> <span class="token-str">'\n'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Disk Result (sample_data.txt)</div>
+              <div>Jacek&#9;43&#9;@jdmochow</div>
+              <div>Alice&#9;29&#9;@alice_dev</div>
+              <div>Bob&#9;35&#9;@bob_pilot</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Safe Resource Management with `with` -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow">Context Managers</div>
+        <h1 class="slide-title">The <code class="inline-code">with</code> Statement &amp; Safe File Handling</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Managing operating system file handles requires strict resource acquisition and release guarantees.</p>
+            <ul class="bullet-list">
+              <li><strong>The Fragile Pattern:</strong> Calling <code class="inline-code">f = open(...)</code> followed by manual <code class="inline-code">f.close()</code> risks leaving handles open if an exception occurs in between.</li>
+              <li><strong>The Context Manager:</strong> <code class="inline-code">with open(...) as f:</code> encapsulates the block in Python's context management protocol.</li>
+              <li><strong>Guaranteed Teardown:</strong> When execution exits the <code class="inline-code">with</code> suite (normally, via <code class="inline-code">return</code>, or via an unhandled exception), <code class="inline-code">f.close()</code> is executed deterministically.</li>
+            </ul>
+          </div>
+          <div class="card" style="justify-content: center; gap: 1rem;">
+            <div style="background: rgba(244, 135, 113, 0.1); border-left: 3px solid var(--danger); padding: 0.8rem; border-radius: 0 4px 4px 0;">
+              <strong style="color: var(--danger);">Anti-Pattern (Manual Close):</strong>
+              <div style="font-family: monospace; font-size: 0.85rem; margin-top: 0.3rem; color: #d4d4d4;">
+                f = open('data.txt', 'w')<br>
+                f.write(compute_payload())  <span style="color: var(--token-com);"># If error occurs here:</span><br>
+                f.close()                   <span style="color: var(--danger);"># This line NEVER runs! Leak!</span>
+              </div>
+            </div>
+            <div style="background: rgba(78, 201, 176, 0.1); border-left: 3px solid var(--token-type); padding: 0.8rem; border-radius: 0 4px 4px 0;">
+              <strong style="color: var(--token-type);">Pythonic Standard (Context Manager):</strong>
+              <div style="font-family: monospace; font-size: 0.85rem; margin-top: 0.3rem; color: #d4d4d4;">
+                with open('data.txt', 'w') as f:<br>
+                &nbsp;&nbsp;&nbsp;&nbsp;f.write(compute_payload())<br>
+                <span style="color: var(--token-com);"># Guaranteed auto-close upon leaving block</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Vector Diagram: File I/O Lifecycle -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow">Architecture Diagram</div>
+        <h1 class="slide-title">File I/O Lifecycle &amp; Stream Buffering</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Understanding how Python coordinates with OS stream buffers and physical disk blocks.</p>
+            <ul class="bullet-list">
+              <li><strong>Stream Buffer:</strong> Writes are staged in a fast in-memory OS buffer before batch-flushing to secondary storage.</li>
+              <li><strong><code class="inline-code">__enter__</code> Hook:</strong> Acquires OS file descriptor, validates read/write permissions, and binds the handle.</li>
+              <li><strong><code class="inline-code">__exit__</code> Hook:</strong> Flushes all pending buffer contents and releases the OS descriptor automatically.</li>
+            </ul>
+          </div>
+          <div class="card" style="align-items: center; justify-content: center; padding: 1.5rem 1rem;">
+            <svg viewBox="0 0 460 270" width="100%" height="100%" style="max-height: 270px; display: block; background: #252526; border-radius: 6px; border: 1px solid #333333; padding: 8px;">
+              <!-- Python Memory Box -->
+              <rect x="20" y="20" width="120" height="90" rx="6" fill="#1e1e1e" stroke="#007acc" stroke-width="1.8"/>
+              <text x="80" y="45" fill="#4fc1ff" font-family="system-ui" font-weight="700" font-size="12" text-anchor="middle">Python Process</text>
+              <rect x="35" y="60" width="90" height="32" rx="4" fill="#252526" stroke="#3c3c3c"/>
+              <text x="80" y="80" fill="#d4d4d4" font-family="monospace" font-size="10" text-anchor="middle">with open()</text>
+
+              <!-- Arrow: Enter Context -->
+              <line x1="140" y1="65" x2="175" y2="65" stroke="#007acc" stroke-width="2" marker-end="url(#arrow-blue)"/>
+              
+              <!-- OS Buffer Box -->
+              <rect x="180" y="20" width="130" height="90" rx="6" fill="#1e1e1e" stroke="#4ec9b0" stroke-width="1.8"/>
+              <text x="245" y="45" fill="#4ec9b0" font-family="system-ui" font-weight="700" font-size="12" text-anchor="middle">Stream Buffer</text>
+              <rect x="195" y="60" width="100" height="32" rx="4" fill="#252526" stroke="#3c3c3c"/>
+              <text x="245" y="80" fill="#b5cea8" font-family="monospace" font-size="10" text-anchor="middle">In-Memory Cache</text>
+
+              <!-- Arrow: OS to Disk -->
+              <line x1="310" y1="65" x2="345" y2="65" stroke="#4ec9b0" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+              <!-- Disk Box -->
+              <rect x="350" y="20" width="90" height="90" rx="6" fill="#1e1e1e" stroke="#dcdcaa" stroke-width="1.8"/>
+              <text x="395" y="45" fill="#dcdcaa" font-family="system-ui" font-weight="700" font-size="12" text-anchor="middle">Disk Storage</text>
+              <rect x="360" y="60" width="70" height="32" rx="4" fill="#252526" stroke="#3c3c3c"/>
+              <text x="395" y="80" fill="#ce9178" font-family="monospace" font-size="9" text-anchor="middle">sample_data</text>
+
+              <!-- Lower Lifecycle Loop -->
+              <rect x="40" y="150" width="380" height="100" rx="6" fill="#181818" stroke="#333333" stroke-dasharray="4"/>
+              <text x="230" y="175" fill="#d4d4d4" font-family="system-ui" font-weight="600" font-size="11" text-anchor="middle">Context Manager Lifecycle Protocol</text>
+              
+              <rect x="55" y="190" width="105" height="42" rx="4" fill="#252526" stroke="#007acc"/>
+              <text x="107" y="210" fill="#4fc1ff" font-family="monospace" font-size="10" text-anchor="middle">__enter__()</text>
+              <text x="107" y="224" fill="#858585" font-family="system-ui" font-size="8.5" text-anchor="middle">Acquires Handle</text>
+
+              <line x1="160" y1="211" x2="185" y2="211" stroke="#858585" stroke-width="1.5"/>
+
+              <rect x="185" y="190" width="100" height="42" rx="4" fill="#252526" stroke="#dcdcaa"/>
+              <text x="235" y="210" fill="#dcdcaa" font-family="monospace" font-size="10" text-anchor="middle">f.write()</text>
+              <text x="235" y="224" fill="#858585" font-family="system-ui" font-size="8.5" text-anchor="middle">Stream Writes</text>
+
+              <line x1="285" y1="211" x2="310" y2="211" stroke="#858585" stroke-width="1.5"/>
+
+              <rect x="310" y="190" width="100" height="42" rx="4" fill="#252526" stroke="#4ec9b0"/>
+              <text x="360" y="210" fill="#4ec9b0" font-family="monospace" font-size="10" text-anchor="middle">__exit__()</text>
+              <text x="360" y="224" fill="#858585" font-family="system-ui" font-size="8.5" text-anchor="middle">Flush &amp; Auto-Close</text>
+
+              <defs>
+                <marker id="arrow-blue" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#007acc"/>
+                </marker>
+                <marker id="arrow-green" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#4ec9b0"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Reading a Text File -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow">File Input</div>
+        <h1 class="slide-title">Reading a Text File: <code class="inline-code">mode='r'</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Open files in read-only mode to extract persisted records into active Python data structures.</p>
+            <ul class="bullet-list">
+              <li><strong>Read Mode (<code class="inline-code">mode='r'</code>):</strong> Default mode; raises <code class="inline-code">FileNotFoundError</code> if the target file is missing.</li>
+              <li><strong>Line-by-Line Iteration:</strong> Iterating directly over <code class="inline-code">data</code> stream consumes lines lazily, requiring only <code class="inline-code">O(1)</code> memory overhead per record.</li>
+              <li><strong>Trailing Newlines:</strong> Each raw line contains the trailing <code class="inline-code">'\n'</code> written during output.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — read_file.py</span><span>Stream Iteration</span></div>
+            <div class="code-box-body"><span class="token-com"># Open existing file for reading</span>
+<span class="token-kw">with</span> <span class="token-fn">open</span>(<span class="token-str">'sample_data.txt'</span>, <span class="token-var">mode</span><span class="token-op">=</span><span class="token-str">'r'</span>) <span class="token-kw">as</span> <span class="token-var">data</span>:
+    <span class="token-kw">for</span> <span class="token-var">line</span> <span class="token-kw">in</span> <span class="token-var">data</span>:
+        <span class="token-com"># Print raw line without adding extra newline</span>
+        <span class="token-fn">print</span>(<span class="token-var">line</span>, <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">''</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Jacek&#9;43&#9;@jdmochow</div>
+              <div>Alice&#9;29&#9;@alice_dev</div>
+              <div>Bob&#9;35&#9;@bob_pilot</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 8: Parsing Delimited Rows -->
+      <section class="slide" id="slide-8">
+        <div class="eyebrow">Tabular Display</div>
+        <h1 class="slide-title">Parsing Delimited Rows with <code class="inline-code">line.split()</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Deconstruct whitespace/tab-delimited records and reformat them into an aligned tabular report.</p>
+            <ul class="bullet-list">
+              <li><strong>Line Tokenization:</strong> <code class="inline-code">line.split()</code> splits on any whitespace (tabs, spaces), discarding the newline automatically.</li>
+              <li><strong>Tuple Unpacking:</strong> <code class="inline-code">name, age, twitter = line.split()</code> assigns variables cleanly in one step.</li>
+              <li><strong>Column Alignment:</strong> Use f-string specifiers (<code class="inline-code">&lt;10</code> for left alignment, <code class="inline-code">&gt;30</code> for right alignment).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — format_table.py</span><span>Formatted Report</span></div>
+            <div class="code-box-body"><span class="token-kw">with</span> <span class="token-fn">open</span>(<span class="token-str">'sample_data.txt'</span>, <span class="token-var">mode</span><span class="token-op">=</span><span class="token-str">'r'</span>) <span class="token-kw">as</span> <span class="token-var">data</span>:
+    <span class="token-fn">print</span>(<span class="token-str">f'</span><span class="token-var">{"NAME":&lt;10}</span><span class="token-var">{"AGE":3s}</span><span class="token-var">{"TWITTER":&gt;25}</span><span class="token-str">'</span>)
+    <span class="token-fn">print</span>(<span class="token-str">'-'</span> <span class="token-op">*</span> <span class="token-num">38</span>)
+    <span class="token-kw">for</span> <span class="token-var">line</span> <span class="token-kw">in</span> <span class="token-var">data</span>:
+        <span class="token-var">name</span>, <span class="token-var">age</span>, <span class="token-var">twitter</span> <span class="token-op">=</span> <span class="token-var">line</span>.<span class="token-fn">split</span>()
+        <span class="token-fn">print</span>(<span class="token-str">f'</span><span class="token-var">{name:&lt;10}</span><span class="token-var">{age:3s}</span><span class="token-var">{twitter:&gt;25}</span><span class="token-str">'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div style="font-family: monospace;">NAME      AGE                  TWITTER</div>
+              <div style="font-family: monospace;">--------------------------------------</div>
+              <div style="font-family: monospace;">Jacek     43                 @jdmochow</div>
+              <div style="font-family: monospace;">Alice     29                @alice_dev</div>
+              <div style="font-family: monospace;">Bob       35                @bob_pilot</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Renaming Files with the OS Library -->
+      <section class="slide" id="slide-9">
+        <div class="eyebrow">Operating System Tools</div>
+        <h1 class="slide-title">File System Operations with <code class="inline-code">os</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python's built-in <code class="inline-code">os</code> library bridges scripts directly to host operating system file management services.</p>
+            <ul class="bullet-list">
+              <li><strong>Renaming:</strong> <code class="inline-code">os.rename(src, dst)</code> atomically renames files across directories.</li>
+              <li><strong>Deletion:</strong> <code class="inline-code">os.remove(path)</code> removes a file from physical storage permanently.</li>
+              <li><strong>Path Verification:</strong> <code class="inline-code">os.path.exists(path)</code> checks whether target files exist before initiating destructive actions.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — os_operations.py</span><span>OS Library File Management</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">os</span>
+
+<span class="token-com"># Rename existing file on disk</span>
+<span class="token-var">os</span>.<span class="token-fn">rename</span>(<span class="token-str">"sample_data.txt"</span>, <span class="token-str">"our_sample_data.txt"</span>)
+<span class="token-fn">print</span>(<span class="token-str">"Renamed to our_sample_data.txt successfully!"</span>)
+
+<span class="token-com"># Verify new name exists</span>
+<span class="token-kw">if</span> <span class="token-var">os</span>.<span class="token-var">path</span>.<span class="token-fn">exists</span>(<span class="token-str">"our_sample_data.txt"</span>):
+    <span class="token-fn">print</span>(<span class="token-str">"Verified: File exists on storage."</span>)
+
+<span class="token-com"># Clean up deletion</span>
+<span class="token-com"># os.remove("our_sample_data.txt")</span></div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Renamed to our_sample_data.txt successfully!</div>
+              <div>Verified: File exists on storage.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 10: Working with JSON Files -->
+      <section class="slide" id="slide-10">
+        <div class="eyebrow">Data Serialization</div>
+        <h1 class="slide-title">The JSON Data Format Standard</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">JavaScript Object Notation (JSON) has emerged as the universal standard for structured web data interchange.</p>
+            <ul class="bullet-list">
+              <li><strong>Language Independent:</strong> Human-readable, text-based serialization understood by virtually every programming language.</li>
+              <li><strong>Natural Python Mapping:</strong>
+                <br>• JSON Object <code class="inline-code">{}</code> &harr; Python <code class="inline-code">dict</code>
+                <br>• JSON Array <code class="inline-code">[]</code> &harr; Python <code class="inline-code">list</code>
+                <br>• JSON String / Number &harr; Python <code class="inline-code">str</code> / <code class="inline-code">int</code>, <code class="inline-code">float</code>
+              </li>
+              <li><strong>Web Standard:</strong> Core format for REST APIs, microservices, and aviation telemetry telemetry payloads.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4 style="color: var(--accent-cyan); margin-bottom: 0.75rem;">Sample Raw JSON Syntax</h4>
+            <div style="background: #181818; padding: 1rem; border-radius: 4px; border: 1px solid var(--border); font-family: monospace; font-size: 0.86rem; color: #d4d4d4; line-height: 1.45;">
+              {<br>
+              &nbsp;&nbsp;<span style="color: #9cdcfe;">"airport"</span>: <span style="color: #ce9178;">"VTBD"</span>,<br>
+              &nbsp;&nbsp;<span style="color: #9cdcfe;">"name"</span>: <span style="color: #ce9178;">"Don Mueang"</span>,<br>
+              &nbsp;&nbsp;<span style="color: #9cdcfe;">"active_runways"</span>: [<span style="color: #ce9178;">"03L"</span>, <span style="color: #ce9178;">"21R"</span>],<br>
+              &nbsp;&nbsp;<span style="color: #9cdcfe;">"elevation_ft"</span>: <span style="color: #b5cea8;">9</span><br>
+              }
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 11: Nested Dictionaries -->
+      <section class="slide" id="slide-11">
+        <div class="eyebrow">Structured Data</div>
+        <h1 class="slide-title">Structuring Complex Nested Dictionaries</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Modeling realistic datasets requires composing nested collections of dictionaries and lists.</p>
+            <ul class="bullet-list">
+              <li><strong>Top-Level Key:</strong> A single primary key <code class="inline-code">'twitter'</code> pointing to a collection.</li>
+              <li><strong>Record List:</strong> An ordered list where each element represents an individual user account.</li>
+              <li><strong>Attribute Dictionaries:</strong> Homogeneous dictionaries storing <code class="inline-code">'name'</code>, <code class="inline-code">'handle'</code>, and <code class="inline-code">'num_followers'</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — twitter_data.py</span><span>Nested In-Memory Schema</span></div>
+            <div class="code-box-body"><span class="token-var">twitter_dict</span> <span class="token-op">=</span> {<span class="token-str">'twitter'</span>: [ 
+    {<span class="token-str">'name'</span>: <span class="token-str">'Barack Obama'</span>, <span class="token-str">'handle'</span>: <span class="token-str">'@BarackObama'</span>, <span class="token-str">'num_followers'</span>: <span class="token-num">133</span>}, 
+    {<span class="token-str">'name'</span>: <span class="token-str">'Elon Musk'</span>, <span class="token-str">'handle'</span>: <span class="token-str">'@elonmusk'</span>, <span class="token-str">'num_followers'</span>: <span class="token-num">124</span>}, 
+    {<span class="token-str">'name'</span>: <span class="token-str">'Justin Bieber'</span>, <span class="token-str">'handle'</span>: <span class="token-str">'@justinbieber'</span>, <span class="token-str">'num_followers'</span>: <span class="token-num">113</span>}, 
+    {<span class="token-str">'name'</span>: <span class="token-str">'Katy Perry'</span>, <span class="token-str">'handle'</span>: <span class="token-str">'@katyperry'</span>, <span class="token-str">'num_followers'</span>: <span class="token-num">108</span>}, 
+    {<span class="token-str">'name'</span>: <span class="token-str">'Rihanna'</span>, <span class="token-str">'handle'</span>: <span class="token-str">'@rihanna'</span>, <span class="token-str">'num_followers'</span>: <span class="token-num">108</span>}
+]}</div>
+            <div class="output-box">
+              <div class="out-label">Structure Summary</div>
+              <div>Type: dict with 1 key ('twitter')</div>
+              <div>Value: list containing 5 user dictionaries</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 12: Navigating Nested Data -->
+      <section class="slide" id="slide-12">
+        <div class="eyebrow">Multi-Index Access</div>
+        <h1 class="slide-title">Navigating Nested Collections</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Traverse deeply nested records with syntax like <code class="inline-code">twitter_dict['twitter'][2]['handle']</code> by chaining subscript operators from outer keys to inner attributes.</p>
+            <ul class="bullet-list">
+              <li><strong>Step 1 &rarr; <code class="inline-code">twitter_dict['twitter']</code>:</strong> Retrieves the top-level list of accounts.</li>
+              <li><strong>Step 2 &rarr; <code class="inline-code">[2]</code>:</strong> Accesses the 3rd account object (0-indexed: Justin Bieber).</li>
+              <li><strong>Step 3 &rarr; <code class="inline-code">['handle']</code>:</strong> Extracts the string value associated with the <code class="inline-code">'handle'</code> key.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — traverse_json.py</span><span>Chained Subscription</span></div>
+            <div class="code-box-body"><span class="token-com"># Target: Extract handle for 3rd popular user</span>
+<span class="token-var">user_handle</span> <span class="token-op">=</span> <span class="token-var">twitter_dict</span>[<span class="token-str">'twitter'</span>][<span class="token-num">2</span>][<span class="token-str">'handle'</span>]
+<span class="token-fn">print</span>(<span class="token-str">'3rd Account Handle:'</span>, <span class="token-var">user_handle</span>)
+
+<span class="token-com"># Extracting follower count</span>
+<span class="token-var">followers</span> <span class="token-op">=</span> <span class="token-var">twitter_dict</span>[<span class="token-str">'twitter'</span>][<span class="token-num">2</span>][<span class="token-str">'num_followers'</span>]
+<span class="token-fn">print</span>(<span class="token-str">'Followers (Millions):'</span>, <span class="token-var">followers</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>3rd Account Handle: @justinbieber</div>
+              <div>Followers (Millions): 113</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 13: Creating a JSON File -->
+      <section class="slide" id="slide-13">
+        <div class="eyebrow">Serialization</div>
+        <h1 class="slide-title">Writing JSON Files with <code class="inline-code">json.dump()</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The standard <code class="inline-code">json</code> module serializes Python in-memory objects directly into JSON text files.</p>
+            <ul class="bullet-list">
+              <li><strong><code class="inline-code">import json</code>:</strong> Standard library module—no installation required.</li>
+              <li><strong><code class="inline-code">json.dump(obj, file_handle)</code>:</strong> Serializes Python dict/list directly into an open writable file stream.</li>
+              <li><strong>vs. <code class="inline-code">json.dumps()</code>:</strong> <code class="inline-code">dump()</code> writes to a <em>file stream</em>; <code class="inline-code">dumps()</code> dumps to an in-memory <em>string</em>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — export_json.py</span><span>Serializing to Disk</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">json</span>
+
+<span class="token-com"># Serialize dictionary into JSON file</span>
+<span class="token-kw">with</span> <span class="token-fn">open</span>(<span class="token-str">'twitter_top5.json'</span>, <span class="token-str">'w'</span>) <span class="token-kw">as</span> <span class="token-var">twitter</span>:
+    <span class="token-var">json</span>.<span class="token-fn">dump</span>(<span class="token-var">twitter_dict</span>, <span class="token-var">twitter</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">"File 'twitter_top5.json' written successfully!"</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>File 'twitter_top5.json' written successfully!</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Can be viewed in browser / editor with full syntax parsing</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 14: Reading in a JSON File -->
+      <section class="slide" id="slide-14">
+        <div class="eyebrow">Deserialization</div>
+        <h1 class="slide-title">Reading JSON Files with <code class="inline-code">json.load()</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Parse persistent JSON files from disk back into native Python dictionaries and lists.</p>
+            <ul class="bullet-list">
+              <li><strong><code class="inline-code">json.load(file_handle)</code>:</strong> Reads the stream, parses JSON syntax, and constructs corresponding Python data types.</li>
+              <li><strong>Automatic Type Coercion:</strong> JSON arrays become <code class="inline-code">list</code>, objects become <code class="inline-code">dict</code>, and numbers/booleans become Python primitives.</li>
+              <li><strong>Integrity Inspection:</strong> Query dictionary keys with <code class="inline-code">.keys()</code> to confirm schema conformance.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — import_json.py</span><span>Deserializing from Disk</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">json</span>
+
+<span class="token-kw">with</span> <span class="token-fn">open</span>(<span class="token-str">'twitter_top5.json'</span>, <span class="token-str">'r'</span>) <span class="token-kw">as</span> <span class="token-var">twitter</span>:
+    <span class="token-var">twitter_json</span> <span class="token-op">=</span> <span class="token-var">json</span>.<span class="token-fn">load</span>(<span class="token-var">twitter</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Loaded type:'</span>, <span class="token-fn">type</span>(<span class="token-var">twitter_json</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Root keys:'</span>, <span class="token-var">twitter_json</span>.<span class="token-fn">keys</span>())
+<span class="token-fn">print</span>(<span class="token-str">'User count:'</span>, <span class="token-fn">len</span>(<span class="token-var">twitter_json</span>[<span class="token-str">'twitter'</span>]))</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Loaded type: &lt;class 'dict'&gt;</div>
+              <div>Root keys: dict_keys(['twitter'])</div>
+              <div>User count: 5</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 15: Introduction to Exceptions -->
+      <section class="slide" id="slide-15">
+        <div class="eyebrow">Defensive Programming</div>
+        <h1 class="slide-title">Runtime Errors &amp; Python Exceptions</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">When a Python program encounters an unexpected condition at runtime, it "raises" an Exception.</p>
+            <ul class="bullet-list">
+              <li><strong>The "Computer Hissy Fit":</strong> Unhandled exceptions trigger a traceback and terminate the application immediately.</li>
+              <li><strong>Missing File Example:</strong> Attempting to open a non-existent file (<code class="inline-code">'twitter_top6.json'</code>) raises <code class="inline-code">FileNotFoundError</code>.</li>
+              <li><strong>Programmer's Duty:</strong> Foresee potential failure modes and handle them gracefully without crashing operational workflows.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — unhandled_exception.py</span><span>Crash on Missing File</span></div>
+            <div class="code-box-body"><span class="token-com"># Attempting to open non-existent file</span>
+<span class="token-kw">import</span> <span class="token-var">json</span>
+
+<span class="token-kw">with</span> <span class="token-fn">open</span>(<span class="token-str">'twitter_top6.json'</span>, <span class="token-str">'r'</span>) <span class="token-kw">as</span> <span class="token-var">twitter</span>:
+    <span class="token-var">data</span> <span class="token-op">=</span> <span class="token-var">json</span>.<span class="token-fn">load</span>(<span class="token-var">twitter</span>)</div>
+            <div class="output-box" style="border-left-color: var(--danger);">
+              <div class="out-label" style="color: var(--danger);">Traceback (Fatal Error)</div>
+              <div style="color: var(--danger);">FileNotFoundError: [Errno 2] No such file or directory: 'twitter_top6.json'</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Process finished with exit code 1</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 16: Handling Exceptions with try & except -->
+      <section class="slide" id="slide-16">
+        <div class="eyebrow">Error Trapping</div>
+        <h1 class="slide-title">Handling Exceptions with <code class="inline-code">try</code> &amp; <code class="inline-code">except</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Encapsulate risky operations inside a <code class="inline-code">try</code> block to intercept specific exceptions.</p>
+            <ul class="bullet-list">
+              <li><strong><code class="inline-code">try</code>:</strong> Tells Python to execute the enclosed block while actively listening for errors.</li>
+              <li><strong><code class="inline-code">except FileNotFoundError:</code>:</strong> Intercepts that specific error class, running recovery code instead of terminating.</li>
+              <li><strong>Graceful Degradation:</strong> Notifies user, falls back to default settings, or prompts for corrected file path.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — try_except.py</span><span>Graceful Error Handling</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">json</span>
+
+<span class="token-kw">try</span>:
+    <span class="token-kw">with</span> <span class="token-fn">open</span>(<span class="token-str">'twitter_top6.json'</span>, <span class="token-str">'r'</span>) <span class="token-kw">as</span> <span class="token-var">twitter</span>:
+        <span class="token-var">twitter_json</span> <span class="token-op">=</span> <span class="token-var">json</span>.<span class="token-fn">load</span>(<span class="token-var">twitter</span>)
+<span class="token-kw">except</span> <span class="token-token-type">FileNotFoundError</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Bruh, the provided file does not exist!'</span>)</div>
+            <div class="output-box" style="border-left-color: var(--accent-gold);">
+              <div class="out-label" style="color: var(--accent-gold);">Output (Handled Exception)</div>
+              <div>Bruh, the provided file does not exist!</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Program continues running normally! Zero crashes.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 17: Full Exception Flow: else & finally -->
+      <section class="slide" id="slide-17">
+        <div class="eyebrow">Comprehensive Architecture</div>
+        <h1 class="slide-title">Complete Error Flow: <code class="inline-code">try</code>, <code class="inline-code">except</code>, <code class="inline-code">else</code>, <code class="inline-code">finally</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python's complete exception anatomy separates normal execution, error recovery, and cleanup.</p>
+            <ul class="bullet-list">
+              <li><strong><code class="inline-code">try</code>:</strong> Guarded operational block.</li>
+              <li><strong><code class="inline-code">except</code>:</strong> Runs <em>only if</em> an exception was raised.</li>
+              <li><strong><code class="inline-code">else</code>:</strong> Runs <em>only if NO exception occurred</em> (success path).</li>
+              <li><strong><code class="inline-code">finally</code>:</strong> <em>Always</em> runs regardless of success or failure (ideal for socket / hardware teardown).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — full_exception.py</span><span>4-Clause Exception Suite</span></div>
+            <div class="code-box-body"><span class="token-kw">try</span>:
+    <span class="token-kw">with</span> <span class="token-fn">open</span>(<span class="token-str">'twitter_top5.json'</span>, <span class="token-str">'r'</span>) <span class="token-kw">as</span> <span class="token-var">f</span>:
+        <span class="token-var">data</span> <span class="token-op">=</span> <span class="token-var">json</span>.<span class="token-fn">load</span>(<span class="token-var">f</span>)
+<span class="token-kw">except</span> <span class="token-token-type">FileNotFoundError</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Error: File not found!'</span>)
+<span class="token-kw">else</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Success: JSON parsed clean!'</span>)
+<span class="token-kw">finally</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Thank you for using our app!'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output (When File Exists)</div>
+              <div>Success: JSON parsed clean!</div>
+              <div>Thank you for using our app!</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 18: Lecture 9 Summary & Checkpoint -->
+      <section class="slide" id="slide-18">
+        <div class="eyebrow">Checkpoint</div>
+        <h1 class="slide-title">Lecture 9 Synthesis &amp; Best Practices</h1>
+        <div class="grid-equal">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); margin-bottom: 0.75rem; font-size: 1.15rem;">File I/O Best Practices</h3>
+            <ul class="bullet-list">
+              <li><strong>Always Use Context Managers:</strong> Eliminate manual <code class="inline-code">close()</code> calls. <code class="inline-code">with open(...)</code> prevents resource leaks.</li>
+              <li><strong>Lazy Streaming:</strong> Iterate through <code class="inline-code">for line in file:</code> to maintain <code class="inline-code">O(1)</code> memory footprints.</li>
+              <li><strong>Adopt Standard JSON:</strong> Leverage <code class="inline-code">json.dump()</code> and <code class="inline-code">json.load()</code> for structured data interchange.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--token-type); margin-bottom: 0.75rem; font-size: 1.15rem;">Next: Object-Oriented Programming</h3>
+            <ul class="bullet-list">
+              <li><strong>Beyond Flat Dictionaries:</strong> Moving from ad-hoc data structures to encapsulated <code class="inline-code">class</code> models.</li>
+              <li><strong>Behavior + State:</strong> Binding methods and properties into unified object entities.</li>
+              <li><strong>Lecture 10 Ahead:</strong> Class definitions, constructors, <code class="inline-code">self</code>, methods, and magic protocols.</li>
             </ul>
           </div>
         </div>
