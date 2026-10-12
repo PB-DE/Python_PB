@@ -63,3 +63,40 @@ assert(slideMatches.length >= 15, `Must have at least 15 slides, currently has $
 
 console.log('✓ Task 2 Verification Passed!');
 
+console.log('Testing Task 3: Lecture 2 Content & VS Code Syntax Tokens...');
+
+// Lecture 2 Title & Transition
+assert(html.toLowerCase().includes('intro to python programming') || html.toLowerCase().includes('lecture 2'), 'Must include Lecture 2 title');
+
+// Expressions & Variables
+assert(html.includes('Expressions') || html.includes('expressions'), 'Must include Expressions');
+assert(html.includes('PEP 8') || html.includes('pep-0008') || html.includes('PEP8'), 'Must include PEP 8 spacing note');
+assert(html.includes('SyntaxError') && html.includes('123_xyz'), 'Must include invalid variable name SyntaxError example');
+
+// Types & Operations
+assert(html.includes('Data types') || html.includes('Data Types'), 'Must include Data types slide');
+assert(html.includes('Arithmetic operations') || html.includes('Arithmetic Operations'), 'Must include Arithmetic operations');
+assert(html.includes('//') && html.includes('%'), 'Must include floor division and modulus');
+assert(html.includes('2417851639229258349412352') || html.includes('2 ** 3 ** 4'), 'Must include exponent associativity');
+
+
+// Strings, Input, Casting
+assert(html.toLowerCase().includes('strings') && html.includes('\\n'), 'Must include strings with newline escape');
+assert(html.includes('input('), 'Must include user input() function');
+assert(html.includes('int(y)') || html.includes('int('), 'Must include type casting with int()');
+
+// Booleans & Conditionals
+assert(html.includes('Boolean expressions') || html.includes('Boolean Expressions'), 'Must include Boolean expressions');
+assert(html.includes('bigger than y') && html.includes('smaller than y'), 'Must include conditional if statement');
+
+assert(html.includes('Comments allow you to') || html.includes('Comments'), 'Must include Comments slide');
+assert(html.includes('Dynamic typing') || html.includes('Dynamic Typing'), 'Must include Dynamic typing');
+assert(html.includes('min(') && html.includes('max('), 'Must include descriptive statistics min/max');
+
+// Slide count >= 35
+const totalSlides = (html.match(/class="slide/g) || []).length;
+assert(totalSlides >= 35, `Must have at least 35 slides for complete L01 + L02, currently has ${totalSlides}`);
+
+console.log('✓ Task 3 Verification Passed!');
+
+

@@ -858,6 +858,642 @@
         </div>
       </section>
 
+      <!-- SLIDE 16: LECTURE 2 TRANSITION TITLE SLIDE -->
+      <section class="slide" id="slide-16">
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Computer Science</div>
+        <h1 class="slide-title" style="font-size: 2.8rem; margin-bottom: 0.75rem;">Lecture 2: Intro to Python Programming</h1>
+        <h2 class="slide-subtitle" style="color: var(--accent-cyan); font-size: 1.5rem; margin-bottom: 2rem;">Expressions, Variables, Types, and Control Flow</h2>
+        <div class="card" style="max-width: 680px; background: #252526; border-left: 4px solid var(--accent);">
+          <p style="color: #cccccc; font-size: 1.1rem; line-height: 1.7;">
+            In this lecture, we begin writing Python code: evaluating mathematical expressions, defining variables, mastering operator precedence, handling strings and user input, and controlling program branching with conditionals.
+          </p>
+        </div>
+      </section>
+
+      <!-- SLIDE 17: EXPRESSIONS AND STATEMENTS -->
+      <section class="slide" id="slide-17">
+        <div class="eyebrow">Lecture 2 • Programming Concepts</div>
+        <h1 class="slide-title">Expressions &amp; Statements</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>A line of code in Python generally contains a <strong>statement</strong> or an <strong>expression</strong>.</li>
+              <li><strong>Statements</strong> indicate the action or task that we want the computer to perform (e.g. assignment, print, branching).</li>
+              <li><strong>Expressions</strong> combine values, variables, and operators that evaluate down to a single value.</li>
+              <li>When the interpreter evaluates an expression, it executes the mathematical logic and produces a result.</li>
+            </ul>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="font-weight: 600; color: var(--accent-gold); font-size: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Statements vs. Expressions</div>
+            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px;">
+              <span style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-bottom: 0.25rem;">Expression (Evaluates to 42):</span>
+              <code style="color: var(--token-num); font-size: 1.05rem;">20 + 22</code>
+            </div>
+            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px;">
+              <span style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-bottom: 0.25rem;">Statement (Performs assignment task):</span>
+              <code style="color: var(--token-var); font-size: 1.05rem;">total <span style="color: var(--token-op);">=</span> <span style="color: var(--token-num);">20</span> <span style="color: var(--token-op);">+</span> <span style="color: var(--token-num);">22</span></code>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 18: ASSIGNMENT AND IDENTIFIERS -->
+      <section class="slide" id="slide-18">
+        <div class="eyebrow">Lecture 2 • Variables</div>
+        <h1 class="slide-title">Assignment &amp; Identifiers</h1>
+        <div class="grid-2col">
+          <div>
+            <div class="code-box" style="margin-bottom: 1.25rem;">
+              <div class="code-box-header"><span>interactive_shell.py</span><span>Assignment</span></div>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">2</span></div>
+            </div>
+            <ul class="bullet-list">
+              <li><code class="inline-code">x</code> is termed an <strong>identifier</strong> of a <strong>variable</strong>.</li>
+              <li><code class="inline-code">=</code> is the <strong>assignment symbol</strong> (not equality!).</li>
+              <li><code class="inline-code">2</code> is an integer literal that we are assigning to the variable identified by <code class="inline-code">'x'</code>.</li>
+            </ul>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column; justify-content: center; gap: 0.75rem;">
+            <div style="color: var(--accent-cyan); font-weight: 600; font-size: 1rem;">Mental Model</div>
+            <p style="color: var(--text); font-size: 1rem; line-height: 1.6;">
+              Think of a variable as a labeled sticky note pointing to a value box in the computer's memory.
+            </p>
+            <div style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem; font-family: monospace; font-size: 0.9rem;">
+              Label <span style="color: var(--token-var);">x</span> &mdash;&mdash;&gt; [ Object: <span style="color: var(--token-num);">2</span> (int) ]
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 19: ADDING TWO INTEGERS & PEP 8 -->
+      <section class="slide" id="slide-19">
+        <div class="eyebrow">Lecture 2 • Arithmetic &amp; Style</div>
+        <h1 class="slide-title">Adding Two Integers &amp; PEP 8</h1>
+        <div class="grid-2col">
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>addition.py</span><span>Python 3</span></div>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">45</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">36</span>
+<span class="token-var">z</span> <span class="token-op">=</span> <span class="token-var">x</span> <span class="token-op">+</span> <span class="token-var">y</span>
+<span class="token-var">z</span></div>
+              <div class="output-box">
+                <div class="out-label">Output</div>
+                <span>81</span>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="card" style="border-left: 4px solid var(--accent);">
+              <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.15rem;">Programming Style: PEP 8</h3>
+              <ul class="bullet-list" style="font-size: 1rem;">
+                <li>Note the single space around the assignment symbol (<code class="inline-code">=</code>) and operators (<code class="inline-code">+</code>).</li>
+                <li><strong>PEP 8</strong> is the official Python Enhancement Proposal for Code Style.</li>
+                <li>Clean spacing makes code readable, professional, and maintainable across engineering teams.</li>
+              </ul>
+              <div style="margin-top: 1rem; font-size: 0.85rem; color: var(--accent-cyan);">
+                Reference: peps.python.org/pep-0008
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 20: VARIABLE NAMES -->
+      <section class="slide" id="slide-20">
+        <div class="eyebrow">Lecture 2 • Identifier Rules</div>
+        <h1 class="slide-title">Variable Names &amp; Syntax Rules</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li><strong>Case-Sensitive:</strong> <code class="inline-code">X</code> and <code class="inline-code">x</code> are completely distinct variables!
+                <div class="code-box" style="margin: 0.5rem 0;">
+                  <div class="code-box-body"><span class="token-var">X</span> <span class="token-op">=</span> <span class="token-num">12</span>
+<span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">34</span>
+<span class="token-var">X</span><span class="token-op">,</span> <span class="token-var">x</span>  <span class="token-com"># Output: (12, 34)</span></div>
+                </div>
+              </li>
+              <li>May contain: letters (<code class="inline-code">a-z, A-Z</code>), digits (<code class="inline-code">0-9</code>), and underscores (<code class="inline-code">_</code>).</li>
+              <li><strong>CANNOT begin with a number:</strong>
+                <div style="background: rgba(244, 135, 113, 0.15); border: 1px solid var(--danger); border-radius: 6px; padding: 0.6rem 0.8rem; margin-top: 0.4rem; font-family: monospace; font-size: 0.85rem;">
+                  <span style="color: var(--danger);">123_xyz = 56</span> &rarr; <span style="color: var(--text-bright);">SyntaxError: invalid decimal literal</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div class="card">
+            <h4 style="color: var(--accent-gold); margin-bottom: 0.75rem; font-size: 1rem;">Valid vs. Invalid Identifiers</h4>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; font-family: monospace; font-size: 0.95rem;">
+              <div style="color: #4ec9b0;">✓ airspeed = 250</div>
+              <div style="color: #4ec9b0;">✓ altitude_ft = 35000</div>
+              <div style="color: #4ec9b0;">✓ flight_101 = True</div>
+              <div style="color: #4ec9b0;">✓ _heading = 180</div>
+              <div style="color: var(--danger); margin-top: 0.5rem;">✗ 101_flight (Starts with digit)</div>
+              <div style="color: var(--danger);">✗ flight-number (Hyphen is minus)</div>
+              <div style="color: var(--danger);">✗ class (Reserved keyword)</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 21: DATA TYPES & TYPE() -->
+      <section class="slide" id="slide-21">
+        <div class="eyebrow">Lecture 2 • Type System</div>
+        <h1 class="slide-title">Data Types &amp; The <code>type()</code> Function</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>Every variable and value in Python has an associated <strong>type</strong>.</li>
+              <li>Python provides the built-in function <code class="inline-code">type()</code> to inspect types at any point.</li>
+              <li><code class="inline-code">type</code> is a <em>function</em> whose <em>argument</em> is the variable and whose <em>output</em> is the data type class.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>type_inspection.py</span><span>Python 3</span></div>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">78</span>
+<span class="token-fn">type</span>(<span class="token-var">x</span>)  <span class="token-com"># &lt;class 'int'&gt;</span>
+
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">12.34</span>
+<span class="token-fn">type</span>(<span class="token-var">y</span>)  <span class="token-com"># &lt;class 'float'&gt;</span></div>
+              <div class="output-box">
+                <div class="out-label">Output Types</div>
+                <div>int &nbsp;&rarr; Integer (whole numbers)</div>
+                <div>float &rarr; Floating-point (decimal values)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 22: ARITHMETIC OPERATIONS BASIC -->
+      <section class="slide" id="slide-22">
+        <div class="eyebrow">Lecture 2 • Operators</div>
+        <h1 class="slide-title">Arithmetic Operations: Basic</h1>
+        <div class="grid-2col">
+          <div class="code-box">
+            <div class="code-box-header"><span>basic_math.py</span><span>x = 2, y = 3</span></div>
+            <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">2</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">3</span>
+
+<span class="token-var">x</span> <span class="token-op">+</span> <span class="token-var">y</span>   <span class="token-com"># Addition: 5</span>
+<span class="token-var">y</span> <span class="token-op">-</span> <span class="token-var">x</span>   <span class="token-com"># Subtraction: 1</span>
+<span class="token-var">x</span> <span class="token-op">*</span> <span class="token-var">y</span>   <span class="token-com"># Multiplication: 6</span>
+<span class="token-var">y</span> <span class="token-op">/</span> <span class="token-var">x</span>   <span class="token-com"># True Division: 1.5</span></div>
+          </div>
+          <div>
+            <div class="card" style="border-left: 4px solid var(--accent-cyan);">
+              <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.15rem;">Important: Division Behavior</h3>
+              <p style="color: var(--text); font-size: 1rem; line-height: 1.6;">
+                In Python 3, the standard division operator (<code class="inline-code">/</code>) <strong>always returns a float</strong>, even when the division divides evenly!
+              </p>
+              <div style="background: #1e1e1e; padding: 0.5rem 0.75rem; border-radius: 4px; margin-top: 0.75rem; font-family: monospace; font-size: 0.95rem;">
+                <span style="color: var(--token-num);">4</span> / <span style="color: var(--token-num);">2</span> &rarr; <span style="color: var(--token-num);">2.0</span> (<span style="color: var(--token-type);">float</span>)
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 23: ARITHMETIC OPERATIONS ADVANCED -->
+      <section class="slide" id="slide-23">
+        <div class="eyebrow">Lecture 2 • Operators</div>
+        <h1 class="slide-title">Arithmetic Operations: Advanced</h1>
+        <div class="grid-2col">
+          <div class="code-box">
+            <div class="code-box-header"><span>advanced_math.py</span><span>x = 2, y = 3</span></div>
+            <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">2</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">3</span>
+
+<span class="token-com"># Exponentiation (x raised to power y)</span>
+<span class="token-var">x</span> <span class="token-op">**</span> <span class="token-var">y</span>   <span class="token-com"># 2³ = 8</span>
+
+<span class="token-com"># Floor division (integer division)</span>
+<span class="token-var">y</span> <span class="token-op">//</span> <span class="token-var">x</span>   <span class="token-com"># 3 // 2 = 1</span>
+
+<span class="token-com"># Modulus (remainder of division)</span>
+<span class="token-var">y</span> <span class="token-op">%</span> <span class="token-var">x</span>    <span class="token-com"># 3 % 2 = 1</span></div>
+          </div>
+          <div style="display: flex; flex-direction: column; gap: 0.85rem;">
+            <div class="card">
+              <h4 style="color: var(--token-kw);">Exponentiation (<code class="inline-code">**</code>)</h4>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Raises base to the exponent: <code class="inline-code">2 ** 3 = 8</code>.</p>
+            </div>
+            <div class="card">
+              <h4 style="color: var(--accent-gold);">Floor Division (<code class="inline-code">//</code>)</h4>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Divides and rounds down to the nearest integer: <code class="inline-code">7 // 2 = 3</code>.</p>
+            </div>
+            <div class="card">
+              <h4 style="color: var(--accent-cyan);">Modulus (<code class="inline-code">%</code>)</h4>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Calculates remainder: <code class="inline-code">7 % 2 = 1</code>. Used to test even/odd or clock cycles.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 24: OPERATOR PRECEDENCE RULES -->
+      <section class="slide" id="slide-24">
+        <div class="eyebrow">Lecture 2 • Evaluation Order</div>
+        <h1 class="slide-title">Operator Precedence Rules</h1>
+        <div class="grid-2col">
+          <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+            <div class="card" style="border-left: 4px solid var(--accent); padding: 0.85rem 1.25rem;">
+              <strong style="color: #ffffff;">1. Parentheses <code>( )</code></strong>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">Innermost parentheses evaluate first.</div>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--accent-gold); padding: 0.85rem 1.25rem;">
+              <strong style="color: #ffffff;">2. Exponentiation <code>**</code></strong>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">Evaluates next, in order of <em>right-to-left</em>.</div>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--accent-cyan); padding: 0.85rem 1.25rem;">
+              <strong style="color: #ffffff;">3. Multiplication, Division <code>* , / , // , %</code></strong>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">Left-to-right evaluation.</div>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--token-num); padding: 0.85rem 1.25rem;">
+              <strong style="color: #ffffff;">4. Addition, Subtraction <code>+ , -</code></strong>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">Evaluates last, left-to-right.</div>
+            </div>
+          </div>
+
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>precedence.py</span><span>x=2, y=3, z=4</span></div>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">2</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">3</span>
+<span class="token-var">z</span> <span class="token-op">=</span> <span class="token-num">4</span>
+
+<span class="token-com"># Mult before Add: (2 * 3) + 4</span>
+<span class="token-var">x</span> <span class="token-op">*</span> <span class="token-var">y</span> <span class="token-op">+</span> <span class="token-var">z</span>    <span class="token-com"># Output: 10</span>
+
+<span class="token-com"># Parentheses override: 2 * (3 + 4)</span>
+<span class="token-var">x</span> <span class="token-op">*</span> (<span class="token-var">y</span> <span class="token-op">+</span> <span class="token-var">z</span>)  <span class="token-com"># Output: 14</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 25: AVOIDING AMBIGUITY WITH PARENTHESES -->
+      <section class="slide" id="slide-25">
+        <div class="eyebrow">Lecture 2 • Associativity</div>
+        <h1 class="slide-title">Use Parentheses to Avoid Ambiguity</h1>
+        <p class="lead">Exponents are <strong>right-associative</strong> in Python:</p>
+        <div class="grid-2col">
+          <div class="code-box">
+            <div class="code-box-header"><span>associativity.py</span><span>Right-to-Left</span></div>
+            <div class="code-box-body"><span class="token-com"># Default right-to-left evaluation:</span>
+<span class="token-num">2</span> <span class="token-op">**</span> <span class="token-num">3</span> <span class="token-op">**</span> <span class="token-num">4</span>
+<span class="token-com"># Evaluates as: 2 ** (3 ** 4)</span>
+<span class="token-com"># = 2 ** 81</span>
+<span class="token-com"># = 2417851639229258349412352</span>
+
+<span class="token-com"># Explicit left-to-right grouping:</span>
+(<span class="token-num">2</span> <span class="token-op">**</span> <span class="token-num">3</span>) <span class="token-op">**</span> <span class="token-num">4</span>
+<span class="token-com"># = 8 ** 4</span>
+<span class="token-com"># = 4096</span></div>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column; justify-content: center; border-left: 4px solid var(--accent-gold);">
+            <h3 style="color: var(--text-bright); margin-bottom: 0.75rem;">Golden Rule for Engineers</h3>
+            <p style="color: var(--text); font-size: 1.05rem; line-height: 1.7;">
+              Even if you know the exact precedence table, <strong>always use parentheses</strong> when writing complex equations.
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+              Parentheses make the code self-documenting, remove ambiguity, and eliminate subtle calculation bugs in mission-critical software.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 26: STRINGS -->
+      <section class="slide" id="slide-26">
+        <div class="eyebrow">Lecture 2 • Text Data</div>
+        <h1 class="slide-title">Strings (<code>str</code>)</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>The <code class="inline-code">str</code> type holds sequences of characters.</li>
+              <li>Can be enclosed in single quotes (<code class="inline-code">'...'</code>) or double quotes (<code class="inline-code">"..."</code>).</li>
+              <li>The built-in <code class="inline-code">print()</code> function displays strings on screen.</li>
+              <li>Strings can span multiple lines using <strong>escape characters</strong>:
+                <ul>
+                  <li><code class="inline-code">\n</code> &rarr; Newline</li>
+                  <li><code class="inline-code">\t</code> &rarr; Horizontal Tab</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>strings.py</span><span>Python 3</span></div>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-str">'Python is cool'</span>
+<span class="token-fn">print</span>(<span class="token-var">x</span>)
+
+<span class="token-var">multiline</span> <span class="token-op">=</span> <span class="token-str">'Python is lit \n and so is Loquacious D'</span>
+<span class="token-fn">print</span>(<span class="token-var">multiline</span>)</div>
+              <div class="output-box">
+                <div class="out-label">Output</div>
+                <div>Python is cool</div>
+                <div>Python is lit</div>
+                <div>&nbsp;and so is Loquacious D</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 27: OBTAINING USER INPUT -->
+      <section class="slide" id="slide-27">
+        <div class="eyebrow">Lecture 2 • Interactivity</div>
+        <h1 class="slide-title">Obtaining User Input</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>The <code class="inline-code">input()</code> function allows the user to supply values via keyboard.</li>
+              <li>Program execution pauses until the user types their response and presses <kbd>Enter</kbd>.</li>
+              <li><strong>CRITICAL POINT:</strong> The resulting value returned by <code class="inline-code">input()</code> is <strong>always a string</strong>!</li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>user_input.py</span><span>Python 3</span></div>
+              <div class="code-box-body"><span class="token-var">name</span> <span class="token-op">=</span> <span class="token-fn">input</span>(<span class="token-str">"Please enter your name: "</span>)
+<span class="token-fn">print</span>(<span class="token-str">"You entered:"</span><span class="token-op">,</span> <span class="token-var">name</span>)
+
+<span class="token-var">age</span> <span class="token-op">=</span> <span class="token-fn">input</span>(<span class="token-str">"Please enter your age: "</span>)
+<span class="token-fn">print</span>(<span class="token-var">age</span><span class="token-op">,</span> <span class="token-fn">type</span>(<span class="token-var">age</span>))</div>
+              <div class="output-box">
+                <div class="out-label">Terminal Interaction</div>
+                <div>Please enter your age: 43</div>
+                <div style="color: var(--accent-cyan); font-weight: 600;">43 &lt;class 'str'&gt;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 28: CASTING DATA TYPES VIA INT() -->
+      <section class="slide" id="slide-28">
+        <div class="eyebrow">Lecture 2 • Type Conversion</div>
+        <h1 class="slide-title">Casting Data Types via <code>int()</code></h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>Since <code class="inline-code">input()</code> returns strings, attempting arithmetic directly will fail:
+                <div style="background: rgba(244, 135, 113, 0.1); border-left: 3px solid var(--danger); padding: 0.5rem; margin: 0.5rem 0; font-family: monospace; font-size: 0.9rem;">
+                  '43' + 1 &rarr; TypeError: can only concatenate str to str
+                </div>
+              </li>
+              <li>We <strong>cast</strong> (convert) the string into an integer using the <code class="inline-code">int()</code> function.</li>
+              <li>Other casting functions: <code class="inline-code">float()</code>, <code class="inline-code">str()</code>, <code class="inline-code">bool()</code>.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>type_casting.py</span><span>Converting to int</span></div>
+              <div class="code-box-body"><span class="token-var">y</span> <span class="token-op">=</span> <span class="token-fn">input</span>(<span class="token-str">"Please enter your age: "</span>)
+<span class="token-var">z</span> <span class="token-op">=</span> <span class="token-fn">int</span>(<span class="token-var">y</span>)  <span class="token-com"># Convert str -&gt; int</span>
+
+<span class="token-fn">print</span>(<span class="token-var">z</span><span class="token-op">,</span> <span class="token-fn">type</span>(<span class="token-var">z</span>))</div>
+              <div class="output-box">
+                <div class="out-label">Output</div>
+                <div>43 &lt;class 'int'&gt;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 29: BOOLEAN EXPRESSIONS -->
+      <section class="slide" id="slide-29">
+        <div class="eyebrow">Lecture 2 • Logic &amp; Truth</div>
+        <h1 class="slide-title">Boolean Expressions</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>Boolean expressions evaluate to one of two built-in keywords: <code class="inline-code">True</code> or <code class="inline-code">False</code>.</li>
+              <li>Constructed using <strong>relational comparison operators</strong>:
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-top: 0.5rem; font-family: monospace; font-size: 0.9rem;">
+                  <div><code>&gt;</code> greater than</div>
+                  <div><code>&lt;</code> less than</div>
+                  <div><code>&gt;=</code> greater or equal</div>
+                  <div><code>&lt;=</code> less or equal</div>
+                  <div><code>==</code> is equal to</div>
+                  <div><code>!=</code> is not equal to</div>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>booleans.py</span><span>Relational Comparisons</span></div>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">12</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">34</span>
+
+<span class="token-var">z</span> <span class="token-op">=</span> <span class="token-var">x</span> <span class="token-op">&gt;</span> <span class="token-var">y</span>
+<span class="token-fn">print</span>(<span class="token-var">z</span>)        <span class="token-com"># False</span>
+<span class="token-fn">print</span>(<span class="token-var">x</span> <span class="token-op">&lt;</span> <span class="token-var">y</span>)    <span class="token-com"># True</span>
+<span class="token-fn">print</span>(<span class="token-var">x</span> <span class="token-op">!=</span> <span class="token-var">y</span>)   <span class="token-com"># True</span>
+<span class="token-fn">print</span>(<span class="token-var">x</span> <span class="token-op">==</span> <span class="token-num">12</span>)  <span class="token-com"># True</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 30: CONDITIONAL EXECUTION: IF STATEMENT -->
+      <section class="slide" id="slide-30">
+        <div class="eyebrow">Lecture 2 • Control Flow</div>
+        <h1 class="slide-title">Conditional Execution: <code>if</code> Statement</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>The <code class="inline-code">if</code> statement allows program execution to branch depending on current program state.</li>
+              <li><strong>Syntax anatomy:</strong>
+                <ul>
+                  <li>The keyword <code class="inline-code">if</code> followed by a boolean condition.</li>
+                  <li>A required colon (<code class="inline-code">:</code>) at the end of the condition line.</li>
+                  <li>Indented code block below (standard 4 spaces).</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>conditionals.py</span><span>Branching</span></div>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">12</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">34</span>
+
+<span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">&gt;</span> <span class="token-var">y</span>:
+    <span class="token-fn">print</span>(<span class="token-str">"x is bigger than y"</span>)
+
+<span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">&lt;</span> <span class="token-var">y</span>:
+    <span class="token-fn">print</span>(<span class="token-str">"x is smaller than y"</span>)</div>
+              <div class="output-box">
+                <div class="out-label">Output</div>
+                <div>x is smaller than y</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 31: COMMENTS -->
+      <section class="slide" id="slide-31">
+        <div class="eyebrow">Lecture 2 • Code Documentation</div>
+        <h1 class="slide-title">Comments &amp; Documentation</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>Comments allow you to <strong>document</strong> the intent and logic of your code.</li>
+              <li>Comments are completely ignored by the Python interpreter during execution.</li>
+              <li>Indicated with the hash (<code class="inline-code">#</code>) symbol.</li>
+              <li>Can appear as standalone lines or inline to the right of code.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>comments.py</span><span>Python 3</span></div>
+              <div class="code-box-body"><span class="token-com"># Check if variable x exceeds y</span>
+<span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">&gt;</span> <span class="token-var">y</span>:
+    <span class="token-fn">print</span>(<span class="token-str">"x is bigger than y"</span>)  <span class="token-com"># Display notification to user</span></div>
+            </div>
+            <div class="card" style="margin-top: 1rem; border-left: 4px solid var(--accent-gold);">
+              <div style="font-size: 0.95rem; font-weight: 600; color: #ffffff;">Best Practice</div>
+              <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
+                Write comments that explain <em>why</em> an algorithm was chosen, rather than just repeating <em>what</em> the code syntax obviously does.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 32: VARIABLES, VALUES, AND TYPES -->
+      <section class="slide" id="slide-32">
+        <div class="eyebrow">Lecture 2 • Object Model</div>
+        <h1 class="slide-title">Variables, Values, and Types</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>Variables in Python <strong>refer to objects</strong> in memory.</li>
+              <li>Every object possesses both a <strong>value</strong> and a <strong>type</strong>.</li>
+              <li>In <code class="inline-code">x = 78</code>:
+                <ul>
+                  <li><code class="inline-code">x</code> is a variable name (identifier).</li>
+                  <li><code class="inline-code">78</code> is the value.</li>
+                  <li><code class="inline-code">int</code> is the type.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>objects.py</span><span>Inspection</span></div>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">3.14156</span>
+<span class="token-fn">print</span>(<span class="token-str">"Value:"</span><span class="token-op">,</span> <span class="token-var">x</span>)
+<span class="token-fn">print</span>(<span class="token-str">"Type:"</span><span class="token-op">,</span> <span class="token-fn">type</span>(<span class="token-var">x</span>))
+
+<span class="token-var">x</span> <span class="token-op">=</span> <span class="token-str">'3.14156'</span>
+<span class="token-fn">print</span>(<span class="token-str">"Value:"</span><span class="token-op">,</span> <span class="token-var">x</span>)
+<span class="token-fn">print</span>(<span class="token-str">"Type:"</span><span class="token-op">,</span> <span class="token-fn">type</span>(<span class="token-var">x</span>))</div>
+              <div class="output-box">
+                <div class="out-label">Output</div>
+                <div>Value: 3.14156 &nbsp;|&nbsp; Type: &lt;class 'float'&gt;</div>
+                <div>Value: 3.14156 &nbsp;|&nbsp; Type: &lt;class 'str'&gt;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 33: DYNAMIC TYPING -->
+      <section class="slide" id="slide-33">
+        <div class="eyebrow">Lecture 2 • Runtime Behavior</div>
+        <h1 class="slide-title">Dynamic Typing</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>Unlike statically typed languages (such as C++ or Java), Python does not require variable types to be declared upfront.</li>
+              <li>Python determines and tracks variable types <strong>dynamically during program execution</strong>.</li>
+              <li>Types can evolve and mutate seamlessly as expressions are evaluated.</li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>dynamic_typing.py</span><span>Type Evolution</span></div>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">10</span>    <span class="token-com"># int</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">3</span>     <span class="token-com"># int</span>
+
+<span class="token-com"># Dividing two integers yields a float:</span>
+<span class="token-var">z</span> <span class="token-op">=</span> <span class="token-var">x</span> <span class="token-op">/</span> <span class="token-var">y</span>
+<span class="token-fn">print</span>(<span class="token-str">"The type of z is"</span><span class="token-op">,</span> <span class="token-fn">type</span>(<span class="token-var">z</span>))</div>
+              <div class="output-box">
+                <div class="out-label">Output</div>
+                <div>The type of z is &lt;class 'float'&gt;</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 34: BASIC DESCRIPTIVE STATISTICS -->
+      <section class="slide" id="slide-34">
+        <div class="eyebrow">Lecture 2 • Built-in Utilities</div>
+        <h1 class="slide-title">Basic Descriptive Statistics</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>Python comes standard with built-in numerical functions.</li>
+              <li>We can find the minimum and maximum of a set of numbers using <code class="inline-code">min()</code> and <code class="inline-code">max()</code>.</li>
+              <li>Accepts comma-separated arguments or entire sequences (lists/tuples).</li>
+            </ul>
+          </div>
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>stats.py</span><span>min and max</span></div>
+              <div class="code-box-body"><span class="token-fn">min</span>(<span class="token-num">12</span><span class="token-op">,</span> <span class="token-num">34</span><span class="token-op">,</span> <span class="token-num">56</span>)  <span class="token-com"># Output: 12</span>
+
+<span class="token-fn">max</span>(<span class="token-num">12</span><span class="token-op">,</span> <span class="token-num">34</span><span class="token-op">,</span> <span class="token-num">56</span>)  <span class="token-com"># Output: 56</span></div>
+              <div class="output-box">
+                <div class="out-label">Output Values</div>
+                <div>min &rarr; 12</div>
+                <div>max &rarr; 56</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 35: COURSE SUMMARY & WRAP-UP -->
+      <section class="slide" id="slide-35">
+        <div class="eyebrow">Civil Aviation Training Center (CATC)</div>
+        <h1 class="slide-title">Summary &amp; Next Steps</h1>
+        <div class="grid-equal">
+          <div class="card" style="border-top: 4px solid var(--accent);">
+            <h3 style="color: var(--accent-cyan); margin-bottom: 0.75rem;">Lecture 1 Highlights</h3>
+            <ul class="bullet-list" style="font-size: 0.95rem;">
+              <li>Information represented as binary numbers.</li>
+              <li>Computer hardware: CPU, RAM, I/O &amp; System Bus.</li>
+              <li>Moore's Law exponential transistor scaling.</li>
+              <li>Memory references: Shallow vs. Deep copy.</li>
+              <li>Why Python dominates modern scientific computing.</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-top: 4px solid var(--token-num);">
+            <h3 style="color: var(--accent-gold); margin-bottom: 0.75rem;">Lecture 2 Highlights</h3>
+            <ul class="bullet-list" style="font-size: 0.95rem;">
+              <li>Statements, variables, identifiers, and PEP 8 style.</li>
+              <li>Data types: <code>int</code>, <code>float</code>, <code>str</code>, <code>bool</code>.</li>
+              <li>Arithmetic operators and PEMDAS precedence.</li>
+              <li>User input and type casting.</li>
+              <li>Logical comparisons and <code>if</code> conditionals.</li>
+            </ul>
+          </div>
+        </div>
+        <div style="margin-top: 1.5rem; text-align: center; color: var(--text-muted); font-size: 0.9rem;">
+          End of Lecture 1 &amp; 2 Deck • Up Next: Loops, Iteration, Lists, and Functions!
+        </div>
+      </section>
+
+
     </div>
 
     <!-- Footer -->
