@@ -341,12 +341,672 @@
 
     <!-- Slides Container -->
     <div id="deck">
-      <!-- Placeholder slide for Task 1 -->
+      <!-- Slide 1: Title -->
       <section class="slide active" id="slide-1">
-        <div class="eyebrow">Civil Aviation Training Center (CATC)</div>
-        <h1 class="slide-title">Python Programming: Lectures 5 &amp; 6</h1>
-        <h2 class="slide-subtitle">Sequences, Lists, Tuples, Dictionaries, and Sets</h2>
-        <p class="lead">Use Arrow Keys (← / →) or Space to navigate. Press <code>F</code> for Fullscreen.</p>
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 5</div>
+        <h1 class="slide-title">Sequences: Lists and Tuples</h1>
+        <h2 class="slide-subtitle">Indexed Collections, Mutability, Slicing, Comprehensions &amp; 2D Structures</h2>
+        <div class="grid-equal" style="margin-top: 1rem;">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 5 Agenda</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>Sequence Fundamentals:</strong> Indexing <code class="inline-code">[]</code>, <code class="inline-code">len()</code>, and negative offsets</li>
+              <li><strong>Containers:</strong> Mutable lists vs. immutable tuples, unpacking, and <code class="inline-code">enumerate()</code></li>
+              <li><strong>Operations:</strong> Advanced slicing, sorting, searching, and in-place mutation</li>
+              <li><strong>Functional Python:</strong> List comprehensions, <code class="inline-code">filter()</code>, <code class="inline-code">lambda</code>, and 2D matrices</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Navigation &amp; Controls</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong style="color: #ffffff;">Next Slide:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">→</kbd> or <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Space</kbd></li>
+              <li><strong style="color: #ffffff;">Previous Slide:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">←</kbd> or <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Backspace</kbd></li>
+              <li><strong style="color: #ffffff;">Fullscreen:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">F</kbd></li>
+              <li><strong style="color: #ffffff;">Fast Jump:</strong> Use <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Home</kbd> / <kbd style="background:#333; padding:2px 6px; border-radius:3px;">End</kbd> or swipe on touch screens</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Collections Overview -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow">Data Architecture</div>
+        <h1 class="slide-title">Collections: Grouping Data in Python</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A <strong>collection</strong> is a compound data type that groups multiple individual values into a single unified container object.</p>
+            <ul class="bullet-list">
+              <li><strong>Sequences (Ordered):</strong> Positionally indexed by integers (<code class="inline-code">list</code>, <code class="inline-code">tuple</code>, <code class="inline-code">str</code>).</li>
+              <li><strong>Mappings (Associative):</strong> Indexed by unique immutable keys (<code class="inline-code">dict</code>).</li>
+              <li><strong>Sets (Unordered &amp; Unique):</strong> Unordered bags of distinct hashable values (<code class="inline-code">set</code>, <code class="inline-code">frozenset</code>).</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 0.75rem;">The Sequence Hierarchy</h3>
+            <div style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.95rem;">
+              <div style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px; border-left: 3px solid var(--accent-cyan);">
+                <strong style="color: #ffffff;">List <code class="inline-code">[1, 2, 3]</code>:</strong> Mutable, ordered, dynamic sizing, duplicate values allowed.
+              </div>
+              <div style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px; border-left: 3px solid var(--accent-gold);">
+                <strong style="color: #ffffff;">Tuple <code class="inline-code">(1, 2, 3)</code>:</strong> Immutable, ordered, fixed size, memory efficient.
+              </div>
+              <div style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px; border-left: 3px solid #4ec9b0;">
+                <strong style="color: #ffffff;">String <code class="inline-code">"text"</code>:</strong> Immutable sequence of Unicode characters.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Lists Indexing and len -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow">Lists &amp; Indices</div>
+        <h1 class="slide-title">List Indexing, len(), and Negative Indices</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">List elements are accessed using square brackets <code class="inline-code">[]</code>. Python uses <strong>zero-based indexing</strong>.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">len(my_list)</code> returns total number of elements.</li>
+              <li>Valid forward indices range from <code class="inline-code">0</code> to <code class="inline-code">len - 1</code>.</li>
+              <li><strong>Negative indices:</strong> Access elements starting from the end!
+                <ul>
+                  <li><code class="inline-code">-1</code>: The very last element.</li>
+                  <li><code class="inline-code">-2</code>: The second-to-last element.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — list_indices.py</span><span>Indexing</span></div>
+            <div class="code-box-body"><span class="token-var">my_list</span> <span class="token-op">=</span> [<span class="token-num">14</span>, <span class="token-num">42</span>, <span class="token-num">9</span>, <span class="token-num">77</span>, <span class="token-num">31</span>]
+
+<span class="token-fn">print</span>(<span class="token-str">'Length of list:'</span>, <span class="token-fn">len</span>(<span class="token-var">my_list</span>))
+<span class="token-fn">print</span>(<span class="token-str">'First element  [0]:'</span>, <span class="token-var">my_list</span>[<span class="token-num">0</span>])
+<span class="token-fn">print</span>(<span class="token-str">'Middle element [2]:'</span>, <span class="token-var">my_list</span>[<span class="token-num">2</span>])
+<span class="token-fn">print</span>(<span class="token-str">'Last element   [-1]:'</span>, <span class="token-var">my_list</span>[<span class="token-op">-</span><span class="token-num">1</span>])
+<span class="token-fn">print</span>(<span class="token-str">'2nd to last    [-2]:'</span>, <span class="token-var">my_list</span>[<span class="token-op">-</span><span class="token-num">2</span>])</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Length of list: 5</div>
+              <div>First element  [0]: 14</div>
+              <div>Middle element [2]: 9</div>
+              <div>Last element   [-1]: 31</div>
+              <div>2nd to last    [-2]: 77</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Mutability & IndexError -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow">Data Integrity</div>
+        <h1 class="slide-title">Mutability &amp; Out of Range Errors (IndexError)</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Lists are <strong>mutable</strong>: their elements can be modified, replaced, or deleted in place after creation without changing the list's identity.</p>
+            <ul class="bullet-list">
+              <li>Assignment via index: <code class="inline-code">my_list[0] = 99</code> replaces the element directly.</li>
+              <li><strong>IndexError (Out of range):</strong> Attempting to access an index $\ge \text{len}$ or $&lt; -\text{len}$ triggers a fatal <code class="inline-code">IndexError</code>.</li>
+              <li>You cannot append by assigning to a non-existent index!</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — mutability_errors.py</span><span>IndexError Trap</span></div>
+            <div class="code-box-body"><span class="token-var">c</span> <span class="token-op">=</span> [<span class="token-op">-</span><span class="token-num">45</span>, <span class="token-num">6</span>, <span class="token-num">0</span>, <span class="token-num">72</span>, <span class="token-num">1543</span>]
+
+<span class="token-com"># Modifying an existing element in-place</span>
+<span class="token-var">c</span>[<span class="token-num">4</span>] <span class="token-op">=</span> <span class="token-num">17</span>
+<span class="token-fn">print</span>(<span class="token-str">'Modified list:'</span>, <span class="token-var">c</span>)
+
+<span class="token-com"># Common error: Out of range index</span>
+<span class="token-kw">try</span>:
+    <span class="token-fn">print</span>(<span class="token-var">c</span>[<span class="token-num">10</span>])
+<span class="token-kw">except</span> <span class="token-token-type">IndexError</span> <span class="token-kw">as</span> <span class="token-var">e</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Caught error:'</span>, <span class="token-var">e</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Modified list: [-45, 6, 0, 72, 17]</div>
+              <div>Caught error: list index out of range</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Appending & Concatenation -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow">Sequence Growth</div>
+        <h1 class="slide-title">Appending and Concatenating Lists</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python offers multiple distinct ways to combine or grow lists: concatenation <code class="inline-code">+</code>, augmented assignment <code class="inline-code">+=</code>, and the <code class="inline-code">append()</code> method.</p>
+            <ul class="bullet-list">
+              <li><strong>Concatenation (<code class="inline-code">+</code>):</strong> Creates an entirely <em>new</em> list combining elements of both operands.</li>
+              <li><strong>Augmented (<code class="inline-code">+=</code>):</strong> Extends the existing list in-place (must pass an iterable: <code class="inline-code">my_list += [50]</code>).</li>
+              <li><strong><code class="inline-code">append(item)</code>:</strong> Adds an individual item directly to the end of the list.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — list_concat.py</span><span>Growing Lists</span></div>
+            <div class="code-box-body"><span class="token-var">a</span> <span class="token-op">=</span> [<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>]
+<span class="token-var">b</span> <span class="token-op">=</span> [<span class="token-num">4</span>, <span class="token-num">5</span>]
+
+<span class="token-com"># Concatenation produces a new third list</span>
+<span class="token-var">combined</span> <span class="token-op">=</span> <span class="token-var">a</span> <span class="token-op">+</span> <span class="token-var">b</span>
+<span class="token-fn">print</span>(<span class="token-str">'Combined (+):'</span>, <span class="token-var">combined</span>)
+
+<span class="token-com"># In-place appending via += and append()</span>
+<span class="token-var">a</span> <span class="token-op">+=</span> [<span class="token-num">10</span>]
+<span class="token-var">a</span>.<span class="token-fn">append</span>(<span class="token-num">20</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Grown list a:'</span>, <span class="token-var">a</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Combined (+): [1, 2, 3, 4, 5]</div>
+              <div>Grown list a: [1, 2, 3, 10, 20]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Vector Memory Diagram -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow">Memory Model</div>
+        <h1 class="slide-title">Contiguous Indexing &amp; Pointer References</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Under the hood, a Python list is an array of memory pointers referencing distinct objects in memory.</p>
+            <ul class="bullet-list">
+              <li><strong>Positive Indices:</strong> Count forward starting from <code class="inline-code">0</code> to <code class="inline-code">N - 1</code>.</li>
+              <li><strong>Negative Indices:</strong> Count backward starting from <code class="inline-code">-1</code> to <code class="inline-code">-N</code>.</li>
+              <li>Pointer references allow Python lists to hold elements of diverse and arbitrary types simultaneously.</li>
+            </ul>
+          </div>
+          <div>
+            <svg viewBox="0 0 540 320" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
+              <defs>
+                <marker id="ptr-arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#007acc" />
+                </marker>
+              </defs>
+
+              <text x="270" y="30" fill="#4fc1ff" font-size="13" font-weight="700" text-anchor="middle" font-family="system-ui">Python List Memory Layout: my_list = [14, 42, 9, 77]</text>
+
+              <!-- Positive indices -->
+              <text x="95" y="75" fill="#4ec9b0" font-size="13" font-weight="700" text-anchor="middle" font-family="monospace">Index: 0</text>
+              <text x="210" y="75" fill="#4ec9b0" font-size="13" font-weight="700" text-anchor="middle" font-family="monospace">Index: 1</text>
+              <text x="325" y="75" fill="#4ec9b0" font-size="13" font-weight="700" text-anchor="middle" font-family="monospace">Index: 2</text>
+              <text x="440" y="75" fill="#4ec9b0" font-size="13" font-weight="700" text-anchor="middle" font-family="monospace">Index: 3</text>
+
+              <!-- Pointer boxes -->
+              <rect x="45" y="90" width="100" height="50" rx="6" fill="#1e1e1e" stroke="#007acc" stroke-width="2"/>
+              <text x="95" y="120" fill="#9cdcfe" font-size="12" font-weight="600" text-anchor="middle" font-family="monospace">ptr[0]</text>
+
+              <rect x="160" y="90" width="100" height="50" rx="6" fill="#1e1e1e" stroke="#007acc" stroke-width="2"/>
+              <text x="210" y="120" fill="#9cdcfe" font-size="12" font-weight="600" text-anchor="middle" font-family="monospace">ptr[1]</text>
+
+              <rect x="275" y="90" width="100" height="50" rx="6" fill="#1e1e1e" stroke="#007acc" stroke-width="2"/>
+              <text x="325" y="120" fill="#9cdcfe" font-size="12" font-weight="600" text-anchor="middle" font-family="monospace">ptr[2]</text>
+
+              <rect x="390" y="90" width="100" height="50" rx="6" fill="#1e1e1e" stroke="#007acc" stroke-width="2"/>
+              <text x="440" y="120" fill="#9cdcfe" font-size="12" font-weight="600" text-anchor="middle" font-family="monospace">ptr[3]</text>
+
+              <!-- Pointer arrows down -->
+              <line x1="95" y1="140" x2="95" y2="185" stroke="#007acc" stroke-width="2" marker-end="url(#ptr-arrow)"/>
+              <line x1="210" y1="140" x2="210" y2="185" stroke="#007acc" stroke-width="2" marker-end="url(#ptr-arrow)"/>
+              <line x1="325" y1="140" x2="325" y2="185" stroke="#007acc" stroke-width="2" marker-end="url(#ptr-arrow)"/>
+              <line x1="440" y1="140" x2="440" y2="185" stroke="#007acc" stroke-width="2" marker-end="url(#ptr-arrow)"/>
+
+              <!-- Actual Heap Objects -->
+              <rect x="55" y="195" width="80" height="45" rx="6" fill="#2d2d30" stroke="#333333" stroke-width="1.5"/>
+              <text x="95" y="222" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">14</text>
+
+              <rect x="170" y="195" width="80" height="45" rx="6" fill="#2d2d30" stroke="#333333" stroke-width="1.5"/>
+              <text x="210" y="222" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">42</text>
+
+              <rect x="285" y="195" width="80" height="45" rx="6" fill="#2d2d30" stroke="#333333" stroke-width="1.5"/>
+              <text x="325" y="222" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">9</text>
+
+              <rect x="400" y="195" width="80" height="45" rx="6" fill="#2d2d30" stroke="#333333" stroke-width="1.5"/>
+              <text x="440" y="222" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle" font-family="monospace">77</text>
+
+              <!-- Negative indices -->
+              <text x="95" y="275" fill="#f48771" font-size="13" font-weight="700" text-anchor="middle" font-family="monospace">Index: -4</text>
+              <text x="210" y="275" fill="#f48771" font-size="13" font-weight="700" text-anchor="middle" font-family="monospace">Index: -3</text>
+              <text x="325" y="275" fill="#f48771" font-size="13" font-weight="700" text-anchor="middle" font-family="monospace">Index: -2</text>
+              <text x="440" y="275" fill="#f48771" font-size="13" font-weight="700" text-anchor="middle" font-family="monospace">Index: -1</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Tuples and Chained Indexing -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow">Immutable Containers</div>
+        <h1 class="slide-title">Tuples: Immutability &amp; Chained Indexing</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A <strong>tuple</strong> is an ordered, comma-separated sequence enclosed in parentheses <code class="inline-code">(...)</code>.</p>
+            <ul class="bullet-list">
+              <li><strong>Immutable:</strong> Elements cannot be modified, replaced, or deleted after creation.</li>
+              <li>Appending to a tuple with <code class="inline-code">+=</code> creates a <em>new</em> tuple object entirely.</li>
+              <li><strong>Mixed containers:</strong> Tuples may contain mutable elements (such as lists).</li>
+              <li><strong>Chained Indexing:</strong> Use successive brackets <code class="inline-code">t[2][-1]</code> to reach inside nested elements.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — tuples_chained.py</span><span>Chained Indexing</span></div>
+            <div class="code-box-body"><span class="token-com"># Tuple containing string, integer, and a nested list</span>
+<span class="token-var">t</span> <span class="token-op">=</span> (<span class="token-str">'Jacek'</span>, <span class="token-num">42</span>, [<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">4</span>])
+
+<span class="token-fn">print</span>(<span class="token-str">'Full tuple:'</span>, <span class="token-var">t</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Element [0]:'</span>, <span class="token-var">t</span>[<span class="token-num">0</span>])
+<span class="token-fn">print</span>(<span class="token-str">'Nested list [2]:'</span>, <span class="token-var">t</span>[<span class="token-num">2</span>])
+
+<span class="token-com"># Chained indexing to get the last element of the nested list:</span>
+<span class="token-fn">print</span>(<span class="token-str">'Chained t[2][-1]:'</span>, <span class="token-var">t</span>[<span class="token-num">2</span>][<span class="token-op">-</span><span class="token-num">1</span>])</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Full tuple: ('Jacek', 42, [1, 2, 3, 4])</div>
+              <div>Element [0]: Jacek</div>
+              <div>Nested list [2]: [1, 2, 3, 4]</div>
+              <div>Chained t[2][-1]: 4</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 8: Sequence Unpacking -->
+      <section class="slide" id="slide-8">
+        <div class="eyebrow">Assignment Mechanics</div>
+        <h1 class="slide-title">Sequence Unpacking: Clean Assignments</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>Unpacking</strong> extracts elements of any sequence (tuple, list, range) directly into separate target variables on the left side of an assignment.</p>
+            <ul class="bullet-list">
+              <li>Replaces tedious manual indexing:
+                <br><code class="inline-code">x = data[0]; y = data[1]</code> ➔ <code class="inline-code">x, y = data</code></li>
+              <li>Number of variables must exactly match sequence length.</li>
+              <li>Enables idiomatic variable swapping without a temporary variable:
+                <br><code class="inline-code">a, b = b, a</code></li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — unpacking.py</span><span>Unpacking</span></div>
+            <div class="code-box-body"><span class="token-com"># Unpacking a list</span>
+<span class="token-var">coordinates</span> <span class="token-op">=</span> [<span class="token-num">13.7563</span>, <span class="token-num">100.5018</span>]
+<span class="token-var">lat</span>, <span class="token-var">lon</span> <span class="token-op">=</span> <span class="token-var">coordinates</span>
+<span class="token-fn">print</span>(<span class="token-str">f'Latitude: {lat}, Longitude: {lon}'</span>)
+
+<span class="token-com"># Elegant variable swapping in Python</span>
+<span class="token-var">x</span>, <span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">10</span>, <span class="token-num">99</span>
+<span class="token-fn">print</span>(<span class="token-str">f'Before swap: x={x}, y={y}'</span>)
+<span class="token-var">x</span>, <span class="token-var">y</span> <span class="token-op">=</span> <span class="token-var">y</span>, <span class="token-var">x</span>
+<span class="token-fn">print</span>(<span class="token-str">f'After swap:  x={x}, y={y}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Latitude: 13.7563, Longitude: 100.5018</div>
+              <div>Before swap: x=10, y=99</div>
+              <div>After swap:  x=99, y=10</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: The enumerate Function -->
+      <section class="slide" id="slide-9">
+        <div class="eyebrow">Iteration Utilities</div>
+        <h1 class="slide-title">The enumerate() Function: Index &amp; Value</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">When iterating through a sequence, you often need both the item's <strong>index</strong> and its <strong>value</strong>.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">enumerate(sequence)</code> produces pairs of <code class="inline-code">(index, item)</code> on each iteration.</li>
+              <li>Eliminates manual index counters like <code class="inline-code">i += 1</code>.</li>
+              <li>Can specify starting index offset via optional parameter: <code class="inline-code">enumerate(seq, start=1)</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — enumerate_demo.py</span><span>enumerate()</span></div>
+            <div class="code-box-body"><span class="token-var">colors</span> <span class="token-op">=</span> [<span class="token-str">'red'</span>, <span class="token-str">'orange'</span>, <span class="token-str">'yellow'</span>]
+
+<span class="token-com"># Inspect raw enumerate representation</span>
+<span class="token-fn">print</span>(<span class="token-str">'As list of tuples:'</span>, <span class="token-fn">list</span>(<span class="token-fn">enumerate</span>(<span class="token-var">colors</span>)))
+
+<span class="token-com"># Unpack index and item in a for loop</span>
+<span class="token-kw">for</span> <span class="token-var">index</span>, <span class="token-var">value</span> <span class="token-kw">in</span> <span class="token-fn">enumerate</span>(<span class="token-var">colors</span>):
+    <span class="token-fn">print</span>(<span class="token-str">f'Index {index}: {value}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>As list of tuples: [(0, 'red'), (1, 'orange'), (2, 'yellow')]</div>
+              <div>Index 0: red</div>
+              <div>Index 1: orange</div>
+              <div>Index 2: yellow</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 10: Slicing Fundamentals -->
+      <section class="slide" id="slide-10">
+        <div class="eyebrow">Sub-sequences</div>
+        <h1 class="slide-title">Introduction to Slicing: Subsets of Data</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>Slicing</strong> extracts a sub-sequence from a list or tuple using colon syntax: <code class="inline-code">sequence[start:stop]</code>.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">start</code>: Inclusive starting index. Defaults to <code class="inline-code">0</code> if omitted.</li>
+              <li><code class="inline-code">stop</code>: Exclusive stopping index. Defaults to <code class="inline-code">len</code> if omitted.</li>
+              <li><code class="inline-code">numbers[:3]</code>: First 3 elements (indices 0, 1, 2).</li>
+              <li><code class="inline-code">numbers[2:]</code>: From index 2 to the end of the sequence.</li>
+              <li><code class="inline-code">numbers[:]</code>: Shallow copy of the entire list.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — slicing_basics.py</span><span>Slicing</span></div>
+            <div class="code-box-body"><span class="token-var">numbers</span> <span class="token-op">=</span> [<span class="token-num">10</span>, <span class="token-num">20</span>, <span class="token-num">30</span>, <span class="token-num">40</span>, <span class="token-num">50</span>, <span class="token-num">60</span>]
+
+<span class="token-fn">print</span>(<span class="token-str">'Full list:  '</span>, <span class="token-var">numbers</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Slice [1:4]:'</span>, <span class="token-var">numbers</span>[<span class="token-num">1</span>:<span class="token-num">4</span>])   <span class="token-com"># indices 1, 2, 3</span>
+<span class="token-fn">print</span>(<span class="token-str">'Prefix [:3]: '</span>, <span class="token-var">numbers</span>[:<span class="token-num">3</span>])    <span class="token-com"># indices 0, 1, 2</span>
+<span class="token-fn">print</span>(<span class="token-str">'Suffix [3:]: '</span>, <span class="token-var">numbers</span>[<span class="token-num">3</span>:])    <span class="token-com"># indices 3, 4, 5</span></div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Full list:   [10, 20, 30, 40, 50, 60]</div>
+              <div>Slice [1:4]: [20, 30, 40]</div>
+              <div>Prefix [:3]:  [10, 20, 30]</div>
+              <div>Suffix [3:]:  [40, 50, 60]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 11: Slicing with Step & Reverse -->
+      <section class="slide" id="slide-11">
+        <div class="eyebrow">Advanced Slicing</div>
+        <h1 class="slide-title">Slicing with Step Sizes &amp; Reverse Slicing</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Add a second colon to specify an optional step parameter: <code class="inline-code">sequence[start:stop:step]</code>.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">step=2</code> skips every second item (<code class="inline-code">numbers[::2]</code>).</li>
+              <li>Negative steps step backwards through the sequence.</li>
+              <li><strong>The Pythonic Reversal Trick:</strong>
+                <br><code class="inline-code">numbers[::-1]</code> creates a reversed copy of the sequence with zero boilerplate!</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — step_slicing.py</span><span>Step Slicing</span></div>
+            <div class="code-box-body"><span class="token-var">nums</span> <span class="token-op">=</span> [<span class="token-num">0</span>, <span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">4</span>, <span class="token-num">5</span>, <span class="token-num">6</span>, <span class="token-num">7</span>, <span class="token-num">8</span>, <span class="token-num">9</span>]
+
+<span class="token-com"># Every second item (evens)</span>
+<span class="token-fn">print</span>(<span class="token-str">'Every 2nd item [::2]:'</span>, <span class="token-var">nums</span>[::<span class="token-num">2</span>])
+
+<span class="token-com"># Every third item starting from index 1</span>
+<span class="token-fn">print</span>(<span class="token-str">'Step 3 from 1 [1::3]: '</span>, <span class="token-var">nums</span>[<span class="token-num">1</span>::<span class="token-num">3</span>])
+
+<span class="token-com"># Reverse the list</span>
+<span class="token-fn">print</span>(<span class="token-str">'Reversed [::-1]:      '</span>, <span class="token-var">nums</span>[::<span class="token-op">-</span><span class="token-num">1</span>])</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Every 2nd item [::2]: [0, 2, 4, 6, 8]</div>
+              <div>Step 3 from 1 [1::3]:  [1, 4, 7]</div>
+              <div>Reversed [::-1]:       [9, 8, 7, 6, 5, 4, 3, 2, 1, 0]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 12: In-place Slicing & del -->
+      <section class="slide" id="slide-12">
+        <div class="eyebrow">Mutation &amp; Deletion</div>
+        <h1 class="slide-title">Modifying with Slices &amp; The del Operator</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Assigning to a slice modifies multiple list elements simultaneously, even changing the list's total length.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">numbers[0:2] = ['red', 'green']</code> replaces the first two elements.</li>
+              <li>Assigning an empty list <code class="inline-code">numbers[1:3] = []</code> deletes those elements.</li>
+              <li><strong>The <code class="inline-code">del</code> operator:</strong> Deletes an individual element or an entire slice cleanly without assigning empty values.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — slice_mutate.py</span><span>Slice Mutation</span></div>
+            <div class="code-box-body"><span class="token-var">items</span> <span class="token-op">=</span> [<span class="token-num">10</span>, <span class="token-num">20</span>, <span class="token-num">30</span>, <span class="token-num">40</span>, <span class="token-num">50</span>]
+
+<span class="token-com"># Replace indices 0 and 1</span>
+<span class="token-var">items</span>[<span class="token-num">0</span>:<span class="token-num">2</span>] <span class="token-op">=</span> [<span class="token-num">100</span>, <span class="token-num">200</span>]
+<span class="token-fn">print</span>(<span class="token-str">'After slice replace:'</span>, <span class="token-var">items</span>)
+
+<span class="token-com"># Delete element at index 2 with del</span>
+<span class="token-kw">del</span> <span class="token-var">items</span>[<span class="token-num">2</span>]
+<span class="token-fn">print</span>(<span class="token-str">'After del items[2]: '</span>, <span class="token-var">items</span>)
+
+<span class="token-com"># Clear entire list via del</span>
+<span class="token-kw">del</span> <span class="token-var">items</span>[:]
+<span class="token-fn">print</span>(<span class="token-str">'After del items[:]: '</span>, <span class="token-var">items</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>After slice replace: [100, 200, 300, 40, 50]</div>
+              <div>After del items[2]:  [100, 200, 40, 50]</div>
+              <div>After del items[:]:  []</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 13: Passing Lists to Functions -->
+      <section class="slide" id="slide-13">
+        <div class="eyebrow">Memory &amp; Functions</div>
+        <h1 class="slide-title">Passing Lists to Functions: In-Place Mutation</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Because Python passes arguments by object reference, passing a mutable list to a function allows that function to <strong>mutate the caller's list directly</strong>.</p>
+            <ul class="bullet-list">
+              <li>Any in-place modification (like <code class="inline-code">list[i] *= 2</code> or <code class="inline-code">list.append()</code>) affects the original object.</li>
+              <li>To prevent a function from modifying the original data, pass a shallow copy instead: <code class="inline-code">func(my_list[:])</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — mutate_func.py</span><span>Pass by Reference</span></div>
+            <div class="code-box-body"><span class="token-kw">def</span> <span class="token-fn">double_elements</span>(<span class="token-var">lst</span>):
+    <span class="token-str">"""Double every item in the list in-place."""</span>
+    <span class="token-kw">for</span> <span class="token-var">i</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-fn">len</span>(<span class="token-var">lst</span>)):
+        <span class="token-var">lst</span>[<span class="token-var">i</span>] <span class="token-op">*=</span> <span class="token-num">2</span>
+
+<span class="token-var">numbers</span> <span class="token-op">=</span> [<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">4</span>]
+<span class="token-fn">print</span>(<span class="token-str">'Original before call:'</span>, <span class="token-var">numbers</span>)
+
+<span class="token-fn">double_elements</span>(<span class="token-var">numbers</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Original after call: '</span>, <span class="token-var">numbers</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Original before call: [1, 2, 3, 4]</div>
+              <div>Original after call:  [2, 4, 6, 8]</div>
+              <div style="color: #4fc1ff; font-size: 0.8rem; margin-top: 4px;">Notice: numbers was modified permanently!</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 14: Sorting Lists -->
+      <section class="slide" id="slide-14">
+        <div class="eyebrow">Algorithms &amp; Ordering</div>
+        <h1 class="slide-title">Sorting a List: list.sort() vs. sorted()</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python provides two distinct ways to sort sequences: the in-place method <code class="inline-code">sort()</code> and the built-in function <code class="inline-code">sorted()</code>.</p>
+            <ul class="bullet-list">
+              <li><strong style="color: var(--accent-cyan);"><code class="inline-code">my_list.sort()</code>:</strong> Modifies the list <em>in place</em>. Returns <code class="inline-code">None</code>. Fast and memory efficient.</li>
+              <li><strong style="color: var(--accent-gold);"><code class="inline-code">sorted(my_list)</code>:</strong> Leaves original list untouched; returns a <em>new sorted list</em>.</li>
+              <li>Both accept <code class="inline-code">reverse=True</code> to sort in descending order.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — sorting_demo.py</span><span>sort() vs sorted()</span></div>
+            <div class="code-box-body"><span class="token-var">raw</span> <span class="token-op">=</span> [<span class="token-num">64</span>, <span class="token-num">25</span>, <span class="token-num">12</span>, <span class="token-num">22</span>, <span class="token-num">11</span>]
+
+<span class="token-com"># Using sorted() creates a new list</span>
+<span class="token-var">new_sorted</span> <span class="token-op">=</span> <span class="token-fn">sorted</span>(<span class="token-var">raw</span>)
+<span class="token-fn">print</span>(<span class="token-str">'sorted(raw):'</span>, <span class="token-var">new_sorted</span>)
+<span class="token-fn">print</span>(<span class="token-str">'raw is unchanged:'</span>, <span class="token-var">raw</span>)
+
+<span class="token-com"># Using .sort(reverse=True) mutates in place</span>
+<span class="token-var">raw</span>.<span class="token-fn">sort</span>(<span class="token-var">reverse</span><span class="token-op">=</span><span class="token-kw">True</span>)
+<span class="token-fn">print</span>(<span class="token-str">'raw.sort(reverse=True):'</span>, <span class="token-var">raw</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>sorted(raw): [11, 12, 25, 22, 64]</div>
+              <div>raw is unchanged: [64, 25, 12, 22, 11]</div>
+              <div>raw.sort(reverse=True): [64, 25, 22, 12, 11]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 15: Searching Lists -->
+      <section class="slide" id="slide-15">
+        <div class="eyebrow">Search Operations</div>
+        <h1 class="slide-title">Searching a List: index() &amp; The in Operator</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Locating elements in a sequence can be performed using either index lookups or boolean membership tests.</p>
+            <ul class="bullet-list">
+              <li><strong style="color: var(--accent-cyan);"><code class="inline-code">list.index(val)</code>:</strong> Returns the position of the <em>first</em> matching occurrence.</li>
+              <li><code class="inline-code">list.index(val, start)</code>: Starts search at index <code class="inline-code">start</code>.</li>
+              <li><code class="inline-code">list.index(val, start, stop)</code>: Bounds search within a specific window.</li>
+              <li><strong style="color: var(--accent-gold);"><code class="inline-code">item in list</code>:</strong> Returns boolean <code class="inline-code">True</code> or <code class="inline-code">False</code> safely without raising exceptions if missing.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — searching.py</span><span>index() &amp; in</span></div>
+            <div class="code-box-body"><span class="token-var">fib</span> <span class="token-op">=</span> [<span class="token-num">0</span>, <span class="token-num">1</span>, <span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">8</span>]
+
+<span class="token-com"># First occurrence of 1</span>
+<span class="token-fn">print</span>(<span class="token-str">'fib.index(1):'</span>, <span class="token-var">fib</span>.<span class="token-fn">index</span>(<span class="token-num">1</span>))
+
+<span class="token-com"># Search for 1 starting at index 2</span>
+<span class="token-fn">print</span>(<span class="token-str">'fib.index(1, 2):'</span>, <span class="token-var">fib</span>.<span class="token-fn">index</span>(<span class="token-num">1</span>, <span class="token-num">2</span>))
+
+<span class="token-com"># Safe membership check using in</span>
+<span class="token-fn">print</span>(<span class="token-str">'Is 5 in fib?'</span>, <span class="token-num">5</span> <span class="token-kw">in</span> <span class="token-var">fib</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Is 6 in fib?'</span>, <span class="token-num">6</span> <span class="token-kw">in</span> <span class="token-var">fib</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>fib.index(1): 1</div>
+              <div>fib.index(1, 2): 2</div>
+              <div>Is 5 in fib? True</div>
+              <div>Is 6 in fib? False</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 16: List Comprehensions -->
+      <section class="slide" id="slide-16">
+        <div class="eyebrow">Pythonic Constructs</div>
+        <h1 class="slide-title">List Comprehensions: Expressive Syntax</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>List comprehensions</strong> replace multi-line <code class="inline-code">for</code> loops with elegant, high-speed single lines of code.</p>
+            <ul class="bullet-list">
+              <li>Basic syntax: <code class="inline-code">[expression for item in iterable]</code></li>
+              <li>With transformation: <code class="inline-code">[x**2 for x in range(1, 11)]</code></li>
+              <li>With filtering condition:
+                <br><code class="inline-code">[x**2 for x in range(1, 11) if x % 2 == 0]</code></li>
+              <li>Implemented in C under the hood, running significantly faster than manual <code class="inline-code">.append()</code> loops.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — list_comp.py</span><span>Comprehensions</span></div>
+            <div class="code-box-body"><span class="token-com"># Basic range generation</span>
+<span class="token-var">nums</span> <span class="token-op">=</span> [<span class="token-var">i</span> <span class="token-kw">for</span> <span class="token-var">i</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">6</span>)]
+<span class="token-fn">print</span>(<span class="token-str">'Numbers 1-5:'</span>, <span class="token-var">nums</span>)
+
+<span class="token-com"># Squares of numbers 1-5</span>
+<span class="token-var">squares</span> <span class="token-op">=</span> [<span class="token-var">i</span><span class="token-op">**</span><span class="token-num">2</span> <span class="token-kw">for</span> <span class="token-var">i</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">6</span>)]
+<span class="token-fn">print</span>(<span class="token-str">'Squares:    '</span>, <span class="token-var">squares</span>)
+
+<span class="token-com"># Even squares only (with if filter)</span>
+<span class="token-var">even_sq</span> <span class="token-op">=</span> [<span class="token-var">i</span><span class="token-op">**</span><span class="token-num">2</span> <span class="token-kw">for</span> <span class="token-var">i</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">11</span>) <span class="token-kw">if</span> <span class="token-var">i</span> <span class="token-op">%</span> <span class="token-num">2</span> <span class="token-op">==</span> <span class="token-num">0</span>]
+<span class="token-fn">print</span>(<span class="token-str">'Even squares:'</span>, <span class="token-var">even_sq</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Numbers 1-5: [1, 2, 3, 4, 5]</div>
+              <div>Squares:     [1, 4, 9, 16, 25]</div>
+              <div>Even squares: [4, 16, 36, 64, 100]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 17: filter and lambda -->
+      <section class="slide" id="slide-17">
+        <div class="eyebrow">Functional Programming</div>
+        <h1 class="slide-title">The filter() Function &amp; Lambda Expressions</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python supports functional programming idioms with built-in higher-order functions like <code class="inline-code">filter()</code> and anonymous <code class="inline-code">lambda</code> expressions.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">filter(function, iterable)</code>: Filters elements for which <code class="inline-code">function(item)</code> evaluates to <code class="inline-code">True</code>.</li>
+              <li>Returns an iterator; wrap in <code class="inline-code">list(...)</code> to evaluate.</li>
+              <li><strong>Lambda expression:</strong> An inline anonymous function created on the fly:
+                <br><code class="inline-code">lambda x: (x % 2) == 0</code></li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — filter_lambda.py</span><span>filter &amp; lambda</span></div>
+            <div class="code-box-body"><span class="token-com"># Method 1: Named predicate function</span>
+<span class="token-kw">def</span> <span class="token-fn">is_even</span>(<span class="token-var">x</span>):
+    <span class="token-kw">return</span> <span class="token-var">x</span> <span class="token-op">%</span> <span class="token-num">2</span> <span class="token-op">==</span> <span class="token-num">0</span>
+
+<span class="token-var">evens1</span> <span class="token-op">=</span> <span class="token-fn">list</span>(<span class="token-fn">filter</span>(<span class="token-var">is_even</span>, <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">11</span>)))
+<span class="token-fn">print</span>(<span class="token-str">'Filter with def:   '</span>, <span class="token-var">evens1</span>)
+
+<span class="token-com"># Method 2: Anonymous lambda expression</span>
+<span class="token-var">evens2</span> <span class="token-op">=</span> <span class="token-fn">list</span>(<span class="token-fn">filter</span>(<span class="token-kw">lambda</span> <span class="token-var">x</span>: <span class="token-var">x</span> <span class="token-op">%</span> <span class="token-num">2</span> <span class="token-op">==</span> <span class="token-num">0</span>, <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">11</span>)))
+<span class="token-fn">print</span>(<span class="token-str">'Filter with lambda:'</span>, <span class="token-var">evens2</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Filter with def:    [2, 4, 6, 8, 10]</div>
+              <div>Filter with lambda: [2, 4, 6, 8, 10]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 18: Two-Dimensional Lists -->
+      <section class="slide" id="slide-18">
+        <div class="eyebrow">Multidimensional Data</div>
+        <h1 class="slide-title">Two-Dimensional Lists: Matrices &amp; Grids</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A <strong>two-dimensional list</strong> is a list whose elements are themselves lists, representing tables, grids, and matrices.</p>
+            <ul class="bullet-list">
+              <li>Definition: <code class="inline-code">my_2d_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]</code></li>
+              <li>Row indexing: <code class="inline-code">my_2d_list[0]</code> returns the entire first row <code class="inline-code">[1, 2, 3]</code>.</li>
+              <li>Cell indexing: <code class="inline-code">my_2d_list[row][col]</code>:
+                <br><code class="inline-code">my_2d_list[1][2]</code> selects row 1, column 2 (<code class="inline-code">6</code>).</li>
+              <li>Slicing rows: <code class="inline-code">my_2d_list[1][1:3]</code> returns <code class="inline-code">[5, 6]</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — matrix_2d.py</span><span>2D Lists</span></div>
+            <div class="code-box-body"><span class="token-var">matrix</span> <span class="token-op">=</span> [
+    [<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>],
+    [<span class="token-num">4</span>, <span class="token-num">5</span>, <span class="token-num">6</span>],
+    [<span class="token-num">7</span>, <span class="token-num">8</span>, <span class="token-num">9</span>]
+]
+
+<span class="token-fn">print</span>(<span class="token-str">'Entire row 0:     '</span>, <span class="token-var">matrix</span>[<span class="token-num">0</span>])
+<span class="token-fn">print</span>(<span class="token-str">'Element row 1, col 2:'</span>, <span class="token-var">matrix</span>[<span class="token-num">1</span>][<span class="token-num">2</span>])
+<span class="token-fn">print</span>(<span class="token-str">'Row 1 slice [1:3]:'</span>, <span class="token-var">matrix</span>[<span class="token-num">1</span>][<span class="token-num">1</span>:<span class="token-num">3</span>])</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Entire row 0:      [1, 2, 3]</div>
+              <div>Element row 1, col 2: 6</div>
+              <div>Row 1 slice [1:3]: [5, 6]</div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
 
