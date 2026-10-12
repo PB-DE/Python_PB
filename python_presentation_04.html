@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Python Programming — Lectures 7 &amp; 8 (CATC)</title>
+  <style>
+    :root {
+      --bg: #1e1e1e;
+      --code-bg: #252526;
+      --card-bg: #252526;
+      --border: #333333;
+      --text: #d4d4d4;
+      --text-bright: #ffffff;
+      --text-muted: #858585;
+      --accent: #007acc;
+      --accent-cyan: #4fc1ff;
+      --accent-gold: #dcdcaa;
+      --danger: #f48771;
+      
+      /* VS Code Dark+ Syntax Tokens */
+      --token-kw: #569cd6;
+      --token-var: #9cdcfe;
+      --token-num: #b5cea8;
+      --token-str: #ce9178;
+      --token-com: #6a9955;
+      --token-fn: #dcdcaa;
+      --token-op: #d4d4d4;
+      --token-type: #4ec9b0;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #121212;
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      user-select: none;
+    }
+
+    /* Widescreen 16:9 Presentation Stage */
+    #stage {
+      position: relative;
+      width: min(96vw, 170.66vh);
+      height: min(54vw, 96vh);
+      background-color: var(--bg);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
+    }
+
+    /* Progress Bar */
+    .progress-bar-container {
+      width: 100%;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.05);
+      position: relative;
+      z-index: 10;
+    }
+
+    .progress-bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent-cyan));
+      width: 0%;
+      transition: width 0.25s ease-out;
+    }
+
+    /* Deck and Slides */
+    #deck {
+      position: relative;
+      flex: 1;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 3rem 4rem 2rem 4rem;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      visibility: hidden;
+      transition: opacity 0.2s ease-in-out;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      visibility: visible;
+    }
+
+    /* Typography */
+    .eyebrow {
+      font-size: 0.85rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-cyan);
+      margin-bottom: 0.4rem;
+    }
+
+    .slide-title {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.2;
+      margin-bottom: 0.35rem;
+      letter-spacing: -0.02em;
+    }
+
+    .slide-subtitle {
+      font-size: 1.15rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+      font-weight: 400;
+    }
+
+    .lead {
+      font-size: 1.12rem;
+      line-height: 1.55;
+      color: var(--text);
+      margin-bottom: 1rem;
+    }
+
+    .bullet-list {
+      list-style: none;
+      margin-top: 0.5rem;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 1.5rem;
+      margin-bottom: 0.85rem;
+      font-size: 1.05rem;
+      line-height: 1.5;
+      color: var(--text);
+    }
+
+    .bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0;
+      top: -0.05rem;
+      color: var(--accent-cyan);
+      font-size: 1.3rem;
+    }
+
+    /* VS Code Code Box */
+    .code-box {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      overflow: hidden;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+      font-size: 0.96rem;
+      line-height: 1.5;
+      margin-top: 0.5rem;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
+    }
+
+    .code-box-header {
+      background: #1e1e1e;
+      padding: 0.45rem 1rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .code-box-body {
+      padding: 1rem 1.2rem;
+      color: #d4d4d4;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .output-box {
+      margin-top: 0.75rem;
+      padding: 0.75rem 1rem;
+      background: #181818;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 4px 4px 0;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.88rem;
+      color: #9cdcfe;
+      line-height: 1.45;
+    }
+
+    .out-label {
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 0.25rem;
+    }
+
+    /* Syntax Highlighting Classes */
+    .token-kw { color: var(--token-kw); font-weight: 600; }
+    .token-var { color: var(--token-var); }
+    .token-num { color: var(--token-num); }
+    .token-str { color: var(--token-str); }
+    .token-com { color: var(--token-com); font-style: italic; }
+    .token-fn { color: var(--token-fn); }
+    .token-op { color: var(--token-op); }
+    .token-type { color: var(--token-type); }
+
+    .inline-code {
+      background: #2d2d30;
+      color: #ce9178;
+      padding: 0.15rem 0.4rem;
+      border-radius: 3px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 0.9em;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    /* Grids */
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 2.5rem;
+      align-items: start;
+      width: 100%;
+    }
+
+    .grid-equal {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+    }
+
+    /* Footer */
+    .slide-footer {
+      height: 48px;
+      background: #181818;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 2rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      z-index: 10;
+    }
+
+    .nav-hints {
+      display: flex;
+      gap: 1.25rem;
+      align-items: center;
+    }
+
+    .slide-counter {
+      color: var(--text);
+      font-weight: 600;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .nav-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 0.25rem 0.65rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background: var(--card-bg);
+      color: var(--text-bright);
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+  <div id="stage">
+    <!-- Progress Indicator -->
+    <div class="progress-bar-container">
+      <div id="progress" class="progress-bar"></div>
+    </div>
+
+    <!-- Slides Container -->
+    <div id="deck">
+      <!-- Slide 1: Title -->
+      <section class="slide active" id="slide-1">
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 7</div>
+        <h1 class="slide-title">NumPy Arrays: Numerical Computing</h1>
+        <h2 class="slide-subtitle">Multidimensional Arrays, Vectorization, Broadcasting &amp; Slicing</h2>
+        <div class="grid-equal" style="margin-top: 1rem;">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 7 Agenda</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>Array Foundations:</strong> Contrast Python lists with NumPy <code class="inline-code">ndarray</code></li>
+              <li><strong>Creation &amp; Types:</strong> <code class="inline-code">dtype</code>, <code class="inline-code">shape</code>, <code class="inline-code">zeros</code>, <code class="inline-code">ones</code>, <code class="inline-code">arange</code>, <code class="inline-code">linspace</code></li>
+              <li><strong>Vectorized Math:</strong> Element-wise arithmetic, scalar broadcasting, and boolean masks</li>
+              <li><strong>Aggregations &amp; Slicing:</strong> Axis reductions, 2D coordinates, non-contiguous indexing, and transpose</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Navigation &amp; Controls</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>Next Slide:</strong> Press <kbd class="inline-code">→</kbd> or <kbd class="inline-code">Space</kbd></li>
+              <li><strong>Previous Slide:</strong> Press <kbd class="inline-code">←</kbd> or <kbd class="inline-code">Backspace</kbd></li>
+              <li><strong>Fullscreen:</strong> Press <kbd class="inline-code">F</kbd></li>
+              <li><strong>Fast Jump:</strong> Use <kbd class="inline-code">Home</kbd> / <kbd class="inline-code">End</kbd> or swipe on touch screens</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <div class="slide-footer">
+      <div>Civil Aviation Training Center (CATC)</div>
+      <div class="nav-hints">
+        <button class="nav-btn" onclick="SlideDeck.prev()">◀ Prev</button>
+        <button class="nav-btn" onclick="SlideDeck.next()">Next ▶</button>
+        <button class="nav-btn" onclick="SlideDeck.toggleFullscreen()">⛶ Fullscreen</button>
+        <span id="counter" class="slide-counter">1 / 1</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const SlideDeck = (function () {
+      let slides = [];
+      let currentIndex = 0;
+      let counterEl, progressEl;
+
+      function init() {
+        slides = Array.from(document.querySelectorAll('.slide'));
+        counterEl = document.getElementById('counter');
+        progressEl = document.getElementById('progress');
+
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#slide-')) {
+          const idx = parseInt(hash.replace('#slide-', ''), 10) - 1;
+          if (!isNaN(idx) && idx >= 0 && idx < slides.length) {
+            currentIndex = idx;
+          }
+        }
+
+        updateView();
+
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('hashchange', handleHashChange);
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        document.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          if (touchEndX < touchStartX - 50) next();
+          if (touchEndX > touchStartX + 50) prev();
+        }, { passive: true });
+      }
+
+      function handleKeyDown(e) {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+
+        switch (e.code) {
+          case 'ArrowRight':
+          case 'Space':
+          case 'PageDown':
+          case 'Enter':
+            e.preventDefault();
+            next();
+            break;
+          case 'ArrowLeft':
+          case 'PageUp':
+          case 'Backspace':
+            e.preventDefault();
+            prev();
+            break;
+          case 'Home':
+            e.preventDefault();
+            goTo(0);
+            break;
+          case 'End':
+            e.preventDefault();
+            goTo(slides.length - 1);
+            break;
+          case 'KeyF':
+            e.preventDefault();
+            toggleFullscreen();
+            break;
+        }
+      }
+
+      function handleHashChange() {
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#slide-')) {
+          const idx = parseInt(hash.replace('#slide-', ''), 10) - 1;
+          if (!isNaN(idx) && idx >= 0 && idx < slides.length && idx !== currentIndex) {
+            currentIndex = idx;
+            updateView();
+          }
+        }
+      }
+
+      function goTo(index) {
+        if (index < 0 || index >= slides.length) return;
+        currentIndex = index;
+        updateView();
+        window.location.hash = `slide-${currentIndex + 1}`;
+      }
+
+      function next() {
+        if (currentIndex < slides.length - 1) {
+          goTo(currentIndex + 1);
+        }
+      }
+
+      function prev() {
+        if (currentIndex > 0) {
+          goTo(currentIndex - 1);
+        }
+      }
+
+      function updateView() {
+        slides.forEach((slide, idx) => {
+          if (idx === currentIndex) {
+            slide.classList.add('active');
+          } else {
+            slide.classList.remove('active');
+          }
+        });
+
+        if (counterEl) {
+          counterEl.textContent = `${currentIndex + 1} / ${slides.length}`;
+        }
+        if (progressEl) {
+          const pct = slides.length > 1 ? ((currentIndex) / (slides.length - 1)) * 100 : 100;
+          progressEl.style.width = `${pct}%`;
+        }
+      }
+
+      function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+          document.documentElement.requestFullscreen().catch(() => {});
+        } else {
+          document.exitFullscreen().catch(() => {});
+        }
+      }
+
+      return {
+        init,
+        next,
+        prev,
+        goTo,
+        toggleFullscreen
+      };
+    })();
+
+    document.addEventListener('DOMContentLoaded', SlideDeck.init);
+  </script>
+</body>
+</html>
