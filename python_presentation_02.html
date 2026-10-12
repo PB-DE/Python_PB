@@ -341,12 +341,672 @@
 
     <!-- Slides Container -->
     <div id="deck">
-      <!-- Placeholder slide for Task 1 -->
+      <!-- Slide 1: Title -->
       <section class="slide active" id="slide-1">
-        <div class="eyebrow">Civil Aviation Training Center (CATC)</div>
-        <h1 class="slide-title">Python Programming: Lectures 3 &amp; 4</h1>
-        <h2 class="slide-subtitle">Control Statements &amp; Functions</h2>
-        <p class="lead">Use Arrow Keys (← / →) or Space to navigate. Press <code>F</code> for Fullscreen.</p>
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 3</div>
+        <h1 class="slide-title">Control Statements &amp; Program Development</h1>
+        <h2 class="slide-subtitle">Algorithms, Selection Logic, Iterations, and Central Tendency</h2>
+        <div class="grid-equal" style="margin-top: 1rem;">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture Overview</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>Algorithmic Thinking:</strong> Specifications, pseudocode, and 3-stage models</li>
+              <li><strong>Selection Statements:</strong> <code class="inline-code">if</code>, <code class="inline-code">if-elif-else</code>, truthiness, and ternary expressions</li>
+              <li><strong>Repetition Statements:</strong> <code class="inline-code">while</code> loops, <code class="inline-code">for</code> loops, and <code class="inline-code">range()</code></li>
+              <li><strong>Data &amp; Logic:</strong> Lists, augmented operators, and <code class="inline-code">statistics</code></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Navigation &amp; Controls</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong style="color: #ffffff;">Next Slide:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">→</kbd> or <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Space</kbd></li>
+              <li><strong style="color: #ffffff;">Previous Slide:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">←</kbd> or <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Backspace</kbd></li>
+              <li><strong style="color: #ffffff;">Fullscreen:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">F</kbd></li>
+              <li><strong style="color: #ffffff;">Fast Jump:</strong> Use <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Home</kbd> / <kbd style="background:#333; padding:2px 6px; border-radius:3px;">End</kbd> or swipe on touch screens</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 2: Algorithms -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow">Program Development</div>
+        <h1 class="slide-title">Algorithms: Foundations of Computation</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">An <strong>algorithm</strong> is an unambiguous, step-by-step procedure for solving a specific problem in a finite amount of time.</p>
+            <ul class="bullet-list">
+              <li><strong>Definiteness:</strong> Every action is rigorously and precisely specified.</li>
+              <li><strong>Input &amp; Output:</strong> Accepts zero or more inputs and produces well-defined results.</li>
+              <li><strong>Finiteness:</strong> Guaranteed to terminate after a countable number of execution steps.</li>
+              <li><strong>Effectiveness:</strong> Operations must be feasible on physical computing machinery.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 0.75rem;">Why Algorithms Precede Code</h3>
+            <p style="color: var(--text); line-height: 1.6; margin-bottom: 1rem;">Writing code before clarifying the algorithm leads to spaghetti logic and obscure bugs.</p>
+            <div style="background: #1e1e1e; padding: 1rem; border-radius: 6px; border-left: 3px solid var(--accent);">
+              <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.35rem;">Core Principle:</div>
+              <p style="font-size: 0.95rem; color: #b0b0b0; line-height: 1.5;">Decompose the conceptual solution into logical sequences <em>first</em>; translate to Python syntax <em>second</em>.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 3: Pseudocode -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow">Algorithmic Design</div>
+        <h1 class="slide-title">Pseudocode: Bridging Human Thought and Code</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>Pseudocode</strong> is an artificial, informal language that helps programmers develop algorithms without getting bogged down by syntax.</p>
+            <ul class="bullet-list">
+              <li>Reads like structured English; ignores punctuation and strict grammar.</li>
+              <li>Focuses exclusively on control flow, data transformations, and boundaries.</li>
+              <li><strong>Case Study:</strong> Computing the maximum value in an arbitrary set of numbers.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>Pseudocode vs. Python Implementation</span><span>Max In Set</span></div>
+            <div class="code-box-body"><span class="token-com"># --- Informal Pseudocode ---
+# Set maximum to the first number
+# For each remaining number in the set:
+#     If number &gt; maximum:
+#         Set maximum to number
+# Display maximum</span>
+
+<span class="token-com"># --- Python Realization ---</span>
+<span class="token-var">numbers</span> <span class="token-op">=</span> [<span class="token-num">14</span>, <span class="token-num">42</span>, <span class="token-num">9</span>, <span class="token-num">77</span>, <span class="token-num">31</span>]
+<span class="token-var">maximum</span> <span class="token-op">=</span> <span class="token-var">numbers</span>[<span class="token-num">0</span>]
+
+<span class="token-kw">for</span> <span class="token-var">num</span> <span class="token-kw">in</span> <span class="token-var">numbers</span>[<span class="token-num">1</span>:]:
+    <span class="token-kw">if</span> <span class="token-var">num</span> <span class="token-op">&gt;</span> <span class="token-var">maximum</span>:
+        <span class="token-var">maximum</span> <span class="token-op">=</span> <span class="token-var">num</span>
+
+<span class="token-fn">print</span>(<span class="token-str">'Maximum value:'</span>, <span class="token-var">maximum</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Terminal Output</div>
+              <div>Maximum value: 77</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 4: Control Statements Flowchart -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow">Execution Flow</div>
+        <h1 class="slide-title">Control Statements &amp; Branching Logic</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Normally, programs execute statements sequentially, line by line. <strong>Control statements</strong> alter this flow.</p>
+            <ul class="bullet-list">
+              <li><strong>Sequence:</strong> Default step-by-step order of operations.</li>
+              <li><strong>Selection:</strong> Choose between alternative execution paths (<code class="inline-code">if</code>, <code class="inline-code">if-else</code>, <code class="inline-code">if-elif-else</code>).</li>
+              <li><strong>Repetition:</strong> Repeat execution while a condition holds (<code class="inline-code">while</code>, <code class="inline-code">for</code>).</li>
+            </ul>
+          </div>
+          <div>
+            <svg viewBox="0 0 540 320" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#007acc" />
+                </marker>
+                <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#4ec9b0" />
+                </marker>
+                <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 1 L 10 5 L 0 9 z" fill="#f48771" />
+                </marker>
+              </defs>
+
+              <!-- Entry node -->
+              <rect x="200" y="20" width="140" height="36" rx="18" fill="#1e1e1e" stroke="#007acc" stroke-width="2"/>
+              <text x="270" y="43" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="system-ui">Entry / Code</text>
+
+              <line x1="270" y1="56" x2="270" y2="90" stroke="#007acc" stroke-width="2" marker-end="url(#arrow)"/>
+
+              <!-- Decision diamond -->
+              <polygon points="270,95 380,145 270,195 160,145" fill="#2d2d30" stroke="#4fc1ff" stroke-width="2"/>
+              <text x="270" y="142" fill="#4fc1ff" font-size="13" font-weight="600" text-anchor="middle" font-family="system-ui">Condition?</text>
+              <text x="270" y="158" fill="#858585" font-size="11" text-anchor="middle" font-family="system-ui">(True or False)</text>
+
+              <!-- True branch -->
+              <line x1="380" y1="145" x2="450" y2="145" stroke="#4ec9b0" stroke-width="2"/>
+              <line x1="450" y1="145" x2="450" y2="208" stroke="#4ec9b0" stroke-width="2" marker-end="url(#arrow-green)"/>
+              <text x="410" y="137" fill="#4ec9b0" font-size="12" font-weight="700" text-anchor="middle" font-family="system-ui">True</text>
+
+              <!-- True action box -->
+              <rect x="380" y="214" width="140" height="42" rx="6" fill="#1e1e1e" stroke="#4ec9b0" stroke-width="2"/>
+              <text x="450" y="239" fill="#ffffff" font-size="12" font-weight="500" text-anchor="middle" font-family="system-ui">Execute if Suite</text>
+
+              <!-- False branch -->
+              <line x1="270" y1="195" x2="270" y2="275" stroke="#f48771" stroke-width="2" marker-end="url(#arrow-red)"/>
+              <text x="285" y="215" fill="#f48771" font-size="12" font-weight="700" text-anchor="start" font-family="system-ui">False (Bypass)</text>
+
+              <!-- Merging branch -->
+              <line x1="450" y1="256" x2="450" y2="295" stroke="#4ec9b0" stroke-width="2"/>
+              <line x1="450" y1="295" x2="350" y2="295" stroke="#4ec9b0" stroke-width="2" marker-end="url(#arrow)"/>
+
+              <!-- Exit node -->
+              <rect x="190" y="275" width="160" height="36" rx="6" fill="#1e1e1e" stroke="#858585" stroke-width="2"/>
+              <text x="270" y="298" fill="#d4d4d4" font-size="13" font-weight="500" text-anchor="middle" font-family="system-ui">Next Statement</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 5: Selection Statements -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow">Selection statements</div>
+        <h1 class="slide-title">The if Statement &amp; Conditional Decisions</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The single-selection <code class="inline-code">if</code> statement performs an action only if a condition evaluates to <code class="inline-code">True</code>.</p>
+            <ul class="bullet-list">
+              <li>Header begins with keyword <code class="inline-code">if</code>, followed by a condition, ending with a colon (<code class="inline-code">:</code>).</li>
+              <li>The indented block beneath the header is termed the <strong>suite</strong>.</li>
+              <li>If condition is <code class="inline-code">False</code>, Python skips the suite completely.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — selection.py</span><span>Single Selection</span></div>
+            <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-fn">int</span>(<span class="token-fn">input</span>(<span class="token-str">'Please enter an integer: '</span>))
+
+<span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">&lt;</span> <span class="token-num">0</span>:
+    <span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">0</span>
+    <span class="token-fn">print</span>(<span class="token-str">'Negative changed to zero'</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">f'x value is: {x}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Input / Output Example</div>
+              <div>Please enter an integer: -7</div>
+              <div>Negative changed to zero</div>
+              <div>x value is: 0</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 6: Multi-way Branching -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow">Branching Logic</div>
+        <h1 class="slide-title">Multi-way Branching: if-elif-else</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">When a decision involves more than two mutually exclusive alternatives, use the <code class="inline-code">if elif else</code> structure.</p>
+            <ul class="bullet-list">
+              <li>Python tests conditions sequentially from top to bottom.</li>
+              <li>The <strong>first</strong> condition that evaluates to <code class="inline-code">True</code> runs its suite.</li>
+              <li>All subsequent <code class="inline-code">elif</code> and <code class="inline-code">else</code> suites are bypassed immediately.</li>
+              <li>The optional <code class="inline-code">else</code> clause acts as a fallback catch-all.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — ticket_pricing.py</span><span>Multi-branch</span></div>
+            <div class="code-box-body"><span class="token-var">age</span> <span class="token-op">=</span> <span class="token-fn">int</span>(<span class="token-fn">input</span>(<span class="token-str">'Please enter your age: '</span>))
+
+<span class="token-kw">if</span> <span class="token-var">age</span> <span class="token-op">&lt;</span> <span class="token-num">18</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Youth ticket: $10'</span>)
+<span class="token-kw">elif</span> <span class="token-var">age</span> <span class="token-op">&lt;</span> <span class="token-num">65</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Standard ticket: $18'</span>)
+<span class="token-kw">else</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Senior ticket: $12'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Sample Run (age = 70)</div>
+              <div>Please enter your age: 70</div>
+              <div>Senior ticket: $12</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 7: Truthiness -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow">Evaluation Rules</div>
+        <h1 class="slide-title">Truthiness in Python: Values as Booleans</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">In Python, conditions need not be strict Booleans (<code class="inline-code">True</code> or <code class="inline-code">False</code>). Any Python object can be evaluated for truth value.</p>
+            <ul class="bullet-list">
+              <li><strong>Truthy values:</strong>
+                <ul>
+                  <li>Any non-zero numeric value (<code class="inline-code">12</code>, <code class="inline-code">-4</code>, <code class="inline-code">3.14</code>)</li>
+                  <li>Any non-empty string (<code class="inline-code">'Loquacious D'</code>, <code class="inline-code">' '</code>)</li>
+                  <li>Non-empty lists or collections (<code class="inline-code">[1, 2]</code>)</li>
+                </ul>
+              </li>
+              <li><strong>Falsy values:</strong> <code class="inline-code">0</code>, <code class="inline-code">0.0</code>, empty string <code class="inline-code">""</code>, empty list <code class="inline-code">[]</code>, and <code class="inline-code">None</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — truthiness.py</span><span>Implicit Booleans</span></div>
+            <div class="code-box-body"><span class="token-com"># Non-zero number evaluation</span>
+<span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">12</span>
+<span class="token-kw">if</span> <span class="token-var">x</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Condition is True'</span>)  <span class="token-com"># Non-zero integer is truthy</span>
+
+<span class="token-com"># Non-empty string evaluation</span>
+<span class="token-var">x</span> <span class="token-op">=</span> <span class="token-str">'Loquacious D'</span>
+<span class="token-kw">if</span> <span class="token-var">x</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Condition is True'</span>)  <span class="token-com"># Non-empty string is truthy</span>
+
+<span class="token-com"># Zero evaluates to False</span>
+<span class="token-var">z</span> <span class="token-op">=</span> <span class="token-num">0</span>
+<span class="token-kw">if</span> <span class="token-var">z</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'Will not run'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Condition is True</div>
+              <div>Condition is True</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 8: Suite Indentation -->
+      <section class="slide" id="slide-8">
+        <div class="eyebrow">Syntax Rules</div>
+        <h1 class="slide-title">Suite indentation: Block Structure</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python is renowned for using whitespace indentation rather than curly braces <code class="inline-code">{}</code> or <code class="inline-code">begin...end</code> to define block suites.</p>
+            <ul class="bullet-list">
+              <li>Standard convention: <strong>4 spaces</strong> per indentation level.</li>
+              <li>Every statement in the same suite must have the exact same level of indentation.</li>
+              <li>Mismatched indentation triggers an immediate <code class="inline-code">IndentationError</code> or <code class="inline-code">TabError</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — indentation.py</span><span>Suites</span></div>
+            <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">36</span>
+
+<span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">%</span> <span class="token-num">2</span> <span class="token-op">==</span> <span class="token-num">0</span>:
+    <span class="token-fn">print</span>(<span class="token-str">f'{x} is divisible by 2'</span>)
+    <span class="token-fn">print</span>(<span class="token-str">'Suite line 2: still inside if block'</span>)
+<span class="token-kw">else</span>:
+    <span class="token-fn">print</span>(<span class="token-str">f'{x} is odd'</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Unindented: outside the if-else block'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Execution Result</div>
+              <div>36 is divisible by 2</div>
+              <div>Suite line 2: still inside if block</div>
+              <div>Unindented: outside the if-else block</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 9: Conditional Expressions -->
+      <section class="slide" id="slide-9">
+        <div class="eyebrow">Concise Python</div>
+        <h1 class="slide-title">Conditional Expressions: One-Line Ternary</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A <strong>conditional expression</strong> (ternary operator) evaluates an expression based on a condition in a single concise line.</p>
+            <ul class="bullet-list">
+              <li><strong>Syntax:</strong> <code class="inline-code">true_val if condition else false_val</code></li>
+              <li>Evaluates the condition first: returns left value if <code class="inline-code">True</code>, right value if <code class="inline-code">False</code>.</li>
+              <li>Reduces 4 lines of boilerplate into an elegant single assignment: <code class="inline-code">'even' if (x % 2) == 0 else 'odd'</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — ternary.py</span><span>One-line Condition</span></div>
+            <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">36</span>
+
+<span class="token-com"># Standard 4-line form:</span>
+<span class="token-com"># if (x % 2) == 0:</span>
+<span class="token-com">#     y = 'even'</span>
+<span class="token-com"># else:</span>
+<span class="token-com">#     y = 'odd'</span>
+
+<span class="token-com"># Pythonic one-liner: y = 'even' if (x % 2) == 0 else 'odd'</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-str">'even'</span> <span class="token-kw">if</span> (<span class="token-var">x</span> <span class="token-op">%</span> <span class="token-num">2</span>) <span class="token-op">==</span> <span class="token-num">0</span> <span class="token-kw">else</span> <span class="token-str">'odd'</span>
+
+<span class="token-fn">print</span>(<span class="token-str">f'{x} is {y}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>36 is even</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 10: Logic vs Syntax Errors -->
+      <section class="slide" id="slide-10">
+        <div class="eyebrow">Debugging Principles</div>
+        <h1 class="slide-title">Logic errors vs. Syntax Errors</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>Logic error:</strong> The program runs without crashing, but computes the wrong result. Logic errors are much more insidious than syntax errors.</p>
+            <ul class="bullet-list">
+              <li><strong>Syntax errors:</strong> Caught immediately by the parser before running (e.g. missing colon, typo in keyword).</li>
+              <li><strong>Logic errors:</strong> Valid syntax, but incorrect intention.</li>
+              <li><strong>Classic trap:</strong> Mistaking comparison <code class="inline-code">==</code> for assignment <code class="inline-code">=</code>, or vice versa!</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — trap.py</span><span>Common Pitfall</span></div>
+            <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">10</span>
+
+<span class="token-com"># Mistaking == for =:</span>
+<span class="token-var">x</span> <span class="token-op">==</span> <span class="token-num">23</span>  <span class="token-com"># Evaluates comparison expression (False), but does NOT assign 23!</span>
+
+<span class="token-fn">print</span>(<span class="token-str">f'Value of x: {x}'</span>)
+
+<span class="token-com"># Python guards against accidental assignment in if:</span>
+<span class="token-com"># if x = 23: -&gt; SyntaxError: invalid syntax</span></div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Value of x: 10</div>
+              <div style="color: #f48771; font-size: 0.8rem; margin-top: 4px;">⚠️ x remains 10 because == compares without updating the variable!</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 11: while Loop -->
+      <section class="slide" id="slide-11">
+        <div class="eyebrow">Repetition Statements</div>
+        <h1 class="slide-title">The while Loop: Netflix Subscription Case Study</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A <code class="inline-code">while</code> statement repeatedly executes its suite as long as its loop-continuation condition remains <code class="inline-code">True</code>.</p>
+            <ul class="bullet-list">
+              <li><strong>Problem:</strong> A Netflix subscription starts at $7.99 in 2020 and increases by 5% annually (<code class="inline-code">rate_of_increase = 0.05</code>).</li>
+              <li>Determine in what year the subscription will exceed $20.00.</li>
+              <li><strong>Requirement:</strong> The suite must modify the condition variables to avoid infinite loops!</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — netflix_while.py</span><span>while loop</span></div>
+            <div class="code-box-body"><span class="token-var">rate_of_increase</span> <span class="token-op">=</span> <span class="token-num">0.05</span>
+<span class="token-var">price_of_netflix</span> <span class="token-op">=</span> <span class="token-num">7.99</span>
+<span class="token-var">year</span> <span class="token-op">=</span> <span class="token-num">2020</span>
+
+<span class="token-kw">while</span> <span class="token-var">price_of_netflix</span> <span class="token-op">&lt;=</span> <span class="token-num">20</span>:
+    <span class="token-var">year</span> <span class="token-op">+=</span> <span class="token-num">1</span>
+    <span class="token-var">price_of_netflix</span> <span class="token-op">*=</span> (<span class="token-num">1</span> <span class="token-op">+</span> <span class="token-var">rate_of_increase</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">f'Netflix exceeds $20 in year: {year}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Final price: ${price_of_netflix:0.2f}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Netflix exceeds $20 in year: 2039</div>
+              <div>Final price: $20.25</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 12: Formatting Strings -->
+      <section class="slide" id="slide-12">
+        <div class="eyebrow">Data Presentation</div>
+        <h1 class="slide-title">Formatting Strings (f-strings) for Clean Output</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Formatted string literals (f-strings) let you embed expressions and precision specifiers cleanly inside string literals.</p>
+            <ul class="bullet-list">
+              <li>Prefixed by <code class="inline-code">f</code> before quotation marks.</li>
+              <li>Expressions inside <code class="inline-code">{}</code> are evaluated at runtime.</li>
+              <li><strong>Format specifier syntax:</strong> <code class="inline-code">{variable:specifier}</code>
+                <ul>
+                  <li><code class="inline-code">{price:0.2f}</code>: floating-point rounded to 2 decimal places.</li>
+                  <li><code class="inline-code">{year:0d}</code>: decimal integer.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — format_strings.py</span><span>f-string format</span></div>
+            <div class="code-box-body"><span class="token-var">rate_of_increase</span> <span class="token-op">=</span> <span class="token-num">0.05</span>
+<span class="token-var">price_of_netflix</span> <span class="token-op">=</span> <span class="token-num">7.99</span>
+<span class="token-var">year</span> <span class="token-op">=</span> <span class="token-num">2020</span>
+
+<span class="token-kw">while</span> <span class="token-var">price_of_netflix</span> <span class="token-op">&lt;=</span> <span class="token-num">20</span>:
+    <span class="token-fn">print</span>(<span class="token-str">f'{year:0d}: ${price_of_netflix:0.2f}'</span>)
+    <span class="token-var">year</span> <span class="token-op">+=</span> <span class="token-num">1</span>
+    <span class="token-var">price_of_netflix</span> <span class="token-op">*=</span> (<span class="token-num">1</span> <span class="token-op">+</span> <span class="token-var">rate_of_increase</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Formatted Table (First 5 Years)</div>
+              <div>2020: $7.99</div>
+              <div>2021: $8.39</div>
+              <div>2022: $8.81</div>
+              <div>2023: $9.25</div>
+              <div>2024: $9.71 ...</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 13: The for Loop and range() -->
+      <section class="slide" id="slide-13">
+        <div class="eyebrow">Iteration</div>
+        <h1 class="slide-title">The for loop &amp; range() Function</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The <code class="inline-code">for</code> statement provides sequence-controlled iteration, running its suite once for each item in an iterable.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">range(stop)</code> produces integers from <code class="inline-code">0</code> up to <code class="inline-code">stop - 1</code>.</li>
+              <li><code class="inline-code">range(start, stop)</code> produces integers from <code class="inline-code">start</code> up to <code class="inline-code">stop - 1</code>.</li>
+              <li><code class="inline-code">range(start, stop, step)</code> increments by <code class="inline-code">step</code>.</li>
+              <li>Python's indexing and ranges are zero-based and stop value is always exclusive.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — for_range.py</span><span>for loop</span></div>
+            <div class="code-box-body"><span class="token-com"># range(6) generates 0, 1, 2, 3, 4, 5</span>
+<span class="token-fn">print</span>(<span class="token-str">'range(6):'</span>)
+<span class="token-kw">for</span> <span class="token-var">i</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">6</span>):
+    <span class="token-fn">print</span>(<span class="token-var">i</span>, <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">' '</span>)
+<span class="token-fn">print</span>()
+
+<span class="token-com"># range with start, stop, step</span>
+<span class="token-fn">print</span>(<span class="token-str">'range(1, 10, 2):'</span>)
+<span class="token-kw">for</span> <span class="token-var">n</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">10</span>, <span class="token-num">2</span>):
+    <span class="token-fn">print</span>(<span class="token-var">n</span>, <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">' '</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>range(6): 0 1 2 3 4 5</div>
+              <div>range(1, 10, 2): 1 3 5 7 9</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 14: Iterables and lists -->
+      <section class="slide" id="slide-14">
+        <div class="eyebrow">Data Structures</div>
+        <h1 class="slide-title">Iterables and lists: Traversing Collections</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A <strong>list</strong> in Python is an ordered, mutable sequence of items delimited by square brackets <code class="inline-code">[...]</code>.</p>
+            <ul class="bullet-list">
+              <li>Lists are <strong>iterables</strong>: they can be passed directly to a <code class="inline-code">for</code> loop.</li>
+              <li>No need for manual indexing variables like <code class="inline-code">i</code>: Python assigns each element directly to the target variable.</li>
+              <li>Iterates over arbitrary types (integers, floats, strings, objects).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — list_iteration.py</span><span>Iterables</span></div>
+            <div class="code-box-body"><span class="token-com"># Defining an integer list</span>
+<span class="token-var">my_first_list</span> <span class="token-op">=</span> [<span class="token-op">-</span><span class="token-num">3</span>, <span class="token-num">2</span>, <span class="token-op">-</span><span class="token-num">5</span>, <span class="token-num">4</span>, <span class="token-num">0</span>]
+
+<span class="token-com"># Direct traversal</span>
+<span class="token-kw">for</span> <span class="token-var">item</span> <span class="token-kw">in</span> <span class="token-var">my_first_list</span>:
+    <span class="token-fn">print</span>(<span class="token-str">f'Current item: {item}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Current item: -3</div>
+              <div>Current item: 2</div>
+              <div>Current item: -5</div>
+              <div>Current item: 4</div>
+              <div>Current item: 0</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 15: Augmented expressions -->
+      <section class="slide" id="slide-15">
+        <div class="eyebrow">Expressions &amp; Accumulators</div>
+        <h1 class="slide-title">Augmented expressions &amp; Initializations</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Augmented assignment operators abbreviate common update patterns: <code class="inline-code">+=</code>, <code class="inline-code">-=</code>, <code class="inline-code">*=</code>, <code class="inline-code">/=</code>.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">running_sum += item</code> replaces <code class="inline-code">running_sum = running_sum + item</code>.</li>
+              <li><code class="inline-code">running_product *= item</code> replaces <code class="inline-code">running_product = running_product * item</code>.</li>
+              <li><strong style="color: var(--accent-gold);">Key Interview Question:</strong> Why initialize <code class="inline-code">running_product = 1</code> instead of <code class="inline-code">0</code>?
+                <ul>
+                  <li>0 is the additive identity ($x + 0 = x$).</li>
+                  <li>1 is the multiplicative identity ($x \times 1 = x$). Multiplying by 0 collapses the entire product to 0!</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — accumulators.py</span><span>Augmented Assignment</span></div>
+            <div class="code-box-body"><span class="token-var">my_list</span> <span class="token-op">=</span> [<span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>]
+
+<span class="token-var">running_sum</span> <span class="token-op">=</span> <span class="token-num">0</span>
+<span class="token-kw">for</span> <span class="token-var">item</span> <span class="token-kw">in</span> <span class="token-var">my_list</span>:
+    <span class="token-var">running_sum</span> <span class="token-op">+=</span> <span class="token-var">item</span>
+
+<span class="token-var">running_product</span> <span class="token-op">=</span> <span class="token-num">1</span>
+<span class="token-kw">for</span> <span class="token-var">item</span> <span class="token-kw">in</span> <span class="token-var">my_list</span>:
+    <span class="token-var">running_product</span> <span class="token-op">*=</span> <span class="token-var">item</span>
+
+<span class="token-fn">print</span>(<span class="token-str">f'Sum: {running_sum}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Product: {running_product}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Sum: 10</div>
+              <div>Product: 30</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 16: Algorithm development & 3 stages -->
+      <section class="slide" id="slide-16">
+        <div class="eyebrow">Algorithm development</div>
+        <h1 class="slide-title">Three Stages of Algorithms &amp; Fibonacci</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Structured algorithm development organizes code into three distinct stages:</p>
+            <ul class="bullet-list">
+              <li><strong>1. Initialization:</strong> Establish starting variables, accumulators, and input parameters.</li>
+              <li><strong>2. Processing:</strong> The core loop executing transformations and applying logic.</li>
+              <li><strong>3. Termination:</strong> Format results, display outputs, or return values.</li>
+              <li><strong>Fibonacci Sequence:</strong> $F_n = F_{n-1} + F_{n-2}$, starting with $0, 1, 1, 2, 3, 5, 8, 13\dots$</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — fibonacci_stages.py</span><span>3 Stages</span></div>
+            <div class="code-box-body"><span class="token-com"># Stage 1: Initialization</span>
+<span class="token-var">f0</span>, <span class="token-var">f1</span> <span class="token-op">=</span> <span class="token-num">0</span>, <span class="token-num">1</span>
+<span class="token-var">n_terms</span> <span class="token-op">=</span> <span class="token-num">8</span>
+<span class="token-fn">print</span>(<span class="token-str">'Fibonacci series:'</span>, <span class="token-var">f0</span>, <span class="token-var">f1</span>, <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">' '</span>)
+
+<span class="token-com"># Stage 2: Processing</span>
+<span class="token-kw">for</span> <span class="token-var">_</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">2</span>, <span class="token-var">n_terms</span>):
+    <span class="token-var">f_next</span> <span class="token-op">=</span> <span class="token-var">f0</span> <span class="token-op">+</span> <span class="token-var">f1</span>
+    <span class="token-fn">print</span>(<span class="token-var">f_next</span>, <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">' '</span>)
+    <span class="token-var">f0</span>, <span class="token-var">f1</span> <span class="token-op">=</span> <span class="token-var">f1</span>, <span class="token-var">f_next</span>
+
+<span class="token-com"># Stage 3: Termination</span>
+<span class="token-fn">print</span>(<span class="token-str">'\nDone.'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Fibonacci series: 0 1 1 2 3 5 8 13 </div>
+              <div>Done.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 17: Algorithm Refinement & break / continue -->
+      <section class="slide" id="slide-17">
+        <div class="eyebrow">Flow Controls</div>
+        <h1 class="slide-title">Algorithm Refinement &amp; break / continue</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>Refinement:</strong> Top-down design where a problem begins with a high-level description (first refinement) and is progressively fleshed out into concrete code (second refinement).</p>
+            <ul class="bullet-list">
+              <li><strong><code class="inline-code">break</code> statement:</strong> Immediately terminates loop execution and jumps to the statement following the loop.</li>
+              <li><strong><code class="inline-code">continue</code> statement:</strong> Immediately aborts the <em>current</em> iteration and proceeds to the next iteration.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — loop_controls.py</span><span>break &amp; continue</span></div>
+            <div class="code-box-body"><span class="token-com"># break: abort loop when condition is met</span>
+<span class="token-var">running_sum</span> <span class="token-op">=</span> <span class="token-num">0</span>
+<span class="token-kw">for</span> <span class="token-var">x</span> <span class="token-kw">in</span> [<span class="token-num">10</span>, <span class="token-num">20</span>, <span class="token-num">30</span>, <span class="token-num">40</span>, <span class="token-num">50</span>]:
+    <span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">&gt;</span> <span class="token-num">35</span>:
+        <span class="token-kw">break</span>  <span class="token-com"># Exits completely</span>
+    <span class="token-var">running_sum</span> <span class="token-op">+=</span> <span class="token-var">x</span>
+<span class="token-fn">print</span>(<span class="token-str">f'break sum: {running_sum}'</span>)  <span class="token-com"># 10 + 20 + 30 = 60</span>
+
+<span class="token-com"># continue: skip negative values</span>
+<span class="token-var">running_sum</span> <span class="token-op">=</span> <span class="token-num">0</span>
+<span class="token-kw">for</span> <span class="token-var">x</span> <span class="token-kw">in</span> [<span class="token-num">10</span>, <span class="token-op">-</span><span class="token-num">5</span>, <span class="token-num">20</span>, <span class="token-op">-</span><span class="token-num">8</span>, <span class="token-num">30</span>]:
+    <span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">&lt;</span> <span class="token-num">0</span>:
+        <span class="token-kw">continue</span>  <span class="token-com"># Skips rest of suite</span>
+    <span class="token-var">running_sum</span> <span class="token-op">+=</span> <span class="token-var">x</span>
+<span class="token-fn">print</span>(<span class="token-str">f'continue sum: {running_sum}'</span>)  <span class="token-com"># 10 + 20 + 30 = 60</span></div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>break sum: 60</div>
+              <div>continue sum: 60</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 18: Boolean Operators & Statistics -->
+      <section class="slide" id="slide-18">
+        <div class="eyebrow">Logic &amp; Analysis</div>
+        <h1 class="slide-title">Boolean operators &amp; Central Tendency</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Combine complex logical conditions with <strong>Boolean operators</strong> and summarize datasets with Python's <code class="inline-code">statistics</code> module.</p>
+            <ul class="bullet-list">
+              <li><code class="inline-code">and</code>: Both operands must be true.</li>
+              <li><code class="inline-code">or</code>: At least one operand must be true.</li>
+              <li><code class="inline-code">not</code>: Reverses truth value.</li>
+              <li><strong>Measures of Central Tendency:</strong>
+                <ul>
+                  <li><code class="inline-code">statistics.mean()</code>: Arithmetic average.</li>
+                  <li><code class="inline-code">statistics.median()</code>: Middle score; resistant to extreme outliers!</li>
+                  <li><code class="inline-code">statistics.mode()</code>: Most frequent value.</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — stats_logic.py</span><span>Boolean &amp; Stats</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">statistics</span>
+
+<span class="token-com"># Boolean operator example</span>
+<span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">36</span>
+<span class="token-kw">if</span> (<span class="token-var">x</span> <span class="token-op">%</span> <span class="token-num">2</span> <span class="token-op">==</span> <span class="token-num">0</span>) <span class="token-kw">and</span> (<span class="token-var">x</span> <span class="token-op">%</span> <span class="token-num">3</span> <span class="token-op">==</span> <span class="token-num">0</span>):
+    <span class="token-fn">print</span>(<span class="token-str">f'{x} is divisible by both 2 and 3'</span>)
+
+<span class="token-com"># Central tendency with outliers</span>
+<span class="token-var">salaries</span> <span class="token-op">=</span> [<span class="token-num">30000</span>, <span class="token-num">32000</span>, <span class="token-num">31000</span>, <span class="token-num">35000</span>, <span class="token-num">500000</span>]
+<span class="token-fn">print</span>(<span class="token-str">f'Mean:   ${statistics.mean(salaries):0.2f}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Median: ${statistics.median(salaries):0.2f}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Mode:   {statistics.mode([1, 2, 2, 3, 4])}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>36 is divisible by both 2 and 3</div>
+              <div>Mean:   $125600.00</div>
+              <div>Median: $32000.00</div>
+              <div>Mode:   2</div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
 
