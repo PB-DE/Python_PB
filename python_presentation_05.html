@@ -932,6 +932,577 @@
           </div>
         </div>
       </section>
+
+      <!-- Slide 19: Lecture 10 Title Slide -->
+      <section class="slide" id="slide-19">
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 10</div>
+        <h1 class="slide-title">Intro to Object-Oriented Programming</h1>
+        <div class="slide-subtitle">Classes, Objects, Constructors, Encapsulation &amp; Magic Methods</div>
+        
+        <div class="grid-equal" style="margin-top: 1rem;">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); margin-bottom: 0.75rem; font-size: 1.15rem;">Lecture 10 Curriculum</h3>
+            <ul class="bullet-list">
+              <li><strong>Paradigm:</strong> "Everything is an object" in Python's computational model.</li>
+              <li><strong>Blueprints vs. Instances:</strong> Defining classes and spawning distinct memory objects.</li>
+              <li><strong>Constructors &amp; <code class="inline-code">self</code>:</strong> Initializing state with <code class="inline-code">__init__</code>.</li>
+              <li><strong>Methods &amp; Composition:</strong> Binding behavior and nesting objects inside collections.</li>
+              <li><strong>Encapsulation &amp; Dunder Protocols:</strong> Simulated privacy and string representation with <code class="inline-code">__str__</code>.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--token-type); margin-bottom: 0.75rem; font-size: 1.15rem;">Architectural Motivations</h3>
+            <ul class="bullet-list">
+              <li><strong>Operation Constraining:</strong> Guarantee valid state transitions and enforce logical integrity.</li>
+              <li><strong>Cohesive Data Bundling:</strong> Group state and the functions that manipulate that state into a single cohesive unit.</li>
+              <li><strong>Declarative Domain Code:</strong> Replace fragile nested dictionary lookups with intuitive, domain-specific object APIs.</li>
+              <li><strong>Extensibility:</strong> Establish solid object foundations that can be specialized via inheritance.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 20: Paradigm: Everything is an Object -->
+      <section class="slide" id="slide-20">
+        <div class="eyebrow">Core Paradigm</div>
+        <h1 class="slide-title">In Python, "Everything is an Object"</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python is built entirely on the object model—from numeric literals and functions to custom classes.</p>
+            <ul class="bullet-list">
+              <li><strong>Unified Type Hierarchy:</strong> Unlike languages with raw unboxed primitives, all values in Python are instances of a class.</li>
+              <li><strong>Data Types are Classes:</strong> An integer is an instance of <code class="inline-code">int</code>; a float is an instance of <code class="inline-code">float</code>.</li>
+              <li><strong>Intrinsic Properties:</strong> Every object possesses an identity (memory address), a type, and internal state/methods.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — everything_is_object.py</span><span>Type Introspection</span></div>
+            <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">2.3</span>
+<span class="token-fn">print</span>(<span class="token-str">'Type of 2.3:'</span>, <span class="token-fn">type</span>(<span class="token-var">x</span>))
+
+<span class="token-var">text</span> <span class="token-op">=</span> <span class="token-str">'CATC Aviation'</span>
+<span class="token-fn">print</span>(<span class="token-str">'Type of string:'</span>, <span class="token-fn">type</span>(<span class="token-var">text</span>))
+
+<span class="token-kw">def</span> <span class="token-fn">greet</span>(): <span class="token-kw">pass</span>
+<span class="token-fn">print</span>(<span class="token-str">'Type of function:'</span>, <span class="token-fn">type</span>(<span class="token-var">greet</span>))</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Type of 2.3: &lt;class 'float'&gt;</div>
+              <div>Type of string: &lt;class 'str'&gt;</div>
+              <div>Type of function: &lt;class 'function'&gt;</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 21: Classes vs Objects -->
+      <section class="slide" id="slide-21">
+        <div class="eyebrow">Conceptual Foundations</div>
+        <h1 class="slide-title">Classes vs. Objects: Blueprint vs. Instance</h1>
+        <div class="grid-equal">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); margin-bottom: 0.75rem; font-size: 1.2rem;">The Class (Blueprint)</h3>
+            <ul class="bullet-list">
+              <li><strong>Abstract Schema:</strong> The template or architectural blueprint that specifies what attributes and behaviors exist.</li>
+              <li><strong>Defines Constraints:</strong> Sets the rules, operations, and validations that its objects will adhere to.</li>
+              <li><strong>Static Definition:</strong> Defined once in source code using the <code class="inline-code">class</code> keyword.</li>
+              <li><strong>Analogy:</strong> The CAD schematic for a Boeing 737 aircraft.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--token-type); margin-bottom: 0.75rem; font-size: 1.2rem;">The Object (Instance)</h3>
+            <ul class="bullet-list">
+              <li><strong>Concrete Realization:</strong> An actual living entity allocated in heap memory created from the blueprint.</li>
+              <li><strong>Unique State:</strong> Each instance possesses its own distinct data (e.g. flight number, registration, altitude).</li>
+              <li><strong>Dynamic Population:</strong> A single class can spawn thousands of separate independent objects.</li>
+              <li><strong>Analogy:</strong> A specific physical Boeing 737 flying route BKK-CNX.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 22: Four Motivations of OOP -->
+      <section class="slide" id="slide-22">
+        <div class="eyebrow">Software Engineering</div>
+        <h1 class="slide-title">Four Core Motivations for OOP Design</h1>
+        <div class="grid-equal">
+          <div class="card" style="margin-bottom: 1rem;">
+            <h4 style="color: var(--accent-gold); margin-bottom: 0.4rem;">1. Constraining Operations</h4>
+            <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.45;">Classes restrict what actions can be performed on their data. You can multiply a <code class="inline-code">float</code> by 2, but you cannot call <code class="inline-code">.upper()</code> on it.</p>
+          </div>
+          <div class="card" style="margin-bottom: 1rem;">
+            <h4 style="color: var(--accent-cyan); margin-bottom: 0.4rem;">2. Grouping Logical Data</h4>
+            <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.45;">Instead of tracking disconnected arrays for user names, handles, and follower counts, an object binds them into a cohesive data model.</p>
+          </div>
+          <div class="card">
+            <h4 style="color: var(--token-type); margin-bottom: 0.4rem;">3. Logical Code Architecture</h4>
+            <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.45;">Methods represent domain-specific actions (<code class="inline-code">add_follower()</code>), making application workflows clean, readable, and self-documenting.</p>
+          </div>
+          <div class="card">
+            <h4 style="color: var(--danger); margin-bottom: 0.4rem;">4. Inheritance &amp; Extension</h4>
+            <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.45;">Generic classes (e.g. <code class="inline-code">Account</code>) can be extended into specialized classes (e.g. <code class="inline-code">VerifiedBusinessAccount</code>) without duplicating code.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 23: Defining a Class -->
+      <section class="slide" id="slide-23">
+        <div class="eyebrow">Class Definition</div>
+        <h1 class="slide-title">Defining a Class in Python</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Classes are defined using the <code class="inline-code">class</code> keyword followed by the PascalCase class name.</p>
+            <ul class="bullet-list">
+              <li><strong>Naming Convention:</strong> PEP-8 style recommends PascalCase (e.g. <code class="inline-code">TwitterAccount</code>, <code class="inline-code">FlightRadar</code>).</li>
+              <li><strong>Parentheses:</strong> Optional in Python 3; <code class="inline-code">class TwitterAccount:</code> and <code class="inline-code">class TwitterAccount():</code> are identical.</li>
+              <li><strong>Class Scope:</strong> Statements inside the class body define initial methods and class attributes.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — twitter_class.py</span><span>Class Definition</span></div>
+            <div class="code-box-body"><span class="token-kw">class</span> <span class="token-type">TwitterAccount</span>():
+    <span class="token-str">"""A class modeling a social media account."""</span>
+    <span class="token-kw">def</span> <span class="token-fn">__init__</span>(<span class="token-var">self</span>, <span class="token-var">name</span>, <span class="token-var">handle</span>):
+        <span class="token-var">self</span>.<span class="token-var">name</span> <span class="token-op">=</span> <span class="token-var">name</span>
+        <span class="token-var">self</span>.<span class="token-var">handle</span> <span class="token-op">=</span> <span class="token-var">handle</span></div>
+            <div class="output-box">
+              <div class="out-label">Status</div>
+              <div>Class TwitterAccount defined in __main__ namespace</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Ready to spawn instances using constructor syntax</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 24: Instantiation & The Constructor -->
+      <section class="slide" id="slide-24">
+        <div class="eyebrow">Instantiation</div>
+        <h1 class="slide-title">Object Instantiation &amp; The Constructor</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Calling a class as a function invokes its constructor to allocate a new instance on the heap.</p>
+            <ul class="bullet-list">
+              <li><strong>Calling the Class:</strong> <code class="inline-code">TwitterAccount(name='Elon Musk', handle='elonmusk')</code> constructs an instance.</li>
+              <li><strong>Automatic Invocation:</strong> Python allocates memory and immediately delegates initialization to <code class="inline-code">__init__()</code>.</li>
+              <li><strong>Introspection:</strong> <code class="inline-code">type(elon)</code> reveals <code class="inline-code">&lt;class '__main__.TwitterAccount'&gt;</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — instantiate.py</span><span>Spawning Objects</span></div>
+            <div class="code-box-body"><span class="token-com"># Spawning new TwitterAccount object</span>
+<span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-var">name</span><span class="token-op">=</span><span class="token-str">'Elon Musk'</span>, <span class="token-var">handle</span><span class="token-op">=</span><span class="token-str">'elonmusk'</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Object type:'</span>, <span class="token-fn">type</span>(<span class="token-var">elon</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Direct reference:'</span>, <span class="token-var">elon</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Object type: &lt;class '__main__.TwitterAccount'&gt;</div>
+              <div>Direct reference: &lt;__main__.TwitterAccount object at 0x7fa9241b&gt;</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Address 0x7fa9241b is the unique heap pointer</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 25: The self Parameter Demystified -->
+      <section class="slide" id="slide-25">
+        <div class="eyebrow">Instance Binding</div>
+        <h1 class="slide-title">The <code class="inline-code">self</code> Parameter Demystified</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><code class="inline-code">self</code> is Python's explicit reference to the specific instance currently executing the method.</p>
+            <ul class="bullet-list">
+              <li><strong>First Parameter Invariant:</strong> Every instance method must receive <code class="inline-code">self</code> as its very first argument.</li>
+              <li><strong>Automatic Passing:</strong> When you invoke <code class="inline-code">elon.some_method()</code>, Python rewrites it behind the scenes as <code class="inline-code">TwitterAccount.some_method(elon)</code>.</li>
+              <li><strong>Attaching State:</strong> Statements like <code class="inline-code">self.name = name</code> attach attributes directly to the calling instance's dictionary (<code class="inline-code">__dict__</code>).</li>
+            </ul>
+          </div>
+          <div class="card" style="justify-content: center;">
+            <h4 style="color: var(--accent-cyan); margin-bottom: 0.75rem;">Under the Hood Execution</h4>
+            <div style="background: #181818; padding: 1rem; border-radius: 4px; border: 1px solid var(--border); font-family: monospace; font-size: 0.9rem; line-height: 1.5;">
+              <div style="color: var(--token-com);"># User Syntax:</div>
+              <div>elon = TwitterAccount('Elon Musk', 'elonmusk')</div>
+              <div style="color: var(--accent-gold); margin: 0.6rem 0;">&darr; Translates internally to &darr;</div>
+              <div style="color: var(--token-com);"># Internal Python Engine Call:</div>
+              <div style="color: var(--token-type);">new_obj = alloc_memory(TwitterAccount)</div>
+              <div>TwitterAccount.__init__(<span style="color: var(--accent-cyan); font-weight: bold;">new_obj</span>, 'Elon Musk', 'elonmusk')</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 26: Accessing & Modifying Member Variables -->
+      <section class="slide" id="slide-26">
+        <div class="eyebrow">Attribute Mutation</div>
+        <h1 class="slide-title">Accessing &amp; Modifying Object Properties</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Instance attributes are accessed and updated dynamically using standard dot notation.</p>
+            <ul class="bullet-list">
+              <li><strong>Reading State:</strong> Access member attributes directly via <code class="inline-code">object.attribute_name</code>.</li>
+              <li><strong>Dynamic Mutation:</strong> Python object attributes are mutable by default; reassignment updates the instance in memory.</li>
+              <li><strong>Instance Isolation:</strong> Modifying <code class="inline-code">elon.handle</code> alters only Elon's instance—other accounts remain unaffected.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — mutate_attributes.py</span><span>Updating Member Variables</span></div>
+            <div class="code-box-body"><span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-var">name</span><span class="token-op">=</span><span class="token-str">'Elon Musk'</span>, <span class="token-var">handle</span><span class="token-op">=</span><span class="token-str">'elonmusk'</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Original handle:'</span>, <span class="token-var">elon</span>.<span class="token-var">handle</span>)
+
+<span class="token-com"># Modifying object property dynamically</span>
+<span class="token-var">elon</span>.<span class="token-var">handle</span> <span class="token-op">=</span> <span class="token-str">'boo_mastodon'</span>
+<span class="token-fn">print</span>(<span class="token-str">'Updated handle:'</span>, <span class="token-var">elon</span>.<span class="token-var">handle</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Original handle: elonmusk</div>
+              <div>Updated handle: boo_mastodon</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 27: Vector Diagram: OOP Memory Model -->
+      <section class="slide" id="slide-27">
+        <div class="eyebrow">Memory Model Diagram</div>
+        <h1 class="slide-title">Class Blueprint vs. Heap Instances</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">How the Python virtual machine manages shared class definitions alongside independent heap instances.</p>
+            <ul class="bullet-list">
+              <li><strong>Single Class Definition:</strong> Method bytecode is stored once in the class object namespace.</li>
+              <li><strong>Distinct Heap Instances:</strong> Each object holds its own private dictionary of instance variables.</li>
+              <li><strong>Shared Method Delegation:</strong> Method calls seamlessly look up functions from the parent blueprint.</li>
+            </ul>
+          </div>
+          <div class="card" style="align-items: center; justify-content: center; padding: 1rem;">
+            <svg viewBox="0 0 520 280" width="100%" height="100%" style="max-height: 280px; display: block; background: #252526; border-radius: 6px; border: 1px solid #333333; padding: 8px;">
+              <!-- Class Blueprint Card -->
+              <rect x="15" y="20" width="170" height="240" rx="6" fill="#1e1e1e" stroke="#007acc" stroke-width="2"/>
+              <text x="100" y="45" fill="#4fc1ff" font-family="system-ui" font-weight="700" font-size="12" text-anchor="middle">Class Blueprint</text>
+              <text x="100" y="62" fill="#858585" font-family="monospace" font-size="10" text-anchor="middle">TwitterAccount</text>
+              <line x1="25" y1="72" x2="175" y2="72" stroke="#333333" stroke-width="1"/>
+              
+              <text x="30" y="95" fill="#dcdcaa" font-family="monospace" font-size="9.5">def __init__()</text>
+              <text x="30" y="125" fill="#dcdcaa" font-family="monospace" font-size="9.5">def add_follower()</text>
+              <text x="30" y="155" fill="#dcdcaa" font-family="monospace" font-size="9.5">def get_number_followers()</text>
+              <text x="30" y="185" fill="#dcdcaa" font-family="monospace" font-size="9.5">def __str__()</text>
+              <text x="100" y="235" fill="#858585" font-family="system-ui" font-size="8.5" text-anchor="middle">Shared Bytecode Table</text>
+
+              <!-- Arrow to Instances -->
+              <line x1="185" y1="80" x2="230" y2="80" stroke="#007acc" stroke-width="1.8" marker-end="url(#arrow-inst)"/>
+              <line x1="185" y1="190" x2="230" y2="190" stroke="#007acc" stroke-width="1.8" marker-end="url(#arrow-inst)"/>
+
+              <!-- Instance 1: Elon -->
+              <rect x="235" y="20" width="265" height="110" rx="6" fill="#181818" stroke="#4ec9b0" stroke-width="1.8"/>
+              <text x="250" y="42" fill="#4ec9b0" font-family="monospace" font-weight="700" font-size="11">elon [Instance @ 0x7fa924]</text>
+              <line x1="245" y1="50" x2="490" y2="50" stroke="#333333" stroke-width="1"/>
+              <text x="250" y="68" fill="#d4d4d4" font-family="monospace" font-size="9.5">name: <tspan fill="#ce9178">'Elon Musk'</tspan></text>
+              <text x="250" y="86" fill="#d4d4d4" font-family="monospace" font-size="9.5">handle: <tspan fill="#ce9178">'elonmusk'</tspan></text>
+              <text x="250" y="104" fill="#d4d4d4" font-family="monospace" font-size="9.5">followers: <tspan fill="#dcdcaa">[biebs_ref &rarr; 0x7fa988]</tspan></text>
+
+              <!-- Instance 2: Biebs -->
+              <rect x="235" y="150" width="265" height="110" rx="6" fill="#181818" stroke="#dcdcaa" stroke-width="1.8"/>
+              <text x="250" y="172" fill="#dcdcaa" font-family="monospace" font-weight="700" font-size="11">biebs [Instance @ 0x7fa988]</text>
+              <line x1="245" y1="180" x2="490" y2="180" stroke="#333333" stroke-width="1"/>
+              <text x="250" y="198" fill="#d4d4d4" font-family="monospace" font-size="9.5">name: <tspan fill="#ce9178">'Justin Bieber'</tspan></text>
+              <text x="250" y="216" fill="#d4d4d4" font-family="monospace" font-size="9.5">handle: <tspan fill="#ce9178">'justinbieber'</tspan></text>
+              <text x="250" y="234" fill="#d4d4d4" font-family="monospace" font-size="9.5">followers: <tspan fill="#858585">[] (Empty List)</tspan></text>
+
+              <defs>
+                <marker id="arrow-inst" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#007acc"/>
+                </marker>
+              </defs>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 28: Adding a Method to our Class -->
+      <section class="slide" id="slide-28">
+        <div class="eyebrow">Object Behavior</div>
+        <h1 class="slide-title">Adding Instance Methods</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Methods encapsulate operational algorithms that inspect and mutate the calling object's state.</p>
+            <ul class="bullet-list">
+              <li><strong>Initializing Collections:</strong> In <code class="inline-code">__init__</code>, instantiate <code class="inline-code">self.followers = []</code> as an empty list.</li>
+              <li><strong>Method Signature:</strong> <code class="inline-code">def add_follower(self, follower):</code> accepts the target account instance.</li>
+              <li><strong>Encapsulated Mutation:</strong> Appends the new user object directly onto <code class="inline-code">self.followers</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — methods.py</span><span>Instance Methods</span></div>
+            <div class="code-box-body"><span class="token-kw">class</span> <span class="token-type">TwitterAccount</span>():
+    <span class="token-kw">def</span> <span class="token-fn">__init__</span>(<span class="token-var">self</span>, <span class="token-var">name</span>, <span class="token-var">handle</span>):
+        <span class="token-var">self</span>.<span class="token-var">name</span> <span class="token-op">=</span> <span class="token-var">name</span>
+        <span class="token-var">self</span>.<span class="token-var">handle</span> <span class="token-op">=</span> <span class="token-var">handle</span>
+        <span class="token-var">self</span>.<span class="token-var">followers</span> <span class="token-op">=</span> []
+        
+    <span class="token-kw">def</span> <span class="token-fn">add_follower</span>(<span class="token-var">self</span>, <span class="token-var">follower</span>):
+        <span class="token-var">self</span>.<span class="token-var">followers</span>.<span class="token-fn">append</span>(<span class="token-var">follower</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Capabilities</div>
+              <div>Objects can now invoke elon.add_follower(biebs)</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 29: Object Composition -->
+      <section class="slide" id="slide-29">
+        <div class="eyebrow">Object Composition</div>
+        <h1 class="slide-title">Objects Containing Objects: Composition</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Instances can store references to other instances inside their attributes, forming rich relational networks.</p>
+            <ul class="bullet-list">
+              <li><strong>Relational References:</strong> <code class="inline-code">elon.followers</code> stores actual <code class="inline-code">TwitterAccount</code> objects—not merely raw strings.</li>
+              <li><strong>Chained Attribute Traversal:</strong> Access member fields across objects: <code class="inline-code">elon.followers[0].name</code> &rarr; <code class="inline-code">'Justin Bieber'</code>.</li>
+              <li><strong>Modeling Reality:</strong> Cleanly mirrors real-world graphs (e.g. Aircraft holding Passengers, Radar holding Flights).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — composition.py</span><span>Nested Object References</span></div>
+            <div class="code-box-body"><span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-str">'Elon Musk'</span>, <span class="token-str">'elonmusk'</span>)
+<span class="token-var">biebs</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-str">'Justin Bieber'</span>, <span class="token-str">'justinbieber'</span>)
+
+<span class="token-com"># Add biebs object into elon's followers list</span>
+<span class="token-var">elon</span>.<span class="token-fn">add_follower</span>(<span class="token-var">biebs</span>)
+
+<span class="token-fn">print</span>(<span class="token-str">'Follower count:'</span>, <span class="token-fn">len</span>(<span class="token-var">elon</span>.<span class="token-var">followers</span>))
+<span class="token-fn">print</span>(<span class="token-str">'First follower name:'</span>, <span class="token-var">elon</span>.<span class="token-var">followers</span>[<span class="token-num">0</span>].<span class="token-var">name</span>)
+<span class="token-fn">print</span>(<span class="token-str">'First follower handle:'</span>, <span class="token-var">elon</span>.<span class="token-var">followers</span>[<span class="token-num">0</span>].<span class="token-var">handle</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Follower count: 1</div>
+              <div>First follower name: Justin Bieber</div>
+              <div>First follower handle: justinbieber</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 30: Computed Methods -->
+      <section class="slide" id="slide-30">
+        <div class="eyebrow">Derived State</div>
+        <h1 class="slide-title">Computed Methods: <code class="inline-code">get_number_followers()</code></h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Compute state dynamically using methods rather than maintaining duplicate counter variables.</p>
+            <ul class="bullet-list">
+              <li><strong>Zero Redundancy:</strong> Storing both a <code class="inline-code">followers</code> list and an integer <code class="inline-code">num_followers</code> risks synchronization bugs.</li>
+              <li><strong>Self-Contained Computation:</strong> Query length directly from the internal collection: <code class="inline-code">return len(self.followers)</code>.</li>
+              <li><strong>Clean Public API:</strong> Consumers call <code class="inline-code">elon.get_number_followers()</code> without needing to know how followers are stored.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — computed_methods.py</span><span>Dynamic Property Derivation</span></div>
+            <div class="code-box-body"><span class="token-kw">class</span> <span class="token-type">TwitterAccount</span>():
+    <span class="token-kw">def</span> <span class="token-fn">__init__</span>(<span class="token-var">self</span>, <span class="token-var">name</span>, <span class="token-var">handle</span>):
+        <span class="token-var">self</span>.<span class="token-var">name</span> <span class="token-op">=</span> <span class="token-var">name</span>
+        <span class="token-var">self</span>.<span class="token-var">handle</span> <span class="token-op">=</span> <span class="token-var">handle</span>
+        <span class="token-var">self</span>.<span class="token-var">followers</span> <span class="token-op">=</span> []
+        
+    <span class="token-kw">def</span> <span class="token-fn">add_follower</span>(<span class="token-var">self</span>, <span class="token-var">follower</span>):
+        <span class="token-var">self</span>.<span class="token-var">followers</span>.<span class="token-fn">append</span>(<span class="token-var">follower</span>)
+        
+    <span class="token-kw">def</span> <span class="token-fn">get_number_followers</span>(<span class="token-var">self</span>):
+        <span class="token-kw">return</span> <span class="token-fn">len</span>(<span class="token-var">self</span>.<span class="token-var">followers</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Testing get_number_followers()</div>
+              <div>elon.get_number_followers() &rarr; 1</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 31: Simulating Private Data -->
+      <section class="slide" id="slide-31">
+        <div class="eyebrow">Encapsulation</div>
+        <h1 class="slide-title">Simulating "Private" Data in Python</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python does not enforce private access modifiers by keywords; instead, it relies on strict naming conventions.</p>
+            <ul class="bullet-list">
+              <li><strong>Leading Underscore Convention:</strong> Prefixing an attribute with an underscore (<code class="inline-code">_userid</code>) signals to programmers that it is internal and private.</li>
+              <li><strong>Philosophy:</strong> <em>"We are all consenting adults here"</em>—Python trusts developers not to tamper with internal implementation details.</li>
+              <li><strong>Double Underscore (<code class="inline-code">__var</code>):</strong> Triggers name-mangling (<code class="inline-code">_ClassName__var</code>) to prevent accidental naming collisions in subclasses.</li>
+            </ul>
+          </div>
+          <div class="card" style="justify-content: center; gap: 0.8rem;">
+            <div style="background: rgba(0, 122, 204, 0.1); border-left: 3px solid var(--accent); padding: 0.75rem; border-radius: 0 4px 4px 0;">
+              <strong style="color: var(--accent-cyan);">Public Attribute (<code class="inline-code">self.name</code>):</strong>
+              <div style="font-size: 0.85rem; color: #d4d4d4; margin-top: 0.2rem;">Freely readable and modifiable by any external consumer.</div>
+            </div>
+            <div style="background: rgba(220, 220, 170, 0.1); border-left: 3px solid var(--accent-gold); padding: 0.75rem; border-radius: 0 4px 4px 0;">
+              <strong style="color: var(--accent-gold);">Protected Convention (<code class="inline-code">self._userid</code>):</strong>
+              <div style="font-size: 0.85rem; color: #d4d4d4; margin-top: 0.2rem;">Internal to class implementation; should NOT be accessed from outside.</div>
+            </div>
+            <div style="background: rgba(244, 135, 113, 0.1); border-left: 3px solid var(--danger); padding: 0.75rem; border-radius: 0 4px 4px 0;">
+              <strong style="color: var(--danger);">Mangled Private (<code class="inline-code">self.__secret</code>):</strong>
+              <div style="font-size: 0.85rem; color: #d4d4d4; margin-top: 0.2rem;">Rewritten as <code class="inline-code">_TwitterAccount__secret</code> to avoid collisions.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 32: Unique Identifiers -->
+      <section class="slide" id="slide-32">
+        <div class="eyebrow">Internal State</div>
+        <h1 class="slide-title">Generating Unique Internal Identifiers</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Initialize internal private fields inside <code class="inline-code">__init__</code> to establish unique identities for every spawned instance.</p>
+            <ul class="bullet-list">
+              <li><strong>Internal Initialization:</strong> Generate pseudorandom or sequential IDs automatically upon construction.</li>
+              <li><strong>Simulation:</strong> Generating integer user IDs between 1 and 1,000,000 using <code class="inline-code">random.randint()</code> or NumPy.</li>
+              <li><strong>Instance Independence:</strong> Each created account receives a distinct, decoupled ID upon instantiation.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — private_id.py</span><span>Simulating User IDs</span></div>
+            <div class="code-box-body"><span class="token-kw">import</span> <span class="token-var">random</span>
+
+<span class="token-kw">class</span> <span class="token-type">TwitterAccount</span>():
+    <span class="token-kw">def</span> <span class="token-fn">__init__</span>(<span class="token-var">self</span>, <span class="token-var">name</span>, <span class="token-var">handle</span>):
+        <span class="token-var">self</span>.<span class="token-var">name</span> <span class="token-op">=</span> <span class="token-var">name</span>
+        <span class="token-var">self</span>.<span class="token-var">handle</span> <span class="token-op">=</span> <span class="token-var">handle</span>
+        <span class="token-var">self</span>.<span class="token-var">_userid</span> <span class="token-op">=</span> <span class="token-var">random</span>.<span class="token-fn">randint</span>(<span class="token-num">1</span>, <span class="token-num">1000000</span>)
+        <span class="token-var">self</span>.<span class="token-var">followers</span> <span class="token-op">=</span> []
+
+<span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-str">'Elon Musk'</span>, <span class="token-str">'elonmusk'</span>)
+<span class="token-fn">print</span>(<span class="token-str">"Elon's internal _userid:"</span>, <span class="token-var">elon</span>.<span class="token-var">_userid</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Elon's internal _userid: 742194</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Stored internally as self._userid</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 33: Magic Methods: The Default String Representation -->
+      <section class="slide" id="slide-33">
+        <div class="eyebrow">Magic Protocols</div>
+        <h1 class="slide-title">The Default Object String Representation</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">By default, inspecting or printing a custom object outputs an opaque hexadecimal memory pointer.</p>
+            <ul class="bullet-list">
+              <li><strong>Default Behavior:</strong> <code class="inline-code">print(elon)</code> outputs <code class="inline-code">&lt;__main__.TwitterAccount object at 0x7fa9241b&gt;</code>.</li>
+              <li><strong>The Problem:</strong> The default output reveals the memory location but conceals the user's name, handle, and follower count.</li>
+              <li><strong>The Solution:</strong> Implement the special "dunder" (double underscore) magic method <code class="inline-code">__str__()</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — default_repr.py</span><span>Opaque Output</span></div>
+            <div class="code-box-body"><span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-str">'Elon Musk'</span>, <span class="token-str">'elonmusk'</span>)
+
+<span class="token-com"># Printing without custom __str__ method</span>
+<span class="token-fn">print</span>(<span class="token-var">elon</span>)</div>
+            <div class="output-box" style="border-left-color: var(--accent-gold);">
+              <div class="out-label" style="color: var(--accent-gold);">Default Output</div>
+              <div>&lt;__main__.TwitterAccount object at 0x7fa9241b&gt;</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Unfriendly for end users and operational dashboards!</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 34: Implementing Custom __str__ -->
+      <section class="slide" id="slide-34">
+        <div class="eyebrow">Human-Readable Output</div>
+        <h1 class="slide-title">Implementing the Standard <code class="inline-code">__str__</code> Method</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The <code class="inline-code">__str__()</code> method returns a friendly string summary of an object for users and logs.</p>
+            <ul class="bullet-list">
+              <li><strong>Invocation Hook:</strong> Automatically called by Python whenever <code class="inline-code">print(obj)</code> or <code class="inline-code">str(obj)</code> is evaluated.</li>
+              <li><strong>Return Invariant:</strong> Must return a valid <code class="inline-code">str</code>; returning numbers or printing directly causes errors.</li>
+              <li><strong>Formatting:</strong> Use f-strings to compose readable, professional state summaries.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — custom_str.py</span><span>Defining __str__()</span></div>
+            <div class="code-box-body"><span class="token-kw">class</span> <span class="token-type">TwitterAccount</span>():
+    <span class="token-kw">def</span> <span class="token-fn">__init__</span>(<span class="token-var">self</span>, <span class="token-var">name</span>, <span class="token-var">handle</span>):
+        <span class="token-var">self</span>.<span class="token-var">name</span> <span class="token-op">=</span> <span class="token-var">name</span>
+        <span class="token-var">self</span>.<span class="token-var">handle</span> <span class="token-op">=</span> <span class="token-var">handle</span>
+        <span class="token-var">self</span>.<span class="token-var">followers</span> <span class="token-op">=</span> []
+        
+    <span class="token-kw">def</span> <span class="token-fn">__str__</span>(<span class="token-var">self</span>):
+        <span class="token-kw">return</span> <span class="token-str">f"TwitterAccount(Name: '</span><span class="token-var">{self.name}</span><span class="token-str">', Handle: '@</span><span class="token-var">{self.handle}</span><span class="token-str">', Followers: </span><span class="token-var">{len(self.followers)}</span><span class="token-str">)"</span>
+
+<span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-str">'Elon Musk'</span>, <span class="token-str">'elonmusk'</span>)
+<span class="token-fn">print</span>(<span class="token-var">elon</span>)</div>
+            <div class="output-box" style="border-left-color: var(--token-type);">
+              <div class="out-label" style="color: var(--token-type);">Output (Friendly Display)</div>
+              <div>TwitterAccount(Name: 'Elon Musk', Handle: '@elonmusk', Followers: 0)</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 35: __str__ vs __repr__ -->
+      <section class="slide" id="slide-35">
+        <div class="eyebrow">Dunder Protocols</div>
+        <h1 class="slide-title">String Representations: <code class="inline-code">__str__</code> vs. <code class="inline-code">__repr__</code></h1>
+        <div class="grid-equal">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); margin-bottom: 0.75rem; font-size: 1.2rem;"><code class="inline-code">__str__(self)</code></h3>
+            <ul class="bullet-list">
+              <li><strong>Target Audience:</strong> The end-user or operational dashboard consumer.</li>
+              <li><strong>Primary Goal:</strong> Concise, clear, and human-readable.</li>
+              <li><strong>Triggered By:</strong> <code class="inline-code">print(obj)</code>, <code class="inline-code">str(obj)</code>, and template f-strings <code class="inline-code">f'{obj}'</code>.</li>
+              <li><strong>Example Output:</strong> <br><code class="inline-code">'Account: Elon Musk (@elonmusk)'</code></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--token-type); margin-bottom: 0.75rem; font-size: 1.2rem;"><code class="inline-code">__repr__(self)</code></h3>
+            <ul class="bullet-list">
+              <li><strong>Target Audience:</strong> The software engineer, debugger, and interpreter log.</li>
+              <li><strong>Primary Goal:</strong> Unambiguous representation; ideally executable Python code.</li>
+              <li><strong>Triggered By:</strong> Interactive terminal inspection, <code class="inline-code">repr(obj)</code>, and list printing <code class="inline-code">[obj1, obj2]</code>.</li>
+              <li><strong>Example Output:</strong> <br><code class="inline-code">"TwitterAccount('Elon Musk', 'elonmusk')"</code></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 36: Synthesis & Architecture Matrix -->
+      <section class="slide" id="slide-36">
+        <div class="eyebrow">Curriculum Synthesis</div>
+        <h1 class="slide-title">Unifying Files, JSON &amp; OOP Architectures</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">How robust real-world systems synthesize object-oriented modeling with persistent storage and defensive error boundaries.</p>
+            <ul class="bullet-list">
+              <li><strong>Object Domain Models:</strong> Encapsulate flight, radar, and user data into high-integrity classes.</li>
+              <li><strong>JSON &amp; Stream Persistence:</strong> Serialize in-memory object graphs to disk via context managers.</li>
+              <li><strong>Defensive Fault Recovery:</strong> Guard file streams and network packets against runtime exceptions.</li>
+            </ul>
+          </div>
+          <div class="card" style="justify-content: center;">
+            <h4 style="color: var(--accent-cyan); margin-bottom: 0.75rem;">Aviation Software Stack</h4>
+            <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.88rem;">
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent);">
+                <strong style="color: var(--accent);">OOP Domain Layer:</strong> <code class="inline-code">class FlightRecord</code> with validation and methods
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--token-type);">
+                <strong style="color: var(--token-type);">Persistence Layer:</strong> <code class="inline-code">with open('flights.json')</code> &amp; <code class="inline-code">json.dump()</code>
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-gold);">
+                <strong style="color: var(--accent-gold);">Resilience Layer:</strong> <code class="inline-code">try / except FileNotFoundError / finally</code>
+              </div>
+            </div>
+            <div style="margin-top: 1rem; color: #858585; font-size: 0.85rem; text-align: center;">
+              Civil Aviation Training Center (CATC) • Ready for Presentation 06
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <footer>

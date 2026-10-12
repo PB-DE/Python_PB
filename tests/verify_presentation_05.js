@@ -71,3 +71,38 @@ assert((html.includes('try:') || html.includes('try</span>:')) && html.includes(
 assert((html.includes('else:') || html.includes('else</span>:')) && (html.includes('finally:') || html.includes('finally</span>:')), 'Must demonstrate complete try-except-else-finally architecture');
 
 console.log('✓ Task 2 Verification Passed for Presentation 05!');
+
+console.log('Testing Task 3: Lecture 10 Content & OOP Memory Model Vector Diagram...');
+
+// Check all 36 slides
+for (let i = 1; i <= 36; i++) {
+  assert(html.includes(`id="slide-${i}"`), `Must contain slide-${i}`);
+}
+
+// Lecture 10 title & paradigm
+assert(html.toLowerCase().includes('lecture 10') && (html.toLowerCase().includes('object-oriented') || html.toLowerCase().includes('oop')), 'Must include Lecture 10 OOP in title');
+assert(html.includes('Everything is an object') || html.includes('everything is an object'), 'Must include "Everything is an object" paradigm');
+assert(html.includes('class TwitterAccount') || html.includes('TwitterAccount'), 'Must define TwitterAccount class');
+
+// Constructor & self
+assert(html.includes('__init__'), 'Must include __init__ constructor');
+assert(html.includes('self.name') || html.includes('self.handle'), 'Must bind instance attributes via self');
+assert(html.includes('elonmusk') || html.includes('Elon Musk'), 'Must instantiate elon object');
+
+// Vector diagram in Slide 27
+assert(html.includes('Class Blueprint') && html.includes('Heap Instances'), 'Must include vector diagram for OOP blueprint vs heap instances in slide 27');
+
+// Instance methods & composition
+assert(html.includes('add_follower'), 'Must include add_follower method');
+assert(html.includes('followers[0]') || html.includes('followers'), 'Must demonstrate object composition with followers list');
+assert(html.includes('get_number_followers'), 'Must include get_number_followers computed method');
+
+// State mutation & privacy
+assert(html.includes('boo_mastodon') || html.includes('elon.handle ='), 'Must demonstrate modifying object properties');
+assert(html.includes('_userid') || html.includes('_id'), 'Must demonstrate private attribute convention with underscore');
+
+// Magic methods
+assert(html.includes('__str__'), 'Must demonstrate __str__ magic method');
+assert(html.includes('__repr__'), 'Must compare __str__ with __repr__');
+
+console.log('✓ Task 3 Verification Passed for Presentation 05!');
