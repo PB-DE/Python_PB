@@ -342,13 +342,522 @@
 
     <!-- Slides Container -->
     <div id="deck">
-      <!-- Placeholder slide for Task 1 -->
+      <!-- SLIDE 1: TITLE SLIDE -->
       <section class="slide active" id="slide-1">
-        <div class="eyebrow">Civil Aviation Training Center (CATC)</div>
-        <h1 class="slide-title">Python Programming</h1>
-        <h2 class="slide-subtitle">Lecture 1 &amp; Lecture 2 Course Presentation</h2>
-        <p class="lead">Use Arrow Keys (← / →) or Space to navigate. Press <code>F</code> for Fullscreen.</p>
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Computer Science</div>
+        <h1 class="slide-title" style="font-size: 2.8rem; margin-bottom: 0.75rem;">Lecture 1: Fundamentals of Computing</h1>
+        <h2 class="slide-subtitle" style="color: var(--accent-cyan); font-size: 1.5rem; margin-bottom: 2rem;">Introduction to Computer Architecture &amp; Representation</h2>
+        <div class="card" style="max-width: 650px; background: #252526; border-left: 4px solid var(--accent);">
+          <p style="color: #cccccc; font-size: 1.1rem; line-height: 1.7;">
+            Welcome to Python Programming. In this first lecture, we explore how digital computers represent numbers, execute instructions, and why Python has become the preeminent language of modern computing.
+          </p>
+        </div>
       </section>
+
+      <!-- SLIDE 2: REPRESENTATION WITH NUMBERS -->
+      <section class="slide" id="slide-2">
+        <div class="eyebrow">Lecture 1 • Data Representation</div>
+        <h1 class="slide-title">Representation with Numbers</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>All digital information is fundamentally represented as <strong>numbers</strong>:
+                <ul>
+                  <li><strong>Speech &amp; Audio:</strong> Sampled sound wave amplitudes over time</li>
+                  <li><strong>Images &amp; Video:</strong> Grids of pixels containing RGB numerical values</li>
+                  <li><strong>Text &amp; Documents:</strong> Character encoding sequences (ASCII / Unicode)</li>
+                  <li><strong>Physical Controls:</strong> Sensor voltages, aircraft telemetry, airspeed</li>
+                </ul>
+              </li>
+              <li style="margin-top: 0.5rem;">Representing information as numbers allows computers to perform mathematical operations to transform, filter, and process that information.</li>
+            </ul>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="font-weight: 600; color: var(--accent-gold); font-size: 0.95rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Information to Numbers</div>
+            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem;">
+              <span style="color: var(--token-str);">"CATC"</span> &rarr; <span style="color: var(--token-num);">[67, 65, 84, 67]</span> (ASCII)
+            </div>
+            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem;">
+              <span style="color: var(--token-var);">Pixel Color</span> &rarr; <span style="color: var(--token-num);">RGB(0, 122, 204)</span>
+            </div>
+            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem;">
+              <span style="color: var(--token-fn);">Microphone</span> &rarr; <span style="color: var(--token-num);">44,100 samples / sec</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: WHAT IS A NUMBER -->
+      <section class="slide" id="slide-3">
+        <div class="eyebrow">Lecture 1 • Number Systems</div>
+        <h1 class="slide-title">What is a Number?</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>A number is a sequence of digits evaluated using positional notation.</li>
+              <li>Humans naturally use a <strong>decimal (base-10)</strong> system:
+                <ul>
+                  <li>Symbols used: <code class="inline-code">{0, 1, 2, 3, 4, 5, 6, 7, 8, 9}</code></li>
+                  <li>Each position represents a power of 10 ($10^n$).</li>
+                </ul>
+              </li>
+              <li>Consider the decimal number <strong>1979</strong>:</li>
+            </ul>
+          </div>
+          <div class="card" style="background: #252526; display: flex; flex-direction: column; justify-content: center;">
+            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">Base-10 Positional Expansion</div>
+            <div style="font-family: ui-monospace, Consolas, monospace; font-size: 1.2rem; color: #ffffff; line-height: 2;">
+              1979 = 1&times;10<sup>3</sup> + 9&times;10<sup>2</sup> + 7&times;10<sup>1</sup> + 9&times;10<sup>0</sup>
+            </div>
+            <div style="font-family: ui-monospace, Consolas, monospace; font-size: 0.95rem; color: var(--token-num); margin-top: 0.5rem;">
+              = 1000 + 900 + 70 + 9 = 1979
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 4: BINARY REPRESENTATION -->
+      <section class="slide" id="slide-4">
+        <div class="eyebrow">Lecture 1 • Binary Systems</div>
+        <h1 class="slide-title">Binary Representation</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li>Computers employ a <strong>base-2 (binary)</strong> representation.</li>
+              <li>A binary digit is called a <strong>“bit”</strong> &isin; <code class="inline-code">{0, 1}</code>.</li>
+              <li>Consider the 4-bit binary number <strong>1010<sub>2</sub></strong>:
+                <div style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 0.5rem; font-family: monospace;">
+                  1010<sub>2</sub> = 1&times;2<sup>3</sup> + 0&times;2<sup>2</sup> + 1&times;2<sup>1</sup> + 0&times;2<sup>0</sup><br>
+                  = 8 + 0 + 2 + 0 = <strong style="color: var(--token-num);">10<sub>10</sub></strong>
+                </div>
+              </li>
+              <li><strong>Why binary?</strong> Simple, highly reliable electrical circuits: switch ON (high voltage) or OFF (low voltage).</li>
+            </ul>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column; gap: 1rem;">
+            <div style="font-size: 0.95rem; font-weight: 600; color: var(--accent-cyan);">Key Questions &amp; Capacity</div>
+            <div style="color: var(--text); font-size: 1rem; line-height: 1.6;">
+              <strong style="color: var(--accent-gold);">Q:</strong> What is the largest integer that can be represented with 4 bits?<br>
+              <span style="font-family: monospace; color: var(--token-num); font-size: 1.1rem; display: block; margin-top: 0.4rem;">
+                1111<sub>2</sub> = 2<sup>4</sup> &minus; 1 = 15<sub>10</sub>
+              </span>
+            </div>
+            <div style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; color: var(--text-muted);">
+              General rule: An $n$-bit unsigned integer can represent $2^n$ distinct values from $0$ up to $2^n - 1$.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 5: EQUALITY VS ASSIGNMENT -->
+      <section class="slide" id="slide-5">
+        <div class="eyebrow">Lecture 1 • Core Principles</div>
+        <h1 class="slide-title">Equality versus Assignment</h1>
+        <p class="lead">One of the most crucial mental shifts when learning computer programming.</p>
+        <div class="grid-equal">
+          <div class="card" style="border-top: 4px solid var(--accent-cyan);">
+            <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.2rem;">Mathematical Equality</h3>
+            <div style="font-family: monospace; font-size: 1.25rem; color: var(--accent-cyan); margin-bottom: 0.75rem;">x = 2</div>
+            <ul class="bullet-list" style="font-size: 1rem;">
+              <li>States an assertion of equivalence: &ldquo;x is equal to two&rdquo;.</li>
+              <li>Symmetric relationship: <code class="inline-code">2 = x</code> is an entirely valid, identical mathematical equation.</li>
+              <li>No action or state mutation occurs.</li>
+            </ul>
+          </div>
+
+          <div class="card" style="border-top: 4px solid var(--danger);">
+            <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.2rem;">Programming Assignment</h3>
+            <div style="font-family: monospace; font-size: 1.25rem; color: var(--danger); margin-bottom: 0.75rem;">x := 2 &nbsp;(in Python: x = 2)</div>
+            <ul class="bullet-list" style="font-size: 1rem;">
+              <li>An <strong>action</strong>: &ldquo;Store the value two into the variable named x&rdquo;.</li>
+              <li>Asymmetric instruction: <code class="inline-code">2 = x</code> is a <strong style="color: var(--danger);">SyntaxError</strong> (invalid statement).</li>
+              <li>The computer executes a state change in memory.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 6: DATA HIERARCHY -->
+      <section class="slide" id="slide-6">
+        <div class="eyebrow">Lecture 1 • Data Architecture</div>
+        <h1 class="slide-title">Data Hierarchy</h1>
+        <p class="lead" style="margin-bottom: 1rem;">From microscopic voltages to planetary databases:</p>
+        <div style="display: flex; flex-direction: column; gap: 0.65rem; max-width: 750px;">
+          <div style="background: #2d2d30; border-left: 5px solid #007acc; padding: 0.65rem 1.25rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 600; color: #ffffff;">Database</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">A structured collection of interrelated tables</span>
+          </div>
+          <div style="background: #28282b; border-left: 5px solid #4fc1ff; padding: 0.65rem 1.25rem; margin-left: 1.5rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 600; color: #ffffff;">Record / Row</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">A complete set of related fields (e.g. Student Profile)</span>
+          </div>
+          <div style="background: #242426; border-left: 5px solid #9cdcfe; padding: 0.65rem 1.25rem; margin-left: 3rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 600; color: #ffffff;">Field / Column</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">A meaningful data unit of characters (e.g. Student ID)</span>
+          </div>
+          <div style="background: #202022; border-left: 5px solid #b5cea8; padding: 0.65rem 1.25rem; margin-left: 4.5rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 600; color: #ffffff;">Character (Byte)</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">A group of 8 bits representing a symbol (e.g. 'A')</span>
+          </div>
+          <div style="background: #1b1b1d; border-left: 5px solid #dcdcaa; padding: 0.65rem 1.25rem; margin-left: 6rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+            <span style="font-weight: 600; color: #ffffff;">Bit (Binary Digit)</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">Physical high / low electrical voltage {0, 1}</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 7: BASIC COMPUTER ARCHITECTURE (SVG DIAGRAM) -->
+      <section class="slide" id="slide-7">
+        <div class="eyebrow">Lecture 1 • Hardware Foundation</div>
+        <h1 class="slide-title" style="margin-bottom: 0.75rem;">Basic Computer Architecture</h1>
+        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">Von Neumann model: CPU, Primary Memory, and I/O interconnected via the System Bus.</p>
+        <div style="background: #1a1a1c; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; justify-content: center; align-items: center;">
+          <svg viewBox="0 0 680 300" width="100%" height="270" style="max-height: 270px; font-family: system-ui, sans-serif;">
+            <!-- CPU Container -->
+            <rect x="30" y="30" width="220" height="200" rx="8" fill="#252526" stroke="#007acc" stroke-width="2"/>
+            <text x="140" y="55" fill="#4fc1ff" font-size="14" font-weight="700" text-anchor="middle">CENTRAL PROCESSING UNIT</text>
+            <text x="140" y="70" fill="#858585" font-size="11" text-anchor="middle">(CPU)</text>
+            
+            <rect x="45" y="85" width="190" height="42" rx="4" fill="#2d2d30" stroke="#333333"/>
+            <text x="140" y="110" fill="#d4d4d4" font-size="12" font-weight="600" text-anchor="middle">Control Unit (CU)</text>
+
+            <rect x="45" y="137" width="190" height="42" rx="4" fill="#2d2d30" stroke="#333333"/>
+            <text x="140" y="162" fill="#d4d4d4" font-size="12" font-weight="600" text-anchor="middle">Arithmetic Logic Unit (ALU)</text>
+
+            <rect x="45" y="189" width="190" height="30" rx="4" fill="#222224" stroke="#333333"/>
+            <text x="140" y="209" fill="#9cdcfe" font-size="11" text-anchor="middle">Internal Registers / Cache</text>
+
+            <!-- Memory Container -->
+            <rect x="310" y="30" width="160" height="120" rx="8" fill="#252526" stroke="#4ec9b0" stroke-width="2"/>
+            <text x="390" y="58" fill="#4ec9b0" font-size="13" font-weight="700" text-anchor="middle">PRIMARY MEMORY</text>
+            <text x="390" y="74" fill="#858585" font-size="11" text-anchor="middle">(RAM)</text>
+            <text x="390" y="105" fill="#d4d4d4" font-size="11" text-anchor="middle">Fast, Volatile Storage</text>
+            <text x="390" y="125" fill="#9cdcfe" font-size="10" text-anchor="middle">Programs &amp; Active Data</text>
+
+            <!-- Storage Container -->
+            <rect x="310" y="170" width="160" height="60" rx="8" fill="#252526" stroke="#ce9178" stroke-width="1.5"/>
+            <text x="390" y="196" fill="#ce9178" font-size="12" font-weight="600" text-anchor="middle">Secondary Storage</text>
+            <text x="390" y="214" fill="#858585" font-size="10" text-anchor="middle">SSD / Hard Disk (Non-volatile)</text>
+
+            <!-- Input/Output Container -->
+            <rect x="520" y="30" width="130" height="200" rx="8" fill="#252526" stroke="#dcdcaa" stroke-width="2"/>
+            <text x="585" y="60" fill="#dcdcaa" font-size="13" font-weight="700" text-anchor="middle">INPUT / OUTPUT</text>
+            <text x="585" y="80" fill="#858585" font-size="11" text-anchor="middle">(I/O)</text>
+            <text x="585" y="115" fill="#d4d4d4" font-size="11" text-anchor="middle">Keyboard, Mouse</text>
+            <text x="585" y="135" fill="#d4d4d4" font-size="11" text-anchor="middle">Monitors, Sensors</text>
+            <text x="585" y="155" fill="#d4d4d4" font-size="11" text-anchor="middle">Network Adapter</text>
+            <text x="585" y="175" fill="#d4d4d4" font-size="11" text-anchor="middle">Actuators</text>
+
+            <!-- System Bus Lines -->
+            <rect x="30" y="258" width="620" height="22" rx="4" fill="#007acc" opacity="0.85"/>
+            <text x="340" y="273" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1">SYSTEM BUS (CONTROL, ADDRESS &amp; DATA LINES)</text>
+
+            <!-- Bus Connectors -->
+            <line x1="140" y1="230" x2="140" y2="258" stroke="#007acc" stroke-width="3"/>
+            <line x1="390" y1="150" x2="390" y2="170" stroke="#4ec9b0" stroke-width="2"/>
+            <line x1="390" y1="230" x2="390" y2="258" stroke="#ce9178" stroke-width="3"/>
+            <line x1="585" y1="230" x2="585" y2="258" stroke="#dcdcaa" stroke-width="3"/>
+          </svg>
+        </div>
+      </section>
+
+      <!-- SLIDE 8: WHAT DO COMPUTERS DO -->
+      <section class="slide" id="slide-8">
+        <div class="eyebrow">Lecture 1 • Computing Fundamentals</div>
+        <h1 class="slide-title">What Do Computers Do?</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li><strong>Physical level:</strong> Manipulate small electrical voltages inside transistors.</li>
+              <li><strong>Instruction execution:</strong> Execute relentless sequences of simple instructions (Fetch &rarr; Decode &rarr; Execute).</li>
+              <li><strong>Binary arithmetic:</strong> Add, subtract, multiply, and divide binary numbers with ultra-high speed.</li>
+              <li><strong>Logical comparison:</strong> Compare two numbers against each other:
+                <ul>
+                  <li>Branching decisions depend directly on this comparison result.</li>
+                </ul>
+              </li>
+              <li>Every piece of software—from flight navigation to 3D video games—boils down to this core set of operations!</li>
+            </ul>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem;">
+            <div style="color: var(--accent-cyan); font-weight: 600; font-size: 1.1rem;">The Universal Truth of Computing</div>
+            <p style="color: var(--text); font-size: 1rem; line-height: 1.6;">
+              &ldquo;All software, from that which controls your refrigerator to the latest flight simulator, boils down to a relatively small set of operations on binary numbers.&rdquo;
+            </p>
+            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.85rem; color: var(--text-muted); border-left: 3px solid var(--accent-gold);">
+              Modern CPUs perform billions of these simple operations each second (Gigahertz clock speeds).
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 9: MOORE'S LAW -->
+      <section class="slide" id="slide-9">
+        <div class="eyebrow">Lecture 1 • Exponential Progress</div>
+        <h1 class="slide-title">Moore's Law</h1>
+        <p class="lead">Formulated in 1965 by Gordon Moore (co-founder of Intel):</p>
+        <div class="grid-equal">
+          <div class="card" style="border-left: 4px solid var(--accent-cyan);">
+            <h3 style="color: var(--text-bright); margin-bottom: 0.75rem;">1. Transistor Density</h3>
+            <p style="color: var(--text); font-size: 1.05rem; line-height: 1.7;">
+              The number of transistors packed onto a microchip doubles approximately <strong>every two years</strong>.
+            </p>
+            <div style="margin-top: 1rem; font-family: monospace; color: var(--token-num); font-size: 1.1rem;">
+              N(t) = N<sub>0</sub> &times; 2<sup>(t / 2)</sup>
+            </div>
+          </div>
+
+          <div class="card" style="border-left: 4px solid var(--token-num);">
+            <h3 style="color: var(--text-bright); margin-bottom: 0.75rem;">2. Economic Impact</h3>
+            <p style="color: var(--text); font-size: 1.05rem; line-height: 1.7;">
+              The manufacturing cost of an equivalent microchip roughly <strong>halves every two years</strong>.
+            </p>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
+              Applies directly to processor clock speed, program memory (RAM), and secondary SSD storage.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 10: LEVELS OF PROGRAMMING LANGUAGES -->
+      <section class="slide" id="slide-10">
+        <div class="eyebrow">Lecture 1 • Language Evolution</div>
+        <h1 class="slide-title">Levels of Programming Languages</h1>
+        <div class="grid-2col">
+          <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+            <div class="card" style="border-left: 4px solid var(--danger);">
+              <h4 style="color: var(--text-bright); font-size: 1rem;">1. Machine Language</h4>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Raw binary strings (e.g. <code>10110000 01100001</code>). Directly executable by hardware, but nearly impossible for humans to write reliably.</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--accent-gold);">
+              <h4 style="color: var(--text-bright); font-size: 1rem;">2. Assembly Language</h4>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Human-readable mnemonics (e.g. <code>MOV AL, 61h</code>). Requires an Assembler to translate 1:1 into machine language.</p>
+            </div>
+            <div class="card" style="border-left: 4px solid var(--accent-cyan);">
+              <h4 style="color: var(--text-bright); font-size: 1rem;">3. High-Level Languages</h4>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">English-like syntax, abstracted from specific CPU architectures (e.g. Python, C++, Java). Translated via compilers or interpreters.</p>
+            </div>
+          </div>
+
+          <div class="card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: #252526; border: 2px solid var(--accent);">
+            <div style="font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem;">Where does Python fit?</div>
+            <h2 style="color: var(--accent-cyan); font-size: 1.8rem; margin-bottom: 1rem;">Python is a High-Level Interpreted Language</h2>
+            <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">
+              The Python interpreter parses source code line-by-line into bytecode and executes it dynamically, maximizing developer productivity.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 11: SHALLOW VS DEEP COPY (SVG DIAGRAM) -->
+      <section class="slide" id="slide-11">
+        <div class="eyebrow">Lecture 1 • Memory Mechanics</div>
+        <h1 class="slide-title" style="margin-bottom: 0.75rem;">Shallow versus Deep Copy</h1>
+        <div class="grid-2col">
+          <div>
+            <div class="code-box" style="margin-bottom: 1rem;">
+              <div class="code-box-header"><span>Python Shell</span><span>Reference Assignment</span></div>
+              <div class="code-box-body"><span class="token-var">X</span> <span class="token-op">=</span> <span class="token-num">3.14156</span>
+<span class="token-var">Y</span> <span class="token-op">=</span> <span class="token-var">X</span></div>
+            </div>
+            <ul class="bullet-list" style="font-size: 1rem;">
+              <li>When <code class="inline-code">X = 3.14156</code> is executed, the float object is created at a specific memory location.</li>
+              <li>When <code class="inline-code">Y = X</code> is executed, Python does <strong>not</strong> duplicate the float value in memory.</li>
+              <li>Instead, <code class="inline-code">Y</code> is bound to the <em>same memory address</em> as <code class="inline-code">X</code>.</li>
+            </ul>
+          </div>
+
+          <div style="background: #1a1a1c; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Memory Reference Diagram</div>
+            <svg viewBox="0 0 320 180" width="100%" height="180" style="font-family: monospace;">
+              <!-- Variable X -->
+              <rect x="20" y="30" width="70" height="40" rx="4" fill="#2d2d30" stroke="#9cdcfe" stroke-width="1.5"/>
+              <text x="55" y="55" fill="#9cdcfe" font-size="16" font-weight="700" text-anchor="middle">X</text>
+
+              <!-- Variable Y -->
+              <rect x="20" y="110" width="70" height="40" rx="4" fill="#2d2d30" stroke="#9cdcfe" stroke-width="1.5"/>
+              <text x="55" y="135" fill="#9cdcfe" font-size="16" font-weight="700" text-anchor="middle">Y</text>
+
+              <!-- Memory Object -->
+              <rect x="180" y="60" width="120" height="60" rx="6" fill="#252526" stroke="#4ec9b0" stroke-width="2"/>
+              <text x="240" y="85" fill="#858585" font-size="10" text-anchor="middle">Address: 0x7f8a</text>
+              <text x="240" y="105" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle">3.14156</text>
+
+              <!-- Pointer Arrows -->
+              <path d="M 90,50 L 140,50 L 180,80" fill="none" stroke="#569cd6" stroke-width="2" marker-end="url(#arrow)"/>
+              <path d="M 90,130 L 140,130 L 180,100" fill="none" stroke="#569cd6" stroke-width="2"/>
+
+              <defs>
+                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#569cd6"/>
+                </marker>
+              </defs>
+            </svg>
+            <div style="font-size: 0.8rem; color: var(--accent-cyan); margin-top: 0.5rem;">Both identifiers point to the identical object!</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 12: OBJECT-ORIENTED PROGRAMMING -->
+      <section class="slide" id="slide-12">
+        <div class="eyebrow">Lecture 1 • Software Paradigms</div>
+        <h1 class="slide-title">Object-Oriented Programming (OOP)</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li><strong>Objects:</strong> Reusable, modular software components combining data and behaviors.</li>
+              <li>An object encapsulates:
+                <ul>
+                  <li><strong>Attributes:</strong> What the object <em>has</em> (its internal data/state).</li>
+                  <li><strong>Methods:</strong> What the object <em>does</em> (functions associated with it).</li>
+                </ul>
+              </li>
+              <li>Python is inherently object-oriented: in Python, <em>everything is an object</em> (numbers, strings, functions, modules).</li>
+            </ul>
+          </div>
+          <div class="card" style="border-top: 4px solid var(--accent-gold);">
+            <div style="font-weight: 700; color: #ffffff; font-size: 1.1rem; margin-bottom: 0.75rem;">Example: Bank Account Object</div>
+            <div style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px; margin-bottom: 0.75rem;">
+              <span style="color: var(--accent-cyan); font-weight: 600; font-size: 0.85rem;">ATTRIBUTES (State):</span>
+              <ul style="list-style: square; margin-left: 1.5rem; color: var(--token-var); font-size: 0.95rem; margin-top: 0.25rem;">
+                <li><code>balance = 150000.00</code></li>
+                <li><code>account_type = "Checking"</code></li>
+              </ul>
+            </div>
+            <div style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px;">
+              <span style="color: var(--token-fn); font-weight: 600; font-size: 0.85rem;">METHODS (Behaviors):</span>
+              <ul style="list-style: square; margin-left: 1.5rem; color: var(--token-fn); font-size: 0.95rem; margin-top: 0.25rem;">
+                <li><code>deposit(amount)</code></li>
+                <li><code>withdraw(amount)</code></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 13: OPERATING SYSTEMS -->
+      <section class="slide" id="slide-13">
+        <div class="eyebrow">Lecture 1 • System Software</div>
+        <h1 class="slide-title">Operating Systems</h1>
+        <p class="lead">The bridge between raw hardware and application programs.</p>
+        <div class="grid-equal">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); margin-bottom: 0.75rem; font-size: 1.2rem;">Core Responsibilities</h3>
+            <ul class="bullet-list" style="font-size: 1rem;">
+              <li>Allows different applications to execute <strong>concurrently</strong> on a single piece of hardware.</li>
+              <li>Manages CPU scheduling, RAM allocation, and file systems.</li>
+              <li>Provides hardware abstraction (device drivers for storage, displays, sensors).</li>
+            </ul>
+          </div>
+
+          <div class="card">
+            <h3 style="color: var(--accent-gold); margin-bottom: 0.75rem; font-size: 1.2rem;">Modern Platforms</h3>
+            <ul class="bullet-list" style="font-size: 1rem;">
+              <li><strong>Desktop &amp; Server:</strong>
+                <ul>
+                  <li>Linux (Servers, supercomputers, cloud infrastructure)</li>
+                  <li>Microsoft Windows (Corporate, desktop computing)</li>
+                  <li>Apple macOS (Engineering, development)</li>
+                </ul>
+              </li>
+              <li><strong>Mobile &amp; Embedded:</strong>
+                <ul>
+                  <li>Google Android (Linux kernel-based)</li>
+                  <li>Apple iOS</li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 14: WHY PYTHON -->
+      <section class="slide" id="slide-14">
+        <div class="eyebrow">Lecture 1 • Language Selection</div>
+        <h1 class="slide-title">Why Python?</h1>
+        <div class="grid-2col">
+          <div>
+            <ul class="bullet-list">
+              <li><strong>Most Popular:</strong> Consistently ranked #1 globally on the TIOBE and IEEE Spectrum indexes.</li>
+              <li><strong>Free &amp; Open Source:</strong> Zero licensing restrictions, vast community.</li>
+              <li><strong>High-Level Syntax:</strong> Clear, readable code that reads almost like executable English. Low cognitive burden on the engineer.</li>
+              <li><strong>Vast Ecosystem:</strong> Thousands of battle-tested packages:
+                <ul>
+                  <li>Data Science: NumPy, Pandas, SciPy</li>
+                  <li>Visualization: Matplotlib, Seaborn</li>
+                  <li>Aviation &amp; Machine Learning: PyTorch, Scikit-learn</li>
+                </ul>
+              </li>
+              <li>Learning Python builds strong conceptual foundations that make learning C, Rust, or Java much easier!</li>
+            </ul>
+          </div>
+          <div class="card" style="display: flex; flex-direction: column; justify-content: center; background: #252526; border-left: 4px solid var(--accent);">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Guiding Philosophy</div>
+            <blockquote style="font-style: italic; color: #ffffff; font-size: 1.15rem; line-height: 1.6; margin-bottom: 1rem;">
+              &ldquo;Readability counts. Simple is better than complex.&rdquo;
+            </blockquote>
+            <div style="font-size: 0.85rem; color: var(--accent-cyan); text-align: right;">&mdash; The Zen of Python (PEP 20)</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 15: MOORE'S LAW CODE CASE STUDY -->
+      <section class="slide" id="slide-15">
+        <div class="eyebrow">Lecture 1 • Hands-on Python Example</div>
+        <h1 class="slide-title" style="margin-bottom: 0.75rem;">Plotting Moore's Law with Python</h1>
+        <div class="grid-2col">
+          <div>
+            <div class="code-box">
+              <div class="code-box-header"><span>moores_law.py</span><span>NumPy &amp; Matplotlib</span></div>
+              <div class="code-box-body"><span class="token-com"># Import scientific libraries</span>
+<span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span> 
+<span class="token-kw">import</span> <span class="token-var">matplotlib.pyplot</span> <span class="token-kw">as</span> <span class="token-var">plt</span>
+
+<span class="token-com"># Create array of years from 0 to 100</span>
+<span class="token-var">time</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">linspace</span>(<span class="token-num">0</span>, <span class="token-num">100</span>, <span class="token-num">101</span>) 
+
+<span class="token-com"># Calculate doubling every 2 years: 2^(time/2)</span>
+<span class="token-var">n_transistors</span> <span class="token-op">=</span> <span class="token-num">2</span><span class="token-op">**</span>(<span class="token-var">time</span> <span class="token-op">/</span> <span class="token-num">2</span>)
+
+<span class="token-com"># Plot the exponential curve</span>
+<span class="token-var">plt</span>.<span class="token-fn">plot</span>(<span class="token-var">time</span>, <span class="token-var">n_transistors</span>)
+<span class="token-var">plt</span>.<span class="token-fn">show</span>()</div>
+            </div>
+          </div>
+
+          <div style="background: #1a1a1c; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Resulting Exponential Curve: transistors vs. time</div>
+            <svg viewBox="0 0 320 200" width="100%" height="200" style="font-family: sans-serif;">
+              <!-- Grid lines -->
+              <line x1="50" y1="20" x2="300" y2="20" stroke="#2d2d30" stroke-width="1"/>
+              <line x1="50" y1="60" x2="300" y2="60" stroke="#2d2d30" stroke-width="1"/>
+              <line x1="50" y1="100" x2="300" y2="100" stroke="#2d2d30" stroke-width="1"/>
+              <line x1="50" y1="140" x2="300" y2="140" stroke="#2d2d30" stroke-width="1"/>
+              
+              <!-- Axes -->
+              <line x1="50" y1="20" x2="50" y2="170" stroke="#666666" stroke-width="1.5"/>
+              <line x1="50" y1="170" x2="300" y2="170" stroke="#666666" stroke-width="1.5"/>
+
+              <!-- Axis Labels -->
+              <text x="175" y="195" fill="#858585" font-size="11" text-anchor="middle">Time (Years)</text>
+              <text x="18" y="95" fill="#858585" font-size="10" transform="rotate(-90 18,95)" text-anchor="middle">Transistors</text>
+
+              <!-- Exponential Curve -->
+              <path d="M 50,170 Q 230,165 295,30" fill="none" stroke="#38bdf8" stroke-width="3"/>
+
+              <!-- Highlight points -->
+              <circle cx="50" cy="170" r="4" fill="#38bdf8"/>
+              <circle cx="170" cy="155" r="4" fill="#38bdf8"/>
+              <circle cx="250" cy="110" r="4" fill="#38bdf8"/>
+              <circle cx="295" cy="30" r="4" fill="#f59e0b"/>
+
+              <text x="245" y="45" fill="#f59e0b" font-size="10" font-weight="600">~10¹⁵ Transistors</text>
+            </svg>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Exponential explosion in computational capacity</div>
+          </div>
+        </div>
+      </section>
+
     </div>
 
     <!-- Footer -->
