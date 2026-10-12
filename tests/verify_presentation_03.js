@@ -87,3 +87,37 @@ assert(l5Slides >= 18, `Must have at least 18 slides for L05, currently has ${l5
 
 console.log('✓ Task 2 Verification Passed for Presentation 03!');
 
+console.log('Testing Task 3: Lecture 6 Content & Venn Diagram of Set Operations...');
+
+// Lecture 6 Title & Dictionaries
+assert(html.toLowerCase().includes('lecture 6') && (html.toLowerCase().includes('dictionaries') || html.toLowerCase().includes('sets')), 'Must include Lecture 6 title');
+assert(html.includes('my_first_dictionary') || html.includes('Dictionaries') || html.includes('dictionaries'), 'Must include dictionaries introduction');
+
+// Dictionary rules & tuple keys
+assert(html.includes('(2, 3, 5, 7, 9)') || html.includes('(2,3,5,7,9)'), 'Must include tuple as dictionary key');
+assert(html.includes('presidents') && html.includes('Biden'), 'Must include presidential dictionary case study');
+assert(html.includes('pop(') || html.includes('clear()'), 'Must include dictionary modification methods');
+
+// Safe lookup with .get()
+assert(html.includes('.get(') || html.includes('get('), 'Must include get() safe lookup');
+assert(html.includes('.items()') && html.includes('.keys()') && html.includes('.values()'), 'Must include items(), keys(), and values() methods');
+
+// Dictionary comprehensions
+assert(html.includes('number**2') || html.includes('number ** 2'), 'Must include dictionary comprehension');
+
+// Sets
+assert(html.includes('Sets') || html.includes('sets'), 'Must include Sets introduction');
+assert(html.includes('issubset') || html.includes('subset'), 'Must include subset operations');
+assert(html.includes('union') && html.includes('intersection') && html.includes('difference'), 'Must include set operations union, intersection, difference');
+assert(html.includes('{4, 6, 8, 10}') || html.includes('{4,6,8,10}'), 'Must include unordered set equality check');
+
+// Venn diagram SVG
+assert((html.match(/<svg/g) || []).length >= 2, 'Must include at least 2 inline vector SVGs (Memory diagram + Venn diagram)');
+
+// Slide count >= 35
+const totalSlides = (html.match(/class="slide/g) || []).length;
+assert(totalSlides >= 35, `Must have at least 35 slides total, currently has ${totalSlides}`);
+
+console.log('✓ Task 3 Verification Passed for Presentation 03!');
+
+

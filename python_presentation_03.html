@@ -1008,6 +1008,661 @@
           </div>
         </div>
       </section>
+
+      <!-- Slide 19: Lecture 6 Title Slide -->
+      <section class="slide" id="slide-19">
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 6</div>
+        <h1 class="slide-title">Dictionaries and Sets</h1>
+        <h2 class="slide-subtitle">Associative Mappings, Hash Tables, Set Theory &amp; Venn Operations</h2>
+        <div class="grid-equal" style="margin-top: 1rem;">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 6 Curriculum</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>Dictionaries:</strong> Key-value associations, immutable key rules, and lookups</li>
+              <li><strong>Dictionary Methods:</strong> Mutating, retyping, <code class="inline-code">pop()</code>, and safe <code class="inline-code">get()</code></li>
+              <li><strong>Iteration &amp; Comprehensions:</strong> <code class="inline-code">keys()</code>, <code class="inline-code">values()</code>, <code class="inline-code">items()</code>, and dict comprehensions</li>
+              <li><strong>Sets &amp; Mathematical Operations:</strong> Uniqueness, subsets, union, intersection, and difference</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Core Design Patterns</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>$O(1)$ Hash Lookups:</strong> Instant retrieval regardless of collection scale</li>
+              <li><strong>Key Invariance:</strong> Keys must be hashable and immutable</li>
+              <li><strong>Set Algebra:</strong> Declarative data deduplication and set Venn logic</li>
+              <li><strong>Type Flexibility:</strong> Dynamic values with zero schema friction</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 20: Dictionaries Introduction -->
+      <section class="slide" id="slide-20">
+        <div class="eyebrow">Associative Mappings</div>
+        <h1 class="slide-title">Dictionaries: Key-Value Associations</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A <strong>dictionary</strong> is an associative mapping where each piece of data consists of a <strong>key</strong> and an associated <strong>value</strong>.</p>
+            <ul class="bullet-list">
+              <li><strong>Metaphor:</strong> In an English dictionary, you search for a queried word ("Loquacious") to retrieve its definition ("tending to talk a great deal").</li>
+              <li>Defined with curly braces: <code class="inline-code">{key1: val1, key2: val2}</code>.</li>
+              <li>Look up values by querying the key: <code class="inline-code">my_dict[key]</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — simple_dict.py</span><span>Dictionary Basics</span></div>
+            <div class="code-box-body"><span class="token-com"># Defining a dictionary of mathematical constants</span>
+<span class="token-var">my_first_dictionary</span> <span class="token-op">=</span> {<span class="token-str">'pi'</span>: <span class="token-num">3.1416</span>, <span class="token-str">'exp'</span>: <span class="token-num">2.7183</span>}
+
+<span class="token-com"># Retrieving values using keys</span>
+<span class="token-var">pi_val</span> <span class="token-op">=</span> <span class="token-var">my_first_dictionary</span>[<span class="token-str">'pi'</span>]
+<span class="token-var">exp_val</span> <span class="token-op">=</span> <span class="token-var">my_first_dictionary</span>[<span class="token-str">'exp'</span>]
+
+<span class="token-fn">print</span>(<span class="token-str">'Retrieved pi: '</span>, <span class="token-var">pi_val</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Retrieved exp:'</span>, <span class="token-var">exp_val</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Retrieved pi:  3.1416</div>
+              <div>Retrieved exp: 2.7183</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 21: Dictionary Rules & Key Immutability -->
+      <section class="slide" id="slide-21">
+        <div class="eyebrow">Dictionary Architecture</div>
+        <h1 class="slide-title">Dictionary Rules: Immutability of Keys</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Dictionary keys are hashed internally, imposing strict rules on what can serve as a key.</p>
+            <ul class="bullet-list">
+              <li><strong>Keys MUST be immutable:</strong> Integers, floats, strings, and tuples are valid keys.</li>
+              <li>Mutable objects (like lists) CANNOT be keys (<code class="inline-code">TypeError: unhashable type: 'list'</code>).</li>
+              <li><strong>Tuples as Keys:</strong> Group multiple attributes into a composite key, e.g., <code class="inline-code">(2, 3, 5, 7, 9): 'prime'</code>.</li>
+              <li><strong>Values have no restrictions:</strong> Any type (numbers, lists, objects) can be a value; duplicate values are allowed.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — dict_rules.py</span><span>Key Rules</span></div>
+            <div class="code-box-body"><span class="token-com"># Integer keys</span>
+<span class="token-var">dd</span> <span class="token-op">=</span> {<span class="token-num">1</span>: <span class="token-str">'one'</span>, <span class="token-num">2</span>: <span class="token-str">'two'</span>, <span class="token-num">3</span>: <span class="token-str">'three'</span>}
+<span class="token-fn">print</span>(<span class="token-str">'Key 2 lookup:'</span>, <span class="token-var">dd</span>[<span class="token-num">2</span>])
+
+<span class="token-com"># Tuples as composite immutable keys</span>
+<span class="token-var">ddd</span> <span class="token-op">=</span> {
+    (<span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">7</span>, <span class="token-num">9</span>): <span class="token-str">'prime'</span>,
+    (<span class="token-num">1</span>, <span class="token-num">4</span>, <span class="token-num">6</span>, <span class="token-num">8</span>, <span class="token-num">10</span>): <span class="token-str">'non-prime'</span>
+}
+<span class="token-fn">print</span>(<span class="token-str">'Tuple key query:'</span>, <span class="token-var">ddd</span>[(<span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">7</span>, <span class="token-num">9</span>)])</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Key 2 lookup: two</div>
+              <div>Tuple key query: prime</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 22: Adding & Overwriting Entries -->
+      <section class="slide" id="slide-22">
+        <div class="eyebrow">Mutation &amp; Retyping</div>
+        <h1 class="slide-title">Modifying Dictionaries: Additions &amp; Retyping</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Dictionaries are fully mutable. You can add entries, overwrite existing values, and dynamically change value types.</p>
+            <ul class="bullet-list">
+              <li><strong>Add / Update Syntax:</strong> <code class="inline-code">dict[key] = new_value</code></li>
+              <li>If <code class="inline-code">key</code> does not exist, a new key-value pair is inserted.</li>
+              <li>If <code class="inline-code">key</code> already exists, its previous value is replaced.</li>
+              <li>Values can change types on the fly (e.g. integer to list).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — presidents.py</span><span>Modifying Entries</span></div>
+            <div class="code-box-body"><span class="token-var">presidents</span> <span class="token-op">=</span> {
+    <span class="token-str">'Washington'</span>: <span class="token-num">1</span>,
+    <span class="token-str">'Lincoln'</span>: <span class="token-num">16</span>,
+    <span class="token-str">'Obama'</span>: <span class="token-num">44</span>,
+    <span class="token-str">'Trump'</span>: <span class="token-num">45</span>
+}
+
+<span class="token-com"># Add a new president</span>
+<span class="token-var">presidents</span>[<span class="token-str">'Biden'</span>] <span class="token-op">=</span> <span class="token-num">46</span>
+
+<span class="token-com"># Overwrite with multiple terms (retyped to list!)</span>
+<span class="token-var">presidents</span>[<span class="token-str">'Trump'</span>] <span class="token-op">=</span> [<span class="token-num">45</span>, <span class="token-num">47</span>]
+
+<span class="token-fn">print</span>(<span class="token-str">'Biden:'</span>, <span class="token-var">presidents</span>[<span class="token-str">'Biden'</span>])
+<span class="token-fn">print</span>(<span class="token-str">'Trump:'</span>, <span class="token-var">presidents</span>[<span class="token-str">'Trump'</span>])</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Biden: 46</div>
+              <div>Trump: [45, 47]</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 23: Removing Elements & Empty Dicts -->
+      <section class="slide" id="slide-23">
+        <div class="eyebrow">Lifecycle &amp; Cleanup</div>
+        <h1 class="slide-title">Removing Entries: pop(), clear(), and Empty Dicts</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Manage dictionary size using removal methods and initializers.</p>
+            <ul class="bullet-list">
+              <li><strong>Empty dictionary:</strong> Create using empty braces <code class="inline-code">dd = {}</code> or <code class="inline-code">dict()</code>.</li>
+              <li><strong><code class="inline-code">pop(key)</code>:</strong> Removes the key-value pair and returns the removed value.</li>
+              <li><strong><code class="inline-code">clear()</code>:</strong> Removes all elements from the dictionary, leaving it empty.</li>
+              <li><strong><code class="inline-code">del dict[key]</code>:</strong> Deletes the key-value pair without returning the value.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — dict_cleanup.py</span><span>Removal Methods</span></div>
+            <div class="code-box-body"><span class="token-var">presidents</span> <span class="token-op">=</span> {<span class="token-str">'Washington'</span>: <span class="token-num">1</span>, <span class="token-str">'Obama'</span>: <span class="token-num">44</span>, <span class="token-str">'Trump'</span>: <span class="token-num">45</span>}
+
+<span class="token-com"># pop() removes key and returns value</span>
+<span class="token-var">removed_val</span> <span class="token-op">=</span> <span class="token-var">presidents</span>.<span class="token-fn">pop</span>(<span class="token-str">'Trump'</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Removed value:'</span>, <span class="token-var">removed_val</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Remaining:'</span>, <span class="token-var">presidents</span>)
+
+<span class="token-com"># clear() empties dictionary completely</span>
+<span class="token-var">presidents</span>.<span class="token-fn">clear</span>()
+<span class="token-fn">print</span>(<span class="token-str">'After clear():'</span>, <span class="token-var">presidents</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Removed value: 45</div>
+              <div>Remaining: {'Washington': 1, 'Obama': 44}</div>
+              <div>After clear(): {}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 24: Safe Lookups get() vs in -->
+      <section class="slide" id="slide-24">
+        <div class="eyebrow">Defensive Programming</div>
+        <h1 class="slide-title">Safe Lookups: get() vs. Bracket Indexing &amp; in</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Querying a missing key via <code class="inline-code">dict[missing_key]</code> throws an unhandled <code class="inline-code">KeyError</code> and crashes execution.</p>
+            <ul class="bullet-list">
+              <li><strong>Method 1: Safe <code class="inline-code">get()</code>:</strong>
+                <br><code class="inline-code">dict.get(key, default)</code> returns <code class="inline-code">None</code> (or your custom fallback) if the key is not found.</li>
+              <li><strong>Method 2: Boolean <code class="inline-code">in</code> Operator:</strong>
+                <br>Checks key existence beforehand without raising errors: <code class="inline-code">if key in dict:</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — safe_lookup.py</span><span>Safe Lookups</span></div>
+            <div class="code-box-body"><span class="token-var">presidents</span> <span class="token-op">=</span> {<span class="token-str">'Lincoln'</span>: <span class="token-num">16</span>, <span class="token-str">'Washington'</span>: <span class="token-num">1</span>}
+
+<span class="token-com"># Safe lookup with .get()</span>
+<span class="token-fn">print</span>(<span class="token-str">'Lincoln:'</span>, <span class="token-var">presidents</span>.<span class="token-fn">get</span>(<span class="token-str">'Lincoln'</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Gore:   '</span>, <span class="token-var">presidents</span>.<span class="token-fn">get</span>(<span class="token-str">'Gore'</span>))  <span class="token-com"># returns None</span>
+<span class="token-fn">print</span>(<span class="token-str">'Default:'</span>, <span class="token-var">presidents</span>.<span class="token-fn">get</span>(<span class="token-str">'Gore'</span>, <span class="token-str">'Not Found'</span>))
+
+<span class="token-com"># Using in operator</span>
+<span class="token-kw">for</span> <span class="token-var">name</span> <span class="token-kw">in</span> [<span class="token-str">'Gore'</span>, <span class="token-str">'Washington'</span>]:
+    <span class="token-kw">if</span> <span class="token-var">name</span> <span class="token-kw">in</span> <span class="token-var">presidents</span>:
+        <span class="token-fn">print</span>(<span class="token-str">f'{name} is in dictionary'</span>)
+    <span class="token-kw">else</span>:
+        <span class="token-fn">print</span>(<span class="token-str">f'{name} is NOT in dictionary'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Lincoln: 16</div>
+              <div>Gore:    None</div>
+              <div>Default: Not Found</div>
+              <div>Gore is NOT in dictionary</div>
+              <div>Washington is in dictionary</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 25: Iterating Dictionaries -->
+      <section class="slide" id="slide-25">
+        <div class="eyebrow">Dictionary Iteration</div>
+        <h1 class="slide-title">Iterating: keys(), values(), and items()</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Python dictionaries provide three specialized views for sequence traversal.</p>
+            <ul class="bullet-list">
+              <li><strong style="color: var(--accent-cyan);"><code class="inline-code">dict.keys()</code>:</strong> Yields each key. Default behavior in <code class="inline-code">for k in dict:</code>.</li>
+              <li><strong style="color: var(--accent-gold);"><code class="inline-code">dict.values()</code>:</strong> Yields each value directly.</li>
+              <li><strong style="color: #4ec9b0;"><code class="inline-code">dict.items()</code>:</strong> Yields <code class="inline-code">(key, value)</code> pairs as 2-tuples, unpackable directly into variables!</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — dict_iteration.py</span><span>Iteration Views</span></div>
+            <div class="code-box-body"><span class="token-var">roman</span> <span class="token-op">=</span> {<span class="token-str">'I'</span>: <span class="token-num">1</span>, <span class="token-str">'V'</span>: <span class="token-num">5</span>, <span class="token-str">'X'</span>: <span class="token-num">10</span>}
+
+<span class="token-com"># Iterating keys</span>
+<span class="token-fn">print</span>(<span class="token-str">'Keys:'</span>, [<span class="token-var">k</span> <span class="token-kw">for</span> <span class="token-var">k</span> <span class="token-kw">in</span> <span class="token-var">roman</span>.<span class="token-fn">keys</span>()])
+
+<span class="token-com"># Iterating values</span>
+<span class="token-fn">print</span>(<span class="token-str">'Values:'</span>, [<span class="token-var">v</span> <span class="token-kw">for</span> <span class="token-var">v</span> <span class="token-kw">in</span> <span class="token-var">roman</span>.<span class="token-fn">values</span>()])
+
+<span class="token-com"># Unpacking key-value tuples with items()</span>
+<span class="token-kw">for</span> <span class="token-var">sym</span>, <span class="token-var">val</span> <span class="token-kw">in</span> <span class="token-var">roman</span>.<span class="token-fn">items</span>():
+    <span class="token-fn">print</span>(<span class="token-str">f'{sym} -&gt; {val}'</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Keys: ['I', 'V', 'X']</div>
+              <div>Values: [1, 5, 10]</div>
+              <div>I -&gt; 1</div>
+              <div>V -&gt; 5</div>
+              <div>X -&gt; 10</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 26: Dictionary Comprehensions -->
+      <section class="slide" id="slide-26">
+        <div class="eyebrow">Mapping Comprehensions</div>
+        <h1 class="slide-title">Dictionary Comprehensions: Synthesizing Maps</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Like list comprehensions, <strong>dictionary comprehensions</strong> construct mappings concisely in a single line using colon syntax.</p>
+            <ul class="bullet-list">
+              <li>Syntax: <code class="inline-code">{key_expr: val_expr for item in iterable}</code></li>
+              <li>Example: Mapping numbers to their squares:
+                <br><code class="inline-code">{number: number**2 for number in range(5)}</code></li>
+              <li>Keys can be transformed simultaneously (e.g. converting integers into strings with <code class="inline-code">str(num)</code>).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — dict_comp.py</span><span>Dict Comprehensions</span></div>
+            <div class="code-box-body"><span class="token-com"># Mapping integer to square</span>
+<span class="token-var">dd</span> <span class="token-op">=</span> {<span class="token-var">number</span>: <span class="token-var">number</span><span class="token-op">**</span><span class="token-num">2</span> <span class="token-kw">for</span> <span class="token-var">number</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">5</span>)}
+<span class="token-fn">print</span>(<span class="token-str">'Integer keys:'</span>, <span class="token-var">dd</span>)
+
+<span class="token-com"># Recreating with string keys</span>
+<span class="token-var">dd_str</span> <span class="token-op">=</span> {<span class="token-fn">str</span>(<span class="token-var">number</span>): <span class="token-var">number</span><span class="token-op">**</span><span class="token-num">2</span> <span class="token-kw">for</span> <span class="token-var">number</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">5</span>)}
+<span class="token-fn">print</span>(<span class="token-str">'String keys: '</span>, <span class="token-var">dd_str</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Integer keys: {0: 0, 1: 1, 2: 4, 3: 9, 4: 16}</div>
+              <div>String keys:  {'0': 0, '1': 1, '2': 4, '3': 9, '4': 16}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 27: Sets Introduction -->
+      <section class="slide" id="slide-27">
+        <div class="eyebrow">Set Theory</div>
+        <h1 class="slide-title">Sets: Unique, Unordered Collections</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">A <strong>set</strong> is an unordered collection of unique, immutable elements enclosed in curly braces <code class="inline-code">{...}</code>.</p>
+            <ul class="bullet-list">
+              <li><strong>Automatic Deduplication:</strong> Duplicate values are discarded instantly upon insertion.</li>
+              <li><strong>Unordered:</strong> Elements have no index; you cannot access items via <code class="inline-code">s[0]</code>!</li>
+              <li>Fast $O(1)$ membership testing with <code class="inline-code">in</code>.</li>
+              <li><code class="inline-code">len(s)</code> counts unique members.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — sets_intro.py</span><span>Set Basics</span></div>
+            <div class="code-box-body"><span class="token-com"># Defining a set</span>
+<span class="token-var">presidents</span> <span class="token-op">=</span> {<span class="token-str">'Washington'</span>, <span class="token-str">'Lincoln'</span>, <span class="token-str">'Obama'</span>, <span class="token-str">'Biden'</span>}
+
+<span class="token-fn">print</span>(<span class="token-str">'Number of items:'</span>, <span class="token-fn">len</span>(<span class="token-var">presidents</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Is Obama in set?'</span>, <span class="token-str">'Obama'</span> <span class="token-kw">in</span> <span class="token-var">presidents</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Is Bush in set? '</span>, <span class="token-str">'Bush'</span> <span class="token-kw">in</span> <span class="token-var">presidents</span>)
+
+<span class="token-com"># Automatic deduplication</span>
+<span class="token-var">duplicates</span> <span class="token-op">=</span> {<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">3</span>, <span class="token-num">3</span>}
+<span class="token-fn">print</span>(<span class="token-str">'Deduplicated:'</span>, <span class="token-var">duplicates</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Number of items: 4</div>
+              <div>Is Obama in set? True</div>
+              <div>Is Bush in set?  False</div>
+              <div>Deduplicated: {1, 2, 3}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 28: Set Construction & Type Casting -->
+      <section class="slide" id="slide-28">
+        <div class="eyebrow">Set Construction</div>
+        <h1 class="slide-title">Set Construction &amp; Type Casting: set()</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Construct sets dynamically by casting any iterable sequence using the built-in <code class="inline-code">set()</code> constructor.</p>
+            <ul class="bullet-list">
+              <li><strong style="color: var(--accent-gold);">Crucial Gotcha:</strong> Empty braces <code class="inline-code">{}</code> create an empty <em>dict</em>, NOT an empty set!</li>
+              <li>To create an empty set, you MUST write <code class="inline-code">s = set()</code>.</li>
+              <li>Casting iterables with <code class="inline-code">set(range(9))</code> or <code class="inline-code">set(my_list)</code> effortlessly removes all duplicates from a sequence.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — set_casting.py</span><span>Type Casting</span></div>
+            <div class="code-box-body"><span class="token-com"># Empty set vs. empty dict</span>
+<span class="token-var">d_empty</span> <span class="token-op">=</span> {}
+<span class="token-var">s_empty</span> <span class="token-op">=</span> <span class="token-fn">set</span>()
+<span class="token-fn">print</span>(<span class="token-str">'Type of {}:'</span>, <span class="token-fn">type</span>(<span class="token-var">d_empty</span>))
+<span class="token-fn">print</span>(<span class="token-str">'Type of set():'</span>, <span class="token-fn">type</span>(<span class="token-var">s_empty</span>))
+
+<span class="token-com"># Casting range and redundant list</span>
+<span class="token-var">integers</span> <span class="token-op">=</span> <span class="token-fn">set</span>(<span class="token-fn">range</span>(<span class="token-num">9</span>))
+<span class="token-fn">print</span>(<span class="token-str">'set(range(9)):'</span>, <span class="token-var">integers</span>)
+
+<span class="token-var">clean</span> <span class="token-op">=</span> <span class="token-fn">set</span>([<span class="token-str">'apple'</span>, <span class="token-str">'orange'</span>, <span class="token-str">'apple'</span>, <span class="token-str">'banana'</span>])
+<span class="token-fn">print</span>(<span class="token-str">'Unique fruits:'</span>, <span class="token-var">clean</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Type of {}: &lt;class 'dict'&gt;</div>
+              <div>Type of set(): &lt;class 'set'&gt;</div>
+              <div>set(range(9)): {0, 1, 2, 3, 4, 5, 6, 7, 8}</div>
+              <div>Unique fruits: {'apple', 'banana', 'orange'}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 29: Checking Subsets -->
+      <section class="slide" id="slide-29">
+        <div class="eyebrow">Set Comparisons</div>
+        <h1 class="slide-title">Checking for Subsets and Supersets</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Compare the relational inclusion between sets using operators and methods.</p>
+            <ul class="bullet-list">
+              <li><strong>Subset (<code class="inline-code">&lt;=</code> or <code class="inline-code">.issubset()</code>):</strong> Returns <code class="inline-code">True</code> if every element in set A is present in set B.</li>
+              <li><strong>Proper Subset (<code class="inline-code">&lt;</code>):</strong> True if set A is a subset of set B and $A \neq B$.</li>
+              <li><strong>Superset (<code class="inline-code">&gt;=</code> or <code class="inline-code">.issuperset()</code>):</strong> Returns <code class="inline-code">True</code> if set B contains all elements of set A.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — subsets.py</span><span>Subset Checks</span></div>
+            <div class="code-box-body"><span class="token-var">primes</span> <span class="token-op">=</span> {<span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">7</span>}
+<span class="token-var">integers</span> <span class="token-op">=</span> <span class="token-fn">set</span>(<span class="token-fn">range</span>(<span class="token-num">9</span>))  <span class="token-com"># {0, 1, 2, 3, 4, 5, 6, 7, 8}</span>
+
+<span class="token-com"># Proper subset check (&lt;)</span>
+<span class="token-kw">if</span> <span class="token-var">primes</span> <span class="token-op">&lt;</span> <span class="token-var">integers</span>:
+    <span class="token-fn">print</span>(<span class="token-str">'primes is a PROPER subset of integers'</span>)
+
+<span class="token-com"># Method check</span>
+<span class="token-fn">print</span>(<span class="token-str">'issubset():'</span>, <span class="token-var">primes</span>.<span class="token-fn">issubset</span>(<span class="token-var">integers</span>))
+<span class="token-fn">print</span>(<span class="token-str">'issuperset():'</span>, <span class="token-var">integers</span>.<span class="token-fn">issuperset</span>(<span class="token-var">primes</span>))</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>primes is a PROPER subset of integers</div>
+              <div>issubset(): True</div>
+              <div>issuperset(): True</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 30: Vector Venn Diagram -->
+      <section class="slide" id="slide-30">
+        <div class="eyebrow">Set Operations</div>
+        <h1 class="slide-title">Venn Diagram: Set Algebra Operations</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Mathematical set theory defines fundamental relational operations between sets.</p>
+            <ul class="bullet-list">
+              <li><strong>Union ($A \cup B$):</strong> All elements present in set A, set B, or both.</li>
+              <li><strong>Intersection ($A \cap B$):</strong> Elements present in <em>both</em> sets simultaneously.</li>
+              <li><strong>Difference ($A - B$):</strong> Elements belonging to set A but <em>not</em> in set B.</li>
+            </ul>
+          </div>
+          <div>
+            <svg viewBox="0 0 540 320" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
+              <defs>
+                <radialGradient id="gradA" cx="40%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#007acc" stop-opacity="0.45"/>
+                  <stop offset="100%" stop-color="#007acc" stop-opacity="0.15"/>
+                </radialGradient>
+                <radialGradient id="gradB" cx="60%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#4ec9b0" stop-opacity="0.45"/>
+                  <stop offset="100%" stop-color="#4ec9b0" stop-opacity="0.15"/>
+                </radialGradient>
+              </defs>
+
+              <text x="270" y="30" fill="#4fc1ff" font-size="14" font-weight="700" text-anchor="middle" font-family="system-ui">Venn Diagram: Set Operations</text>
+
+              <!-- Circle A -->
+              <circle cx="210" cy="155" r="105" fill="url(#gradA)" stroke="#007acc" stroke-width="2.5"/>
+              <text x="155" y="105" fill="#4fc1ff" font-size="15" font-weight="700" font-family="system-ui">Set A (Primes)</text>
+              <text x="160" y="160" fill="#ffffff" font-size="13" font-family="monospace">3, 5, 7, 11</text>
+              <text x="160" y="225" fill="#858585" font-size="11" font-family="system-ui">A - B (Difference)</text>
+
+              <!-- Circle B -->
+              <circle cx="330" cy="155" r="105" fill="url(#gradB)" stroke="#4ec9b0" stroke-width="2.5"/>
+              <text x="385" y="105" fill="#4ec9b0" font-size="15" font-weight="700" font-family="system-ui">Set B (Evens)</text>
+              <text x="380" y="160" fill="#ffffff" font-size="13" font-family="monospace">4, 6, 8, 10</text>
+              <text x="380" y="225" fill="#858585" font-size="11" font-family="system-ui">B - A (Difference)</text>
+
+              <!-- Intersection Center -->
+              <text x="270" y="150" fill="#dcdcaa" font-size="16" font-weight="700" text-anchor="middle" font-family="monospace">2</text>
+              <text x="270" y="175" fill="#dcdcaa" font-size="11" font-weight="600" text-anchor="middle" font-family="system-ui">A ∩ B (Intersection)</text>
+
+              <!-- Bottom Legend -->
+              <rect x="40" y="275" width="460" height="32" rx="6" fill="#1e1e1e" stroke="#333333" stroke-width="1"/>
+              <text x="270" y="296" fill="#d4d4d4" font-size="12" text-anchor="middle" font-family="system-ui">Union A ∪ B = All items across both circles: {2, 3, 4, 5, 6, 7, 8, 10, 11}</text>
+            </svg>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 31: Set Union -->
+      <section class="slide" id="slide-31">
+        <div class="eyebrow">Set Algebra</div>
+        <h1 class="slide-title">Set Union: Combining Sets ( | or union() )</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The <strong>union</strong> of two sets contains all elements from both sets with duplicates automatically eliminated.</p>
+            <ul class="bullet-list">
+              <li><strong>Operator syntax:</strong> <code class="inline-code">odds | evens</code></li>
+              <li><strong>Method syntax:</strong> <code class="inline-code">odds.union(evens)</code></li>
+              <li>Produces a new set containing the combined elements.</li>
+              <li>The method form accepts any iterable as argument (lists, tuples), whereas the <code class="inline-code">|</code> operator requires both operands to be sets.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — set_union.py</span><span>Union</span></div>
+            <div class="code-box-body"><span class="token-var">odds</span> <span class="token-op">=</span> {<span class="token-num">1</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">7</span>, <span class="token-num">9</span>}
+<span class="token-var">evens</span> <span class="token-op">=</span> {<span class="token-num">2</span>, <span class="token-num">4</span>, <span class="token-num">6</span>, <span class="token-num">8</span>, <span class="token-num">10</span>}
+
+<span class="token-com"># Union using pipe operator</span>
+<span class="token-var">all_numbers</span> <span class="token-op">=</span> <span class="token-var">odds</span> <span class="token-op">|</span> <span class="token-var">evens</span>
+<span class="token-fn">print</span>(<span class="token-str">'Union (|):   '</span>, <span class="token-var">all_numbers</span>)
+
+<span class="token-com"># Union using method</span>
+<span class="token-var">method_union</span> <span class="token-op">=</span> <span class="token-var">odds</span>.<span class="token-fn">union</span>(<span class="token-var">evens</span>)
+<span class="token-fn">print</span>(<span class="token-str">'union() call:'</span>, <span class="token-var">method_union</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Union (|):    {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}</div>
+              <div>union() call: {1, 2, 3, 4, 5, 6, 7, 8, 9, 10}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 32: Set Intersection -->
+      <section class="slide" id="slide-32">
+        <div class="eyebrow">Set Algebra</div>
+        <h1 class="slide-title">Set Intersection: Common Elements (&amp;)</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The <strong>intersection</strong> yields all elements that reside in <em>both</em> input sets simultaneously.</p>
+            <ul class="bullet-list">
+              <li><strong>Operator syntax:</strong> <code class="inline-code">primes &amp; evens</code></li>
+              <li><strong>Method syntax:</strong> <code class="inline-code">primes.intersection(evens)</code></li>
+              <li>Returns an empty set <code class="inline-code">set()</code> if there are no shared elements (disjoint sets).</li>
+              <li>Classic application: Finding the only even prime number (<code class="inline-code">{2}</code>).</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — set_intersection.py</span><span>Intersection</span></div>
+            <div class="code-box-body"><span class="token-var">primes</span> <span class="token-op">=</span> {<span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">7</span>, <span class="token-num">11</span>}
+<span class="token-var">evens</span> <span class="token-op">=</span> {<span class="token-num">2</span>, <span class="token-num">4</span>, <span class="token-num">6</span>, <span class="token-num">8</span>, <span class="token-num">10</span>}
+
+<span class="token-com"># Intersection with &amp; operator</span>
+<span class="token-var">even_primes</span> <span class="token-op">=</span> <span class="token-var">primes</span> <span class="token-op">&amp;</span> <span class="token-var">evens</span>
+<span class="token-fn">print</span>(<span class="token-str">'Intersection (&amp;):     '</span>, <span class="token-var">even_primes</span>)
+
+<span class="token-com"># Method syntax</span>
+<span class="token-var">shared</span> <span class="token-op">=</span> <span class="token-var">primes</span>.<span class="token-fn">intersection</span>(<span class="token-var">evens</span>)
+<span class="token-fn">print</span>(<span class="token-str">'intersection() call:'</span>, <span class="token-var">shared</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Intersection (&amp;):      {2}</div>
+              <div>intersection() call: {2}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 33: Set Difference -->
+      <section class="slide" id="slide-33">
+        <div class="eyebrow">Set Algebra</div>
+        <h1 class="slide-title">Set Difference: Exclusive Elements (-)</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">The <strong>difference</strong> outputs all elements that are in the first set but <em>not</em> in the second set.</p>
+            <ul class="bullet-list">
+              <li><strong>Operator syntax:</strong> <code class="inline-code">primes - evens</code></li>
+              <li><strong>Method syntax:</strong> <code class="inline-code">primes.difference(evens)</code></li>
+              <li><strong>Order matters:</strong> Unlike union and intersection, difference is non-commutative:
+                <br><code class="inline-code">A - B != B - A</code>.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — set_diff.py</span><span>Difference</span></div>
+            <div class="code-box-body"><span class="token-var">primes</span> <span class="token-op">=</span> {<span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">7</span>, <span class="token-num">11</span>}
+<span class="token-var">evens</span> <span class="token-op">=</span> {<span class="token-num">2</span>, <span class="token-num">4</span>, <span class="token-num">6</span>, <span class="token-num">8</span>, <span class="token-num">10</span>}
+
+<span class="token-com"># Primes that are NOT even</span>
+<span class="token-fn">print</span>(<span class="token-str">'primes - evens:'</span>, <span class="token-var">primes</span> <span class="token-op">-</span> <span class="token-var">evens</span>)
+
+<span class="token-com"># Evens that are NOT prime</span>
+<span class="token-fn">print</span>(<span class="token-str">'evens - primes:'</span>, <span class="token-var">evens</span> <span class="token-op">-</span> <span class="token-var">primes</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>primes - evens: {3, 5, 7, 11}</div>
+              <div>evens - primes: {4, 6, 8, 10}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 34: Unordered Equality & Modification -->
+      <section class="slide" id="slide-34">
+        <div class="eyebrow">Set Dynamics</div>
+        <h1 class="slide-title">Unordered Equality &amp; Modifying Elements</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Sets ignore element insertion order during equality comparison and support dynamic mutation.</p>
+            <ul class="bullet-list">
+              <li><strong>Unordered Equality:</strong> Two sets with identical elements evaluate to <code class="inline-code">True</code> regardless of element ordering:
+                <br><code class="inline-code">{4, 6, 8, 10} == {8, 10, 4, 6}</code>.</li>
+              <li><strong><code class="inline-code">add(elem)</code>:</strong> Adds an element to the set.</li>
+              <li><strong><code class="inline-code">remove(elem)</code>:</strong> Removes element; raises <code class="inline-code">KeyError</code> if not present.</li>
+              <li><strong><code class="inline-code">discard(elem)</code>:</strong> Removes element safely without raising errors if missing.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — set_mutations.py</span><span>Equality &amp; Mutation</span></div>
+            <div class="code-box-body"><span class="token-com"># Confirming unordered equality</span>
+<span class="token-var">s1</span> <span class="token-op">=</span> {<span class="token-num">4</span>, <span class="token-num">6</span>, <span class="token-num">8</span>, <span class="token-num">10</span>}
+<span class="token-var">s2</span> <span class="token-op">=</span> {<span class="token-num">8</span>, <span class="token-num">10</span>, <span class="token-num">4</span>, <span class="token-num">6</span>}
+<span class="token-fn">print</span>(<span class="token-str">'{4,6,8,10} == {8,10,4,6}:'</span>, <span class="token-var">s1</span> <span class="token-op">==</span> <span class="token-var">s2</span>)
+
+<span class="token-com"># Modifying elements</span>
+<span class="token-var">primes</span> <span class="token-op">=</span> {<span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">5</span>, <span class="token-num">7</span>}
+<span class="token-var">primes</span>.<span class="token-fn">add</span>(<span class="token-num">11</span>)
+<span class="token-fn">print</span>(<span class="token-str">'After add(11):   '</span>, <span class="token-var">primes</span>)
+
+<span class="token-var">primes</span>.<span class="token-fn">remove</span>(<span class="token-num">11</span>)
+<span class="token-fn">print</span>(<span class="token-str">'After remove(11):'</span>, <span class="token-var">primes</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>{4,6,8,10} == {8,10,4,6}: True</div>
+              <div>After add(11):    {2, 3, 5, 7, 11}</div>
+              <div>After remove(11): {2, 3, 5, 7}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 35: Set Comprehensions -->
+      <section class="slide" id="slide-35">
+        <div class="eyebrow">Set Comprehensions</div>
+        <h1 class="slide-title">Set Comprehensions: Synthesizing Math Sets</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead"><strong>Set comprehensions</strong> construct sets dynamically using mathematical set-builder notation in curly braces.</p>
+            <ul class="bullet-list">
+              <li>Syntax: <code class="inline-code">{expression for item in iterable if condition}</code></li>
+              <li>Automatically removes duplicate computed values during construction.</li>
+              <li>Generates mathematical subsets (e.g. all even numbers in a range) concisely.</li>
+            </ul>
+          </div>
+          <div class="code-box">
+            <div class="code-box-header"><span>python — set_comp.py</span><span>Set Comprehensions</span></div>
+            <div class="code-box-body"><span class="token-com"># Generating even numbers between 1 and 10</span>
+<span class="token-var">evens</span> <span class="token-op">=</span> {<span class="token-var">number</span> <span class="token-kw">for</span> <span class="token-var">number</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">11</span>) <span class="token-kw">if</span> (<span class="token-var">number</span> <span class="token-op">%</span> <span class="token-num">2</span>) <span class="token-op">==</span> <span class="token-num">0</span>}
+<span class="token-fn">print</span>(<span class="token-str">'Even set:'</span>, <span class="token-var">evens</span>)
+
+<span class="token-com"># Extracting unique word lengths from text</span>
+<span class="token-var">words</span> <span class="token-op">=</span> [<span class="token-str">'cat'</span>, <span class="token-str">'elephant'</span>, <span class="token-str">'dog'</span>, <span class="token-str">'bat'</span>, <span class="token-str">'hippopotamus'</span>]
+<span class="token-var">lengths</span> <span class="token-op">=</span> {<span class="token-fn">len</span>(<span class="token-var">w</span>) <span class="token-kw">for</span> <span class="token-var">w</span> <span class="token-kw">in</span> <span class="token-var">words</span>}
+<span class="token-fn">print</span>(<span class="token-str">'Unique lengths:'</span>, <span class="token-var">lengths</span>)</div>
+            <div class="output-box">
+              <div class="out-label">Output</div>
+              <div>Even set: {2, 4, 6, 8, 10}</div>
+              <div>Unique lengths: {3, 8, 12}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Slide 36: Course Synthesis -->
+      <section class="slide" id="slide-36">
+        <div class="eyebrow">Curriculum Synthesis</div>
+        <h1 class="slide-title">Choosing the Right Python Collection</h1>
+        <div class="grid-2col">
+          <div>
+            <p class="lead">Selecting the optimal data structure depends on mutability requirements, uniqueness constraints, and access patterns.</p>
+            <ul class="bullet-list">
+              <li><strong>Need ordered sequence with updates?</strong> Use a <code class="inline-code">list</code>.</li>
+              <li><strong>Need fixed records or dictionary keys?</strong> Use a <code class="inline-code">tuple</code>.</li>
+              <li><strong>Need fast key lookup by name or ID?</strong> Use a <code class="inline-code">dict</code>.</li>
+              <li><strong>Need fast deduplication and set algebra?</strong> Use a <code class="inline-code">set</code>.</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Comparison Matrix</h3>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.95rem;">
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-cyan);">
+                <strong style="color: var(--accent-cyan);">Lists:</strong> Ordered, mutable, indexed by integer, allows duplicates
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent);">
+                <strong style="color: var(--accent);">Tuples:</strong> Ordered, immutable, indexed by integer, hashable
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid #4ec9b0;">
+                <strong style="color: #4ec9b0);">Dictionaries:</strong> Associative key-value mapping, unique immutable keys
+              </div>
+              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-gold);">
+                <strong style="color: var(--accent-gold);">Sets:</strong> Unordered, unique elements, mathematical set theory
+              </div>
+            </div>
+            <div style="margin-top: 1rem; color: #858585; font-size: 0.85rem; text-align: center;">
+              Civil Aviation Training Center (CATC) • Ready for Lecture 7 &amp; 8
+            </div>
+          </div>
+        </div>
+      </section>
     </div>
 
     <!-- Footer -->
