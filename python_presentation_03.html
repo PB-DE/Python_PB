@@ -147,7 +147,7 @@
       margin-bottom: 0.6rem;
     }
 
-    h1.slide-title {
+    h1.slide-title, .slide-title {
       font-size: 2.4rem;
       font-weight: 700;
       color: var(--text-bright);
@@ -156,14 +156,14 @@
       letter-spacing: -0.01em;
     }
 
-    h2.slide-subtitle {
+    h2.slide-subtitle, .slide-subtitle {
       font-size: 1.4rem;
       font-weight: 500;
       color: var(--text-muted);
       margin-bottom: 2rem;
     }
 
-    p.lead {
+    p.lead, .lead {
       font-size: 1.25rem;
       line-height: 1.7;
       color: var(--text);
@@ -171,7 +171,7 @@
     }
 
     /* Bullets */
-    ul.bullet-list {
+    ul.bullet-list, .bullet-list {
       list-style: none;
       display: flex;
       flex-direction: column;
@@ -181,12 +181,12 @@
       color: var(--text);
     }
 
-    ul.bullet-list li {
+    ul.bullet-list li, .bullet-list li {
       position: relative;
       padding-left: 1.8rem;
     }
 
-    ul.bullet-list li::before {
+    ul.bullet-list li::before, .bullet-list li::before {
       content: "•";
       position: absolute;
       left: 0.4rem;
@@ -195,7 +195,7 @@
       line-height: 1.2;
     }
 
-    ul.bullet-list ul {
+    ul.bullet-list ul, .bullet-list ul {
       list-style: none;
       margin-top: 0.4rem;
       padding-left: 1.5rem;
@@ -206,7 +206,7 @@
       gap: 0.4rem;
     }
 
-    ul.bullet-list ul li::before {
+    ul.bullet-list ul li::before, .bullet-list ul li::before {
       content: "–";
       position: absolute;
       left: 0.4rem;
@@ -237,6 +237,8 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
     }
 
     /* VS Code Code Box */
@@ -265,8 +267,11 @@
 
     .code-box-body {
       padding: 1.25rem;
-      overflow-x: auto;
-      white-space: pre;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow-x: hidden;
+      tab-size: 4;
     }
 
     .output-box {
@@ -276,6 +281,10 @@
       padding: 0.75rem 1rem;
       font-size: 0.9rem;
       color: #9cdcfe;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow-x: hidden;
     }
 
     .output-box .out-label {
@@ -294,10 +303,10 @@
     .token-com { color: var(--token-com); font-style: italic; }
     .token-fn { color: var(--token-fn); }
     .token-op { color: var(--token-op); }
-    .token-type { color: var(--token-type); }
+    .token-type, .token-token-type { color: var(--token-type); }
 
     /* Inline Code Pill */
-    code.inline-code {
+    .inline-code, code.inline-code {
       background: #2d2d2d;
       color: var(--token-var);
       padding: 0.15rem 0.45rem;
@@ -346,25 +355,14 @@
         <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 5</div>
         <h1 class="slide-title">Sequences: Lists and Tuples</h1>
         <h2 class="slide-subtitle">Indexed Collections, Mutability, Slicing, Comprehensions &amp; 2D Structures</h2>
-        <div class="grid-equal" style="margin-top: 1rem;">
-          <div class="card">
-            <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 5 Agenda</h3>
-            <ul class="bullet-list" style="font-size: 1.05rem;">
-              <li><strong>Sequence Fundamentals:</strong> Indexing <code class="inline-code">[]</code>, <code class="inline-code">len()</code>, and negative offsets</li>
-              <li><strong>Containers:</strong> Mutable lists vs. immutable tuples, unpacking, and <code class="inline-code">enumerate()</code></li>
-              <li><strong>Operations:</strong> Advanced slicing, sorting, searching, and in-place mutation</li>
-              <li><strong>Functional Python:</strong> List comprehensions, <code class="inline-code">filter()</code>, <code class="inline-code">lambda</code>, and 2D matrices</li>
-            </ul>
-          </div>
-          <div class="card">
-            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Navigation &amp; Controls</h3>
-            <ul class="bullet-list" style="font-size: 1.05rem;">
-              <li><strong style="color: #ffffff;">Next Slide:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">→</kbd> or <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Space</kbd></li>
-              <li><strong style="color: #ffffff;">Previous Slide:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">←</kbd> or <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Backspace</kbd></li>
-              <li><strong style="color: #ffffff;">Fullscreen:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">F</kbd></li>
-              <li><strong style="color: #ffffff;">Fast Jump:</strong> Use <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Home</kbd> / <kbd style="background:#333; padding:2px 6px; border-radius:3px;">End</kbd> or swipe on touch screens</li>
-            </ul>
-          </div>
+        <div class="card" style="margin-top: 1.5rem; max-width: 900px;">
+          <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 5 Agenda</h3>
+          <ul class="bullet-list" style="font-size: 1.05rem;">
+            <li><strong>Sequence Fundamentals:</strong> Indexing <code class="inline-code">[]</code>, <code class="inline-code">len()</code>, and negative offsets</li>
+            <li><strong>Containers:</strong> Mutable lists vs. immutable tuples, unpacking, and <code class="inline-code">enumerate()</code></li>
+            <li><strong>Operations:</strong> Advanced slicing, sorting, searching, and in-place mutation</li>
+            <li><strong>Functional Python:</strong> List comprehensions, <code class="inline-code">filter()</code>, <code class="inline-code">lambda</code>, and 2D matrices</li>
+          </ul>
         </div>
       </section>
 

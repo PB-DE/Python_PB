@@ -9,7 +9,9 @@
       --bg: #1e1e1e;
       --code-bg: #252526;
       --card-bg: #252526;
+      --card-alt: #2d2d30;
       --border: #333333;
+      --border-focus: #007acc;
       --text: #d4d4d4;
       --text-bright: #ffffff;
       --text-muted: #858585;
@@ -56,28 +58,31 @@
       background-color: var(--bg);
       border-radius: 8px;
       overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.7);
+      border: 1px solid var(--border);
       display: flex;
       flex-direction: column;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.08);
     }
 
-    /* Progress Bar */
+    /* Top Progress Bar */
     .progress-bar-container {
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
       height: 3px;
       background: rgba(255, 255, 255, 0.05);
-      position: relative;
-      z-index: 10;
+      z-index: 50;
     }
 
     .progress-bar {
       height: 100%;
-      background: linear-gradient(90deg, var(--accent), var(--accent-cyan));
       width: 0%;
-      transition: width 0.25s ease-out;
+      background: var(--accent);
+      transition: width 0.15s ease-out;
     }
 
-    /* Deck and Slides */
+    /* Slide Deck Container */
     #deck {
       position: relative;
       flex: 1;
@@ -86,157 +91,130 @@
       overflow: hidden;
     }
 
+    /* Individual Slide */
     .slide {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      padding: 3rem 4rem 2rem 4rem;
+      inset: 0;
+      padding: 3rem 4.5rem 3.5rem;
       display: flex;
       flex-direction: column;
+      justify-content: center;
       opacity: 0;
       pointer-events: none;
       visibility: hidden;
-      transition: opacity 0.2s ease-in-out;
+      transition: opacity 0.12s ease-in-out;
+      overflow-y: auto;
     }
 
     .slide.active {
       opacity: 1;
       pointer-events: auto;
       visibility: visible;
+      z-index: 10;
     }
 
-    /* Typography */
-    .eyebrow {
-      font-size: 0.85rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: var(--accent-cyan);
-      margin-bottom: 0.4rem;
-    }
-
-    .slide-title {
-      font-size: 2.2rem;
-      font-weight: 700;
-      color: var(--text-bright);
-      line-height: 1.2;
-      margin-bottom: 0.35rem;
-      letter-spacing: -0.02em;
-    }
-
-    .slide-subtitle {
-      font-size: 1.15rem;
-      color: var(--text-muted);
-      margin-bottom: 1.5rem;
-      font-weight: 400;
-    }
-
-    .lead {
-      font-size: 1.12rem;
-      line-height: 1.55;
-      color: var(--text);
-      margin-bottom: 1rem;
-    }
-
-    .bullet-list {
-      list-style: none;
-      margin-top: 0.5rem;
-    }
-
-    .bullet-list li {
-      position: relative;
-      padding-left: 1.5rem;
-      margin-bottom: 0.85rem;
-      font-size: 1.05rem;
-      line-height: 1.5;
-      color: var(--text);
-    }
-
-    .bullet-list li::before {
-      content: "•";
+    /* Discreet Footer */
+    .slide-footer {
       position: absolute;
+      bottom: 0;
       left: 0;
-      top: -0.05rem;
-      color: var(--accent-cyan);
-      font-size: 1.3rem;
-    }
-
-    /* VS Code Code Box */
-    .code-box {
-      background-color: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      overflow: hidden;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
-      font-size: 0.96rem;
-      line-height: 1.5;
-      margin-top: 0.5rem;
-      box-shadow: 0 6px 16px rgba(0,0,0,0.3);
-    }
-
-    .code-box-header {
-      background: #1e1e1e;
-      padding: 0.45rem 1rem;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      border-bottom: 1px solid var(--border);
+      width: 100%;
+      padding: 0.75rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .code-box-body {
-      padding: 1rem 1.2rem;
-      color: #d4d4d4;
-      white-space: pre-wrap;
-      word-break: break-all;
-    }
-
-    .output-box {
-      margin-top: 0.75rem;
-      padding: 0.75rem 1rem;
-      background: #181818;
-      border-left: 3px solid var(--accent);
-      border-radius: 0 4px 4px 0;
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.88rem;
-      color: #9cdcfe;
-      line-height: 1.45;
-    }
-
-    .out-label {
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
+      font-size: 0.8rem;
       color: var(--text-muted);
-      margin-bottom: 0.25rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      background: rgba(30, 30, 30, 0.75);
+      backdrop-filter: blur(8px);
+      z-index: 40;
     }
 
-    /* Syntax Highlighting Classes */
-    .token-kw { color: var(--token-kw); font-weight: 600; }
-    .token-var { color: var(--token-var); }
-    .token-num { color: var(--token-num); }
-    .token-str { color: var(--token-str); }
-    .token-com { color: var(--token-com); font-style: italic; }
-    .token-fn { color: var(--token-fn); }
-    .token-op { color: var(--token-op); }
-    .token-type { color: var(--token-type); }
-
-    .inline-code {
-      background: #2d2d30;
-      color: #ce9178;
-      padding: 0.15rem 0.4rem;
-      border-radius: 3px;
+    .slide-counter {
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-      font-size: 0.9em;
-      border: 1px solid rgba(255, 255, 255, 0.06);
+      color: var(--text-muted);
+      font-weight: 500;
     }
 
-    /* Grids */
+    /* Slide Typography */
+    .eyebrow {
+      font-size: 0.85rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-cyan);
+      margin-bottom: 0.6rem;
+    }
+
+    h1.slide-title, .slide-title {
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      line-height: 1.2;
+      margin-bottom: 1.5rem;
+      letter-spacing: -0.01em;
+    }
+
+    h2.slide-subtitle, .slide-subtitle {
+      font-size: 1.4rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+    }
+
+    p.lead, .lead {
+      font-size: 1.25rem;
+      line-height: 1.7;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Bullets */
+    ul.bullet-list, .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      font-size: 1.15rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    ul.bullet-list li, .bullet-list li {
+      position: relative;
+      padding-left: 1.8rem;
+    }
+
+    ul.bullet-list li::before, .bullet-list li::before {
+      content: "•";
+      position: absolute;
+      left: 0.4rem;
+      color: var(--accent-cyan);
+      font-size: 1.4rem;
+      line-height: 1.2;
+    }
+
+    ul.bullet-list ul, .bullet-list ul {
+      list-style: none;
+      margin-top: 0.4rem;
+      padding-left: 1.5rem;
+      font-size: 1rem;
+      color: #b0b0b0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    ul.bullet-list ul li::before, .bullet-list ul li::before {
+      content: "–";
+      position: absolute;
+      left: 0.4rem;
+      color: var(--text-muted);
+      font-size: 1rem;
+    }
+
+    /* Layout Grids */
     .grid-2col {
       display: grid;
       grid-template-columns: 1.1fr 1fr;
@@ -253,82 +231,130 @@
       width: 100%;
     }
 
+    /* Cards */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
-      border-radius: 6px;
+      border-radius: 8px;
       padding: 1.5rem;
       display: flex;
       flex-direction: column;
     }
 
-    /* Footer Controls */
-    footer {
-      height: 48px;
-      background: #181818;
-      border-top: 1px solid var(--border);
+    /* VS Code Code Box */
+    .code-box {
+      background: var(--code-bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", "Fira Code", Consolas, monospace;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      width: 100%;
+    }
+
+    .code-box-header {
+      background: #2d2d2d;
+      padding: 0.45rem 1rem;
+      font-size: 0.75rem;
+      color: var(--text-muted);
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 1.5rem;
-      font-size: 0.85rem;
+      border-bottom: 1px solid #333333;
+    }
+
+    .code-box-body {
+      padding: 1.25rem;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow-x: hidden;
+      tab-size: 4;
+    }
+
+    .output-box {
+      margin-top: 0.75rem;
+      background: #1e1e1e;
+      border-top: 1px dashed #3c3c3c;
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      color: #9cdcfe;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow-x: hidden;
+    }
+
+    .output-box .out-label {
       color: var(--text-muted);
-      z-index: 10;
+      font-size: 0.75rem;
+      margin-bottom: 0.25rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
     }
 
-    .branding {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      letter-spacing: 0.03em;
-    }
+    /* Syntax Tokens */
+    .token-kw { color: var(--token-kw); font-weight: 500; }
+    .token-var { color: var(--token-var); }
+    .token-num { color: var(--token-num); }
+    .token-str { color: var(--token-str); }
+    .token-com { color: var(--token-com); font-style: italic; }
+    .token-fn { color: var(--token-fn); }
+    .token-op { color: var(--token-op); }
+    .token-type, .token-token-type { color: var(--token-type); }
 
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-    }
-
-    .btn {
-      background: #252526;
-      border: 1px solid #3c3c3c;
-      color: var(--text);
-      padding: 0.3rem 0.65rem;
+    /* Inline Code Pill */
+    .inline-code, code.inline-code {
+      background: #2d2d2d;
+      color: var(--token-var);
+      padding: 0.15rem 0.45rem;
       border-radius: 4px;
-      font-size: 0.8rem;
-      cursor: pointer;
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Consolas, monospace;
+      font-size: 0.95em;
+      border: 1px solid #383838;
+    }
+
+    .nav-hints {
       display: flex;
+      gap: 0.5rem;
       align-items: center;
-      gap: 0.35rem;
+    }
+
+    .nav-btn {
+      background: #2d2d2d;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      cursor: pointer;
       transition: all 0.15s ease;
     }
 
-    .btn:hover {
-      background: #333333;
+    .nav-btn:hover {
+      background: #383838;
       color: var(--text-bright);
-      border-color: #555555;
-    }
-
-    .slide-counter {
-      font-variant-numeric: tabular-nums;
-      font-weight: 600;
-      color: var(--text-bright);
-      margin-left: 0.5rem;
+      border-color: var(--accent);
     }
   </style>
 </head>
 <body>
+
   <div id="stage">
+    <!-- Progress Indicator -->
     <div class="progress-bar-container">
-      <div class="progress-bar" id="progress"></div>
+      <div id="progress" class="progress-bar"></div>
     </div>
 
+    <!-- Slides Container -->
     <div id="deck">
       <!-- Slide 1: Deck Opener -->
       <section class="slide active" id="slide-1">
         <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 9</div>
         <h1 class="slide-title">Files &amp; Exceptions</h1>
-        <div class="slide-subtitle">Data Persistence, Stream I/O, JSON Serialization &amp; Defensive Error Handling</div>
+        <h2 class="slide-subtitle">Data Persistence, Stream I/O, JSON Serialization &amp; Defensive Error Handling</h2>
         
         <div class="grid-equal" style="margin-top: 1rem;">
           <div class="card">
@@ -937,7 +963,7 @@
       <section class="slide" id="slide-19">
         <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 10</div>
         <h1 class="slide-title">Intro to Object-Oriented Programming</h1>
-        <div class="slide-subtitle">Classes, Objects, Constructors, Encapsulation &amp; Magic Methods</div>
+        <h2 class="slide-subtitle">Classes, Objects, Constructors, Encapsulation &amp; Magic Methods</h2>
         
         <div class="grid-equal" style="margin-top: 1rem;">
           <div class="card">
@@ -1505,21 +1531,22 @@
       </section>
     </div>
 
-    <footer>
-      <div class="branding">Civil Aviation Training Center (CATC)</div>
-      <div class="controls">
-        <button class="btn" id="btn-prev" onclick="SlideDeck.prev()">&#9664; Prev</button>
-        <button class="btn" id="btn-next" onclick="SlideDeck.next()">Next &#9654;</button>
-        <button class="btn" id="btn-fs" onclick="SlideDeck.toggleFullscreen()">&#x26F6; Fullscreen</button>
+    <!-- Footer -->
+    <div class="slide-footer">
+      <div>Civil Aviation Training Center (CATC)</div>
+      <div class="nav-hints">
+        <button class="nav-btn" onclick="SlideDeck.prev()">◀ Prev</button>
+        <button class="nav-btn" onclick="SlideDeck.next()">Next ▶</button>
+        <button class="nav-btn" onclick="SlideDeck.toggleFullscreen()">⛶ Fullscreen</button>
         <span id="counter" class="slide-counter">1 / 1</span>
       </div>
-    </footer>
+    </div>
   </div>
 
   <script>
-    const SlideDeck = (function() {
-      let currentIndex = 0;
+    const SlideDeck = (function () {
       let slides = [];
+      let currentIndex = 0;
       let counterEl, progressEl;
 
       function init() {
@@ -1527,34 +1554,45 @@
         counterEl = document.getElementById('counter');
         progressEl = document.getElementById('progress');
 
-        window.addEventListener('keydown', handleKeydown);
-        window.addEventListener('hashchange', handleHashChange);
-        window.addEventListener('resize', handleResize);
-
-        handleResize();
-
-        if (window.location.hash) {
-          handleHashChange();
-        } else {
-          updateView();
+        const hash = window.location.hash;
+        if (hash && hash.startsWith('#slide-')) {
+          const idx = parseInt(hash.replace('#slide-', ''), 10) - 1;
+          if (!isNaN(idx) && idx >= 0 && idx < slides.length) {
+            currentIndex = idx;
+          }
         }
+
+        updateView();
+
+        window.addEventListener('keydown', handleKeyDown);
+        window.addEventListener('hashchange', handleHashChange);
+
+        let touchStartX = 0;
+        let touchEndX = 0;
+        document.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        }, { passive: true });
+        document.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          if (touchEndX < touchStartX - 50) next();
+          if (touchEndX > touchStartX + 50) prev();
+        }, { passive: true });
       }
 
-      function handleResize() {
-        // Auto-scale 16:9 stage
-      }
-
-      function handleKeydown(e) {
+      function handleKeyDown(e) {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
-        switch(e.code) {
+
+        switch (e.code) {
           case 'ArrowRight':
           case 'Space':
-          case 'KeyL':
+          case 'PageDown':
+          case 'Enter':
             e.preventDefault();
             next();
             break;
           case 'ArrowLeft':
-          case 'KeyH':
+          case 'PageUp':
+          case 'Backspace':
             e.preventDefault();
             prev();
             break;

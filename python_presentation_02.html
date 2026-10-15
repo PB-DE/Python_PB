@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,7 +20,7 @@
       --accent-cyan: #4fc1ff;
       --accent-gold: #dcdcaa;
       --danger: #f48771;
-      
+
       /* VS Code Dark+ Syntax Tokens */
       --token-kw: #569cd6;
       --token-var: #9cdcfe;
@@ -147,7 +148,8 @@
       margin-bottom: 0.6rem;
     }
 
-    h1.slide-title {
+    h1.slide-title,
+    .slide-title {
       font-size: 2.4rem;
       font-weight: 700;
       color: var(--text-bright);
@@ -156,14 +158,16 @@
       letter-spacing: -0.01em;
     }
 
-    h2.slide-subtitle {
+    h2.slide-subtitle,
+    .slide-subtitle {
       font-size: 1.4rem;
       font-weight: 500;
       color: var(--text-muted);
       margin-bottom: 2rem;
     }
 
-    p.lead {
+    p.lead,
+    .lead {
       font-size: 1.25rem;
       line-height: 1.7;
       color: var(--text);
@@ -171,7 +175,8 @@
     }
 
     /* Bullets */
-    ul.bullet-list {
+    ul.bullet-list,
+    .bullet-list {
       list-style: none;
       display: flex;
       flex-direction: column;
@@ -181,12 +186,14 @@
       color: var(--text);
     }
 
-    ul.bullet-list li {
+    ul.bullet-list li,
+    .bullet-list li {
       position: relative;
       padding-left: 1.8rem;
     }
 
-    ul.bullet-list li::before {
+    ul.bullet-list li::before,
+    .bullet-list li::before {
       content: "•";
       position: absolute;
       left: 0.4rem;
@@ -195,7 +202,8 @@
       line-height: 1.2;
     }
 
-    ul.bullet-list ul {
+    ul.bullet-list ul,
+    .bullet-list ul {
       list-style: none;
       margin-top: 0.4rem;
       padding-left: 1.5rem;
@@ -206,7 +214,8 @@
       gap: 0.4rem;
     }
 
-    ul.bullet-list ul li::before {
+    ul.bullet-list ul li::before,
+    .bullet-list ul li::before {
       content: "–";
       position: absolute;
       left: 0.4rem;
@@ -237,6 +246,8 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
     }
 
     /* VS Code Code Box */
@@ -265,8 +276,11 @@
 
     .code-box-body {
       padding: 1.25rem;
-      overflow-x: auto;
-      white-space: pre;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow-x: hidden;
+      tab-size: 4;
     }
 
     .output-box {
@@ -276,6 +290,10 @@
       padding: 0.75rem 1rem;
       font-size: 0.9rem;
       color: #9cdcfe;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow-x: hidden;
     }
 
     .output-box .out-label {
@@ -287,16 +305,43 @@
     }
 
     /* Syntax Tokens */
-    .token-kw { color: var(--token-kw); font-weight: 500; }
-    .token-var { color: var(--token-var); }
-    .token-num { color: var(--token-num); }
-    .token-str { color: var(--token-str); }
-    .token-com { color: var(--token-com); font-style: italic; }
-    .token-fn { color: var(--token-fn); }
-    .token-op { color: var(--token-op); }
-    .token-type { color: var(--token-type); }
+    .token-kw {
+      color: var(--token-kw);
+      font-weight: 500;
+    }
+
+    .token-var {
+      color: var(--token-var);
+    }
+
+    .token-num {
+      color: var(--token-num);
+    }
+
+    .token-str {
+      color: var(--token-str);
+    }
+
+    .token-com {
+      color: var(--token-com);
+      font-style: italic;
+    }
+
+    .token-fn {
+      color: var(--token-fn);
+    }
+
+    .token-op {
+      color: var(--token-op);
+    }
+
+    .token-type,
+    .token-token-type {
+      color: var(--token-type);
+    }
 
     /* Inline Code Pill */
+    .inline-code,
     code.inline-code {
       background: #2d2d2d;
       color: var(--token-var);
@@ -331,6 +376,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div id="stage">
@@ -346,25 +392,17 @@
         <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 3</div>
         <h1 class="slide-title">Control Statements &amp; Program Development</h1>
         <h2 class="slide-subtitle">Algorithms, Selection Logic, Iterations, and Central Tendency</h2>
-        <div class="grid-equal" style="margin-top: 1rem;">
-          <div class="card">
-            <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture Overview</h3>
-            <ul class="bullet-list" style="font-size: 1.05rem;">
-              <li><strong>Algorithmic Thinking:</strong> Specifications, pseudocode, and 3-stage models</li>
-              <li><strong>Selection Statements:</strong> <code class="inline-code">if</code>, <code class="inline-code">if-elif-else</code>, truthiness, and ternary expressions</li>
-              <li><strong>Repetition Statements:</strong> <code class="inline-code">while</code> loops, <code class="inline-code">for</code> loops, and <code class="inline-code">range()</code></li>
-              <li><strong>Data &amp; Logic:</strong> Lists, augmented operators, and <code class="inline-code">statistics</code></li>
-            </ul>
-          </div>
-          <div class="card">
-            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Navigation &amp; Controls</h3>
-            <ul class="bullet-list" style="font-size: 1.05rem;">
-              <li><strong style="color: #ffffff;">Next Slide:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">→</kbd> or <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Space</kbd></li>
-              <li><strong style="color: #ffffff;">Previous Slide:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">←</kbd> or <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Backspace</kbd></li>
-              <li><strong style="color: #ffffff;">Fullscreen:</strong> Press <kbd style="background:#333; padding:2px 6px; border-radius:3px;">F</kbd></li>
-              <li><strong style="color: #ffffff;">Fast Jump:</strong> Use <kbd style="background:#333; padding:2px 6px; border-radius:3px;">Home</kbd> / <kbd style="background:#333; padding:2px 6px; border-radius:3px;">End</kbd> or swipe on touch screens</li>
-            </ul>
-          </div>
+        <div class="card" style="margin-top: 1.5rem; max-width: 900px;">
+          <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture Overview</h3>
+          <ul class="bullet-list" style="font-size: 1.05rem;">
+            <li><strong>Algorithmic Thinking:</strong> Specifications, pseudocode, and 3-stage models</li>
+            <li><strong>Selection Statements:</strong> <code class="inline-code">if</code>, <code
+                class="inline-code">if-elif-else</code>, truthiness, and ternary expressions</li>
+            <li><strong>Repetition Statements:</strong> <code class="inline-code">while</code> loops, <code
+                class="inline-code">for</code> loops, and <code class="inline-code">range()</code></li>
+            <li><strong>Data &amp; Logic:</strong> Lists, augmented operators, and <code
+                class="inline-code">statistics</code></li>
+          </ul>
         </div>
       </section>
 
@@ -374,20 +412,25 @@
         <h1 class="slide-title">Algorithms: Foundations of Computation</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">An <strong>algorithm</strong> is an unambiguous, step-by-step procedure for solving a specific problem in a finite amount of time.</p>
+            <p class="lead">An <strong>algorithm</strong> is an unambiguous, step-by-step procedure for solving a
+              specific problem in a finite amount of time.</p>
             <ul class="bullet-list">
               <li><strong>Definiteness:</strong> Every action is rigorously and precisely specified.</li>
-              <li><strong>Input &amp; Output:</strong> Accepts zero or more inputs and produces well-defined results.</li>
+              <li><strong>Input &amp; Output:</strong> Accepts zero or more inputs and produces well-defined results.
+              </li>
               <li><strong>Finiteness:</strong> Guaranteed to terminate after a countable number of execution steps.</li>
               <li><strong>Effectiveness:</strong> Operations must be feasible on physical computing machinery.</li>
             </ul>
           </div>
           <div class="card">
-            <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 0.75rem;">Why Algorithms Precede Code</h3>
-            <p style="color: var(--text); line-height: 1.6; margin-bottom: 1rem;">Writing code before clarifying the algorithm leads to spaghetti logic and obscure bugs.</p>
+            <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 0.75rem;">Why Algorithms Precede
+              Code</h3>
+            <p style="color: var(--text); line-height: 1.6; margin-bottom: 1rem;">Writing code before clarifying the
+              algorithm leads to spaghetti logic and obscure bugs.</p>
             <div style="background: #1e1e1e; padding: 1rem; border-radius: 6px; border-left: 3px solid var(--accent);">
               <div style="color: var(--accent-gold); font-weight: 600; margin-bottom: 0.35rem;">Core Principle:</div>
-              <p style="font-size: 0.95rem; color: #b0b0b0; line-height: 1.5;">Decompose the conceptual solution into logical sequences <em>first</em>; translate to Python syntax <em>second</em>.</p>
+              <p style="font-size: 0.95rem; color: #b0b0b0; line-height: 1.5;">Decompose the conceptual solution into
+                logical sequences <em>first</em>; translate to Python syntax <em>second</em>.</p>
             </div>
           </div>
         </div>
@@ -399,7 +442,8 @@
         <h1 class="slide-title">Pseudocode: Bridging Human Thought and Code</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead"><strong>Pseudocode</strong> is an artificial, informal language that helps programmers develop algorithms without getting bogged down by syntax.</p>
+            <p class="lead"><strong>Pseudocode</strong> is an artificial, informal language that helps programmers
+              develop algorithms without getting bogged down by syntax.</p>
             <ul class="bullet-list">
               <li>Reads like structured English; ignores punctuation and strict grammar.</li>
               <li>Focuses exclusively on control flow, data transformations, and boundaries.</li>
@@ -411,8 +455,8 @@
             <div class="code-box-body"><span class="token-com"># --- Informal Pseudocode ---
 # Set maximum to the first number
 # For each remaining number in the set:
-#     If number &gt; maximum:
-#         Set maximum to number
+#   If number &gt; maximum:
+#     Set maximum to number
 # Display maximum</span>
 
 <span class="token-com"># --- Python Realization ---</span>
@@ -438,58 +482,75 @@
         <h1 class="slide-title">Control Statements &amp; Branching Logic</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Normally, programs execute statements sequentially, line by line. <strong>Control statements</strong> alter this flow.</p>
+            <p class="lead">Normally, programs execute statements sequentially, line by line. <strong>Control
+                statements</strong> alter this flow.</p>
             <ul class="bullet-list">
               <li><strong>Sequence:</strong> Default step-by-step order of operations.</li>
-              <li><strong>Selection:</strong> Choose between alternative execution paths (<code class="inline-code">if</code>, <code class="inline-code">if-else</code>, <code class="inline-code">if-elif-else</code>).</li>
-              <li><strong>Repetition:</strong> Repeat execution while a condition holds (<code class="inline-code">while</code>, <code class="inline-code">for</code>).</li>
+              <li><strong>Selection:</strong> Choose between alternative execution paths (<code
+                  class="inline-code">if</code>, <code class="inline-code">if-else</code>, <code
+                  class="inline-code">if-elif-else</code>).</li>
+              <li><strong>Repetition:</strong> Repeat execution while a condition holds (<code
+                  class="inline-code">while</code>, <code class="inline-code">for</code>).</li>
             </ul>
           </div>
           <div>
-            <svg viewBox="0 0 540 320" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
+            <svg viewBox="0 0 540 320"
+              style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
               <defs>
-                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <marker id="arrow" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6"
+                  orient="auto-start-reverse">
                   <path d="M 0 1 L 10 5 L 0 9 z" fill="#007acc" />
                 </marker>
-                <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <marker id="arrow-green" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6"
+                  orient="auto-start-reverse">
                   <path d="M 0 1 L 10 5 L 0 9 z" fill="#4ec9b0" />
                 </marker>
-                <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                <marker id="arrow-red" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="6" markerHeight="6"
+                  orient="auto-start-reverse">
                   <path d="M 0 1 L 10 5 L 0 9 z" fill="#f48771" />
                 </marker>
               </defs>
 
               <!-- Entry node -->
-              <rect x="200" y="20" width="140" height="36" rx="18" fill="#1e1e1e" stroke="#007acc" stroke-width="2"/>
-              <text x="270" y="43" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle" font-family="system-ui">Entry / Code</text>
+              <rect x="200" y="20" width="140" height="36" rx="18" fill="#1e1e1e" stroke="#007acc" stroke-width="2" />
+              <text x="270" y="43" fill="#ffffff" font-size="13" font-weight="600" text-anchor="middle"
+                font-family="system-ui">Entry / Code</text>
 
-              <line x1="270" y1="56" x2="270" y2="90" stroke="#007acc" stroke-width="2" marker-end="url(#arrow)"/>
+              <line x1="270" y1="56" x2="270" y2="90" stroke="#007acc" stroke-width="2" marker-end="url(#arrow)" />
 
               <!-- Decision diamond -->
-              <polygon points="270,95 380,145 270,195 160,145" fill="#2d2d30" stroke="#4fc1ff" stroke-width="2"/>
-              <text x="270" y="142" fill="#4fc1ff" font-size="13" font-weight="600" text-anchor="middle" font-family="system-ui">Condition?</text>
-              <text x="270" y="158" fill="#858585" font-size="11" text-anchor="middle" font-family="system-ui">(True or False)</text>
+              <polygon points="270,95 380,145 270,195 160,145" fill="#2d2d30" stroke="#4fc1ff" stroke-width="2" />
+              <text x="270" y="142" fill="#4fc1ff" font-size="13" font-weight="600" text-anchor="middle"
+                font-family="system-ui">Condition?</text>
+              <text x="270" y="158" fill="#858585" font-size="11" text-anchor="middle" font-family="system-ui">(True or
+                False)</text>
 
               <!-- True branch -->
-              <line x1="380" y1="145" x2="450" y2="145" stroke="#4ec9b0" stroke-width="2"/>
-              <line x1="450" y1="145" x2="450" y2="208" stroke="#4ec9b0" stroke-width="2" marker-end="url(#arrow-green)"/>
-              <text x="410" y="137" fill="#4ec9b0" font-size="12" font-weight="700" text-anchor="middle" font-family="system-ui">True</text>
+              <line x1="380" y1="145" x2="450" y2="145" stroke="#4ec9b0" stroke-width="2" />
+              <line x1="450" y1="145" x2="450" y2="208" stroke="#4ec9b0" stroke-width="2"
+                marker-end="url(#arrow-green)" />
+              <text x="410" y="137" fill="#4ec9b0" font-size="12" font-weight="700" text-anchor="middle"
+                font-family="system-ui">True</text>
 
               <!-- True action box -->
-              <rect x="380" y="214" width="140" height="42" rx="6" fill="#1e1e1e" stroke="#4ec9b0" stroke-width="2"/>
-              <text x="450" y="239" fill="#ffffff" font-size="12" font-weight="500" text-anchor="middle" font-family="system-ui">Execute if Suite</text>
+              <rect x="380" y="214" width="140" height="42" rx="6" fill="#1e1e1e" stroke="#4ec9b0" stroke-width="2" />
+              <text x="450" y="239" fill="#ffffff" font-size="12" font-weight="500" text-anchor="middle"
+                font-family="system-ui">Execute if Suite</text>
 
               <!-- False branch -->
-              <line x1="270" y1="195" x2="270" y2="275" stroke="#f48771" stroke-width="2" marker-end="url(#arrow-red)"/>
-              <text x="285" y="215" fill="#f48771" font-size="12" font-weight="700" text-anchor="start" font-family="system-ui">False (Bypass)</text>
+              <line x1="270" y1="195" x2="270" y2="275" stroke="#f48771" stroke-width="2"
+                marker-end="url(#arrow-red)" />
+              <text x="285" y="215" fill="#f48771" font-size="12" font-weight="700" text-anchor="start"
+                font-family="system-ui">False (Bypass)</text>
 
               <!-- Merging branch -->
-              <line x1="450" y1="256" x2="450" y2="295" stroke="#4ec9b0" stroke-width="2"/>
-              <line x1="450" y1="295" x2="350" y2="295" stroke="#4ec9b0" stroke-width="2" marker-end="url(#arrow)"/>
+              <line x1="450" y1="256" x2="450" y2="295" stroke="#4ec9b0" stroke-width="2" />
+              <line x1="450" y1="295" x2="350" y2="295" stroke="#4ec9b0" stroke-width="2" marker-end="url(#arrow)" />
 
               <!-- Exit node -->
-              <rect x="190" y="275" width="160" height="36" rx="6" fill="#1e1e1e" stroke="#858585" stroke-width="2"/>
-              <text x="270" y="298" fill="#d4d4d4" font-size="13" font-weight="500" text-anchor="middle" font-family="system-ui">Next Statement</text>
+              <rect x="190" y="275" width="160" height="36" rx="6" fill="#1e1e1e" stroke="#858585" stroke-width="2" />
+              <text x="270" y="298" fill="#d4d4d4" font-size="13" font-weight="500" text-anchor="middle"
+                font-family="system-ui">Next Statement</text>
             </svg>
           </div>
         </div>
@@ -501,9 +562,11 @@
         <h1 class="slide-title">The if Statement &amp; Conditional Decisions</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">The single-selection <code class="inline-code">if</code> statement performs an action only if a condition evaluates to <code class="inline-code">True</code>.</p>
+            <p class="lead">The single-selection <code class="inline-code">if</code> statement performs an action only
+              if a condition evaluates to <code class="inline-code">True</code>.</p>
             <ul class="bullet-list">
-              <li>Header begins with keyword <code class="inline-code">if</code>, followed by a condition, ending with a colon (<code class="inline-code">:</code>).</li>
+              <li>Header begins with keyword <code class="inline-code">if</code>, followed by a condition, ending with a
+                colon (<code class="inline-code">:</code>).</li>
               <li>The indented block beneath the header is termed the <strong>suite</strong>.</li>
               <li>If condition is <code class="inline-code">False</code>, Python skips the suite completely.</li>
             </ul>
@@ -533,11 +596,14 @@
         <h1 class="slide-title">Multi-way Branching: if-elif-else</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">When a decision involves more than two mutually exclusive alternatives, use the <code class="inline-code">if elif else</code> structure.</p>
+            <p class="lead">When a decision involves more than two mutually exclusive alternatives, use the <code
+                class="inline-code">if elif else</code> structure.</p>
             <ul class="bullet-list">
               <li>Python tests conditions sequentially from top to bottom.</li>
-              <li>The <strong>first</strong> condition that evaluates to <code class="inline-code">True</code> runs its suite.</li>
-              <li>All subsequent <code class="inline-code">elif</code> and <code class="inline-code">else</code> suites are bypassed immediately.</li>
+              <li>The <strong>first</strong> condition that evaluates to <code class="inline-code">True</code> runs its
+                suite.</li>
+              <li>All subsequent <code class="inline-code">elif</code> and <code class="inline-code">else</code> suites
+                are bypassed immediately.</li>
               <li>The optional <code class="inline-code">else</code> clause acts as a fallback catch-all.</li>
             </ul>
           </div>
@@ -566,16 +632,21 @@
         <h1 class="slide-title">Truthiness in Python: Values as Booleans</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">In Python, conditions need not be strict Booleans (<code class="inline-code">True</code> or <code class="inline-code">False</code>). Any Python object can be evaluated for truth value.</p>
+            <p class="lead">In Python, conditions need not be strict Booleans (<code class="inline-code">True</code> or
+              <code class="inline-code">False</code>). Any Python object can be evaluated for truth value.</p>
             <ul class="bullet-list">
               <li><strong>Truthy values:</strong>
                 <ul>
-                  <li>Any non-zero numeric value (<code class="inline-code">12</code>, <code class="inline-code">-4</code>, <code class="inline-code">3.14</code>)</li>
-                  <li>Any non-empty string (<code class="inline-code">'Loquacious D'</code>, <code class="inline-code">' '</code>)</li>
+                  <li>Any non-zero numeric value (<code class="inline-code">12</code>, <code
+                      class="inline-code">-4</code>, <code class="inline-code">3.14</code>)</li>
+                  <li>Any non-empty string (<code class="inline-code">'Loquacious D'</code>, <code
+                      class="inline-code">' '</code>)</li>
                   <li>Non-empty lists or collections (<code class="inline-code">[1, 2]</code>)</li>
                 </ul>
               </li>
-              <li><strong>Falsy values:</strong> <code class="inline-code">0</code>, <code class="inline-code">0.0</code>, empty string <code class="inline-code">""</code>, empty list <code class="inline-code">[]</code>, and <code class="inline-code">None</code>.</li>
+              <li><strong>Falsy values:</strong> <code class="inline-code">0</code>, <code
+                  class="inline-code">0.0</code>, empty string <code class="inline-code">""</code>, empty list <code
+                  class="inline-code">[]</code>, and <code class="inline-code">None</code>.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -609,11 +680,14 @@
         <h1 class="slide-title">Suite indentation: Block Structure</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Python is renowned for using whitespace indentation rather than curly braces <code class="inline-code">{}</code> or <code class="inline-code">begin...end</code> to define block suites.</p>
+            <p class="lead">Python is renowned for using whitespace indentation rather than curly braces <code
+                class="inline-code">{}</code> or <code class="inline-code">begin...end</code> to define block suites.
+            </p>
             <ul class="bullet-list">
               <li>Standard convention: <strong>4 spaces</strong> per indentation level.</li>
               <li>Every statement in the same suite must have the exact same level of indentation.</li>
-              <li>Mismatched indentation triggers an immediate <code class="inline-code">IndentationError</code> or <code class="inline-code">TabError</code>.</li>
+              <li>Mismatched indentation triggers an immediate <code class="inline-code">IndentationError</code> or
+                <code class="inline-code">TabError</code>.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -643,11 +717,14 @@
         <h1 class="slide-title">Conditional Expressions: One-Line Ternary</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">A <strong>conditional expression</strong> (ternary operator) evaluates an expression based on a condition in a single concise line.</p>
+            <p class="lead">A <strong>conditional expression</strong> (ternary operator) evaluates an expression based
+              on a condition in a single concise line.</p>
             <ul class="bullet-list">
               <li><strong>Syntax:</strong> <code class="inline-code">true_val if condition else false_val</code></li>
-              <li>Evaluates the condition first: returns left value if <code class="inline-code">True</code>, right value if <code class="inline-code">False</code>.</li>
-              <li>Reduces 4 lines of boilerplate into an elegant single assignment: <code class="inline-code">'even' if (x % 2) == 0 else 'odd'</code>.</li>
+              <li>Evaluates the condition first: returns left value if <code class="inline-code">True</code>, right
+                value if <code class="inline-code">False</code>.</li>
+              <li>Reduces 4 lines of boilerplate into an elegant single assignment: <code
+                  class="inline-code">'even' if (x % 2) == 0 else 'odd'</code>.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -678,11 +755,14 @@
         <h1 class="slide-title">Logic errors vs. Syntax Errors</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead"><strong>Logic error:</strong> The program runs without crashing, but computes the wrong result. Logic errors are much more insidious than syntax errors.</p>
+            <p class="lead"><strong>Logic error:</strong> The program runs without crashing, but computes the wrong
+              result. Logic errors are much more insidious than syntax errors.</p>
             <ul class="bullet-list">
-              <li><strong>Syntax errors:</strong> Caught immediately by the parser before running (e.g. missing colon, typo in keyword).</li>
+              <li><strong>Syntax errors:</strong> Caught immediately by the parser before running (e.g. missing colon,
+                typo in keyword).</li>
               <li><strong>Logic errors:</strong> Valid syntax, but incorrect intention.</li>
-              <li><strong>Classic trap:</strong> Mistaking comparison <code class="inline-code">==</code> for assignment <code class="inline-code">=</code>, or vice versa!</li>
+              <li><strong>Classic trap:</strong> Mistaking comparison <code class="inline-code">==</code> for assignment
+                <code class="inline-code">=</code>, or vice versa!</li>
             </ul>
           </div>
           <div class="code-box">
@@ -699,7 +779,8 @@
             <div class="output-box">
               <div class="out-label">Output</div>
               <div>Value of x: 10</div>
-              <div style="color: #f48771; font-size: 0.8rem; margin-top: 4px;">⚠️ x remains 10 because == compares without updating the variable!</div>
+              <div style="color: #f48771; font-size: 0.8rem; margin-top: 4px;">⚠️ x remains 10 because == compares
+                without updating the variable!</div>
             </div>
           </div>
         </div>
@@ -711,11 +792,14 @@
         <h1 class="slide-title">The while Loop: Netflix Subscription Case Study</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">A <code class="inline-code">while</code> statement repeatedly executes its suite as long as its loop-continuation condition remains <code class="inline-code">True</code>.</p>
+            <p class="lead">A <code class="inline-code">while</code> statement repeatedly executes its suite as long as
+              its loop-continuation condition remains <code class="inline-code">True</code>.</p>
             <ul class="bullet-list">
-              <li><strong>Problem:</strong> A Netflix subscription starts at $7.99 in 2020 and increases by 5% annually (<code class="inline-code">rate_of_increase = 0.05</code>).</li>
+              <li><strong>Problem:</strong> A Netflix subscription starts at $7.99 in 2020 and increases by 5% annually
+                (<code class="inline-code">rate_of_increase = 0.05</code>).</li>
               <li>Determine in what year the subscription will exceed $20.00.</li>
-              <li><strong>Requirement:</strong> The suite must modify the condition variables to avoid infinite loops!</li>
+              <li><strong>Requirement:</strong> The suite must modify the condition variables to avoid infinite loops!
+              </li>
             </ul>
           </div>
           <div class="code-box">
@@ -745,7 +829,8 @@
         <h1 class="slide-title">Formatting Strings (f-strings) for Clean Output</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Formatted string literals (f-strings) let you embed expressions and precision specifiers cleanly inside string literals.</p>
+            <p class="lead">Formatted string literals (f-strings) let you embed expressions and precision specifiers
+              cleanly inside string literals.</p>
             <ul class="bullet-list">
               <li>Prefixed by <code class="inline-code">f</code> before quotation marks.</li>
               <li>Expressions inside <code class="inline-code">{}</code> are evaluated at runtime.</li>
@@ -785,11 +870,15 @@
         <h1 class="slide-title">The for loop &amp; range() Function</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">The <code class="inline-code">for</code> statement provides sequence-controlled iteration, running its suite once for each item in an iterable.</p>
+            <p class="lead">The <code class="inline-code">for</code> statement provides sequence-controlled iteration,
+              running its suite once for each item in an iterable.</p>
             <ul class="bullet-list">
-              <li><code class="inline-code">range(stop)</code> produces integers from <code class="inline-code">0</code> up to <code class="inline-code">stop - 1</code>.</li>
-              <li><code class="inline-code">range(start, stop)</code> produces integers from <code class="inline-code">start</code> up to <code class="inline-code">stop - 1</code>.</li>
-              <li><code class="inline-code">range(start, stop, step)</code> increments by <code class="inline-code">step</code>.</li>
+              <li><code class="inline-code">range(stop)</code> produces integers from <code class="inline-code">0</code>
+                up to <code class="inline-code">stop - 1</code>.</li>
+              <li><code class="inline-code">range(start, stop)</code> produces integers from <code
+                  class="inline-code">start</code> up to <code class="inline-code">stop - 1</code>.</li>
+              <li><code class="inline-code">range(start, stop, step)</code> increments by <code
+                  class="inline-code">step</code>.</li>
               <li>Python's indexing and ranges are zero-based and stop value is always exclusive.</li>
             </ul>
           </div>
@@ -799,7 +888,7 @@
 <span class="token-fn">print</span>(<span class="token-str">'range(6):'</span>)
 <span class="token-kw">for</span> <span class="token-var">i</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">6</span>):
     <span class="token-fn">print</span>(<span class="token-var">i</span>, <span class="token-var">end</span><span class="token-op">=</span><span class="token-str">' '</span>)
-<span class="token-fn">print</span>()
+
 
 <span class="token-com"># range with start, stop, step</span>
 <span class="token-fn">print</span>(<span class="token-str">'range(1, 10, 2):'</span>)
@@ -820,17 +909,20 @@
         <h1 class="slide-title">Iterables and lists: Traversing Collections</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">A <strong>list</strong> in Python is an ordered, mutable sequence of items delimited by square brackets <code class="inline-code">[...]</code>.</p>
+            <p class="lead">A <strong>list</strong> in Python is an ordered, mutable sequence of items delimited by
+              square brackets <code class="inline-code">[...]</code>.</p>
             <ul class="bullet-list">
-              <li>Lists are <strong>iterables</strong>: they can be passed directly to a <code class="inline-code">for</code> loop.</li>
-              <li>No need for manual indexing variables like <code class="inline-code">i</code>: Python assigns each element directly to the target variable.</li>
+              <li>Lists are <strong>iterables</strong>: they can be passed directly to a <code
+                  class="inline-code">for</code> loop.</li>
+              <li>No need for manual indexing variables like <code class="inline-code">i</code>: Python assigns each
+                element directly to the target variable.</li>
               <li>Iterates over arbitrary types (integers, floats, strings, objects).</li>
             </ul>
           </div>
           <div class="code-box">
             <div class="code-box-header"><span>python — list_iteration.py</span><span>Iterables</span></div>
             <div class="code-box-body"><span class="token-com"># Defining an integer list</span>
-<span class="token-var">my_first_list</span> <span class="token-op">=</span> [<span class="token-op">-</span><span class="token-num">3</span>, <span class="token-num">2</span>, <span class="token-op">-</span><span class="token-num">5</span>, <span class="token-num">4</span>, <span class="token-num">0</span>]
+<span class="token-var">my_first_list</span> <span class="token-op">=</span> [-<span class="token-num">3</span>, <span class="token-num">2</span>, -<span class="token-num">5</span>, <span class="token-num">4</span>, <span class="token-num">0</span>]
 
 <span class="token-com"># Direct traversal</span>
 <span class="token-kw">for</span> <span class="token-var">item</span> <span class="token-kw">in</span> <span class="token-var">my_first_list</span>:
@@ -853,14 +945,20 @@
         <h1 class="slide-title">Augmented expressions &amp; Initializations</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Augmented assignment operators abbreviate common update patterns: <code class="inline-code">+=</code>, <code class="inline-code">-=</code>, <code class="inline-code">*=</code>, <code class="inline-code">/=</code>.</p>
+            <p class="lead">Augmented assignment operators abbreviate common update patterns: <code
+                class="inline-code">+=</code>, <code class="inline-code">-=</code>, <code class="inline-code">*=</code>,
+              <code class="inline-code">/=</code>.</p>
             <ul class="bullet-list">
-              <li><code class="inline-code">running_sum += item</code> replaces <code class="inline-code">running_sum = running_sum + item</code>.</li>
-              <li><code class="inline-code">running_product *= item</code> replaces <code class="inline-code">running_product = running_product * item</code>.</li>
-              <li><strong style="color: var(--accent-gold);">Key Interview Question:</strong> Why initialize <code class="inline-code">running_product = 1</code> instead of <code class="inline-code">0</code>?
+              <li><code class="inline-code">running_sum += item</code> replaces <code
+                  class="inline-code">running_sum = running_sum + item</code>.</li>
+              <li><code class="inline-code">running_product *= item</code> replaces <code
+                  class="inline-code">running_product = running_product * item</code>.</li>
+              <li><strong style="color: var(--accent-gold);">Key Interview Question:</strong> Why initialize <code
+                  class="inline-code">running_product = 1</code> instead of <code class="inline-code">0</code>?
                 <ul>
                   <li>0 is the additive identity ($x + 0 = x$).</li>
-                  <li>1 is the multiplicative identity ($x \times 1 = x$). Multiplying by 0 collapses the entire product to 0!</li>
+                  <li>1 is the multiplicative identity ($x \times 1 = x$). Multiplying by 0 collapses the entire product
+                    to 0!</li>
                 </ul>
               </li>
             </ul>
@@ -896,10 +994,12 @@
           <div>
             <p class="lead">Structured algorithm development organizes code into three distinct stages:</p>
             <ul class="bullet-list">
-              <li><strong>1. Initialization:</strong> Establish starting variables, accumulators, and input parameters.</li>
+              <li><strong>1. Initialization:</strong> Establish starting variables, accumulators, and input parameters.
+              </li>
               <li><strong>2. Processing:</strong> The core loop executing transformations and applying logic.</li>
               <li><strong>3. Termination:</strong> Format results, display outputs, or return values.</li>
-              <li><strong>Fibonacci Sequence:</strong> $F_n = F_{n-1} + F_{n-2}$, starting with $0, 1, 1, 2, 3, 5, 8, 13\dots$</li>
+              <li><strong>Fibonacci Sequence:</strong> $F_n = F_{n-1} + F_{n-2}$, starting with $0, 1, 1, 2, 3, 5, 8,
+                13\dots$</li>
             </ul>
           </div>
           <div class="code-box">
@@ -932,10 +1032,14 @@
         <h1 class="slide-title">Algorithm Refinement &amp; break / continue</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead"><strong>Refinement:</strong> Top-down design where a problem begins with a high-level description (first refinement) and is progressively fleshed out into concrete code (second refinement).</p>
+            <p class="lead"><strong>Refinement:</strong> Top-down design where a problem begins with a high-level
+              description (first refinement) and is progressively fleshed out into concrete code (second refinement).
+            </p>
             <ul class="bullet-list">
-              <li><strong><code class="inline-code">break</code> statement:</strong> Immediately terminates loop execution and jumps to the statement following the loop.</li>
-              <li><strong><code class="inline-code">continue</code> statement:</strong> Immediately aborts the <em>current</em> iteration and proceeds to the next iteration.</li>
+              <li><strong><code class="inline-code">break</code> statement:</strong> Immediately terminates loop
+                execution and jumps to the statement following the loop.</li>
+              <li><strong><code class="inline-code">continue</code> statement:</strong> Immediately aborts the
+                <em>current</em> iteration and proceeds to the next iteration.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -950,7 +1054,7 @@
 
 <span class="token-com"># continue: skip negative values</span>
 <span class="token-var">running_sum</span> <span class="token-op">=</span> <span class="token-num">0</span>
-<span class="token-kw">for</span> <span class="token-var">x</span> <span class="token-kw">in</span> [<span class="token-num">10</span>, <span class="token-op">-</span><span class="token-num">5</span>, <span class="token-num">20</span>, <span class="token-op">-</span><span class="token-num">8</span>, <span class="token-num">30</span>]:
+<span class="token-kw">for</span> <span class="token-var">x</span> <span class="token-kw">in</span> [<span class="token-num">10</span>, -<span class="token-num">5</span>, <span class="token-num">20</span>, -<span class="token-num">8</span>, <span class="token-num">30</span>]:
     <span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">&lt;</span> <span class="token-num">0</span>:
         <span class="token-kw">continue</span>  <span class="token-com"># Skips rest of suite</span>
     <span class="token-var">running_sum</span> <span class="token-op">+=</span> <span class="token-var">x</span>
@@ -970,7 +1074,8 @@
         <h1 class="slide-title">Boolean operators &amp; Central Tendency</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Combine complex logical conditions with <strong>Boolean operators</strong> and summarize datasets with Python's <code class="inline-code">statistics</code> module.</p>
+            <p class="lead">Combine complex logical conditions with <strong>Boolean operators</strong> and summarize
+              datasets with Python's <code class="inline-code">statistics</code> module.</p>
             <ul class="bullet-list">
               <li><code class="inline-code">and</code>: Both operands must be true.</li>
               <li><code class="inline-code">or</code>: At least one operand must be true.</li>
@@ -978,7 +1083,8 @@
               <li><strong>Measures of Central Tendency:</strong>
                 <ul>
                   <li><code class="inline-code">statistics.mean()</code>: Arithmetic average.</li>
-                  <li><code class="inline-code">statistics.median()</code>: Middle score; resistant to extreme outliers!</li>
+                  <li><code class="inline-code">statistics.median()</code>: Middle score; resistant to extreme outliers!
+                  </li>
                   <li><code class="inline-code">statistics.mode()</code>: Most frequent value.</li>
                 </ul>
               </li>
@@ -995,15 +1101,15 @@
 
 <span class="token-com"># Central tendency with outliers</span>
 <span class="token-var">salaries</span> <span class="token-op">=</span> [<span class="token-num">30000</span>, <span class="token-num">32000</span>, <span class="token-num">31000</span>, <span class="token-num">35000</span>, <span class="token-num">500000</span>]
-<span class="token-fn">print</span>(<span class="token-str">f'Mean:   ${statistics.mean(salaries):0.2f}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Mean: ${statistics.mean(salaries):0.2f}'</span>)
 <span class="token-fn">print</span>(<span class="token-str">f'Median: ${statistics.median(salaries):0.2f}'</span>)
-<span class="token-fn">print</span>(<span class="token-str">f'Mode:   {statistics.mode([1, 2, 2, 3, 4])}'</span>)</div>
+<span class="token-fn">print</span>(<span class="token-str">f'Mode: {statistics.mode([1, 2, 2, 3, 4])}'</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
               <div>36 is divisible by both 2 and 3</div>
-              <div>Mean:   $125600.00</div>
+              <div>Mean: $125600.00</div>
               <div>Median: $32000.00</div>
-              <div>Mode:   2</div>
+              <div>Mode: 2</div>
             </div>
           </div>
         </div>
@@ -1018,17 +1124,22 @@
           <div class="card">
             <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 4 Curriculum</h3>
             <ul class="bullet-list" style="font-size: 1.05rem;">
-              <li><strong>Function Anatomy:</strong> The <code class="inline-code">def</code> keyword, arguments, and <code class="inline-code">return</code></li>
-              <li><strong>Simulation:</strong> <code class="inline-code">random</code> module, rolling dice, and tuple unpacking</li>
-              <li><strong>Standard Library:</strong> <code class="inline-code">math</code> module, default parameters, and keyword arguments</li>
-              <li><strong>Memory &amp; Scope:</strong> Local vs. global namespaces, <code class="inline-code">global</code> keyword, and object references</li>
+              <li><strong>Function Anatomy:</strong> The <code class="inline-code">def</code> keyword, arguments, and
+                <code class="inline-code">return</code></li>
+              <li><strong>Simulation:</strong> <code class="inline-code">random</code> module, rolling dice, and tuple
+                unpacking</li>
+              <li><strong>Standard Library:</strong> <code class="inline-code">math</code> module, default parameters,
+                and keyword arguments</li>
+              <li><strong>Memory &amp; Scope:</strong> Local vs. global namespaces, <code
+                  class="inline-code">global</code> keyword, and object references</li>
             </ul>
           </div>
           <div class="card">
             <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Key Takeaways</h3>
             <ul class="bullet-list" style="font-size: 1.05rem;">
               <li><strong>DRY Principle:</strong> Don't Repeat Yourself — encapsulate logic into reusable units</li>
-              <li><strong>Black-Box Abstraction:</strong> Separate <em>what</em> a function does from <em>how</em> it computes</li>
+              <li><strong>Black-Box Abstraction:</strong> Separate <em>what</em> a function does from <em>how</em> it
+                computes</li>
               <li><strong>Tuple Returns:</strong> Seamlessly return multiple outputs with unpacking</li>
               <li><strong>Scope Safety:</strong> Protect state by respecting variable lifetimes</li>
             </ul>
@@ -1042,25 +1153,36 @@
         <h1 class="slide-title">Functions: A Key Ingredient of Programs</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead"><strong>Functions</strong> are self-contained blocks of code designed to perform a specific computational task.</p>
+            <p class="lead"><strong>Functions</strong> are self-contained blocks of code designed to perform a specific
+              computational task.</p>
             <ul class="bullet-list">
               <li><strong>Reusability:</strong> Write once, test once, call everywhere throughout your codebase.</li>
-              <li><strong>Decomposition:</strong> Break down large, intimidating problems into manageable sub-tasks.</li>
-              <li><strong>Abstraction:</strong> Callers only need to know required inputs and returned outputs, not inner implementation details.</li>
+              <li><strong>Decomposition:</strong> Break down large, intimidating problems into manageable sub-tasks.
+              </li>
+              <li><strong>Abstraction:</strong> Callers only need to know required inputs and returned outputs, not
+                inner implementation details.</li>
             </ul>
           </div>
           <div class="card">
             <h3 style="color: var(--accent-cyan); font-size: 1.1rem; margin-bottom: 0.75rem;">The Black-Box Model</h3>
-            <div style="background: #1e1e1e; border: 1px solid #333333; border-radius: 6px; padding: 1.25rem; text-align: center; margin-bottom: 1rem;">
+            <div
+              style="background: #1e1e1e; border: 1px solid #333333; border-radius: 6px; padding: 1.25rem; text-align: center; margin-bottom: 1rem;">
               <div style="display: flex; justify-content: space-around; align-items: center; font-size: 0.95rem;">
-                <div style="background: #252526; padding: 0.5rem 0.8rem; border-radius: 4px; border: 1px solid var(--accent-cyan); color: var(--accent-cyan);">Inputs<br><small style="color:#858585;">(Arguments)</small></div>
+                <div
+                  style="background: #252526; padding: 0.5rem 0.8rem; border-radius: 4px; border: 1px solid var(--accent-cyan); color: var(--accent-cyan);">
+                  Inputs<br><small style="color:#858585;">(Arguments)</small></div>
                 <div style="color: var(--text-muted); font-size: 1.2rem;">➔</div>
-                <div style="background: #252526; padding: 0.6rem 1rem; border-radius: 4px; border: 1px solid var(--accent); color: #ffffff; font-weight: 600;">Function<br><small style="color:var(--accent-gold);">Process / Logic</small></div>
+                <div
+                  style="background: #252526; padding: 0.6rem 1rem; border-radius: 4px; border: 1px solid var(--accent); color: #ffffff; font-weight: 600;">
+                  Function<br><small style="color:var(--accent-gold);">Process / Logic</small></div>
                 <div style="color: var(--text-muted); font-size: 1.2rem;">➔</div>
-                <div style="background: #252526; padding: 0.5rem 0.8rem; border-radius: 4px; border: 1px solid #4ec9b0; color: #4ec9b0;">Output<br><small style="color:#858585;">(return value)</small></div>
+                <div
+                  style="background: #252526; padding: 0.5rem 0.8rem; border-radius: 4px; border: 1px solid #4ec9b0; color: #4ec9b0;">
+                  Output<br><small style="color:#858585;">(return value)</small></div>
               </div>
             </div>
-            <p style="font-size: 0.95rem; color: #b0b0b0; line-height: 1.5;">Functions insulate callers from algorithmic complexity, creating cleaner, modular systems.</p>
+            <p style="font-size: 0.95rem; color: #b0b0b0; line-height: 1.5;">Functions insulate callers from algorithmic
+              complexity, creating cleaner, modular systems.</p>
           </div>
         </div>
       </section>
@@ -1071,9 +1193,11 @@
         <h1 class="slide-title">Defining Functions: The def Keyword</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">The <code class="inline-code">def</code> keyword informs Python that you are defining a new callable function.</p>
+            <p class="lead">The <code class="inline-code">def</code> keyword informs Python that you are defining a new
+              callable function.</p>
             <ul class="bullet-list">
-              <li>Header begins with <code class="inline-code">def</code>, followed by the function name, parameter list in parentheses, and a colon (<code class="inline-code">:</code>).</li>
+              <li>Header begins with <code class="inline-code">def</code>, followed by the function name, parameter list
+                in parentheses, and a colon (<code class="inline-code">:</code>).</li>
               <li>The indented body suite runs whenever the function is invoked.</li>
               <li>The <code class="inline-code">return</code> statement sends a computed value back to the caller.</li>
               <li><strong>Example:</strong> Absolute value function <code class="inline-code">my_abs(x)</code>.</li>
@@ -1084,13 +1208,13 @@
             <div class="code-box-body"><span class="token-kw">def</span> <span class="token-fn">my_abs</span>(<span class="token-var">x</span>):
     <span class="token-str">"""Return the absolute value of x."""</span>
     <span class="token-kw">if</span> <span class="token-var">x</span> <span class="token-op">&lt;</span> <span class="token-num">0</span>:
-        <span class="token-kw">return</span> <span class="token-op">-</span><span class="token-var">x</span>
+        <span class="token-kw">return</span> -<span class="token-var">x</span>
     <span class="token-kw">else</span>:
         <span class="token-kw">return</span> <span class="token-var">x</span>
 
 <span class="token-com"># Calling the function with different inputs</span>
 <span class="token-fn">print</span>(<span class="token-str">'The absolute value of 3 is'</span>, <span class="token-fn">my_abs</span>(<span class="token-num">3</span>))
-<span class="token-fn">print</span>(<span class="token-str">'The absolute value of -7 is'</span>, <span class="token-fn">my_abs</span>(<span class="token-op">-</span><span class="token-num">7</span>))</div>
+<span class="token-fn">print</span>(<span class="token-str">'The absolute value of -7 is'</span>, <span class="token-fn">my_abs</span>(-<span class="token-num">7</span>))</div>
             <div class="output-box">
               <div class="out-label">Output</div>
               <div>The absolute value of 3 is 3</div>
@@ -1106,11 +1230,14 @@
         <h1 class="slide-title">Functions With No Arguments</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Not every function requires parameters. Functions can serve as pure value generators, sensors, or procedural routines.</p>
+            <p class="lead">Not every function requires parameters. Functions can serve as pure value generators,
+              sensors, or procedural routines.</p>
             <ul class="bullet-list">
-              <li>Parentheses <code class="inline-code">()</code> remain mandatory in both the definition header and caller invocation.</li>
+              <li>Parentheses <code class="inline-code">()</code> remain mandatory in both the definition header and
+                caller invocation.</li>
               <li>Omitting parentheses when calling references the function object itself rather than executing it!</li>
-              <li><strong>Case Study:</strong> <code class="inline-code">get_pi()</code> returning $\pi \approx 3.1415$ to compute circle area.</li>
+              <li><strong>Case Study:</strong> <code class="inline-code">get_pi()</code> returning $\pi \approx 3.1415$
+                to compute circle area.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -1139,11 +1266,13 @@
         <h1 class="slide-title">Functions With Multiple Arguments: BMI Calculation</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Functions frequently consume multiple inputs, listed as comma-separated parameters in the header.</p>
+            <p class="lead">Functions frequently consume multiple inputs, listed as comma-separated parameters in the
+              header.</p>
             <ul class="bullet-list">
               <li><strong>Body Mass Index (BMI):</strong>
                 $$\text{BMI} = \frac{\text{weight (kg)}}{\text{height (m)}^2}$$</li>
-              <li>Requires two distinct inputs: weight in kilograms (<code class="inline-code">w</code>) and height in meters (<code class="inline-code">h</code>).</li>
+              <li>Requires two distinct inputs: weight in kilograms (<code class="inline-code">w</code>) and height in
+                meters (<code class="inline-code">h</code>).</li>
               <li>Inputs are matched sequentially by position.</li>
             </ul>
           </div>
@@ -1175,11 +1304,13 @@
         <h1 class="slide-title">Random Number Generation: The random Module</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Computers are deterministic machines. To model stochastic events (games, simulations, cryptography), Python uses pseudo-random algorithms.</p>
+            <p class="lead">Computers are deterministic machines. To model stochastic events (games, simulations,
+              cryptography), Python uses pseudo-random algorithms.</p>
             <ul class="bullet-list">
               <li>Load capabilities using <code class="inline-code">import random</code>.</li>
               <li>Access module functions using dot notation: <code class="inline-code">random.random()</code>.</li>
-              <li><code class="inline-code">random.random()</code> returns a floating-point number in the half-open interval $[0.0, 1.0)$.</li>
+              <li><code class="inline-code">random.random()</code> returns a floating-point number in the half-open
+                interval $[0.0, 1.0)$.</li>
               <li>Each call generates an unpredictable subsequent value in the sequence.</li>
             </ul>
           </div>
@@ -1211,7 +1342,8 @@
         <h1 class="slide-title">Generating Random Integers: random.randrange()</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">To generate whole numbers within a specific range, use <code class="inline-code">random.randrange()</code>.</p>
+            <p class="lead">To generate whole numbers within a specific range, use <code
+                class="inline-code">random.randrange()</code>.</p>
             <ul class="bullet-list">
               <li><code class="inline-code">random.randrange(start, stop)</code>:
                 <ul>
@@ -1219,7 +1351,8 @@
                   <li><code class="inline-code">stop</code>: exclusive upper bound.</li>
                 </ul>
               </li>
-              <li><code class="inline-code">random.randrange(1, 11)</code> selects from $\{1, 2, 3, 4, 5, 6, 7, 8, 9, 10\}$.</li>
+              <li><code class="inline-code">random.randrange(1, 11)</code> selects from $\{1, 2, 3, 4, 5, 6, 7, 8, 9,
+                10\}$.</li>
               <li>A 6-sided die roll uses <code class="inline-code">random.randrange(1, 7)</code>.</li>
             </ul>
           </div>
@@ -1251,9 +1384,11 @@
         <h1 class="slide-title">Simulating the Roll of Two Dice</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Simulate physical probabilistic experiments by combining custom functions with random generation.</p>
+            <p class="lead">Simulate physical probabilistic experiments by combining custom functions with random
+              generation.</p>
             <ul class="bullet-list">
-              <li>Function <code class="inline-code">roll_two_dice()</code> simulates rolling two 6-sided dice and summing them.</li>
+              <li>Function <code class="inline-code">roll_two_dice()</code> simulates rolling two 6-sided dice and
+                summing them.</li>
               <li><strong>Statistical Question:</strong> What is the most likely outcome when rolling two dice?
                 <ul>
                   <li><strong>7</strong> is the most probable outcome ($6/36 \approx 16.67\%$).</li>
@@ -1291,11 +1426,15 @@
         <h1 class="slide-title">Returning Multiple Outputs via Tuples</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">In Python, a function can return multiple values simultaneously by returning an immutable <strong>tuple</strong>.</p>
+            <p class="lead">In Python, a function can return multiple values simultaneously by returning an immutable
+              <strong>tuple</strong>.</p>
             <ul class="bullet-list">
-              <li>A <strong>tuple</strong> is an ordered, comma-separated sequence: <code class="inline-code">(r1, r2)</code>.</li>
-              <li><strong>Tuple Unpacking:</strong> Capture each returned value directly into distinct variables on the left side of the assignment.</li>
-              <li>The number of receiving variables must exactly match the number of elements in the tuple, or Python raises a <code class="inline-code">ValueError</code>.</li>
+              <li>A <strong>tuple</strong> is an ordered, comma-separated sequence: <code
+                  class="inline-code">(r1, r2)</code>.</li>
+              <li><strong>Tuple Unpacking:</strong> Capture each returned value directly into distinct variables on the
+                left side of the assignment.</li>
+              <li>The number of receiving variables must exactly match the number of elements in the tuple, or Python
+                raises a <code class="inline-code">ValueError</code>.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -1311,14 +1450,14 @@
 <span class="token-com"># Unpack tuple into two distinct variables:</span>
 <span class="token-var">my_first_roll</span>, <span class="token-var">my_second_roll</span> <span class="token-op">=</span> <span class="token-fn">roll_two_dice</span>()
 
-<span class="token-fn">print</span>(<span class="token-str">f'First Die:  {my_first_roll}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'First Die: {my_first_roll}'</span>)
 <span class="token-fn">print</span>(<span class="token-str">f'Second Die: {my_second_roll}'</span>)
-<span class="token-fn">print</span>(<span class="token-str">f'Sum:        {my_first_roll + my_second_roll}'</span>)</div>
+<span class="token-fn">print</span>(<span class="token-str">f'Sum: {my_first_roll + my_second_roll}'</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
-              <div>First Die:  4</div>
+              <div>First Die: 4</div>
               <div>Second Die: 3</div>
-              <div>Sum:        7</div>
+              <div>Sum: 7</div>
             </div>
           </div>
         </div>
@@ -1330,15 +1469,18 @@
         <h1 class="slide-title">Python Modules &amp; The Standard Library</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">A <strong>module</strong> in Python is simply a file with a <code class="inline-code">.py</code> extension containing Python definitions and statements.</p>
+            <p class="lead">A <strong>module</strong> in Python is simply a file with a <code
+                class="inline-code">.py</code> extension containing Python definitions and statements.</p>
             <ul class="bullet-list">
               <li><strong>Namespacing:</strong> Prevents name collisions between different libraries.</li>
-              <li><strong>The Python Standard Library:</strong> Python's famous "batteries included" philosophy provides robust built-in modules:
+              <li><strong>The Python Standard Library:</strong> Python's famous "batteries included" philosophy provides
+                robust built-in modules:
                 <ul>
                   <li><code class="inline-code">math</code>: Advanced numerical routines</li>
                   <li><code class="inline-code">random</code>: Stochastic simulations</li>
                   <li><code class="inline-code">statistics</code>: Mathematical statistics</li>
-                  <li><code class="inline-code">datetime</code>, <code class="inline-code">os</code>, <code class="inline-code">sys</code>, <code class="inline-code">json</code></li>
+                  <li><code class="inline-code">datetime</code>, <code class="inline-code">os</code>, <code
+                      class="inline-code">sys</code>, <code class="inline-code">json</code></li>
                 </ul>
               </li>
             </ul>
@@ -1354,7 +1496,8 @@
 <span class="token-kw">from</span> <span class="token-var">math</span> <span class="token-kw">import</span> <span class="token-var">sqrt</span>, <span class="token-var">pi</span>
 <span class="token-var">y</span> <span class="token-op">=</span> <span class="token-fn">sqrt</span>(<span class="token-num">25</span>)</div>
             </div>
-            <p style="font-size: 0.85rem; color: #858585;">Using <code class="inline-code">math.sqrt</code> maintains clear namespace provenance.</p>
+            <p style="font-size: 0.85rem; color: #858585;">Using <code class="inline-code">math.sqrt</code> maintains
+              clear namespace provenance.</p>
           </div>
         </div>
       </section>
@@ -1365,12 +1508,16 @@
         <h1 class="slide-title">The math Module: Square Roots &amp; Operations</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">The <code class="inline-code">math</code> module delivers high-performance C-level implementations of standard mathematical functions.</p>
+            <p class="lead">The <code class="inline-code">math</code> module delivers high-performance C-level
+              implementations of standard mathematical functions.</p>
             <ul class="bullet-list">
-              <li><code class="inline-code">math.sqrt(x)</code>: Computes the square root $\sqrt{x}$ for any non-negative number.</li>
-              <li><code class="inline-code">math.pi</code>: High-precision representation of $\pi \approx 3.1415926535...$</li>
+              <li><code class="inline-code">math.sqrt(x)</code>: Computes the square root $\sqrt{x}$ for any
+                non-negative number.</li>
+              <li><code class="inline-code">math.pi</code>: High-precision representation of $\pi \approx
+                3.1415926535...$</li>
               <li><code class="inline-code">math.e</code>: Euler's number $e \approx 2.71828...$</li>
-              <li>Trigonometric, logarithmic, and power functions (<code class="inline-code">math.sin</code>, <code class="inline-code">math.log</code>, <code class="inline-code">math.floor</code>).</li>
+              <li>Trigonometric, logarithmic, and power functions (<code class="inline-code">math.sin</code>, <code
+                  class="inline-code">math.log</code>, <code class="inline-code">math.floor</code>).</li>
             </ul>
           </div>
           <div class="code-box">
@@ -1404,12 +1551,15 @@
         <h1 class="slide-title">Default Parameter Values</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Python allows you to specify <strong>default values</strong> for parameters in the function definition header.</p>
+            <p class="lead">Python allows you to specify <strong>default values</strong> for parameters in the function
+              definition header.</p>
             <ul class="bullet-list">
               <li>Header syntax: <code class="inline-code">def get_bmi(w, h=1.7):</code></li>
               <li>If the caller supplies <code class="inline-code">h</code>, Python uses the caller's argument.</li>
-              <li>If the caller omits <code class="inline-code">h</code>, Python automatically falls back to <code class="inline-code">1.7</code>.</li>
-              <li><strong style="color: var(--accent-gold);">Rule:</strong> All parameters with default values must appear <em>after</em> all parameters without default values.</li>
+              <li>If the caller omits <code class="inline-code">h</code>, Python automatically falls back to <code
+                  class="inline-code">1.7</code>.</li>
+              <li><strong style="color: var(--accent-gold);">Rule:</strong> All parameters with default values must
+                appear <em>after</em> all parameters without default values.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -1441,7 +1591,8 @@
         <h1 class="slide-title">Keyword Arguments: Order-Independent Calls</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">By default, arguments are matched by <em>position</em>. <strong>Keyword arguments</strong> let callers bind arguments explicitly by parameter name.</p>
+            <p class="lead">By default, arguments are matched by <em>position</em>. <strong>Keyword arguments</strong>
+              let callers bind arguments explicitly by parameter name.</p>
             <ul class="bullet-list">
               <li>Call syntax: <code class="inline-code">get_bmi(h=1.76, w=70)</code></li>
               <li>Arguments can be provided in <strong>any arbitrary order</strong>.</li>
@@ -1460,11 +1611,11 @@
 <span class="token-com"># Identical to positional call:</span>
 <span class="token-var">result2</span> <span class="token-op">=</span> <span class="token-fn">get_bmi</span>(<span class="token-num">70</span>, <span class="token-num">1.76</span>)
 
-<span class="token-fn">print</span>(<span class="token-str">f'Keyword call:  {result1:0.2f}'</span>)
+<span class="token-fn">print</span>(<span class="token-str">f'Keyword call: {result1:0.2f}'</span>)
 <span class="token-fn">print</span>(<span class="token-str">f'Positional call: {result2:0.2f}'</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
-              <div>Keyword call:  22.60</div>
+              <div>Keyword call: 22.60</div>
               <div>Positional call: 22.60</div>
             </div>
           </div>
@@ -1477,7 +1628,8 @@
         <h1 class="slide-title">Functions that Belong to Objects: Methods</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">In Python, data types are implemented as classes. A function that belongs to an object is known as a <strong>method</strong>.</p>
+            <p class="lead">In Python, data types are implemented as classes. A function that belongs to an object is
+              known as a <strong>method</strong>.</p>
             <ul class="bullet-list">
               <li>Invoked with dot notation: <code class="inline-code">object.method()</code>.</li>
               <li>Strings are objects bundled with rich built-in methods:
@@ -1496,16 +1648,16 @@
 
 <span class="token-com"># Calling methods bound to the string object</span>
 <span class="token-fn">print</span>(<span class="token-str">'Original:'</span>, <span class="token-var">my_name</span>)
-<span class="token-fn">print</span>(<span class="token-str">'Upper:   '</span>, <span class="token-var">my_name</span>.<span class="token-fn">upper</span>())
-<span class="token-fn">print</span>(<span class="token-str">'Lower:   '</span>, <span class="token-var">my_name</span>.<span class="token-fn">lower</span>())
+<span class="token-fn">print</span>(<span class="token-str">'Upper: '</span>, <span class="token-var">my_name</span>.<span class="token-fn">upper</span>())
+<span class="token-fn">print</span>(<span class="token-str">'Lower: '</span>, <span class="token-var">my_name</span>.<span class="token-fn">lower</span>())
 
 <span class="token-com"># Original object remains intact</span>
 <span class="token-fn">print</span>(<span class="token-str">'After methods:'</span>, <span class="token-var">my_name</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
               <div>Original: Loquacious D</div>
-              <div>Upper:    LOQUACIOUS D</div>
-              <div>Lower:    loquacious d</div>
+              <div>Upper: LOQUACIOUS D</div>
+              <div>Lower: loquacious d</div>
               <div>After methods: Loquacious D</div>
             </div>
           </div>
@@ -1518,11 +1670,15 @@
         <h1 class="slide-title">The Scope of a Variable: Local vs. Global</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">A variable's <strong>scope</strong> is the portion of a program where that variable can be accessed and referenced.</p>
+            <p class="lead">A variable's <strong>scope</strong> is the portion of a program where that variable can be
+              accessed and referenced.</p>
             <ul class="bullet-list">
-              <li><strong>Global Scope:</strong> Variables declared outside of any function. Accessible anywhere in the module.</li>
-              <li><strong>Local Scope:</strong> Variables declared inside a function (including parameters). Accessible <em>only</em> inside that specific function call.</li>
-              <li><strong>NameError:</strong> Attempting to access a local variable from outside its enclosing function crashes with an immediate <code class="inline-code">NameError</code>!</li>
+              <li><strong>Global Scope:</strong> Variables declared outside of any function. Accessible anywhere in the
+                module.</li>
+              <li><strong>Local Scope:</strong> Variables declared inside a function (including parameters). Accessible
+                <em>only</em> inside that specific function call.</li>
+              <li><strong>NameError:</strong> Attempting to access a local variable from outside its enclosing function
+                crashes with an immediate <code class="inline-code">NameError</code>!</li>
             </ul>
           </div>
           <div class="code-box">
@@ -1540,7 +1696,7 @@
 <span class="token-fn">print</span>(<span class="token-str">'Outside function (global):'</span>, <span class="token-var">my_global_name</span>)
 
 <span class="token-com"># Accessing local fails:</span>
-<span class="token-com"># print(my_local_name)  # -&gt; NameError: name 'my_local_name' is not defined</span></div>
+<span class="token-com"># print(my_local_name) # -&gt; NameError: name 'my_local_name' is not defined</span></div>
             <div class="output-box">
               <div class="out-label">Output</div>
               <div>Inside function (global): Loquacious</div>
@@ -1557,46 +1713,60 @@
         <h1 class="slide-title">Visualizing Scope: Local Stack Frame Isolation</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Understanding the stack frame boundary prevents accidental state contamination between functions.</p>
+            <p class="lead">Understanding the stack frame boundary prevents accidental state contamination between
+              functions.</p>
             <ul class="bullet-list">
               <li>Every time a function is called, Python allocates a brand-new <strong>local stack frame</strong>.</li>
               <li>Local variables exist strictly for the lifespan of that function execution.</li>
-              <li>Inner scopes can see outer global scopes, but outer global scopes can never look inside an active frame.</li>
+              <li>Inner scopes can see outer global scopes, but outer global scopes can never look inside an active
+                frame.</li>
             </ul>
           </div>
           <div>
-            <svg viewBox="0 0 540 320" style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
+            <svg viewBox="0 0 540 320"
+              style="width: 100%; height: auto; display: block; border-radius: 8px; background: #252526; border: 1px solid #333333; padding: 10px;">
               <!-- Global scope outer box -->
-              <rect x="15" y="15" width="510" height="290" rx="8" fill="#1e1e1e" stroke="#007acc" stroke-width="2"/>
-              <text x="35" y="42" fill="#4fc1ff" font-size="14" font-weight="700" font-family="system-ui">Global Scope (Module Level)</text>
+              <rect x="15" y="15" width="510" height="290" rx="8" fill="#1e1e1e" stroke="#007acc" stroke-width="2" />
+              <text x="35" y="42" fill="#4fc1ff" font-size="14" font-weight="700" font-family="system-ui">Global Scope
+                (Module Level)</text>
 
               <!-- Global variables in global scope -->
-              <rect x="35" y="60" width="210" height="70" rx="6" fill="#252526" stroke="#333333" stroke-width="1.5"/>
-              <text x="48" y="86" fill="#9cdcfe" font-size="12" font-weight="600" font-family="monospace">my_global_name</text>
+              <rect x="35" y="60" width="210" height="70" rx="6" fill="#252526" stroke="#333333" stroke-width="1.5" />
+              <text x="48" y="86" fill="#9cdcfe" font-size="12" font-weight="600"
+                font-family="monospace">my_global_name</text>
               <text x="48" y="112" fill="#ce9178" font-size="13" font-family="monospace">"Loquacious"</text>
 
-              <rect x="35" y="145" width="210" height="65" rx="6" fill="#252526" stroke="#333333" stroke-width="1.5"/>
-              <text x="48" y="170" fill="#dcdcaa" font-size="12" font-weight="600" font-family="monospace">my_function()</text>
-              <text x="48" y="195" fill="#858585" font-size="11" font-family="system-ui">&lt;function object ref&gt;</text>
+              <rect x="35" y="145" width="210" height="65" rx="6" fill="#252526" stroke="#333333" stroke-width="1.5" />
+              <text x="48" y="170" fill="#dcdcaa" font-size="12" font-weight="600"
+                font-family="monospace">my_function()</text>
+              <text x="48" y="195" fill="#858585" font-size="11" font-family="system-ui">&lt;function object
+                ref&gt;</text>
 
               <!-- Local scope stack frame container -->
-              <rect x="270" y="55" width="240" height="235" rx="8" fill="#2d2d30" stroke="#4ec9b0" stroke-width="2" stroke-dasharray="4 2"/>
-              <text x="285" y="80" fill="#4ec9b0" font-size="13" font-weight="700" font-family="system-ui">Function Local Frame</text>
-              <text x="285" y="98" fill="#858585" font-size="10" font-family="system-ui">(Created on call, destroyed on return)</text>
+              <rect x="270" y="55" width="240" height="235" rx="8" fill="#2d2d30" stroke="#4ec9b0" stroke-width="2"
+                stroke-dasharray="4 2" />
+              <text x="285" y="80" fill="#4ec9b0" font-size="13" font-weight="700" font-family="system-ui">Function
+                Local Frame</text>
+              <text x="285" y="98" fill="#858585" font-size="10" font-family="system-ui">(Created on call, destroyed on
+                return)</text>
 
               <!-- Local variable inside local frame -->
-              <rect x="285" y="115" width="210" height="60" rx="6" fill="#1e1e1e" stroke="#333333" stroke-width="1.5"/>
-              <text x="298" y="138" fill="#9cdcfe" font-size="12" font-weight="600" font-family="monospace">my_local_name</text>
+              <rect x="285" y="115" width="210" height="60" rx="6" fill="#1e1e1e" stroke="#333333" stroke-width="1.5" />
+              <text x="298" y="138" fill="#9cdcfe" font-size="12" font-weight="600"
+                font-family="monospace">my_local_name</text>
               <text x="298" y="160" fill="#ce9178" font-size="13" font-family="monospace">"Special Local"</text>
 
               <!-- Reading global from inside local (allowed) -->
-              <path d="M 285 210 C 240 210, 210 135, 160 135" fill="none" stroke="#4ec9b0" stroke-width="2" stroke-dasharray="2 2"/>
-              <text x="285" y="205" fill="#4ec9b0" font-size="11" font-weight="600" font-family="system-ui">✓ Can READ Global Scope</text>
+              <path d="M 285 210 C 240 210, 210 135, 160 135" fill="none" stroke="#4ec9b0" stroke-width="2"
+                stroke-dasharray="2 2" />
+              <text x="285" y="205" fill="#4ec9b0" font-size="11" font-weight="600" font-family="system-ui">✓ Can READ
+                Global Scope</text>
 
               <!-- Reading local from global (blocked / NameError) -->
-              <line x1="225" y1="255" x2="270" y2="255" stroke="#f48771" stroke-width="2"/>
-              <circle cx="270" cy="255" r="4" fill="#f48771"/>
-              <text x="50" y="260" fill="#f48771" font-size="11" font-weight="700" font-family="system-ui">✗ NameError: Cannot see local from outside</text>
+              <line x1="225" y1="255" x2="270" y2="255" stroke="#f48771" stroke-width="2" />
+              <circle cx="270" cy="255" r="4" fill="#f48771" />
+              <text x="50" y="260" fill="#f48771" font-size="11" font-weight="700" font-family="system-ui">✗ NameError:
+                Cannot see local from outside</text>
             </svg>
           </div>
         </div>
@@ -1608,12 +1778,15 @@
         <h1 class="slide-title">Modifying Global Variables: The global Keyword</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">By default, assigning to a variable inside a function creates a <strong>local variable</strong> with the same name, leaving the global untouched (shadowing).</p>
+            <p class="lead">By default, assigning to a variable inside a function creates a <strong>local
+                variable</strong> with the same name, leaving the global untouched (shadowing).</p>
             <ul class="bullet-list">
-              <li>To modify a global variable inside a function, explicitly declare it with the <code class="inline-code">global</code> keyword.</li>
+              <li>To modify a global variable inside a function, explicitly declare it with the <code
+                  class="inline-code">global</code> keyword.</li>
               <li>Syntax: <code class="inline-code">global my_global_name</code>.</li>
               <li>Tells Python: "Do not create a local variable; write directly to the module-level variable."</li>
-              <li><strong>Best Practice:</strong> Minimize modifying globals directly; prefer passing inputs and returning outputs!</li>
+              <li><strong>Best Practice:</strong> Minimize modifying globals directly; prefer passing inputs and
+                returning outputs!</li>
             </ul>
           </div>
           <div class="code-box">
@@ -1649,28 +1822,38 @@
         <h1 class="slide-title">Parameter Passing: By Value vs. By Reference</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">In Python, arguments are always passed <strong>by object reference</strong> (call-by-sharing).</p>
+            <p class="lead">In Python, arguments are always passed <strong>by object reference</strong>
+              (call-by-sharing).</p>
             <ul class="bullet-list">
-              <li><strong>Immutable objects</strong> (numbers, strings, tuples): Rebinding a parameter inside a function re-points a local name; caller's value is unaffected.</li>
-              <li><strong>Mutable objects</strong> (lists, dictionaries): Mutating the object in-place (e.g. <code class="inline-code">list.append()</code>) directly alters the caller's data!</li>
+              <li><strong>Immutable objects</strong> (numbers, strings, tuples): Rebinding a parameter inside a function
+                re-points a local name; caller's value is unaffected.</li>
+              <li><strong>Mutable objects</strong> (lists, dictionaries): Mutating the object in-place (e.g. <code
+                  class="inline-code">list.append()</code>) directly alters the caller's data!</li>
             </ul>
           </div>
           <div class="card">
-            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Lectures 3 &amp; 4 Mastered Concepts</h3>
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Lectures 3 &amp; 4
+              Mastered Concepts</h3>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; font-size: 0.95rem;">
-              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-cyan);">
+              <div
+                style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-cyan);">
                 <strong>Control Statements:</strong><br>
-                <code class="inline-code">if</code>, <code class="inline-code">elif</code>, <code class="inline-code">else</code>, truthiness, ternary operators
+                <code class="inline-code">if</code>, <code class="inline-code">elif</code>, <code
+                  class="inline-code">else</code>, truthiness, ternary operators
               </div>
-              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent);">
+              <div
+                style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent);">
                 <strong>Iteration &amp; Loops:</strong><br>
-                <code class="inline-code">while</code>, <code class="inline-code">for</code>, <code class="inline-code">range()</code>, <code class="inline-code">break</code>, <code class="inline-code">continue</code>
+                <code class="inline-code">while</code>, <code class="inline-code">for</code>, <code
+                  class="inline-code">range()</code>, <code class="inline-code">break</code>, <code
+                  class="inline-code">continue</code>
               </div>
               <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid #4ec9b0;">
                 <strong>Functions &amp; Returns:</strong><br>
                 <code class="inline-code">def</code>, multiple inputs, tuples, unpacking
               </div>
-              <div style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-gold);">
+              <div
+                style="background: #1e1e1e; padding: 0.6rem; border-radius: 4px; border-left: 2px solid var(--accent-gold);">
                 <strong>Modules &amp; Memory:</strong><br>
                 <code class="inline-code">random</code>, <code class="inline-code">math</code>, namespaces, and scope
               </div>
@@ -1813,9 +1996,9 @@
 
       function toggleFullscreen() {
         if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(() => {});
+          document.documentElement.requestFullscreen().catch(() => { });
         } else {
-          document.exitFullscreen().catch(() => {});
+          document.exitFullscreen().catch(() => { });
         }
       }
 
@@ -1831,4 +2014,5 @@
     document.addEventListener('DOMContentLoaded', SlideDeck.init);
   </script>
 </body>
+
 </html>

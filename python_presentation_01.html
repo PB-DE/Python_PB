@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,7 +21,7 @@
       --accent-gold: #dcdcaa;
       --danger: #f48771;
       
-      /* VS Code Dark+ Syntax Highlighting Tokens */
+      /* VS Code Dark+ Syntax Tokens */
       --token-kw: #569cd6;
       --token-var: #9cdcfe;
       --token-num: #b5cea8;
@@ -147,7 +148,7 @@
       margin-bottom: 0.6rem;
     }
 
-    h1.slide-title {
+    h1.slide-title, .slide-title {
       font-size: 2.4rem;
       font-weight: 700;
       color: var(--text-bright);
@@ -156,14 +157,14 @@
       letter-spacing: -0.01em;
     }
 
-    h2.slide-subtitle {
+    h2.slide-subtitle, .slide-subtitle {
       font-size: 1.4rem;
       font-weight: 500;
       color: var(--text-muted);
       margin-bottom: 2rem;
     }
 
-    p.lead {
+    p.lead, .lead {
       font-size: 1.25rem;
       line-height: 1.7;
       color: var(--text);
@@ -171,7 +172,7 @@
     }
 
     /* Bullets */
-    ul.bullet-list {
+    ul.bullet-list, .bullet-list {
       list-style: none;
       display: flex;
       flex-direction: column;
@@ -181,12 +182,12 @@
       color: var(--text);
     }
 
-    ul.bullet-list li {
+    ul.bullet-list li, .bullet-list li {
       position: relative;
       padding-left: 1.8rem;
     }
 
-    ul.bullet-list li::before {
+    ul.bullet-list li::before, .bullet-list li::before {
       content: "•";
       position: absolute;
       left: 0.4rem;
@@ -195,7 +196,7 @@
       line-height: 1.2;
     }
 
-    ul.bullet-list ul {
+    ul.bullet-list ul, .bullet-list ul {
       list-style: none;
       margin-top: 0.4rem;
       padding-left: 1.5rem;
@@ -206,7 +207,7 @@
       gap: 0.4rem;
     }
 
-    ul.bullet-list ul li::before {
+    ul.bullet-list ul li::before, .bullet-list ul li::before {
       content: "–";
       position: absolute;
       left: 0.4rem;
@@ -237,6 +238,8 @@
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
     }
 
     /* VS Code Code Box */
@@ -265,8 +268,11 @@
 
     .code-box-body {
       padding: 1.25rem;
-      overflow-x: auto;
-      white-space: pre;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow-x: hidden;
+      tab-size: 4;
     }
 
     .output-box {
@@ -276,6 +282,10 @@
       padding: 0.75rem 1rem;
       font-size: 0.9rem;
       color: #9cdcfe;
+      white-space: pre-wrap;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      overflow-x: hidden;
     }
 
     .output-box .out-label {
@@ -294,10 +304,10 @@
     .token-com { color: var(--token-com); font-style: italic; }
     .token-fn { color: var(--token-fn); }
     .token-op { color: var(--token-op); }
-    .token-type { color: var(--token-type); }
+    .token-type, .token-token-type { color: var(--token-type); }
 
     /* Inline Code Pill */
-    code.inline-code {
+    .inline-code, code.inline-code {
       background: #2d2d2d;
       color: var(--token-var);
       padding: 0.15rem 0.45rem;
@@ -307,7 +317,6 @@
       border: 1px solid #383838;
     }
 
-    /* Controls overlay */
     .nav-hints {
       display: flex;
       gap: 0.5rem;
@@ -332,6 +341,7 @@
     }
   </style>
 </head>
+
 <body>
 
   <div id="stage">
@@ -344,20 +354,23 @@
     <div id="deck">
       <!-- SLIDE 1: TITLE SLIDE -->
       <section class="slide active" id="slide-1">
-        <div class="eyebrow">Civil Aviation Training Center (CATC)</div>
-
-        <h1 class="slide-title" style="font-size: 2.8rem; margin-bottom: 0.75rem;">Lecture 1: Fundamentals of Computing</h1>
-        <h2 class="slide-subtitle" style="color: var(--accent-cyan); font-size: 1.5rem; margin-bottom: 2rem;">Introduction to Computer Architecture &amp; Representation</h2>
-        <div class="card" style="max-width: 650px; background: #252526; border-left: 4px solid var(--accent);">
-          <p style="color: #cccccc; font-size: 1.1rem; line-height: 1.7;">
-            Welcome to Python Programming. In this first lecture, we explore how digital computers represent numbers, execute instructions, and why Python has become the preeminent language of modern computing.
-          </p>
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 1</div>
+        <h1 class="slide-title">Fundamentals of Computing</h1>
+        <h2 class="slide-subtitle">Computer Architecture, Number Representation, Memory Mechanics &amp; Moore's Law</h2>
+        <div class="card" style="margin-top: 1.5rem; max-width: 900px;">
+          <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 1 Overview</h3>
+          <ul class="bullet-list" style="font-size: 1.05rem;">
+            <li><strong>Information as Numbers:</strong> Digital encoding, positional notation, and binary architecture</li>
+            <li><strong>Hardware Fundamentals:</strong> CPU, RAM, I/O devices, and system bus topology</li>
+            <li><strong>Scaling Laws:</strong> Exponential semiconductor growth via Moore's Law</li>
+            <li><strong>Memory &amp; Ecosystem:</strong> Shallow vs. deep copy references and the rise of Python</li>
+          </ul>
         </div>
       </section>
 
       <!-- SLIDE 2: REPRESENTATION WITH NUMBERS -->
       <section class="slide" id="slide-2">
-        <div class="eyebrow">Lecture 1 • Data Representation</div>
+        <div class="eyebrow">Data Representation</div>
         <h1 class="slide-title">Representation with Numbers</h1>
         <div class="grid-2col">
           <div>
@@ -370,19 +383,28 @@
                   <li><strong>Physical Controls:</strong> Sensor voltages, aircraft telemetry, airspeed</li>
                 </ul>
               </li>
-              <li style="margin-top: 0.5rem;">Representing information as numbers allows computers to perform mathematical operations to transform, filter, and process that information.</li>
+              <li style="margin-top: 0.5rem;">Representing information as numbers allows computers to perform
+                mathematical operations to transform, filter, and process that information.</li>
             </ul>
           </div>
           <div class="card" style="display: flex; flex-direction: column; gap: 1rem;">
-            <div style="font-weight: 600; color: var(--accent-gold); font-size: 0.95rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Information to Numbers</div>
-            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem;">
-              <span style="color: var(--token-str);">"CATC"</span> &rarr; <span style="color: var(--token-num);">[67, 65, 84, 67]</span> (ASCII)
+            <div
+              style="font-weight: 600; color: var(--accent-gold); font-size: 0.95rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+              Information to Numbers</div>
+            <div
+              style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem;">
+              <span style="color: var(--token-str);">"CATC"</span> &rarr; <span style="color: var(--token-num);">[67,
+                65, 84, 67]</span> (ASCII)
             </div>
-            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem;">
-              <span style="color: var(--token-var);">Pixel Color</span> &rarr; <span style="color: var(--token-num);">RGB(0, 122, 204)</span>
+            <div
+              style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem;">
+              <span style="color: var(--token-var);">Pixel Color</span> &rarr; <span
+                style="color: var(--token-num);">RGB(0, 122, 204)</span>
             </div>
-            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem;">
-              <span style="color: var(--token-fn);">Microphone</span> &rarr; <span style="color: var(--token-num);">44,100 samples / sec</span>
+            <div
+              style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-family: monospace; font-size: 0.9rem;">
+              <span style="color: var(--token-fn);">Microphone</span> &rarr; <span
+                style="color: var(--token-num);">44,100 samples / sec</span>
             </div>
           </div>
         </div>
@@ -390,7 +412,7 @@
 
       <!-- SLIDE 3: WHAT IS A NUMBER -->
       <section class="slide" id="slide-3">
-        <div class="eyebrow">Lecture 1 • Number Systems</div>
+        <div class="eyebrow">Number Systems</div>
         <h1 class="slide-title">What is a Number?</h1>
         <div class="grid-2col">
           <div>
@@ -405,12 +427,16 @@
               <li>Consider the decimal number <strong>1979</strong>:</li>
             </ul>
           </div>
-          <div class="card" style="background: #252526; display: flex; flex-direction: column; justify-content: center;">
-            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">Base-10 Positional Expansion</div>
-            <div style="font-family: ui-monospace, Consolas, monospace; font-size: 1.2rem; color: #ffffff; line-height: 2;">
+          <div class="card"
+            style="background: #252526; display: flex; flex-direction: column; justify-content: center;">
+            <div style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 0.75rem;">Base-10 Positional
+              Expansion</div>
+            <div
+              style="font-family: ui-monospace, Consolas, monospace; font-size: 1.2rem; color: #ffffff; line-height: 2;">
               1979 = 1&times;10<sup>3</sup> + 9&times;10<sup>2</sup> + 7&times;10<sup>1</sup> + 9&times;10<sup>0</sup>
             </div>
-            <div style="font-family: ui-monospace, Consolas, monospace; font-size: 0.95rem; color: var(--token-num); margin-top: 0.5rem;">
+            <div
+              style="font-family: ui-monospace, Consolas, monospace; font-size: 0.95rem; color: var(--token-num); margin-top: 0.5rem;">
               = 1000 + 900 + 70 + 9 = 1979
             </div>
           </div>
@@ -419,7 +445,7 @@
 
       <!-- SLIDE 4: BINARY REPRESENTATION -->
       <section class="slide" id="slide-4">
-        <div class="eyebrow">Lecture 1 • Binary Systems</div>
+        <div class="eyebrow">Binary Systems</div>
         <h1 class="slide-title">Binary Representation</h1>
         <div class="grid-2col">
           <div>
@@ -427,23 +453,30 @@
               <li>Computers employ a <strong>base-2 (binary)</strong> representation.</li>
               <li>A binary digit is called a <strong>“bit”</strong> &isin; <code class="inline-code">{0, 1}</code>.</li>
               <li>Consider the 4-bit binary number <strong>1010<sub>2</sub></strong>:
-                <div style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 0.5rem; font-family: monospace;">
-                  1010<sub>2</sub> = 1&times;2<sup>3</sup> + 0&times;2<sup>2</sup> + 1&times;2<sup>1</sup> + 0&times;2<sup>0</sup><br>
+                <div
+                  style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem; margin-top: 0.5rem; font-family: monospace;">
+                  1010<sub>2</sub> = 1&times;2<sup>3</sup> + 0&times;2<sup>2</sup> + 1&times;2<sup>1</sup> +
+                  0&times;2<sup>0</sup><br>
                   = 8 + 0 + 2 + 0 = <strong style="color: var(--token-num);">10<sub>10</sub></strong>
                 </div>
               </li>
-              <li><strong>Why binary?</strong> Simple, highly reliable electrical circuits: switch ON (high voltage) or OFF (low voltage).</li>
+              <li><strong>Why binary?</strong> Simple, highly reliable electrical circuits: switch ON (high voltage) or
+                OFF (low voltage).</li>
             </ul>
           </div>
           <div class="card" style="display: flex; flex-direction: column; gap: 1rem;">
-            <div style="font-size: 0.95rem; font-weight: 600; color: var(--accent-cyan);">Key Questions &amp; Capacity</div>
+            <div style="font-size: 0.95rem; font-weight: 600; color: var(--accent-cyan);">Key Questions &amp; Capacity
+            </div>
             <div style="color: var(--text); font-size: 1rem; line-height: 1.6;">
-              <strong style="color: var(--accent-gold);">Q:</strong> What is the largest integer that can be represented with 4 bits?<br>
-              <span style="font-family: monospace; color: var(--token-num); font-size: 1.1rem; display: block; margin-top: 0.4rem;">
+              <strong style="color: var(--accent-gold);">Q:</strong> What is the largest integer that can be represented
+              with 4 bits?<br>
+              <span
+                style="font-family: monospace; color: var(--token-num); font-size: 1.1rem; display: block; margin-top: 0.4rem;">
                 1111<sub>2</sub> = 2<sup>4</sup> &minus; 1 = 15<sub>10</sub>
               </span>
             </div>
-            <div style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; color: var(--text-muted);">
+            <div
+              style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px; font-size: 0.85rem; color: var(--text-muted);">
               General rule: An $n$-bit unsigned integer can represent $2^n$ distinct values from $0$ up to $2^n - 1$.
             </div>
           </div>
@@ -452,26 +485,31 @@
 
       <!-- SLIDE 5: EQUALITY VS ASSIGNMENT -->
       <section class="slide" id="slide-5">
-        <div class="eyebrow">Lecture 1 • Core Principles</div>
+        <div class="eyebrow">Core Principles</div>
         <h1 class="slide-title">Equality versus Assignment</h1>
         <p class="lead">One of the most crucial mental shifts when learning computer programming.</p>
         <div class="grid-equal">
           <div class="card" style="border-top: 4px solid var(--accent-cyan);">
             <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.2rem;">Mathematical Equality</h3>
-            <div style="font-family: monospace; font-size: 1.25rem; color: var(--accent-cyan); margin-bottom: 0.75rem;">x = 2</div>
+            <div style="font-family: monospace; font-size: 1.25rem; color: var(--accent-cyan); margin-bottom: 0.75rem;">
+              x = 2</div>
             <ul class="bullet-list" style="font-size: 1rem;">
               <li>States an assertion of equivalence: &ldquo;x is equal to two&rdquo;.</li>
-              <li>Symmetric relationship: <code class="inline-code">2 = x</code> is an entirely valid, identical mathematical equation.</li>
+              <li>Symmetric relationship: <code class="inline-code">2 = x</code> is an entirely valid, identical
+                mathematical equation.</li>
               <li>No action or state mutation occurs.</li>
             </ul>
           </div>
 
           <div class="card" style="border-top: 4px solid var(--danger);">
-            <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.2rem;">Programming Assignment</h3>
-            <div style="font-family: monospace; font-size: 1.25rem; color: var(--danger); margin-bottom: 0.75rem;">x := 2 &nbsp;(in Python: x = 2)</div>
+            <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.2rem;">Programming Assignment
+            </h3>
+            <div style="font-family: monospace; font-size: 1.25rem; color: var(--danger); margin-bottom: 0.75rem;">x :=
+              2 &nbsp;(in Python: x = 2)</div>
             <ul class="bullet-list" style="font-size: 1rem;">
               <li>An <strong>action</strong>: &ldquo;Store the value two into the variable named x&rdquo;.</li>
-              <li>Asymmetric instruction: <code class="inline-code">2 = x</code> is a <strong style="color: var(--danger);">SyntaxError</strong> (invalid statement).</li>
+              <li>Asymmetric instruction: <code class="inline-code">2 = x</code> is a <strong
+                  style="color: var(--danger);">SyntaxError</strong> (invalid statement).</li>
               <li>The computer executes a state change in memory.</li>
             </ul>
           </div>
@@ -480,69 +518,89 @@
 
       <!-- SLIDE 6: DATA HIERARCHY -->
       <section class="slide" id="slide-6">
-        <div class="eyebrow">Lecture 1 • Data Architecture</div>
+        <div class="eyebrow">Data Architecture</div>
         <h1 class="slide-title">Data Hierarchy</h1>
         <p class="lead" style="margin-bottom: 1rem;">From microscopic voltages to planetary databases:</p>
         <div style="display: flex; flex-direction: column; gap: 0.65rem; max-width: 750px;">
-          <div style="background: #2d2d30; border-left: 5px solid #007acc; padding: 0.65rem 1.25rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+          <div
+            style="background: #2d2d30; border-left: 5px solid #007acc; padding: 0.65rem 1.25rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
             <span style="font-weight: 600; color: #ffffff;">Database</span>
-            <span style="color: var(--text-muted); font-size: 0.9rem;">A structured collection of interrelated tables</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">A structured collection of interrelated
+              tables</span>
           </div>
-          <div style="background: #28282b; border-left: 5px solid #4fc1ff; padding: 0.65rem 1.25rem; margin-left: 1.5rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+          <div
+            style="background: #28282b; border-left: 5px solid #4fc1ff; padding: 0.65rem 1.25rem; margin-left: 1.5rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
             <span style="font-weight: 600; color: #ffffff;">Record / Row</span>
-            <span style="color: var(--text-muted); font-size: 0.9rem;">A complete set of related fields (e.g. Student Profile)</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">A complete set of related fields (e.g. Student
+              Profile)</span>
           </div>
-          <div style="background: #242426; border-left: 5px solid #9cdcfe; padding: 0.65rem 1.25rem; margin-left: 3rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+          <div
+            style="background: #242426; border-left: 5px solid #9cdcfe; padding: 0.65rem 1.25rem; margin-left: 3rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
             <span style="font-weight: 600; color: #ffffff;">Field / Column</span>
-            <span style="color: var(--text-muted); font-size: 0.9rem;">A meaningful data unit of characters (e.g. Student ID)</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">A meaningful data unit of characters (e.g.
+              Student ID)</span>
           </div>
-          <div style="background: #202022; border-left: 5px solid #b5cea8; padding: 0.65rem 1.25rem; margin-left: 4.5rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+          <div
+            style="background: #202022; border-left: 5px solid #b5cea8; padding: 0.65rem 1.25rem; margin-left: 4.5rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
             <span style="font-weight: 600; color: #ffffff;">Character (Byte)</span>
-            <span style="color: var(--text-muted); font-size: 0.9rem;">A group of 8 bits representing a symbol (e.g. 'A')</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">A group of 8 bits representing a symbol (e.g.
+              'A')</span>
           </div>
-          <div style="background: #1b1b1d; border-left: 5px solid #dcdcaa; padding: 0.65rem 1.25rem; margin-left: 6rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
+          <div
+            style="background: #1b1b1d; border-left: 5px solid #dcdcaa; padding: 0.65rem 1.25rem; margin-left: 6rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center;">
             <span style="font-weight: 600; color: #ffffff;">Bit (Binary Digit)</span>
-            <span style="color: var(--text-muted); font-size: 0.9rem;">Physical high / low electrical voltage {0, 1}</span>
+            <span style="color: var(--text-muted); font-size: 0.9rem;">Physical high / low electrical voltage {0,
+              1}</span>
           </div>
         </div>
       </section>
 
       <!-- SLIDE 7: BASIC COMPUTER ARCHITECTURE (SVG DIAGRAM) -->
       <section class="slide" id="slide-7">
-        <div class="eyebrow">Lecture 1 • Hardware Foundation</div>
-        <h1 class="slide-title" style="margin-bottom: 0.75rem;">Basic Computer Architecture</h1>
-        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">Von Neumann model: CPU, Primary Memory, and I/O interconnected via the System Bus.</p>
-        <div style="background: #1a1a1c; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; justify-content: center; align-items: center;">
-          <svg viewBox="0 0 680 300" width="100%" height="270" style="max-height: 270px; font-family: system-ui, sans-serif;">
+        <div class="eyebrow">Hardware Foundation</div>
+        <h1 class="slide-title">Basic Computer Architecture</h1>
+        <p style="color: var(--text-muted); margin-bottom: 1rem; font-size: 0.95rem;">Von Neumann model: CPU, Primary
+          Memory, and I/O interconnected via the System Bus.</p>
+        <div
+          style="background: #1a1a1c; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; justify-content: center; align-items: center;">
+          <svg viewBox="0 0 680 300" width="100%" height="270"
+            style="max-height: 270px; font-family: system-ui, sans-serif;">
             <!-- CPU Container -->
-            <rect x="30" y="30" width="220" height="200" rx="8" fill="#252526" stroke="#007acc" stroke-width="2"/>
-            <text x="140" y="55" fill="#4fc1ff" font-size="14" font-weight="700" text-anchor="middle">CENTRAL PROCESSING UNIT</text>
+            <rect x="30" y="30" width="220" height="200" rx="8" fill="#252526" stroke="#007acc" stroke-width="2" />
+            <text x="140" y="55" fill="#4fc1ff" font-size="14" font-weight="700" text-anchor="middle">CENTRAL PROCESSING
+              UNIT</text>
             <text x="140" y="70" fill="#858585" font-size="11" text-anchor="middle">(CPU)</text>
-            
-            <rect x="45" y="85" width="190" height="42" rx="4" fill="#2d2d30" stroke="#333333"/>
-            <text x="140" y="110" fill="#d4d4d4" font-size="12" font-weight="600" text-anchor="middle">Control Unit (CU)</text>
 
-            <rect x="45" y="137" width="190" height="42" rx="4" fill="#2d2d30" stroke="#333333"/>
-            <text x="140" y="162" fill="#d4d4d4" font-size="12" font-weight="600" text-anchor="middle">Arithmetic Logic Unit (ALU)</text>
+            <rect x="45" y="85" width="190" height="42" rx="4" fill="#2d2d30" stroke="#333333" />
+            <text x="140" y="110" fill="#d4d4d4" font-size="12" font-weight="600" text-anchor="middle">Control Unit
+              (CU)</text>
 
-            <rect x="45" y="189" width="190" height="30" rx="4" fill="#222224" stroke="#333333"/>
+            <rect x="45" y="137" width="190" height="42" rx="4" fill="#2d2d30" stroke="#333333" />
+            <text x="140" y="162" fill="#d4d4d4" font-size="12" font-weight="600" text-anchor="middle">Arithmetic Logic
+              Unit (ALU)</text>
+
+            <rect x="45" y="189" width="190" height="30" rx="4" fill="#222224" stroke="#333333" />
             <text x="140" y="209" fill="#9cdcfe" font-size="11" text-anchor="middle">Internal Registers / Cache</text>
 
             <!-- Memory Container -->
-            <rect x="310" y="30" width="160" height="120" rx="8" fill="#252526" stroke="#4ec9b0" stroke-width="2"/>
-            <text x="390" y="58" fill="#4ec9b0" font-size="13" font-weight="700" text-anchor="middle">PRIMARY MEMORY</text>
+            <rect x="310" y="30" width="160" height="120" rx="8" fill="#252526" stroke="#4ec9b0" stroke-width="2" />
+            <text x="390" y="58" fill="#4ec9b0" font-size="13" font-weight="700" text-anchor="middle">PRIMARY
+              MEMORY</text>
             <text x="390" y="74" fill="#858585" font-size="11" text-anchor="middle">(RAM)</text>
             <text x="390" y="105" fill="#d4d4d4" font-size="11" text-anchor="middle">Fast, Volatile Storage</text>
             <text x="390" y="125" fill="#9cdcfe" font-size="10" text-anchor="middle">Programs &amp; Active Data</text>
 
             <!-- Storage Container -->
-            <rect x="310" y="170" width="160" height="60" rx="8" fill="#252526" stroke="#ce9178" stroke-width="1.5"/>
-            <text x="390" y="196" fill="#ce9178" font-size="12" font-weight="600" text-anchor="middle">Secondary Storage</text>
-            <text x="390" y="214" fill="#858585" font-size="10" text-anchor="middle">SSD / Hard Disk (Non-volatile)</text>
+            <rect x="310" y="170" width="160" height="60" rx="8" fill="#252526" stroke="#ce9178" stroke-width="1.5" />
+            <text x="390" y="196" fill="#ce9178" font-size="12" font-weight="600" text-anchor="middle">Secondary
+              Storage</text>
+            <text x="390" y="214" fill="#858585" font-size="10" text-anchor="middle">SSD / Hard Disk
+              (Non-volatile)</text>
 
             <!-- Input/Output Container -->
-            <rect x="520" y="30" width="130" height="200" rx="8" fill="#252526" stroke="#dcdcaa" stroke-width="2"/>
-            <text x="585" y="60" fill="#dcdcaa" font-size="13" font-weight="700" text-anchor="middle">INPUT / OUTPUT</text>
+            <rect x="520" y="30" width="130" height="200" rx="8" fill="#252526" stroke="#dcdcaa" stroke-width="2" />
+            <text x="585" y="60" fill="#dcdcaa" font-size="13" font-weight="700" text-anchor="middle">INPUT /
+              OUTPUT</text>
             <text x="585" y="80" fill="#858585" font-size="11" text-anchor="middle">(I/O)</text>
             <text x="585" y="115" fill="#d4d4d4" font-size="11" text-anchor="middle">Keyboard, Mouse</text>
             <text x="585" y="135" fill="#d4d4d4" font-size="11" text-anchor="middle">Monitors, Sensors</text>
@@ -550,42 +608,49 @@
             <text x="585" y="175" fill="#d4d4d4" font-size="11" text-anchor="middle">Actuators</text>
 
             <!-- System Bus Lines -->
-            <rect x="30" y="258" width="620" height="22" rx="4" fill="#007acc" opacity="0.85"/>
-            <text x="340" y="273" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle" letter-spacing="1">SYSTEM BUS (CONTROL, ADDRESS &amp; DATA LINES)</text>
+            <rect x="30" y="258" width="620" height="22" rx="4" fill="#007acc" opacity="0.85" />
+            <text x="340" y="273" fill="#ffffff" font-size="11" font-weight="700" text-anchor="middle"
+              letter-spacing="1">SYSTEM BUS (CONTROL, ADDRESS &amp; DATA LINES)</text>
 
             <!-- Bus Connectors -->
-            <line x1="140" y1="230" x2="140" y2="258" stroke="#007acc" stroke-width="3"/>
-            <line x1="390" y1="150" x2="390" y2="170" stroke="#4ec9b0" stroke-width="2"/>
-            <line x1="390" y1="230" x2="390" y2="258" stroke="#ce9178" stroke-width="3"/>
-            <line x1="585" y1="230" x2="585" y2="258" stroke="#dcdcaa" stroke-width="3"/>
+            <line x1="140" y1="230" x2="140" y2="258" stroke="#007acc" stroke-width="3" />
+            <line x1="390" y1="150" x2="390" y2="170" stroke="#4ec9b0" stroke-width="2" />
+            <line x1="390" y1="230" x2="390" y2="258" stroke="#ce9178" stroke-width="3" />
+            <line x1="585" y1="230" x2="585" y2="258" stroke="#dcdcaa" stroke-width="3" />
           </svg>
         </div>
       </section>
 
       <!-- SLIDE 8: WHAT DO COMPUTERS DO -->
       <section class="slide" id="slide-8">
-        <div class="eyebrow">Lecture 1 • Computing Fundamentals</div>
+        <div class="eyebrow">Computing Fundamentals</div>
         <h1 class="slide-title">What Do Computers Do?</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
               <li><strong>Physical level:</strong> Manipulate small electrical voltages inside transistors.</li>
-              <li><strong>Instruction execution:</strong> Execute relentless sequences of simple instructions (Fetch &rarr; Decode &rarr; Execute).</li>
-              <li><strong>Binary arithmetic:</strong> Add, subtract, multiply, and divide binary numbers with ultra-high speed.</li>
+              <li><strong>Instruction execution:</strong> Execute relentless sequences of simple instructions (Fetch
+                &rarr; Decode &rarr; Execute).</li>
+              <li><strong>Binary arithmetic:</strong> Add, subtract, multiply, and divide binary numbers with ultra-high
+                speed.</li>
               <li><strong>Logical comparison:</strong> Compare two numbers against each other:
                 <ul>
                   <li>Branching decisions depend directly on this comparison result.</li>
                 </ul>
               </li>
-              <li>Every piece of software—from flight navigation to 3D video games—boils down to this core set of operations!</li>
+              <li>Every piece of software—from flight navigation to 3D video games—boils down to this core set of
+                operations!</li>
             </ul>
           </div>
           <div class="card" style="display: flex; flex-direction: column; justify-content: center; gap: 1rem;">
-            <div style="color: var(--accent-cyan); font-weight: 600; font-size: 1.1rem;">The Universal Truth of Computing</div>
+            <div style="color: var(--accent-cyan); font-weight: 600; font-size: 1.1rem;">The Universal Truth of
+              Computing</div>
             <p style="color: var(--text); font-size: 1rem; line-height: 1.6;">
-              &ldquo;All software, from that which controls your refrigerator to the latest flight simulator, boils down to a relatively small set of operations on binary numbers.&rdquo;
+              &ldquo;All software, from that which controls your refrigerator to the latest flight simulator, boils down
+              to a relatively small set of operations on binary numbers.&rdquo;
             </p>
-            <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.85rem; color: var(--text-muted); border-left: 3px solid var(--accent-gold);">
+            <div
+              style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px; font-size: 0.85rem; color: var(--text-muted); border-left: 3px solid var(--accent-gold);">
               Modern CPUs perform billions of these simple operations each second (Gigahertz clock speeds).
             </div>
           </div>
@@ -594,7 +659,7 @@
 
       <!-- SLIDE 9: MOORE'S LAW -->
       <section class="slide" id="slide-9">
-        <div class="eyebrow">Lecture 1 • Exponential Progress</div>
+        <div class="eyebrow">Exponential Progress</div>
         <h1 class="slide-title">Moore's Law</h1>
         <p class="lead">Formulated in 1965 by Gordon Moore (co-founder of Intel):</p>
         <div class="grid-equal">
@@ -622,29 +687,38 @@
 
       <!-- SLIDE 10: LEVELS OF PROGRAMMING LANGUAGES -->
       <section class="slide" id="slide-10">
-        <div class="eyebrow">Lecture 1 • Language Evolution</div>
+        <div class="eyebrow">Language Evolution</div>
         <h1 class="slide-title">Levels of Programming Languages</h1>
         <div class="grid-2col">
           <div style="display: flex; flex-direction: column; gap: 0.75rem;">
             <div class="card" style="border-left: 4px solid var(--danger);">
               <h4 style="color: var(--text-bright); font-size: 1rem;">1. Machine Language</h4>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Raw binary strings (e.g. <code>10110000 01100001</code>). Directly executable by hardware, but nearly impossible for humans to write reliably.</p>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Raw binary strings (e.g.
+                <code>10110000 01100001</code>). Directly executable by hardware, but nearly impossible for humans to
+                write reliably.
+              </p>
             </div>
             <div class="card" style="border-left: 4px solid var(--accent-gold);">
               <h4 style="color: var(--text-bright); font-size: 1rem;">2. Assembly Language</h4>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Human-readable mnemonics (e.g. <code>MOV AL, 61h</code>). Requires an Assembler to translate 1:1 into machine language.</p>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Human-readable mnemonics (e.g.
+                <code>MOV AL, 61h</code>). Requires an Assembler to translate 1:1 into machine language.
+              </p>
             </div>
             <div class="card" style="border-left: 4px solid var(--accent-cyan);">
               <h4 style="color: var(--text-bright); font-size: 1rem;">3. High-Level Languages</h4>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">English-like syntax, abstracted from specific CPU architectures (e.g. Python, C++, Java). Translated via compilers or interpreters.</p>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">English-like syntax, abstracted from specific CPU
+                architectures (e.g. Python, C++, Java). Translated via compilers or interpreters.</p>
             </div>
           </div>
 
-          <div class="card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: #252526; border: 2px solid var(--accent);">
+          <div class="card"
+            style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: #252526; border: 2px solid var(--accent);">
             <div style="font-size: 1rem; color: var(--text-muted); margin-bottom: 0.5rem;">Where does Python fit?</div>
-            <h2 style="color: var(--accent-cyan); font-size: 1.8rem; margin-bottom: 1rem;">Python is a High-Level Interpreted Language</h2>
+            <h2 style="color: var(--accent-cyan); font-size: 1.8rem; margin-bottom: 1rem;">Python is a High-Level
+              Interpreted Language</h2>
             <p style="color: #cccccc; font-size: 0.95rem; line-height: 1.6;">
-              The Python interpreter parses source code line-by-line into bytecode and executes it dynamically, maximizing developer productivity.
+              The Python interpreter parses source code line-by-line into bytecode and executes it dynamically,
+              maximizing developer productivity.
             </p>
           </div>
         </div>
@@ -652,8 +726,8 @@
 
       <!-- SLIDE 11: SHALLOW VS DEEP COPY (SVG DIAGRAM) -->
       <section class="slide" id="slide-11">
-        <div class="eyebrow">Lecture 1 • Memory Mechanics</div>
-        <h1 class="slide-title" style="margin-bottom: 0.75rem;">Shallow versus Deep Copy</h1>
+        <div class="eyebrow">Memory Mechanics</div>
+        <h1 class="slide-title">Shallow versus Deep Copy</h1>
         <div class="grid-2col">
           <div>
             <div class="code-box" style="margin-bottom: 1rem;">
@@ -662,46 +736,54 @@
 <span class="token-var">Y</span> <span class="token-op">=</span> <span class="token-var">X</span></div>
             </div>
             <ul class="bullet-list" style="font-size: 1rem;">
-              <li>When <code class="inline-code">X = 3.14156</code> is executed, the float object is created at a specific memory location.</li>
-              <li>When <code class="inline-code">Y = X</code> is executed, Python does <strong>not</strong> duplicate the float value in memory.</li>
-              <li>Instead, <code class="inline-code">Y</code> is bound to the <em>same memory address</em> as <code class="inline-code">X</code>.</li>
+              <li>When <code class="inline-code">X = 3.14156</code> is executed, the float object is created at a
+                specific memory location.</li>
+              <li>When <code class="inline-code">Y = X</code> is executed, Python does <strong>not</strong> duplicate
+                the float value in memory.</li>
+              <li>Instead, <code class="inline-code">Y</code> is bound to the <em>same memory address</em> as <code
+                  class="inline-code">X</code>.</li>
             </ul>
           </div>
 
-          <div style="background: #1a1a1c; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center;">
-            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Memory Reference Diagram</div>
+          <div
+            style="background: #1a1a1c; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Memory Reference Diagram
+            </div>
             <svg viewBox="0 0 320 180" width="100%" height="180" style="font-family: monospace;">
               <!-- Variable X -->
-              <rect x="20" y="30" width="70" height="40" rx="4" fill="#2d2d30" stroke="#9cdcfe" stroke-width="1.5"/>
+              <rect x="20" y="30" width="70" height="40" rx="4" fill="#2d2d30" stroke="#9cdcfe" stroke-width="1.5" />
               <text x="55" y="55" fill="#9cdcfe" font-size="16" font-weight="700" text-anchor="middle">X</text>
 
               <!-- Variable Y -->
-              <rect x="20" y="110" width="70" height="40" rx="4" fill="#2d2d30" stroke="#9cdcfe" stroke-width="1.5"/>
+              <rect x="20" y="110" width="70" height="40" rx="4" fill="#2d2d30" stroke="#9cdcfe" stroke-width="1.5" />
               <text x="55" y="135" fill="#9cdcfe" font-size="16" font-weight="700" text-anchor="middle">Y</text>
 
               <!-- Memory Object -->
-              <rect x="180" y="60" width="120" height="60" rx="6" fill="#252526" stroke="#4ec9b0" stroke-width="2"/>
+              <rect x="180" y="60" width="120" height="60" rx="6" fill="#252526" stroke="#4ec9b0" stroke-width="2" />
               <text x="240" y="85" fill="#858585" font-size="10" text-anchor="middle">Address: 0x7f8a</text>
               <text x="240" y="105" fill="#b5cea8" font-size="15" font-weight="700" text-anchor="middle">3.14156</text>
 
               <!-- Pointer Arrows -->
-              <path d="M 90,50 L 140,50 L 180,80" fill="none" stroke="#569cd6" stroke-width="2" marker-end="url(#arrow)"/>
-              <path d="M 90,130 L 140,130 L 180,100" fill="none" stroke="#569cd6" stroke-width="2"/>
+              <path d="M 90,50 L 140,50 L 180,80" fill="none" stroke="#569cd6" stroke-width="2"
+                marker-end="url(#arrow)" />
+              <path d="M 90,130 L 140,130 L 180,100" fill="none" stroke="#569cd6" stroke-width="2" />
 
               <defs>
-                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#569cd6"/>
+                <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6"
+                  orient="auto-start-reverse">
+                  <path d="M 0 0 L 10 5 L 0 10 z" fill="#569cd6" />
                 </marker>
               </defs>
             </svg>
-            <div style="font-size: 0.8rem; color: var(--accent-cyan); margin-top: 0.5rem;">Both identifiers point to the identical object!</div>
+            <div style="font-size: 0.8rem; color: var(--accent-cyan); margin-top: 0.5rem;">Both identifiers point to the
+              identical object!</div>
           </div>
         </div>
       </section>
 
       <!-- SLIDE 12: OBJECT-ORIENTED PROGRAMMING -->
       <section class="slide" id="slide-12">
-        <div class="eyebrow">Lecture 1 • Software Paradigms</div>
+        <div class="eyebrow">Software Paradigms</div>
         <h1 class="slide-title">Object-Oriented Programming (OOP)</h1>
         <div class="grid-2col">
           <div>
@@ -713,21 +795,25 @@
                   <li><strong>Methods:</strong> What the object <em>does</em> (functions associated with it).</li>
                 </ul>
               </li>
-              <li>Python is inherently object-oriented: in Python, <em>everything is an object</em> (numbers, strings, functions, modules).</li>
+              <li>Python is inherently object-oriented: in Python, <em>everything is an object</em> (numbers, strings,
+                functions, modules).</li>
             </ul>
           </div>
           <div class="card" style="border-top: 4px solid var(--accent-gold);">
-            <div style="font-weight: 700; color: #ffffff; font-size: 1.1rem; margin-bottom: 0.75rem;">Example: Bank Account Object</div>
+            <div style="font-weight: 700; color: #ffffff; font-size: 1.1rem; margin-bottom: 0.75rem;">Example: Bank
+              Account Object</div>
             <div style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px; margin-bottom: 0.75rem;">
               <span style="color: var(--accent-cyan); font-weight: 600; font-size: 0.85rem;">ATTRIBUTES (State):</span>
-              <ul style="list-style: square; margin-left: 1.5rem; color: var(--token-var); font-size: 0.95rem; margin-top: 0.25rem;">
+              <ul
+                style="list-style: square; margin-left: 1.5rem; color: var(--token-var); font-size: 0.95rem; margin-top: 0.25rem;">
                 <li><code>balance = 150000.00</code></li>
-                <li><code>account_type = "Checking"</code></li>
+                <li><code>account_type = "Saving"</code></li>
               </ul>
             </div>
             <div style="background: #1e1e1e; padding: 0.75rem; border-radius: 6px;">
               <span style="color: var(--token-fn); font-weight: 600; font-size: 0.85rem;">METHODS (Behaviors):</span>
-              <ul style="list-style: square; margin-left: 1.5rem; color: var(--token-fn); font-size: 0.95rem; margin-top: 0.25rem;">
+              <ul
+                style="list-style: square; margin-left: 1.5rem; color: var(--token-fn); font-size: 0.95rem; margin-top: 0.25rem;">
                 <li><code>deposit(amount)</code></li>
                 <li><code>withdraw(amount)</code></li>
               </ul>
@@ -738,14 +824,15 @@
 
       <!-- SLIDE 13: OPERATING SYSTEMS -->
       <section class="slide" id="slide-13">
-        <div class="eyebrow">Lecture 1 • System Software</div>
+        <div class="eyebrow">System Software</div>
         <h1 class="slide-title">Operating Systems</h1>
         <p class="lead">The bridge between raw hardware and application programs.</p>
         <div class="grid-equal">
           <div class="card">
             <h3 style="color: var(--accent-cyan); margin-bottom: 0.75rem; font-size: 1.2rem;">Core Responsibilities</h3>
             <ul class="bullet-list" style="font-size: 1rem;">
-              <li>Allows different applications to execute <strong>concurrently</strong> on a single piece of hardware.</li>
+              <li>Allows different applications to execute <strong>concurrently</strong> on a single piece of hardware.
+              </li>
               <li>Manages CPU scheduling, RAM allocation, and file systems.</li>
               <li>Provides hardware abstraction (device drivers for storage, displays, sensors).</li>
             </ul>
@@ -774,14 +861,16 @@
 
       <!-- SLIDE 14: WHY PYTHON -->
       <section class="slide" id="slide-14">
-        <div class="eyebrow">Lecture 1 • Language Selection</div>
+        <div class="eyebrow">Language Selection</div>
         <h1 class="slide-title">Why Python?</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
-              <li><strong>Most Popular:</strong> Consistently ranked #1 globally on the TIOBE and IEEE Spectrum indexes.</li>
+              <li><strong>Most Popular:</strong> Consistently ranked #1 globally on the TIOBE and IEEE Spectrum indexes.
+              </li>
               <li><strong>Free &amp; Open Source:</strong> Zero licensing restrictions, vast community.</li>
-              <li><strong>High-Level Syntax:</strong> Clear, readable code that reads almost like executable English. Low cognitive burden on the engineer.</li>
+              <li><strong>High-Level Syntax:</strong> Clear, readable code that reads almost like executable English.
+                Low cognitive burden on the engineer.</li>
               <li><strong>Vast Ecosystem:</strong> Thousands of battle-tested packages:
                 <ul>
                   <li>Data Science: NumPy, Pandas, SciPy</li>
@@ -789,33 +878,39 @@
                   <li>Aviation &amp; Machine Learning: PyTorch, Scikit-learn</li>
                 </ul>
               </li>
-              <li>Learning Python builds strong conceptual foundations that make learning C, Rust, or Java much easier!</li>
+              <li>Learning Python builds strong conceptual foundations that make learning C, Rust, or Java much easier!
+              </li>
             </ul>
           </div>
-          <div class="card" style="display: flex; flex-direction: column; justify-content: center; background: #252526; border-left: 4px solid var(--accent);">
-            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">Guiding Philosophy</div>
-            <blockquote style="font-style: italic; color: #ffffff; font-size: 1.15rem; line-height: 1.6; margin-bottom: 1rem;">
+          <div class="card"
+            style="display: flex; flex-direction: column; justify-content: center; background: #252526; border-left: 4px solid var(--accent);">
+            <div
+              style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem; text-transform: uppercase;">
+              Guiding Philosophy</div>
+            <blockquote
+              style="font-style: italic; color: #ffffff; font-size: 1.15rem; line-height: 1.6; margin-bottom: 1rem;">
               &ldquo;Readability counts. Simple is better than complex.&rdquo;
             </blockquote>
-            <div style="font-size: 0.85rem; color: var(--accent-cyan); text-align: right;">&mdash; The Zen of Python (PEP 20)</div>
+            <div style="font-size: 0.85rem; color: var(--accent-cyan); text-align: right;">&mdash; The Zen of Python
+              (PEP 20)</div>
           </div>
         </div>
       </section>
 
       <!-- SLIDE 15: MOORE'S LAW CODE CASE STUDY -->
       <section class="slide" id="slide-15">
-        <div class="eyebrow">Lecture 1 • Hands-on Python Example</div>
-        <h1 class="slide-title" style="margin-bottom: 0.75rem;">Plotting Moore's Law with Python</h1>
+        <div class="eyebrow">Hands-on Python Example</div>
+        <h1 class="slide-title">Plotting Moore's Law with Python</h1>
         <div class="grid-2col">
           <div>
             <div class="code-box">
               <div class="code-box-header"><span>moores_law.py</span><span>NumPy &amp; Matplotlib</span></div>
               <div class="code-box-body"><span class="token-com"># Import scientific libraries</span>
-<span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span> 
+<span class="token-kw">import</span> <span class="token-var">numpy</span> <span class="token-kw">as</span> <span class="token-var">np</span>
 <span class="token-kw">import</span> <span class="token-var">matplotlib.pyplot</span> <span class="token-kw">as</span> <span class="token-var">plt</span>
 
 <span class="token-com"># Create array of years from 0 to 100</span>
-<span class="token-var">time</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">linspace</span>(<span class="token-num">0</span>, <span class="token-num">100</span>, <span class="token-num">101</span>) 
+<span class="token-var">time</span> <span class="token-op">=</span> <span class="token-var">np</span>.<span class="token-fn">linspace</span>(<span class="token-num">0</span>, <span class="token-num">100</span>, <span class="token-num">101</span>)
 
 <span class="token-com"># Calculate doubling every 2 years: 2^(time/2)</span>
 <span class="token-var">n_transistors</span> <span class="token-op">=</span> <span class="token-num">2</span><span class="token-op">**</span>(<span class="token-var">time</span> <span class="token-op">/</span> <span class="token-num">2</span>)
@@ -826,74 +921,104 @@
             </div>
           </div>
 
-          <div style="background: #1a1a1c; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center;">
-            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Resulting Exponential Curve: transistors vs. time</div>
+          <div
+            style="background: #1a1a1c; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; display: flex; flex-direction: column; align-items: center;">
+            <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.5rem;">Resulting Exponential
+              Curve: transistors vs. time</div>
             <svg viewBox="0 0 320 200" width="100%" height="200" style="font-family: sans-serif;">
               <!-- Grid lines -->
-              <line x1="50" y1="20" x2="300" y2="20" stroke="#2d2d30" stroke-width="1"/>
-              <line x1="50" y1="60" x2="300" y2="60" stroke="#2d2d30" stroke-width="1"/>
-              <line x1="50" y1="100" x2="300" y2="100" stroke="#2d2d30" stroke-width="1"/>
-              <line x1="50" y1="140" x2="300" y2="140" stroke="#2d2d30" stroke-width="1"/>
-              
+              <line x1="50" y1="20" x2="300" y2="20" stroke="#2d2d30" stroke-width="1" />
+              <line x1="50" y1="60" x2="300" y2="60" stroke="#2d2d30" stroke-width="1" />
+              <line x1="50" y1="100" x2="300" y2="100" stroke="#2d2d30" stroke-width="1" />
+              <line x1="50" y1="140" x2="300" y2="140" stroke="#2d2d30" stroke-width="1" />
+
               <!-- Axes -->
-              <line x1="50" y1="20" x2="50" y2="170" stroke="#666666" stroke-width="1.5"/>
-              <line x1="50" y1="170" x2="300" y2="170" stroke="#666666" stroke-width="1.5"/>
+              <line x1="50" y1="20" x2="50" y2="170" stroke="#666666" stroke-width="1.5" />
+              <line x1="50" y1="170" x2="300" y2="170" stroke="#666666" stroke-width="1.5" />
 
               <!-- Axis Labels -->
               <text x="175" y="195" fill="#858585" font-size="11" text-anchor="middle">Time (Years)</text>
-              <text x="18" y="95" fill="#858585" font-size="10" transform="rotate(-90 18,95)" text-anchor="middle">Transistors</text>
+              <text x="18" y="95" fill="#858585" font-size="10" transform="rotate(-90 18,95)"
+                text-anchor="middle">Transistors</text>
 
               <!-- Exponential Curve -->
-              <path d="M 50,170 Q 230,165 295,30" fill="none" stroke="#38bdf8" stroke-width="3"/>
+              <path d="M 50,170 Q 230,165 295,30" fill="none" stroke="#38bdf8" stroke-width="3" />
 
               <!-- Highlight points -->
-              <circle cx="50" cy="170" r="4" fill="#38bdf8"/>
-              <circle cx="170" cy="155" r="4" fill="#38bdf8"/>
-              <circle cx="250" cy="110" r="4" fill="#38bdf8"/>
-              <circle cx="295" cy="30" r="4" fill="#f59e0b"/>
+              <circle cx="50" cy="170" r="4" fill="#38bdf8" />
+              <circle cx="170" cy="155" r="4" fill="#38bdf8" />
+              <circle cx="250" cy="110" r="4" fill="#38bdf8" />
+              <circle cx="295" cy="30" r="4" fill="#f59e0b" />
 
               <text x="245" y="45" fill="#f59e0b" font-size="10" font-weight="600">~10¹⁵ Transistors</text>
             </svg>
-            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Exponential explosion in computational capacity</div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); margin-top: 0.25rem;">Exponential explosion in
+              computational capacity</div>
           </div>
         </div>
       </section>
 
       <!-- SLIDE 16: LECTURE 2 TRANSITION TITLE SLIDE -->
       <section class="slide" id="slide-16">
-        <div class="eyebrow">Civil Aviation Training Center (CATC)</div>
-
-        <h1 class="slide-title" style="font-size: 2.8rem; margin-bottom: 0.75rem;">Lecture 2: Intro to Python Programming</h1>
-        <h2 class="slide-subtitle" style="color: var(--accent-cyan); font-size: 1.5rem; margin-bottom: 2rem;">Expressions, Variables, Types, and Control Flow</h2>
-        <div class="card" style="max-width: 680px; background: #252526; border-left: 4px solid var(--accent);">
-          <p style="color: #cccccc; font-size: 1.1rem; line-height: 1.7;">
-            In this lecture, we begin writing Python code: evaluating mathematical expressions, defining variables, mastering operator precedence, handling strings and user input, and controlling program branching with conditionals.
-          </p>
+        <div class="eyebrow">Civil Aviation Training Center (CATC) • Lecture 2</div>
+        <h1 class="slide-title">Intro to Python Programming</h1>
+        <h2 class="slide-subtitle">Expressions, Variables, Types, Operators &amp; Control Flow</h2>
+        <div class="grid-equal" style="margin-top: 1rem;">
+          <div class="card">
+            <h3 style="color: var(--accent-cyan); font-size: 1.15rem; margin-bottom: 0.75rem;">Lecture 2 Agenda</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>Syntax &amp; PEP 8:</strong> Expressions, statements, and clean Python code style</li>
+              <li><strong>Variables &amp; Types:</strong> Numerical types, strings, dynamic typing, and identifiers</li>
+              <li><strong>Operators:</strong> PEMDAS precedence, floor division, and modulus arithmetic</li>
+              <li><strong>Interactivity &amp; Logic:</strong> User input, explicit casting, and conditional branching</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3 style="color: var(--accent-gold); font-size: 1.15rem; margin-bottom: 0.75rem;">Key Takeaways</h3>
+            <ul class="bullet-list" style="font-size: 1.05rem;">
+              <li><strong>Dynamic Typing:</strong> Variables point to objects; types belong to values, not names</li>
+              <li><strong>Explicit Precedence:</strong> Use parentheses to guarantee unambiguous arithmetic</li>
+              <li><strong>PEP 8 Compliance:</strong> Write idiomatic, readable, standard Python from day one</li>
+              <li><strong>Sequential Execution:</strong> Python executes scripts line-by-line via the interpreter</li>
+            </ul>
+          </div>
         </div>
       </section>
 
       <!-- SLIDE 17: EXPRESSIONS AND STATEMENTS -->
       <section class="slide" id="slide-17">
-        <div class="eyebrow">Lecture 2 • Programming Concepts</div>
+        <div class="eyebrow">Programming Concepts</div>
         <h1 class="slide-title">Expressions &amp; Statements</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
-              <li>A line of code in Python generally contains a <strong>statement</strong> or an <strong>expression</strong>.</li>
-              <li><strong>Statements</strong> indicate the action or task that we want the computer to perform (e.g. assignment, print, branching).</li>
-              <li><strong>Expressions</strong> combine values, variables, and operators that evaluate down to a single value.</li>
-              <li>When the interpreter evaluates an expression, it executes the mathematical logic and produces a result.</li>
+              <li>A line of code in Python generally contains a <strong>statement</strong> or an
+                <strong>expression</strong>.
+              </li>
+              <li><strong>Statements</strong> indicate the action or task that we want the computer to perform (e.g.
+                assignment, print, branching).</li>
+              <li><strong>Expressions</strong> combine values, variables, and operators that evaluate down to a single
+                value.</li>
+              <li>When the interpreter evaluates an expression, it executes the mathematical logic and produces a
+                result.</li>
             </ul>
           </div>
           <div class="card" style="display: flex; flex-direction: column; gap: 1rem;">
-            <div style="font-weight: 600; color: var(--accent-gold); font-size: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Statements vs. Expressions</div>
+            <div
+              style="font-weight: 600; color: var(--accent-gold); font-size: 1rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">
+              Statements vs. Expressions</div>
             <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px;">
-              <span style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-bottom: 0.25rem;">Expression (Evaluates to 42):</span>
+              <span
+                style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-bottom: 0.25rem;">Expression
+                (Evaluates to 42):</span>
               <code style="color: var(--token-num); font-size: 1.05rem;">20 + 22</code>
             </div>
             <div style="background: #1e1e1e; padding: 0.75rem 1rem; border-radius: 6px;">
-              <span style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-bottom: 0.25rem;">Statement (Performs assignment task):</span>
-              <code style="color: var(--token-var); font-size: 1.05rem;">total <span style="color: var(--token-op);">=</span> <span style="color: var(--token-num);">20</span> <span style="color: var(--token-op);">+</span> <span style="color: var(--token-num);">22</span></code>
+              <span
+                style="color: var(--text-muted); font-size: 0.8rem; display: block; margin-bottom: 0.25rem;">Statement
+                (Performs assignment task):</span>
+              <code
+                style="color: var(--token-var); font-size: 1.05rem;">total <span style="color: var(--token-op);">=</span> <span style="color: var(--token-num);">20</span> <span style="color: var(--token-op);">+</span> <span style="color: var(--token-num);">22</span></code>
             </div>
           </div>
         </div>
@@ -901,7 +1026,7 @@
 
       <!-- SLIDE 18: ASSIGNMENT AND IDENTIFIERS -->
       <section class="slide" id="slide-18">
-        <div class="eyebrow">Lecture 2 • Variables</div>
+        <div class="eyebrow">Variables</div>
         <h1 class="slide-title">Assignment &amp; Identifiers</h1>
         <div class="grid-2col">
           <div>
@@ -910,9 +1035,12 @@
               <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">2</span></div>
             </div>
             <ul class="bullet-list">
-              <li><code class="inline-code">x</code> is termed an <strong>identifier</strong> of a <strong>variable</strong>.</li>
+              <li><code class="inline-code">x</code> is termed an <strong>identifier</strong> of a
+                <strong>variable</strong>.
+              </li>
               <li><code class="inline-code">=</code> is the <strong>assignment symbol</strong> (not equality!).</li>
-              <li><code class="inline-code">2</code> is an integer literal that we are assigning to the variable identified by <code class="inline-code">'x'</code>.</li>
+              <li><code class="inline-code">2</code> is an integer literal that we are assigning to the variable
+                identified by <code class="inline-code">'x'</code>.</li>
             </ul>
           </div>
           <div class="card" style="display: flex; flex-direction: column; justify-content: center; gap: 0.75rem;">
@@ -920,8 +1048,10 @@
             <p style="color: var(--text); font-size: 1rem; line-height: 1.6;">
               Think of a variable as a labeled sticky note pointing to a value box in the computer's memory.
             </p>
-            <div style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem; font-family: monospace; font-size: 0.9rem;">
-              Label <span style="color: var(--token-var);">x</span> &mdash;&mdash;&gt; [ Object: <span style="color: var(--token-num);">2</span> (int) ]
+            <div
+              style="background: #1e1e1e; border: 1px solid var(--border); border-radius: 6px; padding: 0.75rem 1rem; font-family: monospace; font-size: 0.9rem;">
+              Label <span style="color: var(--token-var);">x</span> &mdash;&mdash;&gt; [ Object: <span
+                style="color: var(--token-num);">2</span> (int) ]
             </div>
           </div>
         </div>
@@ -929,7 +1059,7 @@
 
       <!-- SLIDE 19: ADDING TWO INTEGERS & PEP 8 -->
       <section class="slide" id="slide-19">
-        <div class="eyebrow">Lecture 2 • Arithmetic &amp; Style</div>
+        <div class="eyebrow">Arithmetic &amp; Style</div>
         <h1 class="slide-title">Adding Two Integers &amp; PEP 8</h1>
         <div class="grid-2col">
           <div>
@@ -941,15 +1071,17 @@
 <span class="token-var">z</span></div>
               <div class="output-box">
                 <div class="out-label">Output</div>
-                <span>81</span>
+                <div>81</div>
               </div>
             </div>
           </div>
           <div>
             <div class="card" style="border-left: 4px solid var(--accent);">
-              <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.15rem;">Programming Style: PEP 8</h3>
+              <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.15rem;">Programming Style: PEP
+                8</h3>
               <ul class="bullet-list" style="font-size: 1rem;">
-                <li>Note the single space around the assignment symbol (<code class="inline-code">=</code>) and operators (<code class="inline-code">+</code>).</li>
+                <li>Note the single space around the assignment symbol (<code class="inline-code">=</code>) and
+                  operators (<code class="inline-code">+</code>).</li>
                 <li><strong>PEP 8</strong> is the official Python Enhancement Proposal for Code Style.</li>
                 <li>Clean spacing makes code readable, professional, and maintainable across engineering teams.</li>
               </ul>
@@ -963,29 +1095,35 @@
 
       <!-- SLIDE 20: VARIABLE NAMES -->
       <section class="slide" id="slide-20">
-        <div class="eyebrow">Lecture 2 • Identifier Rules</div>
+        <div class="eyebrow">Identifier Rules</div>
         <h1 class="slide-title">Variable Names &amp; Syntax Rules</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
-              <li><strong>Case-Sensitive:</strong> <code class="inline-code">X</code> and <code class="inline-code">x</code> are completely distinct variables!
+              <li><strong>Case-Sensitive:</strong> <code class="inline-code">X</code> and <code
+                  class="inline-code">x</code> are completely distinct variables!
                 <div class="code-box" style="margin: 0.5rem 0;">
                   <div class="code-box-body"><span class="token-var">X</span> <span class="token-op">=</span> <span class="token-num">12</span>
 <span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">34</span>
 <span class="token-var">X</span><span class="token-op">,</span> <span class="token-var">x</span>  <span class="token-com"># Output: (12, 34)</span></div>
                 </div>
               </li>
-              <li>May contain: letters (<code class="inline-code">a-z, A-Z</code>), digits (<code class="inline-code">0-9</code>), and underscores (<code class="inline-code">_</code>).</li>
+              <li>May contain: letters (<code class="inline-code">a-z, A-Z</code>), digits (<code
+                  class="inline-code">0-9</code>), and underscores (<code class="inline-code">_</code>).</li>
               <li><strong>CANNOT begin with a number:</strong>
-                <div style="background: rgba(244, 135, 113, 0.15); border: 1px solid var(--danger); border-radius: 6px; padding: 0.6rem 0.8rem; margin-top: 0.4rem; font-family: monospace; font-size: 0.85rem;">
-                  <span style="color: var(--danger);">123_xyz = 56</span> &rarr; <span style="color: var(--text-bright);">SyntaxError: invalid decimal literal</span>
+                <div
+                  style="background: rgba(244, 135, 113, 0.15); border: 1px solid var(--danger); border-radius: 6px; padding: 0.6rem 0.8rem; margin-top: 0.4rem; font-family: monospace; font-size: 0.85rem;">
+                  <span style="color: var(--danger);">123_xyz = 56</span> &rarr; <span
+                    style="color: var(--text-bright);">SyntaxError: invalid decimal literal</span>
                 </div>
               </li>
             </ul>
           </div>
           <div class="card">
-            <h4 style="color: var(--accent-gold); margin-bottom: 0.75rem; font-size: 1rem;">Valid vs. Invalid Identifiers</h4>
-            <div style="display: flex; flex-direction: column; gap: 0.5rem; font-family: monospace; font-size: 0.95rem;">
+            <h4 style="color: var(--accent-gold); margin-bottom: 0.75rem; font-size: 1rem;">Valid vs. Invalid
+              Identifiers</h4>
+            <div
+              style="display: flex; flex-direction: column; gap: 0.5rem; font-family: monospace; font-size: 0.95rem;">
               <div style="color: #4ec9b0;">✓ airspeed = 250</div>
               <div style="color: #4ec9b0;">✓ altitude_ft = 35000</div>
               <div style="color: #4ec9b0;">✓ flight_101 = True</div>
@@ -1000,14 +1138,16 @@
 
       <!-- SLIDE 21: DATA TYPES & TYPE() -->
       <section class="slide" id="slide-21">
-        <div class="eyebrow">Lecture 2 • Type System</div>
+        <div class="eyebrow">Type System</div>
         <h1 class="slide-title">Data Types &amp; The <code>type()</code> Function</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
               <li>Every variable and value in Python has an associated <strong>type</strong>.</li>
-              <li>Python provides the built-in function <code class="inline-code">type()</code> to inspect types at any point.</li>
-              <li><code class="inline-code">type</code> is a <em>function</em> whose <em>argument</em> is the variable and whose <em>output</em> is the data type class.</li>
+              <li>Python provides the built-in function <code class="inline-code">type()</code> to inspect types at any
+                point.</li>
+              <li><code class="inline-code">type</code> is a <em>function</em> whose <em>argument</em> is the variable
+                and whose <em>output</em> is the data type class.</li>
             </ul>
           </div>
           <div>
@@ -1030,7 +1170,7 @@
 
       <!-- SLIDE 22: ARITHMETIC OPERATIONS BASIC -->
       <section class="slide" id="slide-22">
-        <div class="eyebrow">Lecture 2 • Operators</div>
+        <div class="eyebrow">Operators</div>
         <h1 class="slide-title">Arithmetic Operations: Basic</h1>
         <div class="grid-2col">
           <div class="code-box">
@@ -1038,19 +1178,23 @@
             <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">2</span>
 <span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">3</span>
 
-<span class="token-var">x</span> <span class="token-op">+</span> <span class="token-var">y</span>   <span class="token-com"># Addition: 5</span>
-<span class="token-var">y</span> <span class="token-op">-</span> <span class="token-var">x</span>   <span class="token-com"># Subtraction: 1</span>
-<span class="token-var">x</span> <span class="token-op">*</span> <span class="token-var">y</span>   <span class="token-com"># Multiplication: 6</span>
-<span class="token-var">y</span> <span class="token-op">/</span> <span class="token-var">x</span>   <span class="token-com"># True Division: 1.5</span></div>
+<span class="token-var">x</span> <span class="token-op">+</span> <span class="token-var">y</span>  <span class="token-com"># Addition: 5</span>
+<span class="token-var">y</span> <span class="token-op">-</span> <span class="token-var">x</span>  <span class="token-com"># Subtraction: 1</span>
+<span class="token-var">x</span> <span class="token-op">*</span> <span class="token-var">y</span>  <span class="token-com"># Multiplication: 6</span>
+<span class="token-var">y</span> <span class="token-op">/</span> <span class="token-var">x</span>  <span class="token-com"># True Division: 1.5</span></div>
           </div>
           <div>
             <div class="card" style="border-left: 4px solid var(--accent-cyan);">
-              <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.15rem;">Important: Division Behavior</h3>
+              <h3 style="color: var(--text-bright); margin-bottom: 0.75rem; font-size: 1.15rem;">Important: Division
+                Behavior</h3>
               <p style="color: var(--text); font-size: 1rem; line-height: 1.6;">
-                In Python 3, the standard division operator (<code class="inline-code">/</code>) <strong>always returns a float</strong>, even when the division divides evenly!
+                In Python 3, the standard division operator (<code class="inline-code">/</code>) <strong>always returns
+                  a float</strong>, even when the division divides evenly!
               </p>
-              <div style="background: #1e1e1e; padding: 0.5rem 0.75rem; border-radius: 4px; margin-top: 0.75rem; font-family: monospace; font-size: 0.95rem;">
-                <span style="color: var(--token-num);">4</span> / <span style="color: var(--token-num);">2</span> &rarr; <span style="color: var(--token-num);">2.0</span> (<span style="color: var(--token-type);">float</span>)
+              <div
+                style="background: #1e1e1e; padding: 0.5rem 0.75rem; border-radius: 4px; margin-top: 0.75rem; font-family: monospace; font-size: 0.95rem;">
+                <span style="color: var(--token-num);">4</span> / <span style="color: var(--token-num);">2</span> &rarr;
+                <span style="color: var(--token-num);">2.0</span> (<span style="color: var(--token-type);">float</span>)
               </div>
             </div>
           </div>
@@ -1059,7 +1203,7 @@
 
       <!-- SLIDE 23: ARITHMETIC OPERATIONS ADVANCED -->
       <section class="slide" id="slide-23">
-        <div class="eyebrow">Lecture 2 • Operators</div>
+        <div class="eyebrow">Operators</div>
         <h1 class="slide-title">Arithmetic Operations: Advanced</h1>
         <div class="grid-2col">
           <div class="code-box">
@@ -1068,26 +1212,30 @@
 <span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">3</span>
 
 <span class="token-com"># Exponentiation (x raised to power y)</span>
-<span class="token-var">x</span> <span class="token-op">**</span> <span class="token-var">y</span>   <span class="token-com"># 2³ = 8</span>
+<span class="token-var">x</span> <span class="token-op">**</span> <span class="token-var">y</span>  <span class="token-com"># 2³ = 8</span>
 
 <span class="token-com"># Floor division (integer division)</span>
-<span class="token-var">y</span> <span class="token-op">//</span> <span class="token-var">x</span>   <span class="token-com"># 3 // 2 = 1</span>
+<span class="token-var">y</span> <span class="token-op">//</span> <span class="token-var">x</span>  <span class="token-com"># 3 // 2 = 1</span>
 
 <span class="token-com"># Modulus (remainder of division)</span>
-<span class="token-var">y</span> <span class="token-op">%</span> <span class="token-var">x</span>    <span class="token-com"># 3 % 2 = 1</span></div>
+<span class="token-var">y</span> <span class="token-op">%</span> <span class="token-var">x</span>  <span class="token-com"># 3 % 2 = 1</span></div>
           </div>
           <div style="display: flex; flex-direction: column; gap: 0.85rem;">
             <div class="card">
               <h4 style="color: var(--token-kw);">Exponentiation (<code class="inline-code">**</code>)</h4>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Raises base to the exponent: <code class="inline-code">2 ** 3 = 8</code>.</p>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Raises base to the exponent: <code
+                  class="inline-code">2 ** 3 = 8</code>.</p>
             </div>
             <div class="card">
               <h4 style="color: var(--accent-gold);">Floor Division (<code class="inline-code">//</code>)</h4>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Divides and rounds down to the nearest integer: <code class="inline-code">7 // 2 = 3</code>.</p>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Divides and rounds down to the nearest integer:
+                <code class="inline-code">7 // 2 = 3</code>.
+              </p>
             </div>
             <div class="card">
               <h4 style="color: var(--accent-cyan);">Modulus (<code class="inline-code">%</code>)</h4>
-              <p style="color: var(--text-muted); font-size: 0.9rem;">Calculates remainder: <code class="inline-code">7 % 2 = 1</code>. Used to test even/odd or clock cycles.</p>
+              <p style="color: var(--text-muted); font-size: 0.9rem;">Calculates remainder: <code
+                  class="inline-code">7 % 2 = 1</code>. Used to test even/odd or clock cycles.</p>
             </div>
           </div>
         </div>
@@ -1095,7 +1243,7 @@
 
       <!-- SLIDE 24: OPERATOR PRECEDENCE RULES -->
       <section class="slide" id="slide-24">
-        <div class="eyebrow">Lecture 2 • Evaluation Order</div>
+        <div class="eyebrow">Evaluation Order</div>
         <h1 class="slide-title">Operator Precedence Rules</h1>
         <div class="grid-2col">
           <div style="display: flex; flex-direction: column; gap: 0.6rem;">
@@ -1105,7 +1253,9 @@
             </div>
             <div class="card" style="border-left: 4px solid var(--accent-gold); padding: 0.85rem 1.25rem;">
               <strong style="color: #ffffff;">2. Exponentiation <code>**</code></strong>
-              <div style="color: var(--text-muted); font-size: 0.85rem;">Evaluates next, in order of <em>right-to-left</em>.</div>
+              <div style="color: var(--text-muted); font-size: 0.85rem;">Evaluates next, in order of
+                <em>right-to-left</em>.
+              </div>
             </div>
             <div class="card" style="border-left: 4px solid var(--accent-cyan); padding: 0.85rem 1.25rem;">
               <strong style="color: #ffffff;">3. Multiplication, Division <code>* , / , // , %</code></strong>
@@ -1125,7 +1275,7 @@
 <span class="token-var">z</span> <span class="token-op">=</span> <span class="token-num">4</span>
 
 <span class="token-com"># Mult before Add: (2 * 3) + 4</span>
-<span class="token-var">x</span> <span class="token-op">*</span> <span class="token-var">y</span> <span class="token-op">+</span> <span class="token-var">z</span>    <span class="token-com"># Output: 10</span>
+<span class="token-var">x</span> <span class="token-op">*</span> <span class="token-var">y</span> <span class="token-op">+</span> <span class="token-var">z</span>  <span class="token-com"># Output: 10</span>
 
 <span class="token-com"># Parentheses override: 2 * (3 + 4)</span>
 <span class="token-var">x</span> <span class="token-op">*</span> (<span class="token-var">y</span> <span class="token-op">+</span> <span class="token-var">z</span>)  <span class="token-com"># Output: 14</span></div>
@@ -1136,7 +1286,7 @@
 
       <!-- SLIDE 25: AVOIDING AMBIGUITY WITH PARENTHESES -->
       <section class="slide" id="slide-25">
-        <div class="eyebrow">Lecture 2 • Associativity</div>
+        <div class="eyebrow">Associativity</div>
         <h1 class="slide-title">Use Parentheses to Avoid Ambiguity</h1>
         <p class="lead">Exponents are <strong>right-associative</strong> in Python:</p>
         <div class="grid-2col">
@@ -1153,13 +1303,16 @@
 <span class="token-com"># = 8 ** 4</span>
 <span class="token-com"># = 4096</span></div>
           </div>
-          <div class="card" style="display: flex; flex-direction: column; justify-content: center; border-left: 4px solid var(--accent-gold);">
+          <div class="card"
+            style="display: flex; flex-direction: column; justify-content: center; border-left: 4px solid var(--accent-gold);">
             <h3 style="color: var(--text-bright); margin-bottom: 0.75rem;">Golden Rule for Engineers</h3>
             <p style="color: var(--text); font-size: 1.05rem; line-height: 1.7;">
-              Even if you know the exact precedence table, <strong>always use parentheses</strong> when writing complex equations.
+              Even if you know the exact precedence table, <strong>always use parentheses</strong> when writing complex
+              equations.
             </p>
             <p style="color: var(--text-muted); font-size: 0.95rem; margin-top: 0.5rem;">
-              Parentheses make the code self-documenting, remove ambiguity, and eliminate subtle calculation bugs in mission-critical software.
+              Parentheses make the code self-documenting, remove ambiguity, and eliminate subtle calculation bugs in
+              mission-critical software.
             </p>
           </div>
         </div>
@@ -1167,13 +1320,14 @@
 
       <!-- SLIDE 26: STRINGS -->
       <section class="slide" id="slide-26">
-        <div class="eyebrow">Lecture 2 • Text Data</div>
+        <div class="eyebrow">Text Data</div>
         <h1 class="slide-title">Strings (<code>str</code>)</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
               <li>The <code class="inline-code">str</code> type holds sequences of characters.</li>
-              <li>Can be enclosed in single quotes (<code class="inline-code">'...'</code>) or double quotes (<code class="inline-code">"..."</code>).</li>
+              <li>Can be enclosed in single quotes (<code class="inline-code">'...'</code>) or double quotes (<code
+                  class="inline-code">"..."</code>).</li>
               <li>The built-in <code class="inline-code">print()</code> function displays strings on screen.</li>
               <li>Strings can span multiple lines using <strong>escape characters</strong>:
                 <ul>
@@ -1204,14 +1358,16 @@
 
       <!-- SLIDE 27: OBTAINING USER INPUT -->
       <section class="slide" id="slide-27">
-        <div class="eyebrow">Lecture 2 • Interactivity</div>
+        <div class="eyebrow">Interactivity</div>
         <h1 class="slide-title">Obtaining User Input</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
-              <li>The <code class="inline-code">input()</code> function allows the user to supply values via keyboard.</li>
+              <li>The <code class="inline-code">input()</code> function allows the user to supply values via keyboard.
+              </li>
               <li>Program execution pauses until the user types their response and presses <kbd>Enter</kbd>.</li>
-              <li><strong>CRITICAL POINT:</strong> The resulting value returned by <code class="inline-code">input()</code> is <strong>always a string</strong>!</li>
+              <li><strong>CRITICAL POINT:</strong> The resulting value returned by <code
+                  class="inline-code">input()</code> is <strong>always a string</strong>!</li>
             </ul>
           </div>
           <div>
@@ -1234,18 +1390,22 @@
 
       <!-- SLIDE 28: CASTING DATA TYPES VIA INT() -->
       <section class="slide" id="slide-28">
-        <div class="eyebrow">Lecture 2 • Type Conversion</div>
+        <div class="eyebrow">Type Conversion</div>
         <h1 class="slide-title">Casting Data Types via <code>int()</code></h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
-              <li>Since <code class="inline-code">input()</code> returns strings, attempting arithmetic directly will fail:
-                <div style="background: rgba(244, 135, 113, 0.1); border-left: 3px solid var(--danger); padding: 0.5rem; margin: 0.5rem 0; font-family: monospace; font-size: 0.9rem;">
+              <li>Since <code class="inline-code">input()</code> returns strings, attempting arithmetic directly will
+                fail:
+                <div
+                  style="background: rgba(244, 135, 113, 0.1); border-left: 3px solid var(--danger); padding: 0.5rem; margin: 0.5rem 0; font-family: monospace; font-size: 0.9rem;">
                   '43' + 1 &rarr; TypeError: can only concatenate str to str
                 </div>
               </li>
-              <li>We <strong>cast</strong> (convert) the string into an integer using the <code class="inline-code">int()</code> function.</li>
-              <li>Other casting functions: <code class="inline-code">float()</code>, <code class="inline-code">str()</code>, <code class="inline-code">bool()</code>.</li>
+              <li>We <strong>cast</strong> (convert) the string into an integer using the <code
+                  class="inline-code">int()</code> function.</li>
+              <li>Other casting functions: <code class="inline-code">float()</code>, <code
+                  class="inline-code">str()</code>, <code class="inline-code">bool()</code>.</li>
             </ul>
           </div>
           <div>
@@ -1266,14 +1426,17 @@
 
       <!-- SLIDE 29: BOOLEAN EXPRESSIONS -->
       <section class="slide" id="slide-29">
-        <div class="eyebrow">Lecture 2 • Logic &amp; Truth</div>
+        <div class="eyebrow">Logic &amp; Truth</div>
         <h1 class="slide-title">Boolean Expressions</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
-              <li>Boolean expressions evaluate to one of two built-in keywords: <code class="inline-code">True</code> or <code class="inline-code">False</code>.</li>
+              <li>Boolean expressions evaluate to one of two built-in keywords: <code class="inline-code">True</code> or
+                <code class="inline-code">False</code>.
+              </li>
               <li>Constructed using <strong>relational comparison operators</strong>:
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-top: 0.5rem; font-family: monospace; font-size: 0.9rem;">
+                <div
+                  style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.4rem; margin-top: 0.5rem; font-family: monospace; font-size: 0.9rem;">
                   <div><code>&gt;</code> greater than</div>
                   <div><code>&lt;</code> less than</div>
                   <div><code>&gt;=</code> greater or equal</div>
@@ -1291,9 +1454,9 @@
 <span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">34</span>
 
 <span class="token-var">z</span> <span class="token-op">=</span> <span class="token-var">x</span> <span class="token-op">&gt;</span> <span class="token-var">y</span>
-<span class="token-fn">print</span>(<span class="token-var">z</span>)        <span class="token-com"># False</span>
-<span class="token-fn">print</span>(<span class="token-var">x</span> <span class="token-op">&lt;</span> <span class="token-var">y</span>)    <span class="token-com"># True</span>
-<span class="token-fn">print</span>(<span class="token-var">x</span> <span class="token-op">!=</span> <span class="token-var">y</span>)   <span class="token-com"># True</span>
+<span class="token-fn">print</span>(<span class="token-var">z</span>)  <span class="token-com"># False</span>
+<span class="token-fn">print</span>(<span class="token-var">x</span> <span class="token-op">&lt;</span> <span class="token-var">y</span>)  <span class="token-com"># True</span>
+<span class="token-fn">print</span>(<span class="token-var">x</span> <span class="token-op">!=</span> <span class="token-var">y</span>)  <span class="token-com"># True</span>
 <span class="token-fn">print</span>(<span class="token-var">x</span> <span class="token-op">==</span> <span class="token-num">12</span>)  <span class="token-com"># True</span></div>
             </div>
           </div>
@@ -1302,12 +1465,13 @@
 
       <!-- SLIDE 30: CONDITIONAL EXECUTION: IF STATEMENT -->
       <section class="slide" id="slide-30">
-        <div class="eyebrow">Lecture 2 • Control Flow</div>
+        <div class="eyebrow">Control Flow</div>
         <h1 class="slide-title">Conditional Execution: <code>if</code> Statement</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
-              <li>The <code class="inline-code">if</code> statement allows program execution to branch depending on current program state.</li>
+              <li>The <code class="inline-code">if</code> statement allows program execution to branch depending on
+                current program state.</li>
               <li><strong>Syntax anatomy:</strong>
                 <ul>
                   <li>The keyword <code class="inline-code">if</code> followed by a boolean condition.</li>
@@ -1339,7 +1503,7 @@
 
       <!-- SLIDE 31: COMMENTS -->
       <section class="slide" id="slide-31">
-        <div class="eyebrow">Lecture 2 • Code Documentation</div>
+        <div class="eyebrow">Code Documentation</div>
         <h1 class="slide-title">Comments &amp; Documentation</h1>
         <div class="grid-2col">
           <div>
@@ -1360,7 +1524,8 @@
             <div class="card" style="margin-top: 1rem; border-left: 4px solid var(--accent-gold);">
               <div style="font-size: 0.95rem; font-weight: 600; color: #ffffff;">Best Practice</div>
               <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 0.25rem;">
-                Write comments that explain <em>why</em> an algorithm was chosen, rather than just repeating <em>what</em> the code syntax obviously does.
+                Write comments that explain <em>why</em> an algorithm was chosen, rather than just repeating
+                <em>what</em> the code syntax obviously does.
               </p>
             </div>
           </div>
@@ -1369,7 +1534,7 @@
 
       <!-- SLIDE 32: VARIABLES, VALUES, AND TYPES -->
       <section class="slide" id="slide-32">
-        <div class="eyebrow">Lecture 2 • Object Model</div>
+        <div class="eyebrow">Object Model</div>
         <h1 class="slide-title">Variables, Values, and Types</h1>
         <div class="grid-2col">
           <div>
@@ -1407,21 +1572,23 @@
 
       <!-- SLIDE 33: DYNAMIC TYPING -->
       <section class="slide" id="slide-33">
-        <div class="eyebrow">Lecture 2 • Runtime Behavior</div>
+        <div class="eyebrow">Runtime Behavior</div>
         <h1 class="slide-title">Dynamic Typing</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
-              <li>Unlike statically typed languages (such as C++ or Java), Python does not require variable types to be declared upfront.</li>
-              <li>Python determines and tracks variable types <strong>dynamically during program execution</strong>.</li>
+              <li>Unlike statically typed languages (such as C++ or Java), Python does not require variable types to be
+                declared upfront.</li>
+              <li>Python determines and tracks variable types <strong>dynamically during program execution</strong>.
+              </li>
               <li>Types can evolve and mutate seamlessly as expressions are evaluated.</li>
             </ul>
           </div>
           <div>
             <div class="code-box">
               <div class="code-box-header"><span>dynamic_typing.py</span><span>Type Evolution</span></div>
-              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">10</span>    <span class="token-com"># int</span>
-<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">3</span>     <span class="token-com"># int</span>
+              <div class="code-box-body"><span class="token-var">x</span> <span class="token-op">=</span> <span class="token-num">10</span>  <span class="token-com"># int</span>
+<span class="token-var">y</span> <span class="token-op">=</span> <span class="token-num">3</span>  <span class="token-com"># int</span>
 
 <span class="token-com"># Dividing two integers yields a float:</span>
 <span class="token-var">z</span> <span class="token-op">=</span> <span class="token-var">x</span> <span class="token-op">/</span> <span class="token-var">y</span>
@@ -1437,22 +1604,23 @@
 
       <!-- SLIDE 34: BASIC DESCRIPTIVE STATISTICS -->
       <section class="slide" id="slide-34">
-        <div class="eyebrow">Lecture 2 • Built-in Utilities</div>
+        <div class="eyebrow">Built-in Utilities</div>
         <h1 class="slide-title">Basic Descriptive Statistics</h1>
         <div class="grid-2col">
           <div>
             <ul class="bullet-list">
               <li>Python comes standard with built-in numerical functions.</li>
-              <li>We can find the minimum and maximum of a set of numbers using <code class="inline-code">min()</code> and <code class="inline-code">max()</code>.</li>
+              <li>We can find the minimum and maximum of a set of numbers using <code class="inline-code">min()</code>
+                and <code class="inline-code">max()</code>.</li>
               <li>Accepts comma-separated arguments or entire sequences (lists/tuples).</li>
             </ul>
           </div>
           <div>
             <div class="code-box">
               <div class="code-box-header"><span>stats.py</span><span>min and max</span></div>
-              <div class="code-box-body"><span class="token-fn">min</span>(<span class="token-num">12</span><span class="token-op">,</span> <span class="token-num">34</span><span class="token-op">,</span> <span class="token-num">56</span>)  <span class="token-com"># Output: 12</span>
+              <div class="code-box-body"><span class="token-fn">min</span>(<span class="token-num">12</span><span class="token-op">,</span> <span class="token-num">34</span><span class="token-op">,</span> <span class="token-num">56</span>)  <span class=token-com># Output: 12</span>
 
-<span class="token-fn">max</span>(<span class="token-num">12</span><span class="token-op">,</span> <span class="token-num">34</span><span class="token-op">,</span> <span class="token-num">56</span>)  <span class="token-com"># Output: 56</span></div>
+<span class="token-fn">max</span>(<span class="token-num">12</span><span class="token-op">,</span> <span class="token-num">34</span><span class="token-op">,</span> <span class="token-num">56</span>)  <span class=token-com># Output: 56</span></div>
               <div class="output-box">
                 <div class="out-label">Output Values</div>
                 <div>min &rarr; 12</div>
@@ -1465,7 +1633,7 @@
 
       <!-- SLIDE 35: COURSE SUMMARY & WRAP-UP -->
       <section class="slide" id="slide-35">
-        <div class="eyebrow">Civil Aviation Training Center (CATC)</div>
+        <div class="eyebrow">Curriculum Synthesis</div>
         <h1 class="slide-title">Summary &amp; Next Steps</h1>
         <div class="grid-equal">
           <div class="card" style="border-top: 4px solid var(--accent);">
@@ -1502,7 +1670,6 @@
     <div class="slide-footer">
       <div>Civil Aviation Training Center (CATC)</div>
       <div class="nav-hints">
-
         <button class="nav-btn" onclick="SlideDeck.prev()">◀ Prev</button>
         <button class="nav-btn" onclick="SlideDeck.next()">Next ▶</button>
         <button class="nav-btn" onclick="SlideDeck.toggleFullscreen()">⛶ Fullscreen</button>
@@ -1522,7 +1689,6 @@
         counterEl = document.getElementById('counter');
         progressEl = document.getElementById('progress');
 
-        // Check hash
         const hash = window.location.hash;
         if (hash && hash.startsWith('#slide-')) {
           const idx = parseInt(hash.replace('#slide-', ''), 10) - 1;
@@ -1533,13 +1699,9 @@
 
         updateView();
 
-        // Keyboard listeners
         window.addEventListener('keydown', handleKeyDown);
-
-        // Hash change listener
         window.addEventListener('hashchange', handleHashChange);
 
-        // Touch swipe support
         let touchStartX = 0;
         let touchEndX = 0;
         document.addEventListener('touchstart', (e) => {
@@ -1634,9 +1796,9 @@
 
       function toggleFullscreen() {
         if (!document.fullscreenElement) {
-          document.documentElement.requestFullscreen().catch(() => {});
+          document.documentElement.requestFullscreen().catch(() => { });
         } else {
-          document.exitFullscreen().catch(() => {});
+          document.exitFullscreen().catch(() => { });
         }
       }
 
@@ -1652,4 +1814,5 @@
     document.addEventListener('DOMContentLoaded', SlideDeck.init);
   </script>
 </body>
+
 </html>
