@@ -1,0 +1,1267 @@
+[
+  {
+    "id": 1,
+    "deck_number": "01",
+    "title": "Computing Fundamentals & Python Basics",
+    "subtitle": "Computer Architecture, Memory Mechanics, Expressions & Control Flow",
+    "lectures_label": "Lectures 1 & 2",
+    "total_slides": 35,
+    "badge_color": "#4fc1ff",
+    "accent": "#007acc",
+    "part1": {
+      "lecture": "Lecture 1",
+      "title": "Fundamentals of Computing",
+      "slide": 1,
+      "id": "slide-1"
+    },
+    "part2": {
+      "lecture": "Lecture 2",
+      "title": "Intro to Python Programming",
+      "slide": 16,
+      "id": "slide-16"
+    },
+    "notebooks": [
+      "L01.ipynb",
+      "L02.ipynb"
+    ],
+    "tags": [
+      "Binary",
+      "CPU & RAM",
+      "Moore's Law",
+      "PEP 8",
+      "Dynamic Typing",
+      "Arithmetic",
+      "Conditions"
+    ],
+    "slides": [
+      {
+        "num": 1,
+        "id": "slide-1",
+        "title": "Fundamentals of Computing",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 1"
+      },
+      {
+        "num": 2,
+        "id": "slide-2",
+        "title": "Representation with Numbers",
+        "eyebrow": "Data Representation"
+      },
+      {
+        "num": 3,
+        "id": "slide-3",
+        "title": "What is a Number?",
+        "eyebrow": "Number Systems"
+      },
+      {
+        "num": 4,
+        "id": "slide-4",
+        "title": "Binary Representation",
+        "eyebrow": "Binary Systems"
+      },
+      {
+        "num": 5,
+        "id": "slide-5",
+        "title": "Equality versus Assignment",
+        "eyebrow": "Core Principles"
+      },
+      {
+        "num": 6,
+        "id": "slide-6",
+        "title": "Data Hierarchy",
+        "eyebrow": "Data Architecture"
+      },
+      {
+        "num": 7,
+        "id": "slide-7",
+        "title": "Basic Computer Architecture",
+        "eyebrow": "Hardware Foundation"
+      },
+      {
+        "num": 8,
+        "id": "slide-8",
+        "title": "What Do Computers Do?",
+        "eyebrow": "Computing Fundamentals"
+      },
+      {
+        "num": 9,
+        "id": "slide-9",
+        "title": "Moore's Law",
+        "eyebrow": "Exponential Progress"
+      },
+      {
+        "num": 10,
+        "id": "slide-10",
+        "title": "Levels of Programming Languages",
+        "eyebrow": "Language Evolution"
+      },
+      {
+        "num": 11,
+        "id": "slide-11",
+        "title": "Shallow versus Deep Copy",
+        "eyebrow": "Memory Mechanics"
+      },
+      {
+        "num": 12,
+        "id": "slide-12",
+        "title": "Object-Oriented Programming (OOP)",
+        "eyebrow": "Software Paradigms"
+      },
+      {
+        "num": 13,
+        "id": "slide-13",
+        "title": "Operating Systems",
+        "eyebrow": "System Software"
+      },
+      {
+        "num": 14,
+        "id": "slide-14",
+        "title": "Why Python?",
+        "eyebrow": "Language Selection"
+      },
+      {
+        "num": 15,
+        "id": "slide-15",
+        "title": "Plotting Moore's Law with Python",
+        "eyebrow": "Hands-on Python Example"
+      },
+      {
+        "num": 16,
+        "id": "slide-16",
+        "title": "Intro to Python Programming",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 2"
+      },
+      {
+        "num": 17,
+        "id": "slide-17",
+        "title": "Expressions & Statements",
+        "eyebrow": "Programming Concepts"
+      },
+      {
+        "num": 18,
+        "id": "slide-18",
+        "title": "Assignment & Identifiers",
+        "eyebrow": "Variables"
+      },
+      {
+        "num": 19,
+        "id": "slide-19",
+        "title": "Adding Two Integers & PEP 8",
+        "eyebrow": "Arithmetic & Style"
+      },
+      {
+        "num": 20,
+        "id": "slide-20",
+        "title": "Variable Names & Syntax Rules",
+        "eyebrow": "Identifier Rules"
+      },
+      {
+        "num": 21,
+        "id": "slide-21",
+        "title": "Data Types & The type() Function",
+        "eyebrow": "Type System"
+      },
+      {
+        "num": 22,
+        "id": "slide-22",
+        "title": "Arithmetic Operations: Basic",
+        "eyebrow": "Operators"
+      },
+      {
+        "num": 23,
+        "id": "slide-23",
+        "title": "Arithmetic Operations: Advanced",
+        "eyebrow": "Operators"
+      },
+      {
+        "num": 24,
+        "id": "slide-24",
+        "title": "Operator Precedence Rules",
+        "eyebrow": "Evaluation Order"
+      },
+      {
+        "num": 25,
+        "id": "slide-25",
+        "title": "Use Parentheses to Avoid Ambiguity",
+        "eyebrow": "Associativity"
+      },
+      {
+        "num": 26,
+        "id": "slide-26",
+        "title": "Strings ( str )",
+        "eyebrow": "Text Data"
+      },
+      {
+        "num": 27,
+        "id": "slide-27",
+        "title": "Obtaining User Input",
+        "eyebrow": "Interactivity"
+      },
+      {
+        "num": 28,
+        "id": "slide-28",
+        "title": "Casting Data Types via int()",
+        "eyebrow": "Type Conversion"
+      },
+      {
+        "num": 29,
+        "id": "slide-29",
+        "title": "Boolean Expressions",
+        "eyebrow": "Logic & Truth"
+      },
+      {
+        "num": 30,
+        "id": "slide-30",
+        "title": "Conditional Execution: if Statement",
+        "eyebrow": "Control Flow"
+      },
+      {
+        "num": 31,
+        "id": "slide-31",
+        "title": "Comments & Documentation",
+        "eyebrow": "Code Documentation"
+      },
+      {
+        "num": 32,
+        "id": "slide-32",
+        "title": "Variables, Values, and Types",
+        "eyebrow": "Object Model"
+      },
+      {
+        "num": 33,
+        "id": "slide-33",
+        "title": "Dynamic Typing",
+        "eyebrow": "Runtime Behavior"
+      },
+      {
+        "num": 34,
+        "id": "slide-34",
+        "title": "Basic Descriptive Statistics",
+        "eyebrow": "Built-in Utilities"
+      },
+      {
+        "num": 35,
+        "id": "slide-35",
+        "title": "Summary & Next Steps",
+        "eyebrow": "Curriculum Synthesis"
+      }
+    ],
+    "file": "python_presentation_01.html"
+  },
+  {
+    "id": 2,
+    "deck_number": "02",
+    "title": "Control Logic, Algorithms & Modular Architecture",
+    "subtitle": "Algorithmic Problem Solving, Iterations, Random Simulation & Scope",
+    "lectures_label": "Lectures 3 & 4",
+    "total_slides": 36,
+    "badge_color": "#dcdcaa",
+    "accent": "#d7ba7d",
+    "part1": {
+      "lecture": "Lecture 3",
+      "title": "Control Statements & Program Development",
+      "slide": 1,
+      "id": "slide-1"
+    },
+    "part2": {
+      "lecture": "Lecture 4",
+      "title": "Functions & Modular Architecture",
+      "slide": 19,
+      "id": "slide-19"
+    },
+    "notebooks": [
+      "L03.ipynb",
+      "L04.ipynb"
+    ],
+    "tags": [
+      "Algorithms",
+      "Pseudocode",
+      "if-elif-else",
+      "while & for",
+      "Functions",
+      "random",
+      "LEGB Scope"
+    ],
+    "slides": [
+      {
+        "num": 1,
+        "id": "slide-1",
+        "title": "Control Statements & Program Development",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 3"
+      },
+      {
+        "num": 2,
+        "id": "slide-2",
+        "title": "Algorithms: Foundations of Computation",
+        "eyebrow": "Program Development"
+      },
+      {
+        "num": 3,
+        "id": "slide-3",
+        "title": "Pseudocode: Bridging Human Thought and Code",
+        "eyebrow": "Algorithmic Design"
+      },
+      {
+        "num": 4,
+        "id": "slide-4",
+        "title": "Control Statements & Branching Logic",
+        "eyebrow": "Execution Flow"
+      },
+      {
+        "num": 5,
+        "id": "slide-5",
+        "title": "The if Statement & Conditional Decisions",
+        "eyebrow": "Selection statements"
+      },
+      {
+        "num": 6,
+        "id": "slide-6",
+        "title": "Multi-way Branching: if-elif-else",
+        "eyebrow": "Branching Logic"
+      },
+      {
+        "num": 7,
+        "id": "slide-7",
+        "title": "Truthiness in Python: Values as Booleans",
+        "eyebrow": "Evaluation Rules"
+      },
+      {
+        "num": 8,
+        "id": "slide-8",
+        "title": "Suite indentation: Block Structure",
+        "eyebrow": "Syntax Rules"
+      },
+      {
+        "num": 9,
+        "id": "slide-9",
+        "title": "Conditional Expressions: One-Line Ternary",
+        "eyebrow": "Concise Python"
+      },
+      {
+        "num": 10,
+        "id": "slide-10",
+        "title": "Logic errors vs. Syntax Errors",
+        "eyebrow": "Debugging Principles"
+      },
+      {
+        "num": 11,
+        "id": "slide-11",
+        "title": "The while Loop: Netflix Subscription Case Study",
+        "eyebrow": "Repetition Statements"
+      },
+      {
+        "num": 12,
+        "id": "slide-12",
+        "title": "Formatting Strings (f-strings) for Clean Output",
+        "eyebrow": "Data Presentation"
+      },
+      {
+        "num": 13,
+        "id": "slide-13",
+        "title": "The for loop & range() Function",
+        "eyebrow": "Iteration"
+      },
+      {
+        "num": 14,
+        "id": "slide-14",
+        "title": "Iterables and lists: Traversing Collections",
+        "eyebrow": "Data Structures"
+      },
+      {
+        "num": 15,
+        "id": "slide-15",
+        "title": "Augmented expressions & Initializations",
+        "eyebrow": "Expressions & Accumulators"
+      },
+      {
+        "num": 16,
+        "id": "slide-16",
+        "title": "Three Stages of Algorithms & Fibonacci",
+        "eyebrow": "Algorithm development"
+      },
+      {
+        "num": 17,
+        "id": "slide-17",
+        "title": "Algorithm Refinement & break / continue",
+        "eyebrow": "Flow Controls"
+      },
+      {
+        "num": 18,
+        "id": "slide-18",
+        "title": "Boolean operators & Central Tendency",
+        "eyebrow": "Logic & Analysis"
+      },
+      {
+        "num": 19,
+        "id": "slide-19",
+        "title": "Functions & Modular Program Architecture",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 4"
+      },
+      {
+        "num": 20,
+        "id": "slide-20",
+        "title": "Functions: A Key Ingredient of Programs",
+        "eyebrow": "Modular Programming"
+      },
+      {
+        "num": 21,
+        "id": "slide-21",
+        "title": "Defining Functions: The def Keyword",
+        "eyebrow": "Syntax & Definition"
+      },
+      {
+        "num": 22,
+        "id": "slide-22",
+        "title": "Functions With No Arguments",
+        "eyebrow": "Parameter Variations"
+      },
+      {
+        "num": 23,
+        "id": "slide-23",
+        "title": "Functions With Multiple Arguments: BMI Calculation",
+        "eyebrow": "Parameters & Logic"
+      },
+      {
+        "num": 24,
+        "id": "slide-24",
+        "title": "Random Number Generation: The random Module",
+        "eyebrow": "Pseudo-Random Numbers"
+      },
+      {
+        "num": 25,
+        "id": "slide-25",
+        "title": "Generating Random Integers: random.randrange()",
+        "eyebrow": "Discrete Randomness"
+      },
+      {
+        "num": 26,
+        "id": "slide-26",
+        "title": "Simulating the Roll of Two Dice",
+        "eyebrow": "Stochastic Simulation"
+      },
+      {
+        "num": 27,
+        "id": "slide-27",
+        "title": "Returning Multiple Outputs via Tuples",
+        "eyebrow": "Data Structures & Returns"
+      },
+      {
+        "num": 28,
+        "id": "slide-28",
+        "title": "Python Modules & The Standard Library",
+        "eyebrow": "Modular Architecture"
+      },
+      {
+        "num": 29,
+        "id": "slide-29",
+        "title": "The math Module: Square Roots & Operations",
+        "eyebrow": "Scientific Computation"
+      },
+      {
+        "num": 30,
+        "id": "slide-30",
+        "title": "Default Parameter Values",
+        "eyebrow": "Parameter Customization"
+      },
+      {
+        "num": 31,
+        "id": "slide-31",
+        "title": "Keyword Arguments: Order-Independent Calls",
+        "eyebrow": "Function Invocation"
+      },
+      {
+        "num": 32,
+        "id": "slide-32",
+        "title": "Functions that Belong to Objects: Methods",
+        "eyebrow": "Object-Oriented Python"
+      },
+      {
+        "num": 33,
+        "id": "slide-33",
+        "title": "The Scope of a Variable: Local vs. Global",
+        "eyebrow": "Namespaces & Visibility"
+      },
+      {
+        "num": 34,
+        "id": "slide-34",
+        "title": "Visualizing Scope: Local Stack Frame Isolation",
+        "eyebrow": "Memory Model"
+      },
+      {
+        "num": 35,
+        "id": "slide-35",
+        "title": "Modifying Global Variables: The global Keyword",
+        "eyebrow": "State Management"
+      },
+      {
+        "num": 36,
+        "id": "slide-36",
+        "title": "Parameter Passing: By Value vs. By Reference",
+        "eyebrow": "Object Model & Summary"
+      }
+    ],
+    "file": "python_presentation_02.html"
+  },
+  {
+    "id": 3,
+    "deck_number": "03",
+    "title": "Sequences, Sets & Associative Dictionaries",
+    "subtitle": "Lists, Tuples, Mutability, Slicing, Comprehensions & Hash Tables",
+    "lectures_label": "Lectures 5 & 6",
+    "total_slides": 36,
+    "badge_color": "#4ec9b0",
+    "accent": "#20c997",
+    "part1": {
+      "lecture": "Lecture 5",
+      "title": "Sequences: Lists and Tuples",
+      "slide": 1,
+      "id": "slide-1"
+    },
+    "part2": {
+      "lecture": "Lecture 6",
+      "title": "Dictionaries and Sets",
+      "slide": 19,
+      "id": "slide-19"
+    },
+    "notebooks": [
+      "L05.ipynb",
+      "L06.ipynb"
+    ],
+    "tags": [
+      "Lists",
+      "Tuples",
+      "Slicing",
+      "Comprehensions",
+      "2D Matrices",
+      "Dictionaries",
+      "Set Theory"
+    ],
+    "slides": [
+      {
+        "num": 1,
+        "id": "slide-1",
+        "title": "Sequences: Lists and Tuples",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 5"
+      },
+      {
+        "num": 2,
+        "id": "slide-2",
+        "title": "Collections: Grouping Data in Python",
+        "eyebrow": "Data Architecture"
+      },
+      {
+        "num": 3,
+        "id": "slide-3",
+        "title": "List Indexing, len(), and Negative Indices",
+        "eyebrow": "Lists & Indices"
+      },
+      {
+        "num": 4,
+        "id": "slide-4",
+        "title": "Mutability & Out of Range Errors (IndexError)",
+        "eyebrow": "Data Integrity"
+      },
+      {
+        "num": 5,
+        "id": "slide-5",
+        "title": "Appending and Concatenating Lists",
+        "eyebrow": "Sequence Growth"
+      },
+      {
+        "num": 6,
+        "id": "slide-6",
+        "title": "Contiguous Indexing & Pointer References",
+        "eyebrow": "Memory Model"
+      },
+      {
+        "num": 7,
+        "id": "slide-7",
+        "title": "Tuples: Immutability & Chained Indexing",
+        "eyebrow": "Immutable Containers"
+      },
+      {
+        "num": 8,
+        "id": "slide-8",
+        "title": "Sequence Unpacking: Clean Assignments",
+        "eyebrow": "Assignment Mechanics"
+      },
+      {
+        "num": 9,
+        "id": "slide-9",
+        "title": "The enumerate() Function: Index & Value",
+        "eyebrow": "Iteration Utilities"
+      },
+      {
+        "num": 10,
+        "id": "slide-10",
+        "title": "Introduction to Slicing: Subsets of Data",
+        "eyebrow": "Sub-sequences"
+      },
+      {
+        "num": 11,
+        "id": "slide-11",
+        "title": "Slicing with Step Sizes & Reverse Slicing",
+        "eyebrow": "Advanced Slicing"
+      },
+      {
+        "num": 12,
+        "id": "slide-12",
+        "title": "Modifying with Slices & The del Operator",
+        "eyebrow": "Mutation & Deletion"
+      },
+      {
+        "num": 13,
+        "id": "slide-13",
+        "title": "Passing Lists to Functions: In-Place Mutation",
+        "eyebrow": "Memory & Functions"
+      },
+      {
+        "num": 14,
+        "id": "slide-14",
+        "title": "Sorting a List: list.sort() vs. sorted()",
+        "eyebrow": "Algorithms & Ordering"
+      },
+      {
+        "num": 15,
+        "id": "slide-15",
+        "title": "Searching a List: index() & The in Operator",
+        "eyebrow": "Search Operations"
+      },
+      {
+        "num": 16,
+        "id": "slide-16",
+        "title": "List Comprehensions: Expressive Syntax",
+        "eyebrow": "Pythonic Constructs"
+      },
+      {
+        "num": 17,
+        "id": "slide-17",
+        "title": "The filter() Function & Lambda Expressions",
+        "eyebrow": "Functional Programming"
+      },
+      {
+        "num": 18,
+        "id": "slide-18",
+        "title": "Two-Dimensional Lists: Matrices & Grids",
+        "eyebrow": "Multidimensional Data"
+      },
+      {
+        "num": 19,
+        "id": "slide-19",
+        "title": "Dictionaries and Sets",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 6"
+      },
+      {
+        "num": 20,
+        "id": "slide-20",
+        "title": "Dictionaries: Key-Value Associations",
+        "eyebrow": "Associative Mappings"
+      },
+      {
+        "num": 21,
+        "id": "slide-21",
+        "title": "Dictionary Rules: Immutability of Keys",
+        "eyebrow": "Dictionary Architecture"
+      },
+      {
+        "num": 22,
+        "id": "slide-22",
+        "title": "Modifying Dictionaries: Additions & Retyping",
+        "eyebrow": "Mutation & Retyping"
+      },
+      {
+        "num": 23,
+        "id": "slide-23",
+        "title": "Removing Entries: pop(), clear(), and Empty Dicts",
+        "eyebrow": "Lifecycle & Cleanup"
+      },
+      {
+        "num": 24,
+        "id": "slide-24",
+        "title": "Safe Lookups: get() vs. Bracket Indexing & in",
+        "eyebrow": "Defensive Programming"
+      },
+      {
+        "num": 25,
+        "id": "slide-25",
+        "title": "Iterating: keys(), values(), and items()",
+        "eyebrow": "Dictionary Iteration"
+      },
+      {
+        "num": 26,
+        "id": "slide-26",
+        "title": "Dictionary Comprehensions: Synthesizing Maps",
+        "eyebrow": "Mapping Comprehensions"
+      },
+      {
+        "num": 27,
+        "id": "slide-27",
+        "title": "Sets: Unique, Unordered Collections",
+        "eyebrow": "Set Theory"
+      },
+      {
+        "num": 28,
+        "id": "slide-28",
+        "title": "Set Construction & Type Casting: set()",
+        "eyebrow": "Set Construction"
+      },
+      {
+        "num": 29,
+        "id": "slide-29",
+        "title": "Checking for Subsets and Supersets",
+        "eyebrow": "Set Comparisons"
+      },
+      {
+        "num": 30,
+        "id": "slide-30",
+        "title": "Venn Diagram: Set Algebra Operations",
+        "eyebrow": "Set Operations"
+      },
+      {
+        "num": 31,
+        "id": "slide-31",
+        "title": "Set Union: Combining Sets ( | or union() )",
+        "eyebrow": "Set Algebra"
+      },
+      {
+        "num": 32,
+        "id": "slide-32",
+        "title": "Set Intersection: Common Elements (&)",
+        "eyebrow": "Set Algebra"
+      },
+      {
+        "num": 33,
+        "id": "slide-33",
+        "title": "Set Difference: Exclusive Elements (-)",
+        "eyebrow": "Set Algebra"
+      },
+      {
+        "num": 34,
+        "id": "slide-34",
+        "title": "Unordered Equality & Modifying Elements",
+        "eyebrow": "Set Dynamics"
+      },
+      {
+        "num": 35,
+        "id": "slide-35",
+        "title": "Set Comprehensions: Synthesizing Math Sets",
+        "eyebrow": "Set Comprehensions"
+      },
+      {
+        "num": 36,
+        "id": "slide-36",
+        "title": "Choosing the Right Python Collection",
+        "eyebrow": "Curriculum Synthesis"
+      }
+    ],
+    "file": "python_presentation_03.html"
+  },
+  {
+    "id": 4,
+    "deck_number": "04",
+    "title": "Numerical Computing with NumPy & Regular Expressions",
+    "subtitle": "Multidimensional Tensors, Vectorization, Broadcasting & Regex Validation",
+    "lectures_label": "Lectures 7 & 8",
+    "total_slides": 36,
+    "badge_color": "#c586c0",
+    "accent": "#9c27b0",
+    "part1": {
+      "lecture": "Lecture 7",
+      "title": "NumPy Arrays: Numerical Computing",
+      "slide": 1,
+      "id": "slide-1"
+    },
+    "part2": {
+      "lecture": "Lecture 8",
+      "title": "Strings & Regular Expressions",
+      "slide": 19,
+      "id": "slide-19"
+    },
+    "notebooks": [
+      "L07.ipynb",
+      "L08.ipynb"
+    ],
+    "tags": [
+      "NumPy ndarray",
+      "Vectorization",
+      "Broadcasting",
+      "2D Slicing",
+      "f-strings",
+      "split & join",
+      "re Regex"
+    ],
+    "slides": [
+      {
+        "num": 1,
+        "id": "slide-1",
+        "title": "NumPy Arrays: Numerical Computing",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 7"
+      },
+      {
+        "num": 2,
+        "id": "slide-2",
+        "title": "Array Processing with NumPy",
+        "eyebrow": "High-Performance Computing"
+      },
+      {
+        "num": 3,
+        "id": "slide-3",
+        "title": "Creating 1-D and 2-D Arrays",
+        "eyebrow": "Multidimensional Tensors"
+      },
+      {
+        "num": 4,
+        "id": "slide-4",
+        "title": "Array Data Types: The dtype Attribute",
+        "eyebrow": "Memory Homogeneity"
+      },
+      {
+        "num": 5,
+        "id": "slide-5",
+        "title": "Array Dimensions: shape , ndim & size",
+        "eyebrow": "Structural Metadata"
+      },
+      {
+        "num": 6,
+        "id": "slide-6",
+        "title": "Memory Layout: Python List vs. NumPy ndarray",
+        "eyebrow": "Hardware Architecture"
+      },
+      {
+        "num": 7,
+        "id": "slide-7",
+        "title": "Iterating Arrays: Row-by-Row vs. .flat",
+        "eyebrow": "Traversal Techniques"
+      },
+      {
+        "num": 8,
+        "id": "slide-8",
+        "title": "Array Initializers: zeros , ones & full",
+        "eyebrow": "Constructor Helpers"
+      },
+      {
+        "num": 9,
+        "id": "slide-9",
+        "title": "Numerical Sequences: arange vs. linspace",
+        "eyebrow": "Sequence Generators"
+      },
+      {
+        "num": 10,
+        "id": "slide-10",
+        "title": "Array Reshaping: The .reshape() Method",
+        "eyebrow": "Tensor Restructuring"
+      },
+      {
+        "num": 11,
+        "id": "slide-11",
+        "title": "Element-wise Arithmetic & Scalar Broadcasting",
+        "eyebrow": "Vectorization"
+      },
+      {
+        "num": 12,
+        "id": "slide-12",
+        "title": "Array-Array Arithmetic: Element-by-Element",
+        "eyebrow": "Matrix Math"
+      },
+      {
+        "num": 13,
+        "id": "slide-13",
+        "title": "Relational Operators & Boolean Masks",
+        "eyebrow": "Conditional Filtering"
+      },
+      {
+        "num": 14,
+        "id": "slide-14",
+        "title": "Global Aggregations: Sum, Mean, Min & Max",
+        "eyebrow": "Statistical Reductions"
+      },
+      {
+        "num": 15,
+        "id": "slide-15",
+        "title": "Axis-Based Reductions: Row Sums vs. Column Sums",
+        "eyebrow": "Directional Reductions"
+      },
+      {
+        "num": 16,
+        "id": "slide-16",
+        "title": "2D Indexing & Row Slicing: arr[row, col]",
+        "eyebrow": "Coordinate Subsetting"
+      },
+      {
+        "num": 17,
+        "id": "slide-17",
+        "title": "Column Slicing & Non-Contiguous Index Lists",
+        "eyebrow": "Advanced Subsetting"
+      },
+      {
+        "num": 18,
+        "id": "slide-18",
+        "title": "Matrix Transposition: np.transpose() & .T",
+        "eyebrow": "Linear Algebra"
+      },
+      {
+        "num": 19,
+        "id": "slide-19",
+        "title": "Strings & Regular Expressions",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 8"
+      },
+      {
+        "num": 20,
+        "id": "slide-20",
+        "title": "Modern String Formatting: The Power of f-strings",
+        "eyebrow": "Text Templating"
+      },
+      {
+        "num": 21,
+        "id": "slide-21",
+        "title": "Integer & Character Specifiers: :d and :c",
+        "eyebrow": "Type Formatting"
+      },
+      {
+        "num": 22,
+        "id": "slide-22",
+        "title": "Float Precision & Scientific Notation: :.2f & :.2e",
+        "eyebrow": "Numeric Precision"
+      },
+      {
+        "num": 23,
+        "id": "slide-23",
+        "title": "Field Widths & Column Alignment: :10f",
+        "eyebrow": "Tabular Formatting"
+      },
+      {
+        "num": 24,
+        "id": "slide-24",
+        "title": "String Operators: Concatenation ( + ) & Repetition ( * )",
+        "eyebrow": "Sequence Mechanics"
+      },
+      {
+        "num": 25,
+        "id": "slide-25",
+        "title": "Whitespace Sanitization: strip() , lstrip() & rstrip()",
+        "eyebrow": "Data Cleaning"
+      },
+      {
+        "num": 26,
+        "id": "slide-26",
+        "title": "Case Normalization & String Comparisons",
+        "eyebrow": "Case Normalization"
+      },
+      {
+        "num": 27,
+        "id": "slide-27",
+        "title": "Substring Searching: count() , find() & in",
+        "eyebrow": "Pattern Queries"
+      },
+      {
+        "num": 28,
+        "id": "slide-28",
+        "title": "Substring Replacement: The .replace() Method",
+        "eyebrow": "Text Substitution"
+      },
+      {
+        "num": 29,
+        "id": "slide-29",
+        "title": "Tokenizing Text: The .split() Method",
+        "eyebrow": "Parsing Text"
+      },
+      {
+        "num": 30,
+        "id": "slide-30",
+        "title": "Text Processing Pipeline: Split & Join Operations",
+        "eyebrow": "Pipeline Architecture"
+      },
+      {
+        "num": 31,
+        "id": "slide-31",
+        "title": "Reassembling Text: The .join() Method",
+        "eyebrow": "Memory Efficiency"
+      },
+      {
+        "num": 32,
+        "id": "slide-32",
+        "title": "Multiline Strings & .splitlines()",
+        "eyebrow": "File & Document Parsing"
+      },
+      {
+        "num": 33,
+        "id": "slide-33",
+        "title": "Regular Expressions: The re Module",
+        "eyebrow": "Pattern Formalism"
+      },
+      {
+        "num": 34,
+        "id": "slide-34",
+        "title": "Regex Validation: Postal Codes & Quantifiers",
+        "eyebrow": "Quantifiers & Anchors"
+      },
+      {
+        "num": 35,
+        "id": "slide-35",
+        "title": "Character Classes & Twitter Handle Validation",
+        "eyebrow": "Custom Sets"
+      },
+      {
+        "num": 36,
+        "id": "slide-36",
+        "title": "Numerical & Text Processing: Architecture Matrix",
+        "eyebrow": "Curriculum Synthesis"
+      }
+    ],
+    "file": "python_presentation_04.html"
+  },
+  {
+    "id": 5,
+    "deck_number": "05",
+    "title": "Persistence, Error Trapping & Object-Oriented Design",
+    "subtitle": "Stream I/O, JSON Serialization, Defensive Exceptions & OOP Paradigms",
+    "lectures_label": "Lectures 9 & 10",
+    "total_slides": 36,
+    "badge_color": "#f48771",
+    "accent": "#e06c75",
+    "part1": {
+      "lecture": "Lecture 9",
+      "title": "Files & Exceptions",
+      "slide": 1,
+      "id": "slide-1"
+    },
+    "part2": {
+      "lecture": "Lecture 10",
+      "title": "Intro to Object-Oriented Programming",
+      "slide": 19,
+      "id": "slide-19"
+    },
+    "notebooks": [
+      "L09.ipynb",
+      "L10.ipynb",
+      "L11.ipynb"
+    ],
+    "tags": [
+      "File I/O",
+      "with Statement",
+      "JSON Serialization",
+      "try-except",
+      "OOP Classes",
+      "self & __init__",
+      "Magic Methods"
+    ],
+    "slides": [
+      {
+        "num": 1,
+        "id": "slide-1",
+        "title": "Files & Exceptions",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 9"
+      },
+      {
+        "num": 2,
+        "id": "slide-2",
+        "title": "Volatile RAM vs. Persistent Storage",
+        "eyebrow": "Memory Architecture"
+      },
+      {
+        "num": 3,
+        "id": "slide-3",
+        "title": "Files as Sequences of Bytes",
+        "eyebrow": "Storage Abstraction"
+      },
+      {
+        "num": 4,
+        "id": "slide-4",
+        "title": "Writing Data to a Text File: mode='w'",
+        "eyebrow": "File Output"
+      },
+      {
+        "num": 5,
+        "id": "slide-5",
+        "title": "The with Statement & Safe File Handling",
+        "eyebrow": "Context Managers"
+      },
+      {
+        "num": 6,
+        "id": "slide-6",
+        "title": "File I/O Lifecycle & Stream Buffering",
+        "eyebrow": "Architecture Diagram"
+      },
+      {
+        "num": 7,
+        "id": "slide-7",
+        "title": "Reading a Text File: mode='r'",
+        "eyebrow": "File Input"
+      },
+      {
+        "num": 8,
+        "id": "slide-8",
+        "title": "Parsing Delimited Rows with line.split()",
+        "eyebrow": "Tabular Display"
+      },
+      {
+        "num": 9,
+        "id": "slide-9",
+        "title": "File System Operations with os",
+        "eyebrow": "Operating System Tools"
+      },
+      {
+        "num": 10,
+        "id": "slide-10",
+        "title": "The JSON Data Format Standard",
+        "eyebrow": "Data Serialization"
+      },
+      {
+        "num": 11,
+        "id": "slide-11",
+        "title": "Structuring Complex Nested Dictionaries",
+        "eyebrow": "Structured Data"
+      },
+      {
+        "num": 12,
+        "id": "slide-12",
+        "title": "Navigating Nested Collections",
+        "eyebrow": "Multi-Index Access"
+      },
+      {
+        "num": 13,
+        "id": "slide-13",
+        "title": "Writing JSON Files with json.dump()",
+        "eyebrow": "Serialization"
+      },
+      {
+        "num": 14,
+        "id": "slide-14",
+        "title": "Reading JSON Files with json.load()",
+        "eyebrow": "Deserialization"
+      },
+      {
+        "num": 15,
+        "id": "slide-15",
+        "title": "Runtime Errors & Python Exceptions",
+        "eyebrow": "Defensive Programming"
+      },
+      {
+        "num": 16,
+        "id": "slide-16",
+        "title": "Handling Exceptions with try & except",
+        "eyebrow": "Error Trapping"
+      },
+      {
+        "num": 17,
+        "id": "slide-17",
+        "title": "Complete Error Flow: try , except , else , finally",
+        "eyebrow": "Comprehensive Architecture"
+      },
+      {
+        "num": 18,
+        "id": "slide-18",
+        "title": "Lecture 9 Synthesis & Best Practices",
+        "eyebrow": "Checkpoint"
+      },
+      {
+        "num": 19,
+        "id": "slide-19",
+        "title": "Intro to Object-Oriented Programming",
+        "eyebrow": "Civil Aviation Training Center (CATC) \u2022 Lecture 10"
+      },
+      {
+        "num": 20,
+        "id": "slide-20",
+        "title": "In Python, \"Everything is an Object\"",
+        "eyebrow": "Core Paradigm"
+      },
+      {
+        "num": 21,
+        "id": "slide-21",
+        "title": "Classes vs. Objects: Blueprint vs. Instance",
+        "eyebrow": "Conceptual Foundations"
+      },
+      {
+        "num": 22,
+        "id": "slide-22",
+        "title": "Four Core Motivations for OOP Design",
+        "eyebrow": "Software Engineering"
+      },
+      {
+        "num": 23,
+        "id": "slide-23",
+        "title": "Defining a Class in Python",
+        "eyebrow": "Class Definition"
+      },
+      {
+        "num": 24,
+        "id": "slide-24",
+        "title": "Object Instantiation & The Constructor",
+        "eyebrow": "Instantiation"
+      },
+      {
+        "num": 25,
+        "id": "slide-25",
+        "title": "The self Parameter Demystified",
+        "eyebrow": "Instance Binding"
+      },
+      {
+        "num": 26,
+        "id": "slide-26",
+        "title": "Accessing & Modifying Object Properties",
+        "eyebrow": "Attribute Mutation"
+      },
+      {
+        "num": 27,
+        "id": "slide-27",
+        "title": "Class Blueprint vs. Heap Instances",
+        "eyebrow": "Memory Model Diagram"
+      },
+      {
+        "num": 28,
+        "id": "slide-28",
+        "title": "Adding Instance Methods",
+        "eyebrow": "Object Behavior"
+      },
+      {
+        "num": 29,
+        "id": "slide-29",
+        "title": "Objects Containing Objects: Composition",
+        "eyebrow": "Object Composition"
+      },
+      {
+        "num": 30,
+        "id": "slide-30",
+        "title": "Computed Methods: get_number_followers()",
+        "eyebrow": "Derived State"
+      },
+      {
+        "num": 31,
+        "id": "slide-31",
+        "title": "Simulating \"Private\" Data in Python",
+        "eyebrow": "Encapsulation"
+      },
+      {
+        "num": 32,
+        "id": "slide-32",
+        "title": "Generating Unique Internal Identifiers",
+        "eyebrow": "Internal State"
+      },
+      {
+        "num": 33,
+        "id": "slide-33",
+        "title": "The Default Object String Representation",
+        "eyebrow": "Magic Protocols"
+      },
+      {
+        "num": 34,
+        "id": "slide-34",
+        "title": "Implementing the Standard __str__ Method",
+        "eyebrow": "Human-Readable Output"
+      },
+      {
+        "num": 35,
+        "id": "slide-35",
+        "title": "String Representations: __str__ vs. __repr__",
+        "eyebrow": "Dunder Protocols"
+      },
+      {
+        "num": 36,
+        "id": "slide-36",
+        "title": "Unifying Files, JSON & OOP Architectures",
+        "eyebrow": "Curriculum Synthesis"
+      }
+    ],
+    "file": "python_presentation_05.html"
+  }
+]
