@@ -3,13 +3,13 @@ import json
 with open('decks_data.json', 'r', encoding='utf-8') as f:
     decks = json.load(f)
 
-# Colors and accents for the 5 decks
+# Colors, accents, and aviation flight phases for the 5 decks
 deck_accents = {
-    1: {"color": "#38bdf8", "rgb": "56, 189, 248", "class": "deck-1"},
-    2: {"color": "#facc15", "rgb": "250, 204, 21", "class": "deck-2"},
-    3: {"color": "#34d399", "rgb": "52, 211, 153", "class": "deck-3"},
-    4: {"color": "#c084fc", "rgb": "192, 132, 252", "class": "deck-4"},
-    5: {"color": "#fb7185", "rgb": "251, 113, 133", "class": "deck-5"}
+    1: {"color": "#38bdf8", "rgb": "56, 189, 248", "class": "deck-1", "phase": "Phase 1: Pre-Flight Systems"},
+    2: {"color": "#facc15", "rgb": "250, 204, 21", "class": "deck-2", "phase": "Phase 2: Algorithmic Takeoff"},
+    3: {"color": "#34d399", "rgb": "52, 211, 153", "class": "deck-3", "phase": "Phase 3: Data Navigation"},
+    4: {"color": "#c084fc", "rgb": "192, 132, 252", "class": "deck-4", "phase": "Phase 4: Tensor Vectoring"},
+    5: {"color": "#fb7185", "rgb": "251, 113, 133", "class": "deck-5", "phase": "Phase 5: Approach & Architecture"}
 }
 
 # Generate node cards HTML
@@ -22,9 +22,12 @@ for deck in decks:
     subtitle = deck.get('subtitle', '')
     lectures = deck.get('lectures_label', '')
     total_slides = deck.get('total_slides', '')
-    accent_class = deck_accents.get(d_id, {}).get('class', f"deck-{d_id}")
+    deck_meta = deck_accents.get(d_id, {})
+    accent_class = deck_meta.get('class', f"deck-{d_id}")
+    phase = deck_meta.get('phase', '')
+    color = deck_meta.get('color', '#38bdf8')
     
-    node_str = f'''        <a href="{file_name}" class="deck-node {accent_class}" data-deck="{d_id}" aria-label="Deck {deck_no}: {title} ({lectures}, {total_slides} slides)">
+    node_str = f'''        <a href="{file_name}" class="deck-node {accent_class}" data-deck="{d_id}" data-phase="{phase}" data-color="{color}" aria-label="Deck {deck_no}: {title} ({lectures}, {total_slides} slides)">
           <div class="node-socket" aria-hidden="true"></div>
           <div class="node-info">
             <div class="node-header-row">
@@ -177,6 +180,16 @@ html_content = f'''<!DOCTYPE html>
       box-shadow: var(--shadow-sm);
       border: 1px solid rgba(255, 255, 255, 0.15);
       color: #ffffff;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+    }}
+
+    .brand:hover .brand-logo {{
+      transform: rotate(-12deg) scale(1.05);
+      box-shadow: 0 8px 16px -2px rgba(0, 0, 0, 0.5);
+    }}
+
+    .brand:active .brand-logo {{
+      transform: rotate(-18deg) scale(0.97);
     }}
 
     .brand-text {{
@@ -286,6 +299,20 @@ html_content = f'''<!DOCTYPE html>
       transition: stroke-opacity 0.25s ease, stroke-width 0.25s ease;
     }}
 
+    /* Signal databus pulse animation */
+    .branch-path.active {{
+      stroke-opacity: 1 !important;
+      stroke-width: 2.5 !important;
+      stroke-dasharray: 8 6 !important;
+      animation: signalFlow 0.65s linear infinite;
+    }}
+
+    @keyframes signalFlow {{
+      to {{
+        stroke-dashoffset: -28;
+      }}
+    }}
+
     /* Core Root Node (Left) */
     .core-node {{
       background: var(--bg-card);
@@ -296,6 +323,7 @@ html_content = f'''<!DOCTYPE html>
       position: relative;
       box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
       z-index: 2;
+      transition: border-color 0.25s ease;
     }}
 
     .core-socket {{
@@ -309,6 +337,7 @@ html_content = f'''<!DOCTYPE html>
       border-radius: 50%;
       border: 2.5px solid var(--bg);
       z-index: 3;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.25s ease;
     }}
 
     .core-badge {{
@@ -319,6 +348,7 @@ html_content = f'''<!DOCTYPE html>
       letter-spacing: 0.08em;
       font-weight: 700;
       margin-bottom: 0.45rem;
+      transition: color 0.2s ease;
     }}
 
     .core-title {{
@@ -334,6 +364,7 @@ html_content = f'''<!DOCTYPE html>
       font-size: 0.78rem;
       color: var(--text-dim);
       font-variant-numeric: tabular-nums;
+      transition: color 0.2s ease;
     }}
 
     /* Branches List (Right) */
@@ -468,7 +499,7 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     .launch-btn svg {{
-      transition: transform 0.2s ease;
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }}
 
     .deck-node:hover .launch-btn svg,
@@ -503,6 +534,21 @@ html_content = f'''<!DOCTYPE html>
       border-radius: 4px;
       color: var(--cyan);
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease, color 0.15s ease;
+    }}
+
+    .kbd-chip:hover {{
+      background: rgba(56, 189, 248, 0.15);
+      border-color: var(--cyan);
+      transform: translateY(-1px);
+    }}
+
+    .kbd-chip.active {{
+      background: rgba(56, 189, 248, 0.3);
+      border-color: var(--cyan);
+      transform: translateY(1px);
     }}
 
     /* Footer */
@@ -589,10 +635,10 @@ html_content = f'''<!DOCTYPE html>
         <div class="core-node" id="core-node">
           <div class="core-socket" aria-hidden="true"></div>
           <div>
-            <div class="core-badge">Course Core</div>
+            <div class="core-badge" id="core-badge">Course Core</div>
             <div class="core-title">Python Programming</div>
           </div>
-          <div class="core-desc">10 Lectures &bull; 5 Decks</div>
+          <div class="core-desc" id="core-desc">10 Lectures &bull; 5 Decks</div>
         </div>
 
         <!-- 5 Progressive Deck Nodes (Right) -->
@@ -604,9 +650,9 @@ html_content = f'''<!DOCTYPE html>
       <!-- Quick Shortcuts Hint -->
       <div class="shortcuts-hint" aria-label="Keyboard Shortcuts">
         <span>Quick Launch: Press</span>
-        <kbd class="kbd-chip">1</kbd>
+        <kbd class="kbd-chip" data-key="1">1</kbd>
         <span>through</span>
-        <kbd class="kbd-chip">5</kbd>
+        <kbd class="kbd-chip" data-key="5">5</kbd>
         <span>to launch any deck instantly</span>
       </div>
     </div>
@@ -626,6 +672,9 @@ html_content = f'''<!DOCTYPE html>
       const coreSocket = document.querySelector('.core-socket');
       const nodeSockets = document.querySelectorAll('.node-socket');
       const nodes = document.querySelectorAll('.deck-node');
+      const coreBadge = document.getElementById('core-badge');
+      const coreDesc = document.getElementById('core-desc');
+      const kbdChips = document.querySelectorAll('.kbd-chip');
       const colors = ['#38bdf8', '#facc15', '#34d399', '#c084fc', '#fb7185'];
 
       function drawConnectors() {{
@@ -663,22 +712,40 @@ html_content = f'''<!DOCTYPE html>
         svg.innerHTML = paths;
       }}
 
-      // Interactive hover illumination
+      // Interactive hover illumination & avionics telemetry feedback
       nodes.forEach((node, i) => {{
         node.addEventListener('mouseenter', () => {{
           const p = document.getElementById(`path-${{i + 1}}`);
           if (p) {{
-            p.setAttribute('stroke-opacity', '1');
-            p.setAttribute('stroke-width', '2.5');
-            p.removeAttribute('stroke-dasharray');
+            p.classList.add('active');
+          }}
+          if (coreBadge && coreDesc) {{
+            const d = node.dataset.deck;
+            const phase = node.dataset.phase;
+            const color = node.dataset.color;
+            coreBadge.textContent = `Deck 0${{d}} • Engaged`;
+            coreBadge.style.color = color;
+            coreDesc.textContent = phase;
+            if (coreSocket) {{
+              coreSocket.style.backgroundColor = color;
+              coreSocket.style.transform = 'translateY(-50%) scale(1.2)';
+            }}
           }}
         }});
+
         node.addEventListener('mouseleave', () => {{
           const p = document.getElementById(`path-${{i + 1}}`);
           if (p) {{
-            p.setAttribute('stroke-opacity', '0.32');
-            p.setAttribute('stroke-width', '2');
-            p.setAttribute('stroke-dasharray', '6,4');
+            p.classList.remove('active');
+          }}
+          if (coreBadge && coreDesc) {{
+            coreBadge.textContent = 'Course Core';
+            coreBadge.style.color = 'var(--cyan)';
+            coreDesc.innerHTML = '10 Lectures &bull; 5 Decks';
+            if (coreSocket) {{
+              coreSocket.style.backgroundColor = 'var(--cyan)';
+              coreSocket.style.transform = 'translateY(-50%) scale(1)';
+            }}
           }}
         }});
       }});
@@ -687,19 +754,35 @@ html_content = f'''<!DOCTYPE html>
       drawConnectors();
       window.addEventListener('resize', drawConnectors);
 
+      function launchDeck(key) {{
+        const targetNode = document.querySelector(`.deck-node.deck-${{key}}`);
+        const targetKbd = document.querySelector(`.kbd-chip[data-key="${{key}}"]`);
+        if (targetNode) {{
+          targetNode.classList.add('active-launch');
+          if (targetKbd) targetKbd.classList.add('active');
+          const p = document.getElementById(`path-${{key}}`);
+          if (p) p.classList.add('active');
+          
+          const href = targetNode.getAttribute('href');
+          setTimeout(() => {{
+            window.location.href = href;
+          }}, 120);
+        }}
+      }}
+
       // Keyboard shortcuts: 1-5 to launch decks directly
       document.addEventListener('keydown', (e) => {{
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         if (['1', '2', '3', '4', '5'].includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey) {{
-          const targetNode = document.querySelector(`.deck-node.deck-${{e.key}}`);
-          if (targetNode) {{
-            targetNode.classList.add('active-launch');
-            const href = targetNode.getAttribute('href');
-            setTimeout(() => {{
-              window.location.href = href;
-            }}, 120);
-          }}
+          launchDeck(e.key);
         }}
+      }});
+
+      // Click on keyboard chips
+      kbdChips.forEach(chip => {{
+        chip.addEventListener('click', () => {{
+          launchDeck(chip.dataset.key);
+        }});
       }});
     }});
   </script>
