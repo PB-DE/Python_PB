@@ -3,7 +3,47 @@ import json
 with open('decks_data.json', 'r', encoding='utf-8') as f:
     decks = json.load(f)
 
-json_data_str = json.dumps(decks, ensure_ascii=False)
+# Colors and accents for the 5 decks
+deck_accents = {
+    1: {"color": "#38bdf8", "rgb": "56, 189, 248", "class": "deck-1"},
+    2: {"color": "#facc15", "rgb": "250, 204, 21", "class": "deck-2"},
+    3: {"color": "#34d399", "rgb": "52, 211, 153", "class": "deck-3"},
+    4: {"color": "#c084fc", "rgb": "192, 132, 252", "class": "deck-4"},
+    5: {"color": "#fb7185", "rgb": "251, 113, 133", "class": "deck-5"}
+}
+
+# Generate node cards HTML
+nodes_html = []
+for deck in decks:
+    d_id = deck['id']
+    deck_no = deck.get('deck_number', f"0{d_id}")
+    file_name = deck.get('file', f"python_presentation_{deck_no}.html")
+    title = deck.get('title', '')
+    subtitle = deck.get('subtitle', '')
+    lectures = deck.get('lectures_label', '')
+    total_slides = deck.get('total_slides', '')
+    accent_class = deck_accents.get(d_id, {}).get('class', f"deck-{d_id}")
+    
+    node_str = f'''        <a href="{file_name}" class="deck-node {accent_class}" data-deck="{d_id}" aria-label="Deck {deck_no}: {title} ({lectures}, {total_slides} slides)">
+          <div class="node-socket" aria-hidden="true"></div>
+          <div class="node-info">
+            <div class="node-header-row">
+              <span class="deck-tag">Deck {deck_no}</span>
+              <span class="node-title">{title}</span>
+            </div>
+            <div class="node-meta">{lectures} &bull; {subtitle}</div>
+          </div>
+          <div class="node-action">
+            <span class="slide-count-badge">{total_slides} Slides</span>
+            <div class="launch-btn">
+              <span>Launch</span>
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </div>
+          </div>
+        </a>'''
+    nodes_html.append(node_str)
+
+nodes_joined = "\n".join(nodes_html)
 
 html_content = f'''<!DOCTYPE html>
 <html lang="en">
@@ -11,42 +51,39 @@ html_content = f'''<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Programming — CATC Course Portal</title>
-  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation decks and curriculum portal. 5 widescreen decks, 10 comprehensive lectures, 179 interactive slides.">
-  
-  <!-- Modern Google Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation curriculum mind map launcher. 5 widescreen decks, 10 lectures, 179 interactive slides.">
 
   <style>
     :root {{
       --bg: #0b0d13;
       --bg-surface: #12151f;
       --bg-card: #181d2a;
-      --bg-card-hover: #202738;
+      --bg-card-hover: #1f2637;
       --border: #242c3d;
       --border-light: rgba(255, 255, 255, 0.08);
       --border-focus: #38bdf8;
       --text: #cbd5e1;
       --text-bright: #ffffff;
-      --text-muted: #818cf8;
       --text-dim: #94a3b8;
       
       /* Theme accents */
       --cyan: #38bdf8;
-      --blue: #2563eb;
+      --cyan-rgb: 56, 189, 248;
       --gold: #facc15;
+      --gold-rgb: 250, 204, 21;
       --mint: #34d399;
+      --mint-rgb: 52, 211, 153;
       --purple: #c084fc;
+      --purple-rgb: 192, 132, 252;
       --coral: #fb7185;
-      --code-bg: #0f131c;
+      --coral-rgb: 251, 113, 133;
       
       --radius-sm: 6px;
       --radius-md: 10px;
       --radius-lg: 16px;
-      --radius-xl: 24px;
       --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
-      --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.5), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+      --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.35);
+      --shadow-hover: 0 12px 28px -6px rgba(0, 0, 0, 0.55);
     }}
 
     * {{
@@ -62,7 +99,7 @@ html_content = f'''<!DOCTYPE html>
     body {{
       background-color: var(--bg);
       color: var(--text);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
       line-height: 1.6;
       min-height: 100vh;
       display: flex;
@@ -72,15 +109,15 @@ html_content = f'''<!DOCTYPE html>
       font-feature-settings: "cv02", "cv03", "cv04", "cv11";
     }}
 
-    /* Browser Surfaces Craft Standards */
+    /* Browser Surfaces Theming */
     ::selection {{
-      background: rgba(56, 189, 248, 0.25);
+      background: rgba(56, 189, 248, 0.28);
       color: #ffffff;
     }}
 
     :focus-visible {{
       outline: 2px solid var(--cyan);
-      outline-offset: 2px;
+      outline-offset: 3px;
     }}
 
     ::-webkit-scrollbar {{
@@ -101,19 +138,19 @@ html_content = f'''<!DOCTYPE html>
       background: rgba(255, 255, 255, 0.2);
     }}
 
-    /* Header Nav */
+    /* Sticky Navigation Header */
     header.portal-nav {{
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(11, 13, 19, 0.88);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
+      background: rgba(11, 13, 19, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border-light);
     }}
 
     .nav-container {{
-      max-width: 1280px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0.85rem 1.5rem;
       display: flex;
@@ -130,16 +167,16 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     .brand-logo {{
-      width: 40px;
-      height: 40px;
+      width: 38px;
+      height: 38px;
       border-radius: var(--radius-md);
-      background: linear-gradient(135deg, #007acc 0%, #0284c7 100%);
+      background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
       display: flex;
       align-items: center;
       justify-content: center;
       box-shadow: var(--shadow-sm);
       border: 1px solid rgba(255, 255, 255, 0.15);
-      color: #fff;
+      color: #ffffff;
     }}
 
     .brand-text {{
@@ -148,11 +185,10 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     .brand-title {{
-      font-family: 'Outfit', sans-serif;
       font-weight: 700;
-      font-size: 1.15rem;
+      font-size: 1.05rem;
       color: var(--text-bright);
-      letter-spacing: -0.01em;
+      letter-spacing: -0.015em;
       line-height: 1.2;
     }}
 
@@ -164,97 +200,45 @@ html_content = f'''<!DOCTYPE html>
       font-weight: 600;
     }}
 
-    .nav-links {{
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-    }}
-
-    .nav-link {{
-      color: var(--text);
-      text-decoration: none;
-      font-size: 0.875rem;
-      font-weight: 500;
-      padding: 0.4rem 0.75rem;
-      border-radius: var(--radius-sm);
-      transition: all 0.2s ease;
-    }}
-
-    .nav-link:hover {{
-      color: var(--text-bright);
-      background: var(--bg-card);
-    }}
-
-    .search-btn-trigger {{
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      padding: 0.45rem 0.85rem;
-      border-radius: var(--radius-md);
-      font-size: 0.85rem;
-      cursor: pointer;
+    .nav-stats {{
       display: flex;
       align-items: center;
       gap: 0.5rem;
-      transition: all 0.2s ease;
     }}
 
-    .search-btn-trigger:hover {{
-      border-color: var(--cyan);
-      color: var(--text-bright);
+    .nav-badge {{
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-size: 0.75rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: var(--radius-sm);
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-variant-numeric: tabular-nums;
     }}
 
-    .kbd-shortcut {{
-      background: var(--border);
-      color: var(--text);
-      padding: 0.15rem 0.4rem;
-      border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.7rem;
-    }}
-
-    /* Main Container */
+    /* Main Section */
     main {{
-      position: relative;
-      z-index: 1;
-      max-width: 1280px;
+      flex: 1;
+      max-width: 1200px;
       margin: 0 auto;
-      padding: 2.5rem 1.5rem 4rem;
+      padding: 3.5rem 1.5rem 4rem;
       width: 100%;
-    }}
-
-    /* Hero Section */
-    .hero {{
-      text-align: center;
-      padding: 2rem 0 3.5rem;
-      max-width: 920px;
-      margin: 0 auto;
-    }}
-
-    .hero-badge {{
-      display: inline-flex;
+      display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 0.45rem;
-      padding: 0.35rem 0.85rem;
-      border-radius: 9999px;
-      background: rgba(56, 189, 248, 0.08);
-      border: 1px solid rgba(56, 189, 248, 0.2);
-      color: var(--cyan);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      margin-bottom: 1.25rem;
-      text-transform: uppercase;
+      justify-content: center;
     }}
 
     .hero-title {{
-      font-family: 'Outfit', sans-serif;
-      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-size: clamp(2.1rem, 4vw, 3rem);
       font-weight: 800;
       line-height: 1.15;
       color: var(--text-bright);
-      margin-bottom: 1rem;
+      margin-bottom: 0.75rem;
       letter-spacing: -0.025em;
+      text-align: center;
+      text-wrap: balance;
     }}
 
     .hero-title-accent {{
@@ -262,750 +246,301 @@ html_content = f'''<!DOCTYPE html>
     }}
 
     .hero-desc {{
-      font-size: 1.125rem;
-      color: var(--text);
-      max-width: 780px;
-      margin: 0 auto 2.25rem;
-      line-height: 1.65;
+      font-size: 1.02rem;
+      color: var(--text-dim);
+      max-width: 600px;
+      margin: 0 auto 3.25rem;
+      line-height: 1.6;
+      text-align: center;
+      text-wrap: balance;
     }}
 
-    /* Stat Cards Bar */
-    .stats-bar {{
+    /* Mind Map Workspace Wrapper */
+    .mindmap-wrapper {{
+      width: 100%;
+      max-width: 1080px;
+      padding: 0.5rem 0;
+      position: relative;
+    }}
+
+    .mindmap-container {{
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 1rem;
-      margin-bottom: 2.5rem;
+      grid-template-columns: 240px 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
     }}
 
-    .stat-item {{
-      background: var(--bg-surface);
+    /* SVG Connecting Curves */
+    .connector-svg {{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+    }}
+
+    .branch-path {{
+      transition: stroke-opacity 0.25s ease, stroke-width 0.25s ease;
+    }}
+
+    /* Core Root Node (Left) */
+    .core-node {{
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      padding: 1.25rem 1rem;
+      padding: 1.85rem 1.35rem;
       text-align: center;
-      transition: transform 0.2s ease, border-color 0.2s ease;
+      position: relative;
+      box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.45);
+      z-index: 2;
     }}
 
-    .stat-item:hover {{
-      transform: translateY(-3px);
-      border-color: rgba(255, 255, 255, 0.15);
+    .core-socket {{
+      position: absolute;
+      right: -7px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      background: var(--cyan);
+      border-radius: 50%;
+      border: 2.5px solid var(--bg);
+      z-index: 3;
     }}
 
-    .stat-num {{
-      font-family: 'Outfit', sans-serif;
-      font-size: 2rem;
+    .core-badge {{
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.7rem;
+      color: var(--cyan);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+      margin-bottom: 0.45rem;
+    }}
+
+    .core-title {{
+      font-size: 1.35rem;
       font-weight: 800;
       color: var(--text-bright);
-      line-height: 1.1;
-      margin-bottom: 0.25rem;
+      line-height: 1.2;
+      margin-bottom: 0.45rem;
+      letter-spacing: -0.015em;
+    }}
+
+    .core-desc {{
+      font-size: 0.78rem;
+      color: var(--text-dim);
       font-variant-numeric: tabular-nums;
     }}
 
-    .stat-label {{
-      font-size: 0.8rem;
-      color: var(--text-dim);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
+    /* Branches List (Right) */
+    .branches-list {{
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      z-index: 2;
     }}
 
-    /* Global Search & Filter Bar */
-    .filter-section {{
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 1.25rem 1.5rem;
-      margin-bottom: 2.5rem;
-      box-shadow: var(--shadow-sm);
-    }}
-
-    .search-input-wrap {{
-      position: relative;
-      margin-bottom: 1rem;
-    }}
-
-    .search-icon {{
-      position: absolute;
-      left: 1rem;
-      top: 50%;
-      transform: translateY(-50%);
-      color: var(--text-dim);
-      pointer-events: none;
-      width: 20px;
-      height: 20px;
-    }}
-
-    .search-input {{
-      width: 100%;
-      background: var(--code-bg);
+    /* Deck Node Card */
+    .deck-node {{
+      background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 0.85rem 2.85rem 0.85rem 2.85rem;
-      color: var(--text-bright);
-      font-size: 0.95rem;
-      outline: none;
-      transition: all 0.2s ease;
-      font-family: inherit;
-    }}
-
-    .search-input:focus {{
-      border-color: var(--cyan);
-      box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
-    }}
-
-    .search-clear-btn {{
-      position: absolute;
-      right: 0.85rem;
-      top: 50%;
-      transform: translateY(-50%);
-      background: transparent;
-      border: none;
-      color: var(--text-dim);
-      cursor: pointer;
-      display: none;
-      font-size: 1.1rem;
-      padding: 0.25rem;
-    }}
-
-    .search-clear-btn:hover {{
-      color: var(--text-bright);
-    }}
-
-    .filter-pills {{
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 0.5rem;
-    }}
-
-    .filter-label {{
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text-dim);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-right: 0.35rem;
-    }}
-
-    .pill {{
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text);
-      padding: 0.35rem 0.85rem;
-      border-radius: 9999px;
-      font-size: 0.8rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
-    }}
-
-    .pill:hover {{
-      color: var(--text-bright);
-      background: var(--bg-card-hover);
-      border-color: rgba(255, 255, 255, 0.15);
-    }}
-
-    .pill.active {{
-      background: rgba(56, 189, 248, 0.15);
-      border-color: var(--cyan);
-      color: var(--cyan);
-      font-weight: 600;
-    }}
-
-    /* Search Results Live Panel */
-    #search-results-panel {{
-      display: none;
-      margin-top: 1rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--border);
-      max-height: 400px;
-      overflow-y: auto;
-    }}
-
-    .search-result-count {{
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      margin-bottom: 0.75rem;
-    }}
-
-    .search-results-list {{
-      display: flex;
-      flex-direction: column;
-      gap: 0.5rem;
-    }}
-
-    .search-result-item {{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      padding: 0.65rem 0.9rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
+      padding: 1.05rem 1.35rem;
       text-decoration: none;
       color: var(--text);
-      transition: all 0.15s ease;
-    }}
-
-    .search-result-item:hover,
-    .search-result-item:focus,
-    .search-result-item.selected {{
-      background: var(--bg-card-hover);
-      border-color: var(--cyan);
-      transform: translateX(4px);
-      color: var(--text-bright);
-      outline: none;
-    }}
-
-    .res-left {{
-      display: flex;
-      flex-direction: column;
-      gap: 0.15rem;
-    }}
-
-    .res-eyebrow {{
-      font-size: 0.72rem;
-      color: var(--cyan);
-      font-weight: 600;
-    }}
-
-    .res-title {{
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--text-bright);
-    }}
-
-    .res-badge {{
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      background: var(--code-bg);
-      border: 1px solid var(--border);
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
-      color: var(--text-muted);
-      white-space: nowrap;
-    }}
-
-    /* Deck Cards Section */
-    .section-title-wrap {{
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 1.5rem;
-    }}
-
-    .section-title {{
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-bright);
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }}
-
-    .decks-container {{
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      margin-bottom: 3.5rem;
-    }}
-
-    /* Individual Deck Card */
-    .deck-card {{
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      overflow: hidden;
-      position: relative;
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }}
-
-    .deck-card:hover {{
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-lg);
-      border-color: rgba(255, 255, 255, 0.18);
-    }}
-
-    /* Card Top Color Accent Bar */
-    .deck-top-bar {{
-      height: 4px;
-      width: 100%;
-    }}
-
-    .deck-content {{
-      padding: 1.75rem 2rem;
-    }}
-
-    .deck-header {{
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 1rem;
-      margin-bottom: 1.25rem;
-      flex-wrap: wrap;
-    }}
-
-    .deck-header-info {{
-      flex: 1;
-      min-width: 280px;
-    }}
-
-    .deck-badges {{
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-bottom: 0.65rem;
-      flex-wrap: wrap;
-    }}
-
-    .badge-deck-no {{
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
-      font-size: 0.75rem;
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-    }}
-
-    .badge-lectures {{
-      font-size: 0.78rem;
-      font-weight: 600;
-      padding: 0.2rem 0.6rem;
-      border-radius: 9999px;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-bright);
-    }}
-
-    .badge-slides-count {{
-      font-size: 0.78rem;
-      font-weight: 500;
-      color: var(--text-dim);
-    }}
-
-    .deck-title {{
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.6rem;
-      font-weight: 700;
-      color: var(--text-bright);
-      line-height: 1.25;
-      margin-bottom: 0.4rem;
-    }}
-
-    .deck-subtitle {{
-      font-size: 0.95rem;
-      color: var(--text);
-      line-height: 1.5;
-    }}
-
-    /* Dual Lecture Split Modules */
-    .deck-lectures-grid {{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 1.25rem;
-      margin: 1.5rem 0;
+      transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      position: relative;
+      box-shadow: var(--shadow-card);
     }}
 
-    .lecture-box {{
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1.25rem;
+    /* Connection Socket on Left of each card */
+    .node-socket {{
+      position: absolute;
+      left: -6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid var(--bg);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 3;
+    }}
+
+    .deck-1 .node-socket {{ background: var(--cyan); }}
+    .deck-2 .node-socket {{ background: var(--gold); }}
+    .deck-3 .node-socket {{ background: var(--mint); }}
+    .deck-4 .node-socket {{ background: var(--purple); }}
+    .deck-5 .node-socket {{ background: var(--coral); }}
+
+    /* Hover and Focus States */
+    .deck-node:hover,
+    .deck-node.active-launch {{
+      background: var(--bg-card-hover);
+      box-shadow: var(--shadow-hover);
+    }}
+
+    .deck-node:hover .node-socket,
+    .deck-node.active-launch .node-socket {{
+      transform: translateY(-50%) scale(1.35);
+    }}
+
+    .deck-node.deck-1:hover, .deck-node.deck-1.active-launch {{ border-color: var(--cyan); }}
+    .deck-node.deck-2:hover, .deck-node.deck-2.active-launch {{ border-color: var(--gold); }}
+    .deck-node.deck-3:hover, .deck-node.deck-3.active-launch {{ border-color: var(--mint); }}
+    .deck-node.deck-4:hover, .deck-node.deck-4.active-launch {{ border-color: var(--purple); }}
+    .deck-node.deck-5:hover, .deck-node.deck-5.active-launch {{ border-color: var(--coral); }}
+
+    .node-info {{
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
-      transition: border-color 0.2s ease;
+      gap: 0.25rem;
     }}
 
-    .lecture-box:hover {{
-      border-color: rgba(255, 255, 255, 0.15);
-    }}
-
-    .lec-eyebrow {{
-      font-size: 0.75rem;
-      font-weight: 700;
-      color: var(--cyan);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-bottom: 0.35rem;
-    }}
-
-    .lec-title {{
-      font-family: 'Outfit', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: var(--text-bright);
-      margin-bottom: 0.75rem;
-      line-height: 1.3;
-    }}
-
-    .lec-meta {{
+    .node-header-row {{
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 0.5rem;
-      padding-top: 0.75rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-    }}
-
-    .lec-jump-btn {{
-      display: inline-flex;
-      align-items: center;
-      gap: 0.35rem;
-      background: var(--code-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-      font-size: 0.8rem;
-      font-weight: 600;
-      padding: 0.35rem 0.75rem;
-      border-radius: var(--radius-sm);
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }}
-
-    .lec-jump-btn:hover {{
-      background: var(--bg-surface);
-      color: var(--text-bright);
-      border-color: var(--cyan);
-    }}
-
-    /* Topic Tags & Notebooks */
-    .deck-footer-row {{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.5rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid var(--border);
-      flex-wrap: wrap;
-    }}
-
-    .deck-tags-list {{
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      flex: 1;
-      min-width: 250px;
-    }}
-
-    .topic-tag {{
-      font-size: 0.75rem;
-      background: var(--code-bg);
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      padding: 0.2rem 0.55rem;
-      border-radius: 4px;
-      font-family: 'JetBrains Mono', monospace;
-      transition: color 0.15s ease;
-    }}
-
-    .topic-tag:hover {{
-      color: var(--text-bright);
-      border-color: rgba(255, 255, 255, 0.15);
-    }}
-
-    .deck-actions-group {{
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-    }}
-
-    .btn-primary {{
-      background: linear-gradient(135deg, #0284c7 0%, #007acc 100%);
-      color: #ffffff;
-      font-weight: 600;
-      font-size: 0.9rem;
-      padding: 0.6rem 1.25rem;
-      border-radius: var(--radius-md);
-      text-decoration: none;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-      transition: all 0.2s ease;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }}
-
-    .btn-primary:hover {{
-      transform: translateY(-2px);
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
-      filter: brightness(1.08);
-    }}
-
-    .btn-secondary {{
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      color: var(--text-bright);
-      font-weight: 600;
-      font-size: 0.85rem;
-      padding: 0.6rem 1rem;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      transition: all 0.2s ease;
-    }}
-
-    .btn-secondary:hover {{
-      background: var(--bg-card-hover);
-      border-color: rgba(255, 255, 255, 0.2);
-    }}
-
-    /* Slide Outline Accordion Drawer */
-    .deck-outline-drawer {{
-      display: none;
-      background: var(--code-bg);
-      border-top: 1px solid var(--border);
-      padding: 1.5rem 2rem;
-    }}
-
-    .deck-outline-drawer.open {{
-      display: block;
-      animation: fadeIn 0.25s ease;
-    }}
-
-    @keyframes fadeIn {{
-      from {{ opacity: 0; transform: translateY(-6px); }}
-      to {{ opacity: 1; transform: translateY(0); }}
-    }}
-
-    .outline-header {{
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 1rem;
-    }}
-
-    .outline-title {{
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: var(--text-bright);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }}
-
-    .outline-slides-grid {{
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
       gap: 0.65rem;
     }}
 
-    .outline-slide-link {{
+    .deck-tag {{
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.74rem;
+      font-weight: 700;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      font-variant-numeric: tabular-nums;
+    }}
+
+    .deck-1 .deck-tag {{ background: rgba(var(--cyan-rgb), 0.14); color: var(--cyan); border: 1px solid rgba(var(--cyan-rgb), 0.2); }}
+    .deck-2 .deck-tag {{ background: rgba(var(--gold-rgb), 0.14); color: var(--gold); border: 1px solid rgba(var(--gold-rgb), 0.2); }}
+    .deck-3 .deck-tag {{ background: rgba(var(--mint-rgb), 0.14); color: var(--mint); border: 1px solid rgba(var(--mint-rgb), 0.2); }}
+    .deck-4 .deck-tag {{ background: rgba(var(--purple-rgb), 0.14); color: var(--purple); border: 1px solid rgba(var(--purple-rgb), 0.2); }}
+    .deck-5 .deck-tag {{ background: rgba(var(--coral-rgb), 0.14); color: var(--coral); border: 1px solid rgba(var(--coral-rgb), 0.2); }}
+
+    .node-title {{
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      letter-spacing: -0.01em;
+    }}
+
+    .node-meta {{
+      font-size: 0.8rem;
+      color: var(--text-dim);
+    }}
+
+    .node-action {{
       display: flex;
       align-items: center;
-      gap: 0.75rem;
-      padding: 0.55rem 0.8rem;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      text-decoration: none;
-      color: var(--text);
-      font-size: 0.82rem;
-      transition: all 0.15s ease;
+      gap: 0.85rem;
     }}
 
-    .outline-slide-link:hover {{
-      background: var(--bg-card-hover);
-      border-color: var(--cyan);
-      color: var(--text-bright);
-      transform: translateX(3px);
-    }}
-
-    .slide-num-pill {{
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.72rem;
-      font-weight: 700;
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      padding: 0.15rem 0.4rem;
-      border-radius: 4px;
-      color: var(--cyan);
-      min-width: 32px;
-      text-align: center;
-    }}
-
-    /* Syllabus Curriculum Matrix Table */
-    .syllabus-section {{
-      background: var(--bg-surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-xl);
-      padding: 2rem;
-      margin-bottom: 3.5rem;
-      box-shadow: var(--shadow-sm);
-    }}
-
-    .table-container {{
-      overflow-x: auto;
-      margin-top: 1.25rem;
-    }}
-
-    .syllabus-table {{
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.9rem;
-    }}
-
-    .syllabus-table th {{
-      background: var(--bg-card);
-      color: var(--text-bright);
-      font-weight: 600;
-      padding: 0.9rem 1rem;
-      border-bottom: 2px solid var(--border);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }}
-
-    .syllabus-table td {{
-      padding: 0.9rem 1rem;
-      border-bottom: 1px solid var(--border);
-      color: var(--text);
-    }}
-
-    .syllabus-table tr:hover td {{
-      background: rgba(255, 255, 255, 0.02);
-    }}
-
-    .lecture-badge-pill {{
-      font-family: 'JetBrains Mono', monospace;
-      font-weight: 700;
+    .slide-count-badge {{
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
       font-size: 0.75rem;
-      padding: 0.2rem 0.5rem;
-      border-radius: 4px;
+      color: var(--text-dim);
+      font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }}
 
-    /* Keyboard Shortcuts Guide Card */
-    .shortcuts-grid {{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1rem;
-      margin-top: 1.25rem;
+    .launch-btn {{
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.85rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text-bright);
+      white-space: nowrap;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
     }}
 
-    .shortcut-card {{
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      padding: 1rem;
+    .launch-btn svg {{
+      transition: transform 0.2s ease;
+    }}
+
+    .deck-node:hover .launch-btn svg,
+    .deck-node.active-launch .launch-btn svg {{
+      transform: translateX(3px);
+    }}
+
+    .deck-node.deck-1:hover .launch-btn {{ background: var(--cyan); color: #0b0d13; border-color: var(--cyan); }}
+    .deck-node.deck-2:hover .launch-btn {{ background: var(--gold); color: #0b0d13; border-color: var(--gold); }}
+    .deck-node.deck-3:hover .launch-btn {{ background: var(--mint); color: #0b0d13; border-color: var(--mint); }}
+    .deck-node.deck-4:hover .launch-btn {{ background: var(--purple); color: #0b0d13; border-color: var(--purple); }}
+    .deck-node.deck-5:hover .launch-btn {{ background: var(--coral); color: #0b0d13; border-color: var(--coral); }}
+
+    /* Keyboard Shortcuts Bar */
+    .shortcuts-hint {{
+      margin-top: 2.25rem;
       display: flex;
       align-items: center;
-      gap: 1rem;
-    }}
-
-    .key-cap {{
-      background: var(--code-bg);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      border-bottom: 3px solid rgba(255, 255, 255, 0.3);
-      border-radius: 6px;
-      color: var(--text-bright);
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.85rem;
-      font-weight: 700;
-      padding: 0.4rem 0.75rem;
-      display: inline-block;
-      text-align: center;
-      min-width: 45px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    }}
-
-    .key-info {{
-      display: flex;
-      flex-direction: column;
-    }}
-
-    .key-action {{
-      font-size: 0.875rem;
-      font-weight: 600;
-      color: var(--text-bright);
-    }}
-
-    .key-desc {{
-      font-size: 0.75rem;
+      justify-content: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
       color: var(--text-dim);
+    }}
+
+    .kbd-chip {{
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.74rem;
+      font-weight: 700;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      color: var(--cyan);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
     }}
 
     /* Footer */
     footer.portal-footer {{
       margin-top: auto;
       background: var(--bg-surface);
-      border-top: 1px solid var(--border);
-      padding: 2.5rem 1.5rem;
+      border-top: 1px solid var(--border-light);
+      padding: 1.75rem 1.5rem;
       color: var(--text-dim);
-      font-size: 0.875rem;
+      font-size: 0.82rem;
     }}
 
     .footer-content {{
-      max-width: 1280px;
+      max-width: 1200px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 1.5rem;
+      gap: 1rem;
       flex-wrap: wrap;
     }}
 
-    .footer-left {{
-      display: flex;
-      flex-direction: column;
-      gap: 0.35rem;
-    }}
-
-    .footer-links {{
-      display: flex;
-      gap: 1rem;
-    }}
-
-    .footer-link {{
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: color 0.15s ease;
-    }}
-
-    .footer-link:hover {{
-      color: var(--cyan);
-    }}
-
-    /* Notebook Pill */
-    .nb-pill {{
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.2rem 0.5rem;
-      background: rgba(250, 204, 21, 0.1);
-      border: 1px solid rgba(250, 204, 21, 0.25);
-      border-radius: 4px;
-      color: var(--gold);
-      font-size: 0.75rem;
-      font-family: 'JetBrains Mono', monospace;
-      text-decoration: none;
-      transition: all 0.2s ease;
-    }}
-
-    .nb-pill:hover {{
-      background: rgba(250, 204, 21, 0.2);
-      border-color: var(--gold);
-      color: #fff;
-    }}
-
-    /* Responsive adjustments */
-    @media (max-width: 768px) {{
-      .deck-lectures-grid {{
+    @media (max-width: 850px) {{
+      .mindmap-container {{
         grid-template-columns: 1fr;
+        gap: 2rem;
       }}
-      .deck-content {{
-        padding: 1.25rem 1.25rem;
+      .connector-svg,
+      .core-socket,
+      .node-socket {{
+        display: none;
       }}
-      .stats-bar {{
-        grid-template-columns: 1fr 1fr;
+      .core-node {{
+        text-align: left;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1.25rem 1.5rem;
       }}
     }}
   </style>
@@ -1015,11 +550,10 @@ html_content = f'''<!DOCTYPE html>
   <!-- Top Sticky Header -->
   <header class="portal-nav">
     <div class="nav-container">
-      <a href="#top" class="brand">
-        <div class="brand-logo">
-          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="4 17 10 11 4 5"></polyline>
-            <line x1="12" y1="19" x2="20" y2="19"></line>
+      <a href="#" class="brand" aria-label="CATC Python Course Portal Home">
+        <div class="brand-logo" aria-hidden="true">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="12 2 19 21 12 17 5 21 12 2"></polygon>
           </svg>
         </div>
         <div class="brand-text">
@@ -1028,640 +562,145 @@ html_content = f'''<!DOCTYPE html>
         </div>
       </a>
 
-      <div class="nav-links">
-        <a href="#decks" class="nav-link">Slide Decks</a>
-        <a href="#syllabus" class="nav-link">Curriculum</a>
-        <a href="#shortcuts" class="nav-link">Shortcuts</a>
-        <button class="search-btn-trigger" id="search-trigger-btn" aria-label="Search curriculum">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-          </svg>
-          <span>Search</span>
-          <span class="kbd-shortcut">⌘K</span>
-        </button>
+      <div class="nav-stats" aria-label="Curriculum Statistics">
+        <span class="nav-badge">10 Lectures</span>
+        <span class="nav-badge">5 Decks</span>
+        <span class="nav-badge">179 Slides</span>
       </div>
     </div>
   </header>
 
   <!-- Main Content -->
-  <main id="top">
-    
-    <!-- Hero Section -->
-    <section class="hero">
-      <div class="hero-badge">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="margin-right: 0.2rem;"><polygon points="12 2 19 21 12 17 5 21 12 2"></polygon></svg>
-        CATC Department of Aviation Engineering
-      </div>
-      <h1 class="hero-title">
-        Modern Python Programming<br>
-        <span class="hero-title-accent">Interactive Curriculum Decks</span>
-      </h1>
-      <p class="hero-desc">
-        A comprehensive, 10-lecture university course curriculum in computer science and scientific Python, packaged into five 16:9 widescreen interactive presentation decks with direct code demonstrations.
-      </p>
+  <main>
+    <h1 class="hero-title">
+      Python Curriculum <span class="hero-title-accent">Mind Map</span>
+    </h1>
+    <p class="hero-desc">
+      Interactive lecture presentation pathway linking directly to the five course slide decks.
+    </p>
 
-      <!-- Stat Counters -->
-      <div class="stats-bar">
-        <div class="stat-item">
-          <div class="stat-num" style="color: var(--cyan);">5</div>
-          <div class="stat-label">Slide Decks</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num" style="color: var(--mint);">10</div>
-          <div class="stat-label">Lectures (+ Lab 11)</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num" style="color: var(--gold);">179</div>
-          <div class="stat-label">Interactive Slides</div>
-        </div>
-        <div class="stat-item">
-          <div class="stat-num" style="color: var(--coral);">100%</div>
-          <div class="stat-label">Offline Capable</div>
-        </div>
-      </div>
-    </section>
+    <!-- Mind Map Workspace -->
+    <div class="mindmap-wrapper">
+      <div class="mindmap-container">
+        <!-- SVG Branch Connectors -->
+        <svg id="connector-svg" class="connector-svg" aria-hidden="true"></svg>
 
-    <!-- Global Instant Search & Filter Section -->
-    <section class="filter-section" id="search-section">
-      <div class="search-input-wrap">
-        <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-          <circle cx="11" cy="11" r="8"></circle>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-        <input 
-          type="text" 
-          id="global-search" 
-          class="search-input" 
-          placeholder="Search 179 slides (e.g. slicing, regex, json, broadcasting, oop, pep 8, binary)..."
-          autocomplete="off"
-          aria-label="Search curriculum across 179 slides"
-          aria-autocomplete="list"
-          aria-controls="results-list"
-        >
-        <button class="search-clear-btn" id="search-clear" title="Clear search" aria-label="Clear search input">✕</button>
-      </div>
-
-      <div class="filter-pills" role="toolbar" aria-label="Deck filter pills">
-        <span class="filter-label">Filter:</span>
-        <button class="pill active" data-filter="all">All Decks (5)</button>
-        <button class="pill" data-filter="deck-1">Deck 1: Foundations</button>
-        <button class="pill" data-filter="deck-2">Deck 2: Logic &amp; Functions</button>
-        <button class="pill" data-filter="deck-3">Deck 3: Collections &amp; Sets</button>
-        <button class="pill" data-filter="deck-4">Deck 4: NumPy &amp; Regex</button>
-        <button class="pill" data-filter="deck-5">Deck 5: Files &amp; OOP</button>
-      </div>
-
-      <!-- Live Search Results Dropdown/Panel -->
-      <div id="search-results-panel" role="region" aria-label="Search results" aria-live="polite">
-        <div class="search-result-count" id="result-count">0 matching slides found</div>
-        <div class="search-results-list" id="results-list" role="listbox"></div>
-      </div>
-    </section>
-
-    <!-- Presentation Decks List -->
-    <section id="decks">
-      <div class="section-title-wrap">
-        <h2 class="section-title">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--cyan)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-            <line x1="8" y1="21" x2="16" y2="21"></line>
-            <line x1="12" y1="17" x2="12" y2="21"></line>
-          </svg>
-          Interactive Lecture Slide Decks
-        </h2>
-      </div>
-
-      <div class="decks-container" id="decks-container">
-        <!-- Deck Cards will be rendered dynamically -->
-      </div>
-    </section>
-
-    <!-- Syllabus Table Section -->
-    <section class="syllabus-section" id="syllabus">
-      <div class="section-title-wrap">
-        <h2 class="section-title">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-          </svg>
-          Complete Course Syllabus &amp; Lecture Roadmap
-        </h2>
-      </div>
-      <p style="color: var(--text-dim); font-size: 0.95rem;">
-        Ten structured curriculum lectures covering computing principles to production-grade object-oriented system engineering.
-      </p>
-
-      <div class="table-container">
-        <table class="syllabus-table">
-          <thead>
-            <tr>
-              <th>Lecture</th>
-              <th>Presentation Deck</th>
-              <th>Primary Curriculum Domain</th>
-              <th>Slide Range</th>
-              <th>Notebook Lab</th>
-              <th>Launch</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(56, 189, 248, 0.15); color: var(--cyan); border: 1px solid var(--cyan);">Lecture 1</span></td>
-              <td><strong>Deck 01</strong></td>
-              <td>Fundamentals of Computing (Architecture, Binary Representation, Moore's Law)</td>
-              <td>Slides 1 – 15</td>
-              <td><a href="L01.ipynb" class="nb-pill">L01.ipynb</a></td>
-              <td><a href="python_presentation_01.html#slide-1" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(56, 189, 248, 0.15); color: var(--cyan); border: 1px solid var(--cyan);">Lecture 2</span></td>
-              <td><strong>Deck 01</strong></td>
-              <td>Intro to Python Programming (Expressions, Variables, Types, Operators &amp; PEP 8)</td>
-              <td>Slides 16 – 35</td>
-              <td><a href="L02.ipynb" class="nb-pill">L02.ipynb</a></td>
-              <td><a href="python_presentation_01.html#slide-16" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(250, 204, 21, 0.15); color: var(--gold); border: 1px solid var(--gold);">Lecture 3</span></td>
-              <td><strong>Deck 02</strong></td>
-              <td>Control Statements &amp; Program Development (Algorithms, Selection, Iteration, Statistics)</td>
-              <td>Slides 1 – 18</td>
-              <td><a href="L03.ipynb" class="nb-pill">L03.ipynb</a></td>
-              <td><a href="python_presentation_02.html#slide-1" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(250, 204, 21, 0.15); color: var(--gold); border: 1px solid var(--gold);">Lecture 4</span></td>
-              <td><strong>Deck 02</strong></td>
-              <td>Functions &amp; Modular Architecture (Inputs/Outputs, Random Simulation, Scope, References)</td>
-              <td>Slides 19 – 36</td>
-              <td><a href="L04.ipynb" class="nb-pill">L04.ipynb</a></td>
-              <td><a href="python_presentation_02.html#slide-19" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(52, 211, 153, 0.15); color: var(--mint); border: 1px solid var(--mint);">Lecture 5</span></td>
-              <td><strong>Deck 03</strong></td>
-              <td>Sequences: Lists and Tuples (Indexing, Slicing, In-place Mutation, Comprehensions, 2D)</td>
-              <td>Slides 1 – 18</td>
-              <td><a href="L05.ipynb" class="nb-pill">L05.ipynb</a></td>
-              <td><a href="python_presentation_03.html#slide-1" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(52, 211, 153, 0.15); color: var(--mint); border: 1px solid var(--mint);">Lecture 6</span></td>
-              <td><strong>Deck 03</strong></td>
-              <td>Dictionaries and Sets (Hash Tables, Key-Value Mappings, Set Algebra, Venn Operations)</td>
-              <td>Slides 19 – 36</td>
-              <td><a href="L06.ipynb" class="nb-pill">L06.ipynb</a></td>
-              <td><a href="python_presentation_03.html#slide-19" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(192, 132, 252, 0.15); color: var(--purple); border: 1px solid var(--purple);">Lecture 7</span></td>
-              <td><strong>Deck 04</strong></td>
-              <td>NumPy Arrays: Numerical Computing (Multidimensional Tensors, Vectorization, Broadcasting)</td>
-              <td>Slides 1 – 18</td>
-              <td><a href="L07.ipynb" class="nb-pill">L07.ipynb</a></td>
-              <td><a href="python_presentation_04.html#slide-1" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(192, 132, 252, 0.15); color: var(--purple); border: 1px solid var(--purple);">Lecture 8</span></td>
-              <td><strong>Deck 04</strong></td>
-              <td>Strings &amp; Regular Expressions (f-string Formatting, Token Pipelines, Regex Automata)</td>
-              <td>Slides 19 – 36</td>
-              <td><a href="L08.ipynb" class="nb-pill">L08.ipynb</a></td>
-              <td><a href="python_presentation_04.html#slide-19" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(251, 113, 133, 0.15); color: var(--coral); border: 1px solid var(--coral);">Lecture 9</span></td>
-              <td><strong>Deck 05</strong></td>
-              <td>Files &amp; Exceptions (Stream I/O, Persistent Storage, JSON Dictionaries, Defensive try-catch)</td>
-              <td>Slides 1 – 18</td>
-              <td><a href="L09.ipynb" class="nb-pill">L09.ipynb</a></td>
-              <td><a href="python_presentation_05.html#slide-1" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(251, 113, 133, 0.15); color: var(--coral); border: 1px solid var(--coral);">Lecture 10</span></td>
-              <td><strong>Deck 05</strong></td>
-              <td>Intro to Object-Oriented Programming (Classes, Constructors, Encapsulation &amp; Magic Methods)</td>
-              <td>Slides 19 – 36</td>
-              <td><a href="L10.ipynb" class="nb-pill">L10.ipynb</a></td>
-              <td><a href="python_presentation_05.html#slide-19" class="lec-jump-btn">Launch ↗</a></td>
-            </tr>
-            <tr>
-              <td><span class="lecture-badge-pill" style="background: rgba(255, 255, 255, 0.1); color: var(--text-bright); border: 1px solid rgba(255, 255, 255, 0.2);">Lab 11</span></td>
-              <td><strong>Supplementary</strong></td>
-              <td>Pandas Dataframes, Tabular Analytics &amp; Aviation Data Visualization</td>
-              <td>Hands-on Lab</td>
-              <td><a href="L11.ipynb" class="nb-pill">L11.ipynb</a></td>
-              <td><span style="font-size: 0.8rem; color: var(--text-dim);">Jupyter Lab</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- Keyboard Shortcuts Guide -->
-    <section class="syllabus-section" id="shortcuts">
-      <div class="section-title-wrap">
-        <h2 class="section-title">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--mint)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
-            <path d="M6 8h.001"></path>
-            <path d="M10 8h.001"></path>
-            <path d="M14 8h.001"></path>
-            <path d="M18 8h.001"></path>
-            <path d="M8 12h.001"></path>
-            <path d="M12 12h.001"></path>
-            <path d="M16 12h.001"></path>
-            <path d="M7 16h10"></path>
-          </svg>
-          Slide Deck Keyboard Navigation
-        </h2>
-      </div>
-      <p style="color: var(--text-dim); font-size: 0.95rem;">
-        When viewing any presentation deck, use these keyboard shortcuts for smooth presentation control:
-      </p>
-
-      <div class="shortcuts-grid">
-        <div class="shortcut-card">
-          <span class="key-cap">→</span>
-          <div class="key-info">
-            <span class="key-action">Next Slide</span>
-            <span class="key-desc">Also Space or PageDown</span>
+        <!-- Course Core Hub (Left) -->
+        <div class="core-node" id="core-node">
+          <div class="core-socket" aria-hidden="true"></div>
+          <div>
+            <div class="core-badge">Course Core</div>
+            <div class="core-title">Python Programming</div>
           </div>
+          <div class="core-desc">10 Lectures &bull; 5 Decks</div>
         </div>
-        <div class="shortcut-card">
-          <span class="key-cap">←</span>
-          <div class="key-info">
-            <span class="key-action">Previous Slide</span>
-            <span class="key-desc">Also PageUp</span>
-          </div>
-        </div>
-        <div class="shortcut-card">
-          <span class="key-cap">Home</span>
-          <div class="key-info">
-            <span class="key-action">First Slide</span>
-            <span class="key-desc">Jump to deck beginning</span>
-          </div>
-        </div>
-        <div class="shortcut-card">
-          <span class="key-cap">End</span>
-          <div class="key-info">
-            <span class="key-action">Last Slide</span>
-            <span class="key-desc">Jump to curriculum summary</span>
-          </div>
-        </div>
-        <div class="shortcut-card">
-          <span class="key-cap">F</span>
-          <div class="key-info">
-            <span class="key-action">Fullscreen</span>
-            <span class="key-desc">Toggle projector mode</span>
-          </div>
-        </div>
-        <div class="shortcut-card">
-          <span class="key-cap">Esc</span>
-          <div class="key-info">
-            <span class="key-action">Exit Fullscreen</span>
-            <span class="key-desc">Return to window view</span>
-          </div>
-        </div>
-      </div>
-    </section>
 
+        <!-- 5 Progressive Deck Nodes (Right) -->
+        <nav class="branches-list" aria-label="Course presentation decks">
+{nodes_joined}
+        </nav>
+      </div>
+
+      <!-- Quick Shortcuts Hint -->
+      <div class="shortcuts-hint" aria-label="Keyboard Shortcuts">
+        <span>Quick Launch: Press</span>
+        <kbd class="kbd-chip">1</kbd>
+        <span>through</span>
+        <kbd class="kbd-chip">5</kbd>
+        <span>to launch any deck instantly</span>
+      </div>
+    </div>
   </main>
 
   <!-- Footer -->
   <footer class="portal-footer">
     <div class="footer-content">
-      <div class="footer-left">
-        <strong style="color: var(--text-bright);">Civil Aviation Training Center (CATC) • Thailand</strong>
-        <span>Department of Aviation Engineering &bull; Python Programming Curriculum</span>
-      </div>
-      <div class="footer-links">
-        <a href="#top" class="footer-link">Back to Top ↑</a>
-        <a href="https://docs.python.org/3/" target="_blank" rel="noopener" class="footer-link">Python Docs ↗</a>
-      </div>
+      <div>&copy; 2026 Civil Aviation Training Center (CATC). Department of Aviation Engineering.</div>
+      <div>100% Offline Capable &bull; Standalone HTML5 Presentations</div>
     </div>
   </footer>
 
-  <!-- Embedded Decks JSON Data -->
-  <script>
-    const DECKS_DATA = {json_data_str};
-  </script>
-
-  <!-- Portal Interactive Script -->
   <script>
     document.addEventListener('DOMContentLoaded', () => {{
-      const container = document.getElementById('decks-container');
-      const searchInput = document.getElementById('global-search');
-      const searchClear = document.getElementById('search-clear');
-      const searchPanel = document.getElementById('search-results-panel');
-      const resultsList = document.getElementById('results-list');
-      const resultCount = document.getElementById('result-count');
-      const filterPills = document.querySelectorAll('.filter-pills .pill');
-      const searchTriggerBtn = document.getElementById('search-trigger-btn');
+      const svg = document.getElementById('connector-svg');
+      const coreSocket = document.querySelector('.core-socket');
+      const nodeSockets = document.querySelectorAll('.node-socket');
+      const nodes = document.querySelectorAll('.deck-node');
+      const colors = ['#38bdf8', '#facc15', '#34d399', '#c084fc', '#fb7185'];
 
-      // Accent gradients per deck
-      const deckGradients = [
-        'linear-gradient(90deg, #38bdf8 0%, #007acc 100%)',
-        'linear-gradient(90deg, #facc15 0%, #eab308 100%)',
-        'linear-gradient(90deg, #34d399 0%, #059669 100%)',
-        'linear-gradient(90deg, #c084fc 0%, #9333ea 100%)',
-        'linear-gradient(90deg, #fb7185 0%, #e11d48 100%)'
-      ];
-
-      // Render Deck Cards
-      function renderDecks(filter = 'all') {{
-        container.innerHTML = '';
-
-        DECKS_DATA.forEach((deck, idx) => {{
-          const deckFilterKey = `deck-${{deck.id}}`;
-          if (filter !== 'all' && filter !== deckFilterKey) return;
-
-          const card = document.createElement('article');
-          card.className = 'deck-card';
-          card.id = `deck-card-${{deck.id}}`;
-
-          const grad = deckGradients[idx % deckGradients.length];
-
-          // Slides outline generation
-          const outlineSlidesHtml = deck.slides.map(s => `
-            <a href="${{deck.file}}#${{s.id}}" class="outline-slide-link" title="${{s.eyebrow ? s.eyebrow + ' • ' : ''}}${{s.title}}">
-              <span class="slide-num-pill">${{s.num}}</span>
-              <span style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${{s.title}}</span>
-            </a>
-          `).join('');
-
-          // Notebooks pills html
-          const notebooksHtml = deck.notebooks.map(nb => `
-            <a href="${{nb}}" class="nb-pill" title="Open Jupyter Notebook ${{nb}}">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
-              ${{nb}}
-            </a>
-          `).join(' ');
-
-          // Tags html
-          const tagsHtml = deck.tags.map(t => `<span class="topic-tag">${{t}}</span>`).join('');
-
-          card.innerHTML = `
-            <div class="deck-top-bar" style="background: ${{grad}};"></div>
-            <div class="deck-content">
-              <div class="deck-header">
-                <div class="deck-header-info">
-                  <div class="deck-badges">
-                    <span class="badge-deck-no" style="background: rgba(255, 255, 255, 0.08); color: ${{deck.badge_color}}; border: 1px solid ${{deck.badge_color}}44;">DECK ${{deck.deck_number}}</span>
-                    <span class="badge-lectures">${{deck.lectures_label}}</span>
-                    <span class="badge-slides-count">&bull; ${{deck.total_slides}} Widescreen Slides</span>
-                  </div>
-                  <h3 class="deck-title">${{deck.title}}</h3>
-                  <p class="deck-subtitle">${{deck.subtitle}}</p>
-                </div>
-              </div>
-
-              <!-- Dual Lecture Split Modules -->
-              <div class="deck-lectures-grid">
-                <div class="lecture-box">
-                  <div>
-                    <div class="lec-eyebrow">${{deck.part1.lecture}}</div>
-                    <h4 class="lec-title">${{deck.part1.title}}</h4>
-                  </div>
-                  <div class="lec-meta">
-                    <span style="font-size: 0.78rem; color: var(--text-dim);">Starts at Slide ${{deck.part1.slide}}</span>
-                    <a href="${{deck.file}}#${{deck.part1.id}}" class="lec-jump-btn">
-                      Jump to ${{deck.part1.lecture}} ↗
-                    </a>
-                  </div>
-                </div>
-
-                <div class="lecture-box">
-                  <div>
-                    <div class="lec-eyebrow" style="color: var(--gold);">${{deck.part2.lecture}}</div>
-                    <h4 class="lec-title">${{deck.part2.title}}</h4>
-                  </div>
-                  <div class="lec-meta">
-                    <span style="font-size: 0.78rem; color: var(--text-dim);">Starts at Slide ${{deck.part2.slide}}</span>
-                    <a href="${{deck.file}}#${{deck.part2.id}}" class="lec-jump-btn">
-                      Jump to ${{deck.part2.lecture}} ↗
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Footer with tags, notebooks, and action buttons -->
-              <div class="deck-footer-row">
-                <div style="display: flex; flex-direction: column; gap: 0.6rem; flex: 1; min-width: 260px;">
-                  <div class="deck-tags-list">
-                    ${{tagsHtml}}
-                  </div>
-                  <div style="display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;">
-                    <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.05em; font-weight: 600;">Labs:</span>
-                    ${{notebooksHtml}}
-                  </div>
-                </div>
-
-                <div class="deck-actions-group">
-                  <button class="btn-secondary toggle-outline-btn" data-deck="${{deck.id}}" aria-expanded="false" aria-controls="outline-drawer-${{deck.id}}">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
-                    <span>View Outline (${{deck.total_slides}})</span>
-                  </button>
-                  <a href="${{deck.file}}" class="btn-primary">
-                    <span>Launch Presentation</span>
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <!-- Expandable Slide Outline Drawer -->
-            <div class="deck-outline-drawer" id="outline-drawer-${{deck.id}}" role="region" aria-label="Deck ${{deck.deck_number}} Slide Outline">
-              <div class="outline-header">
-                <div class="outline-title">Deck ${{deck.deck_number}} &bull; Complete Slide Outline (${{deck.total_slides}} Slides)</div>
-                <button class="btn-secondary close-outline-btn" data-deck="${{deck.id}}" aria-label="Close outline drawer for Deck ${{deck.deck_number}}" style="padding: 0.25rem 0.6rem; font-size: 0.78rem;">
-                  Close ✕
-                </button>
-              </div>
-              <div class="outline-slides-grid">
-                ${{outlineSlidesHtml}}
-              </div>
-            </div>
-          `;
-
-          container.appendChild(card);
-        }});
-
-        // Attach event listeners for outline buttons
-        document.querySelectorAll('.toggle-outline-btn').forEach(btn => {{
-          btn.addEventListener('click', (e) => {{
-            const deckId = btn.getAttribute('data-deck');
-            const drawer = document.getElementById(`outline-drawer-${{deckId}}`);
-            if (drawer) {{
-              const isOpen = drawer.classList.contains('open');
-              drawer.classList.toggle('open');
-              btn.setAttribute('aria-expanded', !isOpen ? 'true' : 'false');
-              const deckObj = DECKS_DATA.find(d => d.id == deckId);
-              const count = deckObj ? deckObj.total_slides : '';
-              btn.innerHTML = !isOpen ? 
-                `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"></polyline></svg><span>Hide Outline</span>` :
-                `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg><span>View Outline (${{count}})</span>`;
-            }}
-          }});
-        }});
-
-        document.querySelectorAll('.close-outline-btn').forEach(btn => {{
-          btn.addEventListener('click', () => {{
-            const deckId = btn.getAttribute('data-deck');
-            const drawer = document.getElementById(`outline-drawer-${{deckId}}`);
-            if (drawer) drawer.classList.remove('open');
-            const toggleBtn = document.querySelector(`.toggle-outline-btn[data-deck="${{deckId}}"]`);
-            if (toggleBtn) {{
-              toggleBtn.setAttribute('aria-expanded', 'false');
-              const deckObj = DECKS_DATA.find(d => d.id == deckId);
-              const count = deckObj ? deckObj.total_slides : '';
-              toggleBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg><span>View Outline (${{count}})</span>`;
-            }}
-          }});
-        }});
-      }}
-
-      // Live Instant Search across all slides with keyboard traversal
-      let selectedSearchIndex = -1;
-
-      function updateSearchSelection(newIndex) {{
-        const items = resultsList.querySelectorAll('.search-result-item');
-        if (items.length === 0) return;
-        if (newIndex < 0) newIndex = items.length - 1;
-        if (newIndex >= items.length) newIndex = 0;
-        selectedSearchIndex = newIndex;
-        items.forEach((item, idx) => {{
-          if (idx === selectedSearchIndex) {{
-            item.classList.add('selected');
-            item.setAttribute('aria-selected', 'true');
-            item.scrollIntoView({{ block: 'nearest' }});
-          }} else {{
-            item.classList.remove('selected');
-            item.setAttribute('aria-selected', 'false');
-          }}
-        }});
-      }}
-
-      function handleSearch() {{
-        const query = searchInput.value.trim().toLowerCase();
-        selectedSearchIndex = -1;
-
-        if (query.length > 0) {{
-          searchClear.style.display = 'block';
-        }} else {{
-          searchClear.style.display = 'none';
-          searchPanel.style.display = 'none';
+      function drawConnectors() {{
+        if (!svg || window.innerWidth <= 850) {{
+          if (svg) svg.innerHTML = '';
           return;
         }}
+        const container = document.querySelector('.mindmap-container');
+        if (!container || !coreSocket || nodeSockets.length === 0) return;
 
-        const matches = [];
+        const contRect = container.getBoundingClientRect();
+        const coreRect = coreSocket.getBoundingClientRect();
 
-        DECKS_DATA.forEach(deck => {{
-          deck.slides.forEach(slide => {{
-            const matchTitle = slide.title.toLowerCase().includes(query);
-            const matchEyebrow = slide.eyebrow.toLowerCase().includes(query);
-            const matchDeck = deck.title.toLowerCase().includes(query);
+        const startX = coreRect.left + (coreRect.width / 2) - contRect.left;
+        const startY = coreRect.top + (coreRect.height / 2) - contRect.top;
 
-            if (matchTitle || matchEyebrow || matchDeck) {{
-              matches.push({{
-                deckTitle: deck.title,
-                deckNum: deck.deck_number,
-                file: deck.file,
-                slideNum: slide.num,
-                slideId: slide.id,
-                title: slide.title,
-                eyebrow: slide.eyebrow
-              }});
-            }}
-          }});
+        let paths = '';
+
+        nodeSockets.forEach((sock, i) => {{
+          const sockRect = sock.getBoundingClientRect();
+          const endX = sockRect.left + (sockRect.width / 2) - contRect.left;
+          const endY = sockRect.top + (sockRect.height / 2) - contRect.top;
+          
+          const deltaX = endX - startX;
+          const cp1X = startX + (deltaX * 0.45);
+          const cp2X = startX + (deltaX * 0.55);
+
+          paths += `<path id="path-${{i + 1}}" d="M ${{startX}} ${{startY}} C ${{cp1X}} ${{startY}}, ${{cp2X}} ${{endY}}, ${{endX}} ${{endY}}" 
+            fill="none" stroke="${{colors[i]}}" stroke-width="2" stroke-opacity="0.32" stroke-dasharray="6,4" class="branch-path"/>`;
         }});
 
-        resultCount.textContent = `${{matches.length}} matching slide${{matches.length === 1 ? '' : 's'}} found for "${{query}}"`;
-        
-        if (matches.length > 0) {{
-          resultsList.innerHTML = matches.slice(0, 20).map((m, idx) => `
-            <a href="${{m.file}}#${{m.slideId}}" class="search-result-item" role="option" aria-selected="false" tabindex="-1">
-              <div class="res-left">
-                <span class="res-eyebrow">Deck ${{m.deckNum}} &bull; ${{m.eyebrow || 'Lecture Slide'}}</span>
-                <span class="res-title">${{m.title}}</span>
-              </div>
-              <span class="res-badge">Slide ${{m.slideNum}} ↗</span>
-            </a>
-          `).join('');
-
-          if (matches.length > 20) {{
-            resultsList.innerHTML += `<div style="text-align: center; color: var(--text-dim); font-size: 0.8rem; padding: 0.5rem;">+ ${{matches.length - 20}} more results. Refine your query.</div>`;
-          }}
-        }} else {{
-          resultsList.innerHTML = `<div style="padding: 1.5rem; text-align: center; color: var(--text-dim); font-size: 0.9rem;">No matching slides found. Try searching for "loop", "regex", "array", "function", or "class".</div>`;
-        }}
-
-        searchPanel.style.display = 'block';
+        svg.setAttribute('width', contRect.width);
+        svg.setAttribute('height', contRect.height);
+        svg.setAttribute('viewBox', `0 0 ${{contRect.width}} ${{contRect.height}}`);
+        svg.innerHTML = paths;
       }}
 
-      searchInput.addEventListener('input', handleSearch);
-
-      searchInput.addEventListener('keydown', (e) => {{
-        if (searchPanel.style.display !== 'none') {{
-          const items = resultsList.querySelectorAll('.search-result-item');
-          if (items.length > 0) {{
-            if (e.key === 'ArrowDown') {{
-              e.preventDefault();
-              updateSearchSelection(selectedSearchIndex + 1);
-            }} else if (e.key === 'ArrowUp') {{
-              e.preventDefault();
-              updateSearchSelection(selectedSearchIndex - 1);
-            }} else if (e.key === 'Enter') {{
-              if (selectedSearchIndex >= 0 && selectedSearchIndex < items.length) {{
-                e.preventDefault();
-                items[selectedSearchIndex].click();
-              }}
-            }}
+      // Interactive hover illumination
+      nodes.forEach((node, i) => {{
+        node.addEventListener('mouseenter', () => {{
+          const p = document.getElementById(`path-${{i + 1}}`);
+          if (p) {{
+            p.setAttribute('stroke-opacity', '1');
+            p.setAttribute('stroke-width', '2.5');
+            p.removeAttribute('stroke-dasharray');
           }}
-        }}
-      }});
-
-      searchClear.addEventListener('click', () => {{
-        searchInput.value = '';
-        searchInput.focus();
-        handleSearch();
-      }});
-
-      // Category Pill Filters
-      filterPills.forEach(pill => {{
-        pill.addEventListener('click', () => {{
-          filterPills.forEach(p => p.classList.remove('active'));
-          pill.classList.add('active');
-          const filter = pill.getAttribute('data-filter');
-          renderDecks(filter);
+        }});
+        node.addEventListener('mouseleave', () => {{
+          const p = document.getElementById(`path-${{i + 1}}`);
+          if (p) {{
+            p.setAttribute('stroke-opacity', '0.32');
+            p.setAttribute('stroke-width', '2');
+            p.setAttribute('stroke-dasharray', '6,4');
+          }}
         }});
       }});
 
-      // Keyboard Shortcut ⌘K / /
+      // Draw initial connectors and bind resize
+      drawConnectors();
+      window.addEventListener('resize', drawConnectors);
+
+      // Keyboard shortcuts: 1-5 to launch decks directly
       document.addEventListener('keydown', (e) => {{
-        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {{
-          e.preventDefault();
-          searchInput.focus();
-          searchInput.select();
-        }} else if (e.key === '/' && document.activeElement !== searchInput) {{
-          e.preventDefault();
-          searchInput.focus();
-          searchInput.select();
-        }} else if (e.key === 'Escape') {{
-          if (document.activeElement === searchInput) {{
-            searchInput.blur();
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+        if (['1', '2', '3', '4', '5'].includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey) {{
+          const targetNode = document.querySelector(`.deck-node.deck-${{e.key}}`);
+          if (targetNode) {{
+            targetNode.classList.add('active-launch');
+            const href = targetNode.getAttribute('href');
+            setTimeout(() => {{
+              window.location.href = href;
+            }}, 120);
           }}
-          searchPanel.style.display = 'none';
         }}
       }});
-
-      searchTriggerBtn.addEventListener('click', () => {{
-        searchInput.focus();
-        searchInput.scrollIntoView({{ behavior: 'smooth', block: 'center' }});
-      }});
-
-      // Initial render
-      renderDecks('all');
     }});
   </script>
 </body>
@@ -1671,4 +710,4 @@ html_content = f'''<!DOCTYPE html>
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write(html_content)
 
-print('Generated index.html successfully!')
+print("Generated index.html successfully!")
