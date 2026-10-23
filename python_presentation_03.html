@@ -480,26 +480,32 @@
             <ul class="bullet-list">
               <li><strong>Concatenation (<code class="inline-code">+</code>):</strong> Creates an entirely <em>new</em> list combining elements of both operands.</li>
               <li><strong>Augmented (<code class="inline-code">+=</code>):</strong> Extends the existing list in-place (must pass an iterable: <code class="inline-code">my_list += [50]</code>).</li>
-              <li><strong><code class="inline-code">append(item)</code>:</strong> Adds an individual item directly to the end of the list.</li>
+              <li><strong>Proof of Mutability with <code class="inline-code">id()</code>:</strong> Inspecting <code class="inline-code">id(my_list)</code> before and after <code class="inline-code">+=</code> reveals the exact same memory address!</li>
             </ul>
           </div>
           <div class="code-box">
-            <div class="code-box-header"><span>python — list_concat.py</span><span>Growing Lists</span></div>
+            <div class="code-box-header"><span>python — list_concat.py</span><span>Growth &amp; id() Proof</span></div>
             <div class="code-box-body"><span class="token-var">a</span> <span class="token-op">=</span> [<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>]
 <span class="token-var">b</span> <span class="token-op">=</span> [<span class="token-num">4</span>, <span class="token-num">5</span>]
 
-<span class="token-com"># Concatenation produces a new third list</span>
+<span class="token-com"># Concatenation (+) produces a brand NEW third list</span>
 <span class="token-var">combined</span> <span class="token-op">=</span> <span class="token-var">a</span> <span class="token-op">+</span> <span class="token-var">b</span>
 <span class="token-fn">print</span>(<span class="token-str">'Combined (+):'</span>, <span class="token-var">combined</span>)
 
-<span class="token-com"># In-place appending via += and append()</span>
-<span class="token-var">a</span> <span class="token-op">+=</span> [<span class="token-num">10</span>]
-<span class="token-var">a</span>.<span class="token-fn">append</span>(<span class="token-num">20</span>)
-<span class="token-fn">print</span>(<span class="token-str">'Grown list a:'</span>, <span class="token-var">a</span>)</div>
+<span class="token-com"># Mutable testing: in-place += maintains SAME memory id</span>
+<span class="token-var">my_list</span> <span class="token-op">=</span> []
+<span class="token-fn">print</span>(<span class="token-str">'id(my_list) before:'</span>, <span class="token-fn">id</span>(<span class="token-var">my_list</span>))
+<span class="token-kw">for</span> <span class="token-var">index</span> <span class="token-kw">in</span> <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">6</span>):
+    <span class="token-var">my_list</span> <span class="token-op">+=</span> [<span class="token-var">index</span>]
+
+<span class="token-fn">print</span>(<span class="token-str">'my_list:'</span>, <span class="token-var">my_list</span>)
+<span class="token-fn">print</span>(<span class="token-str">'id(my_list) after: '</span>, <span class="token-fn">id</span>(<span class="token-var">my_list</span>), <span class="token-str">'(unchanged!)'</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
               <div>Combined (+): [1, 2, 3, 4, 5]</div>
-              <div>Grown list a: [1, 2, 3, 10, 20]</div>
+              <div>id(my_list) before: 4497751680</div>
+              <div>my_list: [1, 2, 3, 4, 5]</div>
+              <div>id(my_list) after:  4497751680 (unchanged!)</div>
             </div>
           </div>
         </div>
@@ -584,27 +590,30 @@
           <div>
             <p class="lead">A <strong>tuple</strong> is an ordered, comma-separated sequence enclosed in parentheses <code class="inline-code">(...)</code>.</p>
             <ul class="bullet-list">
-              <li><strong>Immutable:</strong> Elements cannot be modified, replaced, or deleted after creation.</li>
-              <li>Appending to a tuple with <code class="inline-code">+=</code> creates a <em>new</em> tuple object entirely.</li>
-              <li><strong>Mixed containers:</strong> Tuples may contain mutable elements (such as lists).</li>
+              <li><strong>Immutable:</strong> Elements cannot be modified, replaced, or deleted in place after creation.</li>
+              <li><strong>Proof of Immutability with <code class="inline-code">id()</code>:</strong> Appending with <code class="inline-code">+=</code> allocates a <em>new</em> tuple object with a new memory address (<code class="inline-code">id</code> changes).</li>
+              <li><strong>Mixed containers:</strong> Tuples may contain mutable elements (such as lists: <code class="inline-code">t[2]</code>).</li>
               <li><strong>Chained Indexing:</strong> Use successive brackets <code class="inline-code">t[2][-1]</code> to reach inside nested elements.</li>
             </ul>
           </div>
           <div class="code-box">
-            <div class="code-box-header"><span>python — tuples_chained.py</span><span>Chained Indexing</span></div>
-            <div class="code-box-body"><span class="token-com"># Tuple containing string, integer, and a nested list</span>
+            <div class="code-box-header"><span>python — tuples_demo.py</span><span>id() Proof &amp; Nesting</span></div>
+            <div class="code-box-body"><span class="token-com"># Immutable testing: += forces NEW object allocation</span>
+<span class="token-var">my_tuple</span> <span class="token-op">=</span> (<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>)
+<span class="token-fn">print</span>(<span class="token-str">'id(my_tuple) before:'</span>, <span class="token-fn">id</span>(<span class="token-var">my_tuple</span>))
+<span class="token-var">my_tuple</span> <span class="token-op">+=</span> (<span class="token-num">4</span>, <span class="token-num">5</span>)
+<span class="token-fn">print</span>(<span class="token-str">'my_tuple:'</span>, <span class="token-var">my_tuple</span>)
+<span class="token-fn">print</span>(<span class="token-str">'id(my_tuple) after: '</span>, <span class="token-fn">id</span>(<span class="token-var">my_tuple</span>), <span class="token-str">'(new object!)'</span>)
+
+<span class="token-com"># Mixed containers and chained indexing</span>
 <span class="token-var">t</span> <span class="token-op">=</span> (<span class="token-str">'Jacek'</span>, <span class="token-num">42</span>, [<span class="token-num">1</span>, <span class="token-num">2</span>, <span class="token-num">3</span>, <span class="token-num">4</span>])
-
-<span class="token-fn">print</span>(<span class="token-str">'Full tuple:'</span>, <span class="token-var">t</span>)
-<span class="token-fn">print</span>(<span class="token-str">'Element [0]:'</span>, <span class="token-var">t</span>[<span class="token-num">0</span>])
 <span class="token-fn">print</span>(<span class="token-str">'Nested list [2]:'</span>, <span class="token-var">t</span>[<span class="token-num">2</span>])
-
-<span class="token-com"># Chained indexing to get the last element of the nested list:</span>
 <span class="token-fn">print</span>(<span class="token-str">'Chained t[2][-1]:'</span>, <span class="token-var">t</span>[<span class="token-num">2</span>][<span class="token-op">-</span><span class="token-num">1</span>])</div>
             <div class="output-box">
               <div class="out-label">Output</div>
-              <div>Full tuple: ('Jacek', 42, [1, 2, 3, 4])</div>
-              <div>Element [0]: Jacek</div>
+              <div>id(my_tuple) before: 4496630080</div>
+              <div>my_tuple: (1, 2, 3, 4, 5)</div>
+              <div>id(my_tuple) after:  4497384816 (new object!)</div>
               <div>Nested list [2]: [1, 2, 3, 4]</div>
               <div>Chained t[2][-1]: 4</div>
             </div>
@@ -833,28 +842,30 @@
           <div>
             <p class="lead">Python provides two distinct ways to sort sequences: the in-place method <code class="inline-code">sort()</code> and the built-in function <code class="inline-code">sorted()</code>.</p>
             <ul class="bullet-list">
-              <li><strong style="color: var(--accent-cyan);"><code class="inline-code">my_list.sort()</code>:</strong> Modifies the list <em>in place</em>. Returns <code class="inline-code">None</code>. Fast and memory efficient.</li>
-              <li><strong style="color: var(--accent-gold);"><code class="inline-code">sorted(my_list)</code>:</strong> Leaves original list untouched; returns a <em>new sorted list</em>.</li>
+              <li><strong style="color: var(--accent-cyan);"><code class="inline-code">my_list.sort()</code>:</strong> Modifies the list <em>in place</em>. Preserves the exact same object identity (<code class="inline-code">id</code> unchanged). Returns <code class="inline-code">None</code>.</li>
+              <li><strong style="color: var(--accent-gold);"><code class="inline-code">sorted(my_list)</code>:</strong> Leaves original list untouched; returns a <em>new sorted list</em> at a different memory address.</li>
               <li>Both accept <code class="inline-code">reverse=True</code> to sort in descending order.</li>
             </ul>
           </div>
           <div class="code-box">
             <div class="code-box-header"><span>python — sorting_demo.py</span><span>sort() vs sorted()</span></div>
-            <div class="code-box-body"><span class="token-var">raw</span> <span class="token-op">=</span> [<span class="token-num">64</span>, <span class="token-num">25</span>, <span class="token-num">12</span>, <span class="token-num">22</span>, <span class="token-num">11</span>]
+            <div class="code-box-body"><span class="token-var">raw</span> <span class="token-op">=</span> [<span class="token-num">45</span>, <span class="token-num">34</span>, <span class="token-num">12</span>, <span class="token-num">23</span>, <span class="token-num">56</span>]
 
-<span class="token-com"># Using sorted() creates a new list</span>
+<span class="token-com"># Using sorted() creates a brand new list</span>
 <span class="token-var">new_sorted</span> <span class="token-op">=</span> <span class="token-fn">sorted</span>(<span class="token-var">raw</span>)
-<span class="token-fn">print</span>(<span class="token-str">'sorted(raw):'</span>, <span class="token-var">new_sorted</span>)
-<span class="token-fn">print</span>(<span class="token-str">'raw is unchanged:'</span>, <span class="token-var">raw</span>)
+<span class="token-fn">print</span>(<span class="token-str">'sorted(raw):   '</span>, <span class="token-var">new_sorted</span>)
 
-<span class="token-com"># Using .sort(reverse=True) mutates in place</span>
-<span class="token-var">raw</span>.<span class="token-fn">sort</span>(<span class="token-var">reverse</span><span class="token-op">=</span><span class="token-kw">True</span>)
-<span class="token-fn">print</span>(<span class="token-str">'raw.sort(reverse=True):'</span>, <span class="token-var">raw</span>)</div>
+<span class="token-com"># .sort() modifies the SAME object in-place</span>
+<span class="token-fn">print</span>(<span class="token-str">'id(raw) before:'</span>, <span class="token-fn">id</span>(<span class="token-var">raw</span>))
+<span class="token-var">raw</span>.<span class="token-fn">sort</span>()
+<span class="token-fn">print</span>(<span class="token-str">'raw.sort():    '</span>, <span class="token-var">raw</span>)
+<span class="token-fn">print</span>(<span class="token-str">'id(raw) after: '</span>, <span class="token-fn">id</span>(<span class="token-var">raw</span>), <span class="token-str">'(same object!)'</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
-              <div>sorted(raw): [11, 12, 25, 22, 64]</div>
-              <div>raw is unchanged: [64, 25, 12, 22, 11]</div>
-              <div>raw.sort(reverse=True): [64, 25, 22, 12, 11]</div>
+              <div>sorted(raw):    [12, 23, 34, 45, 56]</div>
+              <div>id(raw) before: 4497558016</div>
+              <div>raw.sort():     [12, 23, 34, 45, 56]</div>
+              <div>id(raw) after:  4497558016 (same object!)</div>
             </div>
           </div>
         </div>
@@ -884,15 +895,16 @@
 <span class="token-com"># Search for 1 starting at index 2</span>
 <span class="token-fn">print</span>(<span class="token-str">'fib.index(1, 2):'</span>, <span class="token-var">fib</span>.<span class="token-fn">index</span>(<span class="token-num">1</span>, <span class="token-num">2</span>))
 
-<span class="token-com"># Safe membership check using in</span>
-<span class="token-fn">print</span>(<span class="token-str">'Is 5 in fib?'</span>, <span class="token-num">5</span> <span class="token-kw">in</span> <span class="token-var">fib</span>)
-<span class="token-fn">print</span>(<span class="token-str">'Is 6 in fib?'</span>, <span class="token-num">6</span> <span class="token-kw">in</span> <span class="token-var">fib</span>)</div>
+<span class="token-com"># Safe membership check using in operator</span>
+<span class="token-var">is_5_in_fib</span> <span class="token-op">=</span> (<span class="token-num">5</span> <span class="token-kw">in</span> <span class="token-var">fib</span>)
+<span class="token-fn">print</span>(<span class="token-str">'is_5_in_fib:'</span>, <span class="token-var">is_5_in_fib</span>)
+<span class="token-fn">print</span>(<span class="token-str">'is_6_in_fib:'</span>, <span class="token-num">6</span> <span class="token-kw">in</span> <span class="token-var">fib</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
               <div>fib.index(1): 1</div>
               <div>fib.index(1, 2): 2</div>
-              <div>Is 5 in fib? True</div>
-              <div>Is 6 in fib? False</div>
+              <div>is_5_in_fib: True</div>
+              <div>is_6_in_fib: False</div>
             </div>
           </div>
         </div>
@@ -944,10 +956,11 @@
           <div>
             <p class="lead">Python supports functional programming idioms with built-in higher-order functions like <code class="inline-code">filter()</code> and anonymous <code class="inline-code">lambda</code> expressions.</p>
             <ul class="bullet-list">
-              <li><code class="inline-code">filter(function, iterable)</code>: Filters elements for which <code class="inline-code">function(item)</code> evaluates to <code class="inline-code">True</code>.</li>
+              <li><code class="inline-code">filter(function, iterable)</code>: Evaluates each element; retains only items where <code class="inline-code">function(item)</code> is <code class="inline-code">True</code>.</li>
               <li>Returns an iterator; wrap in <code class="inline-code">list(...)</code> to evaluate.</li>
-              <li><strong>Lambda expression:</strong> An inline anonymous function created on the fly:
-                <br><code class="inline-code">lambda x: (x % 2) == 0</code></li>
+              <li><strong>Lambda Syntax Pattern:</strong>
+                <br><code class="inline-code">lambda arg: return_expression</code>
+                <br>e.g., <code class="inline-code">lambda x: x % 2 == 0</code> allows inline functions without writing separate <code class="inline-code">def</code> blocks.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -956,16 +969,16 @@
 <span class="token-kw">def</span> <span class="token-fn">is_even</span>(<span class="token-var">x</span>):
     <span class="token-kw">return</span> <span class="token-var">x</span> <span class="token-op">%</span> <span class="token-num">2</span> <span class="token-op">==</span> <span class="token-num">0</span>
 
-<span class="token-var">evens1</span> <span class="token-op">=</span> <span class="token-fn">list</span>(<span class="token-fn">filter</span>(<span class="token-var">is_even</span>, <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">11</span>)))
-<span class="token-fn">print</span>(<span class="token-str">'Filter with def:   '</span>, <span class="token-var">evens1</span>)
+<span class="token-com"># Filter explicit list [41, 42, 43, 44]</span>
+<span class="token-fn">print</span>(<span class="token-str">'filter([41..44]):'</span>, <span class="token-fn">list</span>(<span class="token-fn">filter</span>(<span class="token-var">is_even</span>, [<span class="token-num">41</span>, <span class="token-num">42</span>, <span class="token-num">43</span>, <span class="token-num">44</span>])))
 
-<span class="token-com"># Method 2: Anonymous lambda expression</span>
-<span class="token-var">evens2</span> <span class="token-op">=</span> <span class="token-fn">list</span>(<span class="token-fn">filter</span>(<span class="token-kw">lambda</span> <span class="token-var">x</span>: <span class="token-var">x</span> <span class="token-op">%</span> <span class="token-num">2</span> <span class="token-op">==</span> <span class="token-num">0</span>, <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">11</span>)))
-<span class="token-fn">print</span>(<span class="token-str">'Filter with lambda:'</span>, <span class="token-var">evens2</span>)</div>
+<span class="token-com"># Method 2: Inline lambda expression on range(1, 11)</span>
+<span class="token-var">evens</span> <span class="token-op">=</span> <span class="token-fn">list</span>(<span class="token-fn">filter</span>(<span class="token-kw">lambda</span> <span class="token-var">x</span>: <span class="token-var">x</span> <span class="token-op">%</span> <span class="token-num">2</span> <span class="token-op">==</span> <span class="token-num">0</span>, <span class="token-fn">range</span>(<span class="token-num">1</span>, <span class="token-num">11</span>)))
+<span class="token-fn">print</span>(<span class="token-str">'filter with lambda:'</span>, <span class="token-var">evens</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
-              <div>Filter with def:    [2, 4, 6, 8, 10]</div>
-              <div>Filter with lambda: [2, 4, 6, 8, 10]</div>
+              <div>filter([41..44]):   [42, 44]</div>
+              <div>filter with lambda: [2, 4, 6, 8, 10]</div>
             </div>
           </div>
         </div>
