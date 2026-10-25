@@ -907,29 +907,33 @@
         <h1 class="slide-title">Complete Error Flow: <code class="inline-code">try</code>, <code class="inline-code">except</code>, <code class="inline-code">else</code>, <code class="inline-code">finally</code></h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Python's complete exception anatomy separates normal execution, error recovery, and cleanup.</p>
+            <p class="lead">Python's complete exception anatomy separates normal execution, error recovery, and cleanup into a clear sequential flow.</p>
             <ul class="bullet-list">
-              <li><strong><code class="inline-code">try</code>:</strong> Guarded operational block.</li>
-              <li><strong><code class="inline-code">except</code>:</strong> Runs <em>only if</em> an exception was raised.</li>
-              <li><strong><code class="inline-code">else</code>:</strong> Runs <em>only if NO exception occurred</em> (success path).</li>
-              <li><strong><code class="inline-code">finally</code>:</strong> <em>Always</em> runs regardless of success or failure (ideal for socket / hardware teardown).</li>
+              <li><strong>1. <code class="inline-code">try</code>:</strong> Run this code first (the guarded or risky operation).</li>
+              <li><strong>2a. <code class="inline-code">except SpecificError</code>:</strong> Run this <em>ONLY if</em> the risky operation failed.</li>
+              <li><strong>2b. <code class="inline-code">else</code>:</strong> Run this <em>ONLY if</em> the risky operation succeeded perfectly with zero errors.</li>
+              <li><strong>3. <code class="inline-code">finally</code>:</strong> Runs <em>ALWAYS</em>, regardless of whether an exception occurred or not (cleanup).</li>
             </ul>
           </div>
           <div class="code-box">
-            <div class="code-box-header"><span>python — full_exception.py</span><span>4-Clause Exception Suite</span></div>
+            <div class="code-box-header"><span>python — full_exception.py</span><span>Sequential Flow Control</span></div>
             <div class="code-box-body"><span class="token-kw">try</span>:
+    <span class="token-com"># 1. Run this code first</span>
     <span class="token-kw">with</span> <span class="token-fn">open</span>(<span class="token-str">'twitter_top5.json'</span>, <span class="token-str">'r'</span>) <span class="token-kw">as</span> <span class="token-var">f</span>:
         <span class="token-var">data</span> <span class="token-op">=</span> <span class="token-var">json</span>.<span class="token-fn">load</span>(<span class="token-var">f</span>)
 <span class="token-kw">except</span> <span class="token-token-type">FileNotFoundError</span>:
-    <span class="token-fn">print</span>(<span class="token-str">'Error: File not found!'</span>)
+    <span class="token-com"># 2a. Run this ONLY if risky operation failed</span>
+    <span class="token-fn">print</span>(<span class="token-str">'Error: Target file does not exist!'</span>)
 <span class="token-kw">else</span>:
-    <span class="token-fn">print</span>(<span class="token-str">'Success: JSON parsed clean!'</span>)
+    <span class="token-com"># 2b. Run this ONLY if risky operation succeeded perfectly</span>
+    <span class="token-fn">print</span>(<span class="token-str">'Success: JSON parsed clean, continue processing!'</span>)
 <span class="token-kw">finally</span>:
-    <span class="token-fn">print</span>(<span class="token-str">'Thank you for using our app!'</span>)</div>
+    <span class="token-com"># 3. Runs ALWAYS regardless of success or failure</span>
+    <span class="token-fn">print</span>(<span class="token-str">'Session complete. Thank you for using our app!'</span>)</div>
             <div class="output-box">
               <div class="out-label">Output (When File Exists)</div>
-              <div>Success: JSON parsed clean!</div>
-              <div>Thank you for using our app!</div>
+              <div>Success: JSON parsed clean, continue processing!</div>
+              <div>Session complete. Thank you for using our app!</div>
             </div>
           </div>
         </div>
@@ -997,7 +1001,7 @@
             <p class="lead">Python is built entirely on the object model—from numeric literals and functions to custom classes.</p>
             <ul class="bullet-list">
               <li><strong>Unified Type Hierarchy:</strong> Unlike languages with raw unboxed primitives, all values in Python are instances of a class.</li>
-              <li><strong>Data Types are Classes:</strong> An integer is an instance of <code class="inline-code">int</code>; a float is an instance of <code class="inline-code">float</code>.</li>
+              <li><strong>Class &amp; Type Unification:</strong> In Python 3, <em>"class"</em> and <em>"type"</em> are completely unified and mean the exact same thing (<code class="inline-code">type(x)</code> returns <code class="inline-code">&lt;class 'float'&gt;</code>).</li>
               <li><strong>Intrinsic Properties:</strong> Every object possesses an identity (memory address), a type, and internal state/methods.</li>
             </ul>
           </div>
@@ -1077,24 +1081,30 @@
         <h1 class="slide-title">Defining a Class in Python</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Classes are defined using the <code class="inline-code">class</code> keyword followed by the PascalCase class name.</p>
+            <p class="lead">Classes are defined using the <code class="inline-code">class</code> keyword followed by the class name and an initializer.</p>
             <ul class="bullet-list">
-              <li><strong>Naming Convention:</strong> PEP-8 style recommends PascalCase (e.g. <code class="inline-code">TwitterAccount</code>, <code class="inline-code">FlightRadar</code>).</li>
-              <li><strong>Parentheses:</strong> Optional in Python 3; <code class="inline-code">class TwitterAccount:</code> and <code class="inline-code">class TwitterAccount():</code> are identical.</li>
-              <li><strong>Class Scope:</strong> Statements inside the class body define initial methods and class attributes.</li>
+              <li><strong>Starter Example:</strong> <code class="inline-code">class cat():</code> defines a simple blueprint taking attributes like <code class="inline-code">name</code> and <code class="inline-code">color</code>.</li>
+              <li><strong>Domain Blueprint:</strong> <code class="inline-code">class TwitterAccount():</code> defines account properties (<code class="inline-code">name</code> and <code class="inline-code">handle</code>).</li>
+              <li><strong>The Initializer:</strong> The <code class="inline-code">def __init__(self, ...):</code> method sets up the initial variables for every new instance.</li>
             </ul>
           </div>
           <div class="code-box">
-            <div class="code-box-header"><span>python — twitter_class.py</span><span>Class Definition</span></div>
-            <div class="code-box-body"><span class="token-kw">class</span> <span class="token-type">TwitterAccount</span>():
-    <span class="token-str">"""A class modeling a social media account."""</span>
+            <div class="code-box-header"><span>python — class_defs.py</span><span>Defining Custom Classes</span></div>
+            <div class="code-box-body"><span class="token-com"># 1. Simple starter class</span>
+<span class="token-kw">class</span> <span class="token-type">cat</span>():
+    <span class="token-kw">def</span> <span class="token-fn">__init__</span>(<span class="token-var">self</span>, <span class="token-var">arg1</span>, <span class="token-var">arg2</span>):
+        <span class="token-var">self</span>.<span class="token-var">name</span> <span class="token-op">=</span> <span class="token-var">arg1</span>
+        <span class="token-var">self</span>.<span class="token-var">color</span> <span class="token-op">=</span> <span class="token-var">arg2</span>
+
+<span class="token-com"># 2. Twitter account blueprint</span>
+<span class="token-kw">class</span> <span class="token-type">TwitterAccount</span>():
     <span class="token-kw">def</span> <span class="token-fn">__init__</span>(<span class="token-var">self</span>, <span class="token-var">name</span>, <span class="token-var">handle</span>):
         <span class="token-var">self</span>.<span class="token-var">name</span> <span class="token-op">=</span> <span class="token-var">name</span>
         <span class="token-var">self</span>.<span class="token-var">handle</span> <span class="token-op">=</span> <span class="token-var">handle</span></div>
             <div class="output-box">
               <div class="out-label">Status</div>
-              <div>Class TwitterAccount defined in __main__ namespace</div>
-              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Ready to spawn instances using constructor syntax</div>
+              <div>Classes <code class="inline-code">cat</code> and <code class="inline-code">TwitterAccount</code> defined in __main__ namespace</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Ready to instantiate custom objects</div>
             </div>
           </div>
         </div>
@@ -1106,25 +1116,26 @@
         <h1 class="slide-title">Object Instantiation &amp; The Constructor</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Calling a class as a function invokes its constructor to allocate a new instance on the heap.</p>
+            <p class="lead">Calling a class as a function creates and initializes a new object instance on the heap.</p>
             <ul class="bullet-list">
-              <li><strong>Calling the Class:</strong> <code class="inline-code">TwitterAccount(name='Elon Musk', handle='elonmusk')</code> constructs an instance.</li>
-              <li><strong>Automatic Invocation:</strong> Python allocates memory and immediately delegates initialization to <code class="inline-code">__init__()</code>.</li>
-              <li><strong>Introspection:</strong> <code class="inline-code">type(elon)</code> reveals <code class="inline-code">&lt;class '__main__.TwitterAccount'&gt;</code>.</li>
+              <li><strong>Spawning Instances:</strong> <code class="inline-code">Kitty = cat("Hello Kitty", "Pink")</code> and <code class="inline-code">elon = TwitterAccount("Elon Musk", "elonmusk")</code>.</li>
+              <li><strong>Constructor Execution:</strong> Python allocates memory and calls <code class="inline-code">__init__()</code> with the provided arguments.</li>
+              <li><strong>Type Verification:</strong> In Python 3, class and type are unified. <code class="inline-code">print(type(Kitty))</code> and <code class="inline-code">print(type(elon))</code> confirm each object's class.</li>
             </ul>
           </div>
           <div class="code-box">
             <div class="code-box-header"><span>python — instantiate.py</span><span>Spawning Objects</span></div>
-            <div class="code-box-body"><span class="token-com"># Spawning new TwitterAccount object</span>
-<span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-var">name</span><span class="token-op">=</span><span class="token-str">'Elon Musk'</span>, <span class="token-var">handle</span><span class="token-op">=</span><span class="token-str">'elonmusk'</span>)
+            <div class="code-box-body"><span class="token-com"># Instantiating objects from our classes</span>
+<span class="token-var">Kitty</span> <span class="token-op">=</span> <span class="token-type">cat</span>(<span class="token-str">"Hello Kitty"</span>, <span class="token-str">"Pink"</span>)
+<span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-str">"Elon Musk"</span>, <span class="token-str">"elonmusk"</span>)
 
-<span class="token-fn">print</span>(<span class="token-str">'Object type:'</span>, <span class="token-fn">type</span>(<span class="token-var">elon</span>))
-<span class="token-fn">print</span>(<span class="token-str">'Direct reference:'</span>, <span class="token-var">elon</span>)</div>
+<span class="token-fn">print</span>(<span class="token-fn">type</span>(<span class="token-var">Kitty</span>))
+<span class="token-fn">print</span>(<span class="token-fn">type</span>(<span class="token-var">elon</span>))</div>
             <div class="output-box">
               <div class="out-label">Output</div>
-              <div>Object type: &lt;class '__main__.TwitterAccount'&gt;</div>
-              <div>Direct reference: &lt;__main__.TwitterAccount object at 0x7fa9241b&gt;</div>
-              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Address 0x7fa9241b is the unique heap pointer</div>
+              <div>&lt;class '__main__.cat'&gt;</div>
+              <div>&lt;class '__main__.TwitterAccount'&gt;</div>
+              <div style="color: var(--text-muted); font-size: 0.78rem; margin-top: 0.3rem;">Both objects are distinct instances of their respective user-defined classes</div>
             </div>
           </div>
         </div>
@@ -1136,11 +1147,11 @@
         <h1 class="slide-title">The <code class="inline-code">self</code> Parameter Demystified</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead"><code class="inline-code">self</code> is Python's explicit reference to the specific instance currently executing the method.</p>
+            <p class="lead"><code class="inline-code">self</code> is Python's explicit reference to the specific instance currently being spawned or executing a method.</p>
             <ul class="bullet-list">
-              <li><strong>First Parameter Invariant:</strong> Every instance method must receive <code class="inline-code">self</code> as its very first argument.</li>
-              <li><strong>Automatic Passing:</strong> When you invoke <code class="inline-code">elon.some_method()</code>, Python rewrites it behind the scenes as <code class="inline-code">TwitterAccount.some_method(elon)</code>.</li>
-              <li><strong>Attaching State:</strong> Statements like <code class="inline-code">self.name = name</code> attach attributes directly to the calling instance's dictionary (<code class="inline-code">__dict__</code>).</li>
+              <li><strong>Spawned Object Reference:</strong> The first argument <code class="inline-code">self</code> refers directly to the object being spawned (such as <code class="inline-code">elon</code> or <code class="inline-code">Kitty</code>).</li>
+              <li><strong>Property Assignment:</strong> <code class="inline-code">self.name = name</code> and <code class="inline-code">self.handle = handle</code> assign initial values directly to the spawned object's properties.</li>
+              <li><strong>Automatic Passing:</strong> When writing <code class="inline-code">elon = TwitterAccount(...)</code>, Python allocates heap memory and passes the new instance as <code class="inline-code">self</code>.</li>
             </ul>
           </div>
           <div class="card" style="justify-content: center;">
@@ -1163,24 +1174,27 @@
         <h1 class="slide-title">Accessing &amp; Modifying Object Properties</h1>
         <div class="grid-2col">
           <div>
-            <p class="lead">Instance attributes are accessed and updated dynamically using standard dot notation.</p>
+            <p class="lead">For the object named <code class="inline-code">elon</code>, we can access its 2 variables (<code class="inline-code">name</code> and <code class="inline-code">handle</code>) using standard dot notation.</p>
             <ul class="bullet-list">
-              <li><strong>Reading State:</strong> Access member attributes directly via <code class="inline-code">object.attribute_name</code>.</li>
-              <li><strong>Dynamic Mutation:</strong> Python object attributes are mutable by default; reassignment updates the instance in memory.</li>
-              <li><strong>Instance Isolation:</strong> Modifying <code class="inline-code">elon.handle</code> alters only Elon's instance—other accounts remain unaffected.</li>
+              <li><strong>Accessing 2 Variables:</strong> Read member attributes directly via <code class="inline-code">elon.name</code> and <code class="inline-code">elon.handle</code>.</li>
+              <li><strong>Dynamic Mutation:</strong> Python attributes are mutable; reassigning updates the instance property directly in memory.</li>
+              <li><strong>Instance Isolation:</strong> Modifying <code class="inline-code">elon.handle</code> alters only Elon's instance—other accounts remain completely unaffected.</li>
             </ul>
           </div>
           <div class="code-box">
-            <div class="code-box-header"><span>python — mutate_attributes.py</span><span>Updating Member Variables</span></div>
-            <div class="code-box-body"><span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-var">name</span><span class="token-op">=</span><span class="token-str">'Elon Musk'</span>, <span class="token-var">handle</span><span class="token-op">=</span><span class="token-str">'elonmusk'</span>)
+            <div class="code-box-header"><span>python — mutate_attributes.py</span><span>Accessing &amp; Updating 2 Variables</span></div>
+            <div class="code-box-body"><span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-str">'Elon Musk'</span>, <span class="token-str">'elonmusk'</span>)
 
+<span class="token-com"># Access the 2 member variables of elon</span>
+<span class="token-fn">print</span>(<span class="token-str">'Name:'</span>, <span class="token-var">elon</span>.<span class="token-var">name</span>)
 <span class="token-fn">print</span>(<span class="token-str">'Original handle:'</span>, <span class="token-var">elon</span>.<span class="token-var">handle</span>)
 
-<span class="token-com"># Modifying object property dynamically</span>
+<span class="token-com"># Modifying elon's handle dynamically</span>
 <span class="token-var">elon</span>.<span class="token-var">handle</span> <span class="token-op">=</span> <span class="token-str">'boo_mastodon'</span>
 <span class="token-fn">print</span>(<span class="token-str">'Updated handle:'</span>, <span class="token-var">elon</span>.<span class="token-var">handle</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
+              <div>Name: Elon Musk</div>
               <div>Original handle: elonmusk</div>
               <div>Updated handle: boo_mastodon</div>
             </div>
@@ -1253,9 +1267,9 @@
           <div>
             <p class="lead">Methods encapsulate operational algorithms that inspect and mutate the calling object's state.</p>
             <ul class="bullet-list">
-              <li><strong>Initializing Collections:</strong> In <code class="inline-code">__init__</code>, instantiate <code class="inline-code">self.followers = []</code> as an empty list.</li>
+              <li><strong>Initializing to Empty List:</strong> In <code class="inline-code">__init__</code>, <code class="inline-code">self.followers = []</code> is initialized to an <strong>empty list</strong>—modeling a newly created account with 0 followers.</li>
               <li><strong>Method Signature:</strong> <code class="inline-code">def add_follower(self, follower):</code> accepts the target account instance.</li>
-              <li><strong>Encapsulated Mutation:</strong> Appends the new user object directly onto <code class="inline-code">self.followers</code>.</li>
+              <li><strong>Encapsulated Mutation:</strong> <code class="inline-code">self.followers.append(follower)</code> appends the new follower object directly into the collection.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -1264,7 +1278,7 @@
     <span class="token-kw">def</span> <span class="token-fn">__init__</span>(<span class="token-var">self</span>, <span class="token-var">name</span>, <span class="token-var">handle</span>):
         <span class="token-var">self</span>.<span class="token-var">name</span> <span class="token-op">=</span> <span class="token-var">name</span>
         <span class="token-var">self</span>.<span class="token-var">handle</span> <span class="token-op">=</span> <span class="token-var">handle</span>
-        <span class="token-var">self</span>.<span class="token-var">followers</span> <span class="token-op">=</span> []
+        <span class="token-var">self</span>.<span class="token-var">followers</span> <span class="token-op">=</span> []  <span class="token-com"># Starts as an empty list</span>
         
     <span class="token-kw">def</span> <span class="token-fn">add_follower</span>(<span class="token-var">self</span>, <span class="token-var">follower</span>):
         <span class="token-var">self</span>.<span class="token-var">followers</span>.<span class="token-fn">append</span>(<span class="token-var">follower</span>)</div>
@@ -1284,9 +1298,9 @@
           <div>
             <p class="lead">Instances can store references to other instances inside their attributes, forming rich relational networks.</p>
             <ul class="bullet-list">
-              <li><strong>Relational References:</strong> <code class="inline-code">elon.followers</code> stores actual <code class="inline-code">TwitterAccount</code> objects—not merely raw strings.</li>
-              <li><strong>Chained Attribute Traversal:</strong> Access member fields across objects: <code class="inline-code">elon.followers[0].name</code> &rarr; <code class="inline-code">'Justin Bieber'</code>.</li>
-              <li><strong>Modeling Reality:</strong> Cleanly mirrors real-world graphs (e.g. Aircraft holding Passengers, Radar holding Flights).</li>
+              <li><strong>Not a String:</strong> The object <code class="inline-code">biebs</code> added to Elon's followers is <strong>not a string (<code class="inline-code">str</code>)</strong>, but a full instance of <code class="inline-code">&lt;class 'TwitterAccount'&gt;</code>.</li>
+              <li><strong>3 Member Variables:</strong> The contained <code class="inline-code">biebs</code> object carries its own 3 variables: <code class="inline-code">name</code>, <code class="inline-code">handle</code>, and <code class="inline-code">followers</code>.</li>
+              <li><strong>Chained Attribute Traversal:</strong> Traverse nested objects directly: <code class="inline-code">elon.followers[0].name</code> &rarr; <code class="inline-code">'Justin Bieber'</code>.</li>
             </ul>
           </div>
           <div class="code-box">
@@ -1294,17 +1308,21 @@
             <div class="code-box-body"><span class="token-var">elon</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-str">'Elon Musk'</span>, <span class="token-str">'elonmusk'</span>)
 <span class="token-var">biebs</span> <span class="token-op">=</span> <span class="token-type">TwitterAccount</span>(<span class="token-str">'Justin Bieber'</span>, <span class="token-str">'justinbieber'</span>)
 
-<span class="token-com"># Add biebs object into elon's followers list</span>
+<span class="token-com"># Add "biebs" (TwitterAccount object, NOT str) to Elon's followers</span>
 <span class="token-var">elon</span>.<span class="token-fn">add_follower</span>(<span class="token-var">biebs</span>)
 
-<span class="token-fn">print</span>(<span class="token-str">'Follower count:'</span>, <span class="token-fn">len</span>(<span class="token-var">elon</span>.<span class="token-var">followers</span>))
-<span class="token-fn">print</span>(<span class="token-str">'First follower name:'</span>, <span class="token-var">elon</span>.<span class="token-var">followers</span>[<span class="token-num">0</span>].<span class="token-var">name</span>)
-<span class="token-fn">print</span>(<span class="token-str">'First follower handle:'</span>, <span class="token-var">elon</span>.<span class="token-var">followers</span>[<span class="token-num">0</span>].<span class="token-var">handle</span>)</div>
+<span class="token-com"># biebs in followers has 3 variables: name, handle, followers</span>
+<span class="token-fn">print</span>(<span class="token-str">'Type:'</span>, <span class="token-fn">type</span>(<span class="token-var">elon</span>.<span class="token-var">followers</span>[<span class="token-num">0</span>]))
+<span class="token-fn">print</span>(<span class="token-str">'Name:'</span>, <span class="token-var">elon</span>.<span class="token-var">followers</span>[<span class="token-num">0</span>].<span class="token-var">name</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Handle:'</span>, <span class="token-var">elon</span>.<span class="token-var">followers</span>[<span class="token-num">0</span>].<span class="token-var">handle</span>)
+<span class="token-fn">print</span>(<span class="token-str">'Followers:'</span>, <span class="token-var">elon</span>.<span class="token-var">followers</span>[<span class="token-num">0</span>].<span class="token-var">followers</span>)</div>
             <div class="output-box">
               <div class="out-label">Output</div>
-              <div>Follower count: 1</div>
-              <div>First follower name: Justin Bieber</div>
-              <div>First follower handle: justinbieber</div>
+              <div>Type: &lt;class '__main__.TwitterAccount'&gt;</div>
+              <div>Name: Justin Bieber</div>
+              <div>Handle: justinbieber</div>
+              <div>Followers: []</div>
+              <div style="color: var(--accent-gold); font-size: 0.78rem; margin-top: 0.3rem;">biebs is a TwitterAccount object with 3 variables, NOT class str!</div>
             </div>
           </div>
         </div>
