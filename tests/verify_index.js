@@ -42,13 +42,14 @@ for (let i = 1; i <= 5; i++) {
   assert(html.includes(`href="${deckFile}"`), `Contains link to deck ${deckFile}`);
 }
 
-// 5. Verify all 5 interactive HTML lab sheets
+// 5. Verify all 5 interactive HTML lab sheets & ensure .md download button is removed
 for (let i = 1; i <= 5; i++) {
   const labRegex = new RegExp(`Lab_0${i}_Exercise_[^"']+\\.html`);
   assert(labRegex.test(html), `Contains link to HTML lab sheet 0${i}`);
-  const mdRegex = new RegExp(`Lab_0${i}_Exercise_[^"']+\\.md`);
-  assert(mdRegex.test(html), `Contains link to raw Markdown source 0${i}`);
+  const mdRegex = new RegExp(`href="[^"]*Lab_0${i}_Exercise_[^"']+\\.md"`);
+  assert(!mdRegex.test(html), `Does NOT contain download button for .md file 0${i}`);
 }
+assert(!html.includes('class="md-chip"'), 'Does not contain .md-chip download buttons');
 
 // 6. Verify shortcut key 'J' handler
 assert(html.includes("e.key === 'j'") || html.includes("e.key === 'J'"), "Keyboard shortcut handler supports key 'j'");

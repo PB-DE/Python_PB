@@ -89,11 +89,10 @@ for deck in decks:
           <div class="node-action">
             <span class="slide-count-badge">{total_slides} Slides</span>
             <div class="action-buttons">
-              <a href="{lab_html_file}" class="lab-btn" target="_blank" rel="noopener" title="Open {lab_title} (HTML style • Source: Markdown)" aria-label="Open Lab Sheet {deck_no} (HTML)">
+              <a href="{lab_html_file}" class="lab-btn" target="_blank" rel="noopener" title="Open {lab_title} (HTML style)" aria-label="Open Lab Sheet {deck_no} (HTML)">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 <span>Lab Sheet</span>
               </a>
-              <a href="{lab_md_file}" class="md-chip" download title="Download raw Markdown (.md) source" aria-label="Download raw Markdown source for Lab {deck_no}">.md</a>
               <a href="{file_name}" class="launch-btn" aria-label="Launch Deck {deck_no} presentation">
                 <span>Launch</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -736,73 +735,13 @@ html_content = f'''<!DOCTYPE html>
     .deck-node.deck-5 .lab-btn:hover {{ border-color: rgba(var(--coral-rgb), 0.5); color: var(--coral); background: rgba(var(--coral-rgb), 0.1); }}
     .deck-node.deck-5 .lab-btn:hover svg {{ color: var(--coral); }}
 
-    /* Small .md chip for direct markdown source download */
-    .md-chip {{
-      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
-      font-size: 0.72rem;
-      font-weight: 700;
-      padding: 0.38rem 0.45rem;
-      border-radius: var(--radius-sm);
-      background: rgba(255, 255, 255, 0.04);
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      text-decoration: none;
-      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      line-height: 1;
-    }}
-
-    .md-chip:hover {{
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.3);
-      color: var(--text-bright);
-      transform: translateY(-1px);
-    }}
-
-    .launch-btn {{
-      font-size: 0.82rem;
-      font-weight: 600;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.42rem 0.8rem;
-      border-radius: var(--radius-sm);
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      color: var(--text-bright);
-      white-space: nowrap;
-      text-decoration: none;
-      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-      cursor: pointer;
-    }}
-
-    .launch-btn svg {{
-      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }}
-
-    .deck-node:hover .launch-btn svg,
-    .deck-node.active-launch .launch-btn svg {{
-      transform: translateX(3px);
-    }}
-
-    .deck-node.deck-1:hover .launch-btn {{ background: var(--cyan); color: #0b0d13; border-color: var(--cyan); }}
-    .deck-node.deck-2:hover .launch-btn {{ background: var(--gold); color: #0b0d13; border-color: var(--gold); }}
-    .deck-node.deck-3:hover .launch-btn {{ background: var(--mint); color: #0b0d13; border-color: var(--mint); }}
-    .deck-node.deck-4:hover .launch-btn {{ background: var(--purple); color: #0b0d13; border-color: var(--purple); }}
-    .deck-node.deck-5:hover .launch-btn {{ background: var(--coral); color: #0b0d13; border-color: var(--coral); }}
-
-    /* Keep launch button clean when hovering on lab button or md chip */
-    .deck-node:has(.lab-btn:hover) .launch-btn,
-    .deck-node:has(.md-chip:hover) .launch-btn {{
+    /* Keep launch button clean when hovering on lab button */
+    .deck-node:has(.lab-btn:hover) .launch-btn {{
       background: rgba(255, 255, 255, 0.05);
       color: var(--text-bright);
       border-color: var(--border);
     }}
-    .deck-node:has(.lab-btn:hover) .launch-btn svg,
-    .deck-node:has(.md-chip:hover) .launch-btn svg {{
+    .deck-node:has(.lab-btn:hover) .launch-btn svg {{
       transform: none;
     }}
 
@@ -1125,7 +1064,7 @@ html_content = f'''<!DOCTYPE html>
         </a>
         <span>&bull; Click</span>
         <span class="hint-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Lab Sheet</span>
-        <span>to view interactive HTML exercises (source: .md)</span>
+        <span>to view interactive HTML exercises</span>
       </div>
     </div>
   </main>
@@ -1229,9 +1168,9 @@ html_content = f'''<!DOCTYPE html>
           }}
         }});
 
-        // Click card background to launch deck (unless clicking lab link or md download link)
+        // Click card background to launch deck (unless clicking lab sheet link)
         node.addEventListener('click', (e) => {{
-          if (e.target.closest('.lab-btn') || e.target.closest('.md-chip')) {{
+          if (e.target.closest('.lab-btn')) {{
             return;
           }}
           if (e.target.closest('a')) {{
