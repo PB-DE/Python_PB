@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Programming — CATC Course Portal</title>
-  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation curriculum mind map launcher. 5 widescreen decks, 10 lectures, 179 interactive slides.">
+  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation curriculum mind map launcher. 5 widescreen decks, 10 lectures, 179 interactive slides, and 5 laboratory exercise sheets.">
 
   <style>
     :root {
@@ -167,6 +167,7 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }
 
     .nav-badge {
@@ -211,7 +212,7 @@
     .hero-desc {
       font-size: 1.02rem;
       color: var(--text-dim);
-      max-width: 600px;
+      max-width: 620px;
       margin: 0 auto 3.25rem;
       line-height: 1.6;
       text-align: center;
@@ -331,7 +332,6 @@
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       padding: 1.05rem 1.35rem;
-      text-decoration: none;
       color: var(--text);
       display: flex;
       align-items: center;
@@ -340,6 +340,7 @@
       transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
       position: relative;
       box-shadow: var(--shadow-card);
+      cursor: pointer;
     }
 
     /* Connection Socket on Left of each card */
@@ -380,6 +381,21 @@
     .deck-node.deck-4:hover, .deck-node.deck-4.active-launch { border-color: var(--purple); }
     .deck-node.deck-5:hover, .deck-node.deck-5.active-launch { border-color: var(--coral); }
 
+    .node-main-link {
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+      border-radius: var(--radius-sm);
+    }
+
+    .node-main-link:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
     .node-info {
       display: flex;
       flex-direction: column;
@@ -412,6 +428,11 @@
       font-weight: 700;
       color: var(--text-bright);
       letter-spacing: -0.01em;
+      transition: color 0.15s ease;
+    }
+
+    .deck-node:hover .node-title {
+      color: #ffffff;
     }
 
     .node-meta {
@@ -423,6 +444,13 @@
       display: flex;
       align-items: center;
       gap: 0.85rem;
+      flex-shrink: 0;
+    }
+
+    .action-buttons {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
 
     .slide-count-badge {
@@ -432,6 +460,61 @@
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }
+
+    .lab-btn {
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text);
+      white-space: nowrap;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }
+
+    .lab-btn svg {
+      color: var(--text-dim);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .lab-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text-bright);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }
+
+    .lab-btn:hover svg {
+      color: var(--text-bright);
+      transform: translateY(1.5px);
+    }
+
+    .lab-btn:active {
+      transform: translateY(0);
+    }
+
+    .deck-node.deck-1 .lab-btn:hover { border-color: rgba(var(--cyan-rgb), 0.5); color: var(--cyan); background: rgba(var(--cyan-rgb), 0.1); }
+    .deck-node.deck-1 .lab-btn:hover svg { color: var(--cyan); }
+
+    .deck-node.deck-2 .lab-btn:hover { border-color: rgba(var(--gold-rgb), 0.5); color: var(--gold); background: rgba(var(--gold-rgb), 0.1); }
+    .deck-node.deck-2 .lab-btn:hover svg { color: var(--gold); }
+
+    .deck-node.deck-3 .lab-btn:hover { border-color: rgba(var(--mint-rgb), 0.5); color: var(--mint); background: rgba(var(--mint-rgb), 0.1); }
+    .deck-node.deck-3 .lab-btn:hover svg { color: var(--mint); }
+
+    .deck-node.deck-4 .lab-btn:hover { border-color: rgba(var(--purple-rgb), 0.5); color: var(--purple); background: rgba(var(--purple-rgb), 0.1); }
+    .deck-node.deck-4 .lab-btn:hover svg { color: var(--purple); }
+
+    .deck-node.deck-5 .lab-btn:hover { border-color: rgba(var(--coral-rgb), 0.5); color: var(--coral); background: rgba(var(--coral-rgb), 0.1); }
+    .deck-node.deck-5 .lab-btn:hover svg { color: var(--coral); }
 
     .launch-btn {
       font-size: 0.82rem;
@@ -445,7 +528,9 @@
       border: 1px solid var(--border);
       color: var(--text-bright);
       white-space: nowrap;
+      text-decoration: none;
       transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
     }
 
     .launch-btn svg {
@@ -463,6 +548,16 @@
     .deck-node.deck-4:hover .launch-btn { background: var(--purple); color: #0b0d13; border-color: var(--purple); }
     .deck-node.deck-5:hover .launch-btn { background: var(--coral); color: #0b0d13; border-color: var(--coral); }
 
+    /* When directly hovering over the Lab Sheet button, keep Launch button clean */
+    .deck-node:has(.lab-btn:hover) .launch-btn {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-bright);
+      border-color: var(--border);
+    }
+    .deck-node:has(.lab-btn:hover) .launch-btn svg {
+      transform: none;
+    }
+
     /* Keyboard Shortcuts Bar */
     .shortcuts-hint {
       margin-top: 2.25rem;
@@ -472,6 +567,7 @@
       gap: 0.5rem;
       font-size: 0.8rem;
       color: var(--text-dim);
+      flex-wrap: wrap;
     }
 
     .kbd-chip {
@@ -499,6 +595,23 @@
       background: rgba(56, 189, 248, 0.3);
       border-color: var(--cyan);
       transform: translateY(1px);
+    }
+
+    .hint-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      color: var(--text-bright);
+      font-weight: 600;
+      font-size: 0.76rem;
+    }
+
+    .hint-badge svg {
+      color: var(--cyan);
     }
 
     /* Footer */
@@ -539,6 +652,35 @@
         padding: 1.25rem 1.5rem;
       }
     }
+
+    @media (max-width: 720px) {
+      .deck-node {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.85rem;
+      }
+      .node-action {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .node-action {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+      }
+      .action-buttons {
+        width: 100%;
+        justify-content: stretch;
+      }
+      .action-buttons .lab-btn,
+      .action-buttons .launch-btn {
+        flex: 1;
+        justify-content: center;
+      }
+    }
   </style>
 </head>
 <body>
@@ -561,6 +703,7 @@
       <div class="nav-stats" aria-label="Curriculum Statistics">
         <span class="nav-badge">10 Lectures</span>
         <span class="nav-badge">5 Decks</span>
+        <span class="nav-badge">5 Lab Sheets</span>
         <span class="nav-badge">179 Slides</span>
       </div>
     </div>
@@ -572,7 +715,7 @@
       Python Curriculum <span class="hero-title-accent">Mind Map</span>
     </h1>
     <p class="hero-desc">
-      Interactive lecture presentation pathway linking directly to the five course slide decks.
+      Interactive lecture presentation pathway linking directly to the five course slide decks and laboratory exercise sheets.
     </p>
 
     <!-- Mind Map Workspace -->
@@ -588,106 +731,148 @@
             <div class="core-badge" id="core-badge">Course Core</div>
             <div class="core-title">Python Programming</div>
           </div>
-          <div class="core-desc" id="core-desc">10 Lectures &bull; 5 Decks</div>
+          <div class="core-desc" id="core-desc">10 Lectures &bull; 5 Decks &bull; 5 Labs</div>
         </div>
 
         <!-- 5 Progressive Deck Nodes (Right) -->
         <nav class="branches-list" aria-label="Course presentation decks">
-        <a href="python_presentation_01.html" class="deck-node deck-1" data-deck="1" data-phase="Phase 1: Pre-Flight Systems" data-color="#38bdf8" aria-label="Deck 01: Computing Fundamentals & Python Basics (Lectures 1 & 2, 35 slides)">
+        <div class="deck-node deck-1" data-deck="1" data-phase="Phase 1: Pre-Flight Systems" data-color="#38bdf8" data-href="python_presentation_01.html" role="article" aria-label="Deck 01: Computing Fundamentals & Python Basics (Lectures 1 & 2, 35 slides)">
           <div class="node-socket" aria-hidden="true"></div>
-          <div class="node-info">
-            <div class="node-header-row">
-              <span class="deck-tag">Deck 01</span>
-              <span class="node-title">Computing Fundamentals & Python Basics</span>
+          <a href="python_presentation_01.html" class="node-main-link" aria-label="Launch Deck 01: Computing Fundamentals & Python Basics">
+            <div class="node-info">
+              <div class="node-header-row">
+                <span class="deck-tag">Deck 01</span>
+                <span class="node-title">Computing Fundamentals & Python Basics</span>
+              </div>
+              <div class="node-meta">Lectures 1 & 2 &bull; Computer Architecture, Memory Mechanics, Expressions & Control Flow</div>
             </div>
-            <div class="node-meta">Lectures 1 & 2 &bull; Computer Architecture, Memory Mechanics, Expressions & Control Flow</div>
-          </div>
+          </a>
           <div class="node-action">
             <span class="slide-count-badge">35 Slides</span>
-            <div class="launch-btn">
-              <span>Launch</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <div class="action-buttons">
+              <a href="version%2003/Lab_01_Exercise_L01_L02.pdf" class="lab-btn" download="Lab_01_Exercise_L01_L02.pdf" target="_blank" rel="noopener" title="Download Laboratory Exercise 1: Computing Foundations & Python Basics (PDF)" aria-label="Download Lab Sheet 01 (PDF)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Lab Sheet</span>
+              </a>
+              <a href="python_presentation_01.html" class="launch-btn" aria-label="Launch Deck 01 presentation">
+                <span>Launch</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
             </div>
           </div>
-        </a>
-        <a href="python_presentation_02.html" class="deck-node deck-2" data-deck="2" data-phase="Phase 2: Algorithmic Takeoff" data-color="#facc15" aria-label="Deck 02: Control Logic, Algorithms & Modular Architecture (Lectures 3 & 4, 36 slides)">
+        </div>
+        <div class="deck-node deck-2" data-deck="2" data-phase="Phase 2: Algorithmic Takeoff" data-color="#facc15" data-href="python_presentation_02.html" role="article" aria-label="Deck 02: Control Logic, Algorithms & Modular Architecture (Lectures 3 & 4, 36 slides)">
           <div class="node-socket" aria-hidden="true"></div>
-          <div class="node-info">
-            <div class="node-header-row">
-              <span class="deck-tag">Deck 02</span>
-              <span class="node-title">Control Logic, Algorithms & Modular Architecture</span>
+          <a href="python_presentation_02.html" class="node-main-link" aria-label="Launch Deck 02: Control Logic, Algorithms & Modular Architecture">
+            <div class="node-info">
+              <div class="node-header-row">
+                <span class="deck-tag">Deck 02</span>
+                <span class="node-title">Control Logic, Algorithms & Modular Architecture</span>
+              </div>
+              <div class="node-meta">Lectures 3 & 4 &bull; Algorithmic Problem Solving, Iterations, Random Simulation & Scope</div>
             </div>
-            <div class="node-meta">Lectures 3 & 4 &bull; Algorithmic Problem Solving, Iterations, Random Simulation & Scope</div>
-          </div>
+          </a>
           <div class="node-action">
             <span class="slide-count-badge">36 Slides</span>
-            <div class="launch-btn">
-              <span>Launch</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <div class="action-buttons">
+              <a href="version%2003/Lab_02_Exercise_L03_L04.pdf" class="lab-btn" download="Lab_02_Exercise_L03_L04.pdf" target="_blank" rel="noopener" title="Download Laboratory Exercise 2: Algorithms, Control Flow & Modular Functions (PDF)" aria-label="Download Lab Sheet 02 (PDF)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Lab Sheet</span>
+              </a>
+              <a href="python_presentation_02.html" class="launch-btn" aria-label="Launch Deck 02 presentation">
+                <span>Launch</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
             </div>
           </div>
-        </a>
-        <a href="python_presentation_03.html" class="deck-node deck-3" data-deck="3" data-phase="Phase 3: Data Navigation" data-color="#34d399" aria-label="Deck 03: Sequences, Sets & Associative Dictionaries (Lectures 5 & 6, 36 slides)">
+        </div>
+        <div class="deck-node deck-3" data-deck="3" data-phase="Phase 3: Data Navigation" data-color="#34d399" data-href="python_presentation_03.html" role="article" aria-label="Deck 03: Sequences, Sets & Associative Dictionaries (Lectures 5 & 6, 36 slides)">
           <div class="node-socket" aria-hidden="true"></div>
-          <div class="node-info">
-            <div class="node-header-row">
-              <span class="deck-tag">Deck 03</span>
-              <span class="node-title">Sequences, Sets & Associative Dictionaries</span>
+          <a href="python_presentation_03.html" class="node-main-link" aria-label="Launch Deck 03: Sequences, Sets & Associative Dictionaries">
+            <div class="node-info">
+              <div class="node-header-row">
+                <span class="deck-tag">Deck 03</span>
+                <span class="node-title">Sequences, Sets & Associative Dictionaries</span>
+              </div>
+              <div class="node-meta">Lectures 5 & 6 &bull; Lists, Tuples, Mutability, Slicing, Comprehensions & Hash Tables</div>
             </div>
-            <div class="node-meta">Lectures 5 & 6 &bull; Lists, Tuples, Mutability, Slicing, Comprehensions & Hash Tables</div>
-          </div>
+          </a>
           <div class="node-action">
             <span class="slide-count-badge">36 Slides</span>
-            <div class="launch-btn">
-              <span>Launch</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <div class="action-buttons">
+              <a href="version%2003/Lab_03_Exercise_L05_L06.pdf" class="lab-btn" download="Lab_03_Exercise_L05_L06.pdf" target="_blank" rel="noopener" title="Download Laboratory Exercise 3: Data Structures — Sequences, Mappings & Sets (PDF)" aria-label="Download Lab Sheet 03 (PDF)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Lab Sheet</span>
+              </a>
+              <a href="python_presentation_03.html" class="launch-btn" aria-label="Launch Deck 03 presentation">
+                <span>Launch</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
             </div>
           </div>
-        </a>
-        <a href="python_presentation_04.html" class="deck-node deck-4" data-deck="4" data-phase="Phase 4: Tensor Vectoring" data-color="#c084fc" aria-label="Deck 04: Numerical Computing with NumPy & Regular Expressions (Lectures 7 & 8, 36 slides)">
+        </div>
+        <div class="deck-node deck-4" data-deck="4" data-phase="Phase 4: Tensor Vectoring" data-color="#c084fc" data-href="python_presentation_04.html" role="article" aria-label="Deck 04: Numerical Computing with NumPy & Regular Expressions (Lectures 7 & 8, 36 slides)">
           <div class="node-socket" aria-hidden="true"></div>
-          <div class="node-info">
-            <div class="node-header-row">
-              <span class="deck-tag">Deck 04</span>
-              <span class="node-title">Numerical Computing with NumPy & Regular Expressions</span>
+          <a href="python_presentation_04.html" class="node-main-link" aria-label="Launch Deck 04: Numerical Computing with NumPy & Regular Expressions">
+            <div class="node-info">
+              <div class="node-header-row">
+                <span class="deck-tag">Deck 04</span>
+                <span class="node-title">Numerical Computing with NumPy & Regular Expressions</span>
+              </div>
+              <div class="node-meta">Lectures 7 & 8 &bull; Multidimensional Tensors, Vectorization, Broadcasting & Regex Validation</div>
             </div>
-            <div class="node-meta">Lectures 7 & 8 &bull; Multidimensional Tensors, Vectorization, Broadcasting & Regex Validation</div>
-          </div>
+          </a>
           <div class="node-action">
             <span class="slide-count-badge">36 Slides</span>
-            <div class="launch-btn">
-              <span>Launch</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <div class="action-buttons">
+              <a href="version%2003/Lab_04_Exercise_L07_L08.pdf" class="lab-btn" download="Lab_04_Exercise_L07_L08.pdf" target="_blank" rel="noopener" title="Download Laboratory Exercise 4: Numerical Computing with NumPy & Text Processing (PDF)" aria-label="Download Lab Sheet 04 (PDF)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Lab Sheet</span>
+              </a>
+              <a href="python_presentation_04.html" class="launch-btn" aria-label="Launch Deck 04 presentation">
+                <span>Launch</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
             </div>
           </div>
-        </a>
-        <a href="python_presentation_05.html" class="deck-node deck-5" data-deck="5" data-phase="Phase 5: Approach & Architecture" data-color="#fb7185" aria-label="Deck 05: Persistence, Error Trapping & Object-Oriented Design (Lectures 9 & 10, 36 slides)">
+        </div>
+        <div class="deck-node deck-5" data-deck="5" data-phase="Phase 5: Approach & Architecture" data-color="#fb7185" data-href="python_presentation_05.html" role="article" aria-label="Deck 05: Persistence, Error Trapping & Object-Oriented Design (Lectures 9 & 10, 36 slides)">
           <div class="node-socket" aria-hidden="true"></div>
-          <div class="node-info">
-            <div class="node-header-row">
-              <span class="deck-tag">Deck 05</span>
-              <span class="node-title">Persistence, Error Trapping & Object-Oriented Design</span>
+          <a href="python_presentation_05.html" class="node-main-link" aria-label="Launch Deck 05: Persistence, Error Trapping & Object-Oriented Design">
+            <div class="node-info">
+              <div class="node-header-row">
+                <span class="deck-tag">Deck 05</span>
+                <span class="node-title">Persistence, Error Trapping & Object-Oriented Design</span>
+              </div>
+              <div class="node-meta">Lectures 9 & 10 &bull; Stream I/O, JSON Serialization, Defensive Exceptions & OOP Paradigms</div>
             </div>
-            <div class="node-meta">Lectures 9 & 10 &bull; Stream I/O, JSON Serialization, Defensive Exceptions & OOP Paradigms</div>
-          </div>
+          </a>
           <div class="node-action">
             <span class="slide-count-badge">36 Slides</span>
-            <div class="launch-btn">
-              <span>Launch</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <div class="action-buttons">
+              <a href="version%2003/Lab_05_Exercise_L09_L10.pdf" class="lab-btn" download="Lab_05_Exercise_L09_L10.pdf" target="_blank" rel="noopener" title="Download Laboratory Exercise 5: Data Persistence, Exception Handling & Object-Oriented Programming (PDF)" aria-label="Download Lab Sheet 05 (PDF)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Lab Sheet</span>
+              </a>
+              <a href="python_presentation_05.html" class="launch-btn" aria-label="Launch Deck 05 presentation">
+                <span>Launch</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
             </div>
           </div>
-        </a>
+        </div>
         </nav>
       </div>
 
       <!-- Quick Shortcuts Hint -->
-      <div class="shortcuts-hint" aria-label="Keyboard Shortcuts">
+      <div class="shortcuts-hint" aria-label="Keyboard Shortcuts and Course Materials">
         <span>Quick Launch: Press</span>
         <kbd class="kbd-chip" data-key="1">1</kbd>
         <span>through</span>
         <kbd class="kbd-chip" data-key="5">5</kbd>
-        <span>to launch any deck instantly</span>
+        <span>to launch decks &bull; Click</span>
+        <span class="hint-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Lab Sheet</span>
+        <span>to download PDF exercises</span>
       </div>
     </div>
   </main>
@@ -696,7 +881,7 @@
   <footer class="portal-footer">
     <div class="footer-content">
       <div>&copy; 2026 Civil Aviation Training Center (CATC). Department of Aviation Engineering.</div>
-      <div>100% Offline Capable &bull; Standalone HTML5 Presentations</div>
+      <div>100% Offline Capable &bull; Standalone HTML5 Presentations &amp; Materials</div>
     </div>
   </footer>
 
@@ -775,11 +960,28 @@
           if (coreBadge && coreDesc) {
             coreBadge.textContent = 'Course Core';
             coreBadge.style.color = 'var(--cyan)';
-            coreDesc.innerHTML = '10 Lectures &bull; 5 Decks';
+            coreDesc.innerHTML = '10 Lectures &bull; 5 Decks &bull; 5 Labs';
             if (coreSocket) {
               coreSocket.style.backgroundColor = 'var(--cyan)';
               coreSocket.style.transform = 'translateY(-50%) scale(1)';
             }
+          }
+        });
+
+        // Click card background to launch deck (unless clicking lab download link or another link)
+        node.addEventListener('click', (e) => {
+          if (e.target.closest('.lab-btn')) {
+            return;
+          }
+          if (e.target.closest('a')) {
+            return;
+          }
+          const href = node.dataset.href;
+          if (href) {
+            node.classList.add('active-launch');
+            setTimeout(() => {
+              window.location.href = href;
+            }, 120);
           }
         });
       });
@@ -797,7 +999,7 @@
           const p = document.getElementById(`path-${key}`);
           if (p) p.classList.add('active');
           
-          const href = targetNode.getAttribute('href');
+          const href = targetNode.dataset.href || targetNode.getAttribute('href');
           setTimeout(() => {
             window.location.href = href;
           }, 120);

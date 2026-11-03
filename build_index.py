@@ -12,6 +12,35 @@ deck_accents = {
     5: {"color": "#fb7185", "rgb": "251, 113, 133", "class": "deck-5", "phase": "Phase 5: Approach & Architecture"}
 }
 
+# Fallback / canonical lab sheets mapping
+lab_sheets_fallback = {
+    1: {
+        "file": "version 03/Lab_01_Exercise_L01_L02.pdf",
+        "filename": "Lab_01_Exercise_L01_L02.pdf",
+        "title": "Laboratory Exercise 1: Computing Foundations & Python Basics"
+    },
+    2: {
+        "file": "version 03/Lab_02_Exercise_L03_L04.pdf",
+        "filename": "Lab_02_Exercise_L03_L04.pdf",
+        "title": "Laboratory Exercise 2: Algorithms, Control Flow & Modular Functions"
+    },
+    3: {
+        "file": "version 03/Lab_03_Exercise_L05_L06.pdf",
+        "filename": "Lab_03_Exercise_L05_L06.pdf",
+        "title": "Laboratory Exercise 3: Data Structures — Sequences, Mappings & Sets"
+    },
+    4: {
+        "file": "version 03/Lab_04_Exercise_L07_L08.pdf",
+        "filename": "Lab_04_Exercise_L07_L08.pdf",
+        "title": "Laboratory Exercise 4: Numerical Computing with NumPy & Text Processing"
+    },
+    5: {
+        "file": "version 03/Lab_05_Exercise_L09_L10.pdf",
+        "filename": "Lab_05_Exercise_L09_L10.pdf",
+        "title": "Laboratory Exercise 5: Data Persistence, Exception Handling & Object-Oriented Programming"
+    }
+}
+
 # Generate node cards HTML
 nodes_html = []
 for deck in decks:
@@ -27,23 +56,36 @@ for deck in decks:
     phase = deck_meta.get('phase', '')
     color = deck_meta.get('color', '#38bdf8')
     
-    node_str = f'''        <a href="{file_name}" class="deck-node {accent_class}" data-deck="{d_id}" data-phase="{phase}" data-color="{color}" aria-label="Deck {deck_no}: {title} ({lectures}, {total_slides} slides)">
+    lab_meta = deck.get('lab_sheet') or lab_sheets_fallback.get(d_id, {})
+    lab_file = lab_meta.get('file', '').replace(' ', '%20')
+    lab_filename = lab_meta.get('filename', f"Lab_{deck_no}_Exercise.pdf")
+    lab_title = lab_meta.get('title', f"Laboratory Exercise {deck_no}")
+    
+    node_str = f'''        <div class="deck-node {accent_class}" data-deck="{d_id}" data-phase="{phase}" data-color="{color}" data-href="{file_name}" role="article" aria-label="Deck {deck_no}: {title} ({lectures}, {total_slides} slides)">
           <div class="node-socket" aria-hidden="true"></div>
-          <div class="node-info">
-            <div class="node-header-row">
-              <span class="deck-tag">Deck {deck_no}</span>
-              <span class="node-title">{title}</span>
+          <a href="{file_name}" class="node-main-link" aria-label="Launch Deck {deck_no}: {title}">
+            <div class="node-info">
+              <div class="node-header-row">
+                <span class="deck-tag">Deck {deck_no}</span>
+                <span class="node-title">{title}</span>
+              </div>
+              <div class="node-meta">{lectures} &bull; {subtitle}</div>
             </div>
-            <div class="node-meta">{lectures} &bull; {subtitle}</div>
-          </div>
+          </a>
           <div class="node-action">
             <span class="slide-count-badge">{total_slides} Slides</span>
-            <div class="launch-btn">
-              <span>Launch</span>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            <div class="action-buttons">
+              <a href="{lab_file}" class="lab-btn" download="{lab_filename}" target="_blank" rel="noopener" title="Download {lab_title} (PDF)" aria-label="Download Lab Sheet {deck_no} (PDF)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span>Lab Sheet</span>
+              </a>
+              <a href="{file_name}" class="launch-btn" aria-label="Launch Deck {deck_no} presentation">
+                <span>Launch</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+              </a>
             </div>
           </div>
-        </a>'''
+        </div>'''
     nodes_html.append(node_str)
 
 nodes_joined = "\n".join(nodes_html)
@@ -54,7 +96,7 @@ html_content = f'''<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Programming — CATC Course Portal</title>
-  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation curriculum mind map launcher. 5 widescreen decks, 10 lectures, 179 interactive slides.">
+  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation curriculum mind map launcher. 5 widescreen decks, 10 lectures, 179 interactive slides, and 5 laboratory exercise sheets.">
 
   <style>
     :root {{
@@ -217,6 +259,7 @@ html_content = f'''<!DOCTYPE html>
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      flex-wrap: wrap;
     }}
 
     .nav-badge {{
@@ -261,7 +304,7 @@ html_content = f'''<!DOCTYPE html>
     .hero-desc {{
       font-size: 1.02rem;
       color: var(--text-dim);
-      max-width: 600px;
+      max-width: 620px;
       margin: 0 auto 3.25rem;
       line-height: 1.6;
       text-align: center;
@@ -381,7 +424,6 @@ html_content = f'''<!DOCTYPE html>
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
       padding: 1.05rem 1.35rem;
-      text-decoration: none;
       color: var(--text);
       display: flex;
       align-items: center;
@@ -390,6 +432,7 @@ html_content = f'''<!DOCTYPE html>
       transition: background 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
       position: relative;
       box-shadow: var(--shadow-card);
+      cursor: pointer;
     }}
 
     /* Connection Socket on Left of each card */
@@ -430,6 +473,21 @@ html_content = f'''<!DOCTYPE html>
     .deck-node.deck-4:hover, .deck-node.deck-4.active-launch {{ border-color: var(--purple); }}
     .deck-node.deck-5:hover, .deck-node.deck-5.active-launch {{ border-color: var(--coral); }}
 
+    .node-main-link {{
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      min-width: 0;
+      border-radius: var(--radius-sm);
+    }}
+
+    .node-main-link:focus-visible {{
+      outline: 2px solid var(--cyan);
+      outline-offset: 4px;
+    }}
+
     .node-info {{
       display: flex;
       flex-direction: column;
@@ -462,6 +520,11 @@ html_content = f'''<!DOCTYPE html>
       font-weight: 700;
       color: var(--text-bright);
       letter-spacing: -0.01em;
+      transition: color 0.15s ease;
+    }}
+
+    .deck-node:hover .node-title {{
+      color: #ffffff;
     }}
 
     .node-meta {{
@@ -473,6 +536,13 @@ html_content = f'''<!DOCTYPE html>
       display: flex;
       align-items: center;
       gap: 0.85rem;
+      flex-shrink: 0;
+    }}
+
+    .action-buttons {{
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }}
 
     .slide-count-badge {{
@@ -482,6 +552,61 @@ html_content = f'''<!DOCTYPE html>
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }}
+
+    .lab-btn {{
+      font-size: 0.8rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.45rem 0.75rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text);
+      white-space: nowrap;
+      text-decoration: none;
+      transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      cursor: pointer;
+    }}
+
+    .lab-btn svg {{
+      color: var(--text-dim);
+      transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), color 0.2s ease;
+      flex-shrink: 0;
+    }}
+
+    .lab-btn:hover {{
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text-bright);
+      transform: translateY(-1px);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    }}
+
+    .lab-btn:hover svg {{
+      color: var(--text-bright);
+      transform: translateY(1.5px);
+    }}
+
+    .lab-btn:active {{
+      transform: translateY(0);
+    }}
+
+    .deck-node.deck-1 .lab-btn:hover {{ border-color: rgba(var(--cyan-rgb), 0.5); color: var(--cyan); background: rgba(var(--cyan-rgb), 0.1); }}
+    .deck-node.deck-1 .lab-btn:hover svg {{ color: var(--cyan); }}
+
+    .deck-node.deck-2 .lab-btn:hover {{ border-color: rgba(var(--gold-rgb), 0.5); color: var(--gold); background: rgba(var(--gold-rgb), 0.1); }}
+    .deck-node.deck-2 .lab-btn:hover svg {{ color: var(--gold); }}
+
+    .deck-node.deck-3 .lab-btn:hover {{ border-color: rgba(var(--mint-rgb), 0.5); color: var(--mint); background: rgba(var(--mint-rgb), 0.1); }}
+    .deck-node.deck-3 .lab-btn:hover svg {{ color: var(--mint); }}
+
+    .deck-node.deck-4 .lab-btn:hover {{ border-color: rgba(var(--purple-rgb), 0.5); color: var(--purple); background: rgba(var(--purple-rgb), 0.1); }}
+    .deck-node.deck-4 .lab-btn:hover svg {{ color: var(--purple); }}
+
+    .deck-node.deck-5 .lab-btn:hover {{ border-color: rgba(var(--coral-rgb), 0.5); color: var(--coral); background: rgba(var(--coral-rgb), 0.1); }}
+    .deck-node.deck-5 .lab-btn:hover svg {{ color: var(--coral); }}
 
     .launch-btn {{
       font-size: 0.82rem;
@@ -495,7 +620,9 @@ html_content = f'''<!DOCTYPE html>
       border: 1px solid var(--border);
       color: var(--text-bright);
       white-space: nowrap;
+      text-decoration: none;
       transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
     }}
 
     .launch-btn svg {{
@@ -513,6 +640,16 @@ html_content = f'''<!DOCTYPE html>
     .deck-node.deck-4:hover .launch-btn {{ background: var(--purple); color: #0b0d13; border-color: var(--purple); }}
     .deck-node.deck-5:hover .launch-btn {{ background: var(--coral); color: #0b0d13; border-color: var(--coral); }}
 
+    /* When directly hovering over the Lab Sheet button, keep Launch button clean */
+    .deck-node:has(.lab-btn:hover) .launch-btn {{
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-bright);
+      border-color: var(--border);
+    }}
+    .deck-node:has(.lab-btn:hover) .launch-btn svg {{
+      transform: none;
+    }}
+
     /* Keyboard Shortcuts Bar */
     .shortcuts-hint {{
       margin-top: 2.25rem;
@@ -522,6 +659,7 @@ html_content = f'''<!DOCTYPE html>
       gap: 0.5rem;
       font-size: 0.8rem;
       color: var(--text-dim);
+      flex-wrap: wrap;
     }}
 
     .kbd-chip {{
@@ -549,6 +687,23 @@ html_content = f'''<!DOCTYPE html>
       background: rgba(56, 189, 248, 0.3);
       border-color: var(--cyan);
       transform: translateY(1px);
+    }}
+
+    .hint-badge {{
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      color: var(--text-bright);
+      font-weight: 600;
+      font-size: 0.76rem;
+    }}
+
+    .hint-badge svg {{
+      color: var(--cyan);
     }}
 
     /* Footer */
@@ -589,6 +744,35 @@ html_content = f'''<!DOCTYPE html>
         padding: 1.25rem 1.5rem;
       }}
     }}
+
+    @media (max-width: 720px) {{
+      .deck-node {{
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.85rem;
+      }}
+      .node-action {{
+        width: 100%;
+        justify-content: space-between;
+      }}
+    }}
+
+    @media (max-width: 480px) {{
+      .node-action {{
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.65rem;
+      }}
+      .action-buttons {{
+        width: 100%;
+        justify-content: stretch;
+      }}
+      .action-buttons .lab-btn,
+      .action-buttons .launch-btn {{
+        flex: 1;
+        justify-content: center;
+      }}
+    }}
   </style>
 </head>
 <body>
@@ -611,6 +795,7 @@ html_content = f'''<!DOCTYPE html>
       <div class="nav-stats" aria-label="Curriculum Statistics">
         <span class="nav-badge">10 Lectures</span>
         <span class="nav-badge">5 Decks</span>
+        <span class="nav-badge">5 Lab Sheets</span>
         <span class="nav-badge">179 Slides</span>
       </div>
     </div>
@@ -622,7 +807,7 @@ html_content = f'''<!DOCTYPE html>
       Python Curriculum <span class="hero-title-accent">Mind Map</span>
     </h1>
     <p class="hero-desc">
-      Interactive lecture presentation pathway linking directly to the five course slide decks.
+      Interactive lecture presentation pathway linking directly to the five course slide decks and laboratory exercise sheets.
     </p>
 
     <!-- Mind Map Workspace -->
@@ -638,7 +823,7 @@ html_content = f'''<!DOCTYPE html>
             <div class="core-badge" id="core-badge">Course Core</div>
             <div class="core-title">Python Programming</div>
           </div>
-          <div class="core-desc" id="core-desc">10 Lectures &bull; 5 Decks</div>
+          <div class="core-desc" id="core-desc">10 Lectures &bull; 5 Decks &bull; 5 Labs</div>
         </div>
 
         <!-- 5 Progressive Deck Nodes (Right) -->
@@ -648,12 +833,14 @@ html_content = f'''<!DOCTYPE html>
       </div>
 
       <!-- Quick Shortcuts Hint -->
-      <div class="shortcuts-hint" aria-label="Keyboard Shortcuts">
+      <div class="shortcuts-hint" aria-label="Keyboard Shortcuts and Course Materials">
         <span>Quick Launch: Press</span>
         <kbd class="kbd-chip" data-key="1">1</kbd>
         <span>through</span>
         <kbd class="kbd-chip" data-key="5">5</kbd>
-        <span>to launch any deck instantly</span>
+        <span>to launch decks &bull; Click</span>
+        <span class="hint-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Lab Sheet</span>
+        <span>to download PDF exercises</span>
       </div>
     </div>
   </main>
@@ -662,7 +849,7 @@ html_content = f'''<!DOCTYPE html>
   <footer class="portal-footer">
     <div class="footer-content">
       <div>&copy; 2026 Civil Aviation Training Center (CATC). Department of Aviation Engineering.</div>
-      <div>100% Offline Capable &bull; Standalone HTML5 Presentations</div>
+      <div>100% Offline Capable &bull; Standalone HTML5 Presentations &amp; Materials</div>
     </div>
   </footer>
 
@@ -741,11 +928,28 @@ html_content = f'''<!DOCTYPE html>
           if (coreBadge && coreDesc) {{
             coreBadge.textContent = 'Course Core';
             coreBadge.style.color = 'var(--cyan)';
-            coreDesc.innerHTML = '10 Lectures &bull; 5 Decks';
+            coreDesc.innerHTML = '10 Lectures &bull; 5 Decks &bull; 5 Labs';
             if (coreSocket) {{
               coreSocket.style.backgroundColor = 'var(--cyan)';
               coreSocket.style.transform = 'translateY(-50%) scale(1)';
             }}
+          }}
+        }});
+
+        // Click card background to launch deck (unless clicking lab download link or another link)
+        node.addEventListener('click', (e) => {{
+          if (e.target.closest('.lab-btn')) {{
+            return;
+          }}
+          if (e.target.closest('a')) {{
+            return;
+          }}
+          const href = node.dataset.href;
+          if (href) {{
+            node.classList.add('active-launch');
+            setTimeout(() => {{
+              window.location.href = href;
+            }}, 120);
           }}
         }});
       }});
@@ -763,7 +967,7 @@ html_content = f'''<!DOCTYPE html>
           const p = document.getElementById(`path-${{key}}`);
           if (p) p.classList.add('active');
           
-          const href = targetNode.getAttribute('href');
+          const href = targetNode.dataset.href || targetNode.getAttribute('href');
           setTimeout(() => {{
             window.location.href = href;
           }}, 120);

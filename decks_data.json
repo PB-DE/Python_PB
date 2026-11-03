@@ -8,6 +8,12 @@
     "total_slides": 35,
     "badge_color": "#4fc1ff",
     "accent": "#007acc",
+    "lab_sheet": {
+      "file": "version 03/Lab_01_Exercise_L01_L02.pdf",
+      "filename": "Lab_01_Exercise_L01_L02.pdf",
+      "title": "Laboratory Exercise 1: Computing Foundations & Python Basics",
+      "lectures": "Lectures 1 & 2"
+    },
     "part1": {
       "lecture": "Lecture 1",
       "title": "Fundamentals of Computing",
@@ -256,6 +262,12 @@
     "total_slides": 36,
     "badge_color": "#dcdcaa",
     "accent": "#d7ba7d",
+    "lab_sheet": {
+      "file": "version 03/Lab_02_Exercise_L03_L04.pdf",
+      "filename": "Lab_02_Exercise_L03_L04.pdf",
+      "title": "Laboratory Exercise 2: Algorithms, Control Flow & Modular Functions",
+      "lectures": "Lectures 3 & 4"
+    },
     "part1": {
       "lecture": "Lecture 3",
       "title": "Control Statements & Program Development",
@@ -510,6 +522,12 @@
     "total_slides": 36,
     "badge_color": "#4ec9b0",
     "accent": "#20c997",
+    "lab_sheet": {
+      "file": "version 03/Lab_03_Exercise_L05_L06.pdf",
+      "filename": "Lab_03_Exercise_L05_L06.pdf",
+      "title": "Laboratory Exercise 3: Data Structures — Sequences, Mappings & Sets",
+      "lectures": "Lectures 5 & 6"
+    },
     "part1": {
       "lecture": "Lecture 5",
       "title": "Sequences: Lists and Tuples",
@@ -764,6 +782,12 @@
     "total_slides": 36,
     "badge_color": "#c586c0",
     "accent": "#9c27b0",
+    "lab_sheet": {
+      "file": "version 03/Lab_04_Exercise_L07_L08.pdf",
+      "filename": "Lab_04_Exercise_L07_L08.pdf",
+      "title": "Laboratory Exercise 4: Numerical Computing with NumPy & Text Processing",
+      "lectures": "Lectures 7 & 8"
+    },
     "part1": {
       "lecture": "Lecture 7",
       "title": "NumPy Arrays: Numerical Computing",
@@ -1018,6 +1042,12 @@
     "total_slides": 36,
     "badge_color": "#f48771",
     "accent": "#e06c75",
+    "lab_sheet": {
+      "file": "version 03/Lab_05_Exercise_L09_L10.pdf",
+      "filename": "Lab_05_Exercise_L09_L10.pdf",
+      "title": "Laboratory Exercise 5: Data Persistence, Exception Handling & Object-Oriented Programming",
+      "lectures": "Lectures 9 & 10"
+    },
     "part1": {
       "lecture": "Lecture 9",
       "title": "Files & Exceptions",
