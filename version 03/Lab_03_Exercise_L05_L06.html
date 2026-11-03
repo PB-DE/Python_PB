@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratory Exercise 3: Data Structures — Sequences, Mappings & Sets — CATC Course Portal</title>
+  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming — Laboratory Exercise 3: Data Structures — Sequences, Mappings & Sets (Lectures 5 & 6). Standalone offline HTML lab sheet with interactive student blanks, syntax-highlighted code blocks, and print stylesheet.">
+
+  <style>
+    :root {
+      --bg: #0b0d13;
+      --bg-surface: #12151f;
+      --bg-card: #181d2a;
+      --bg-card-hover: #1f2637;
+      --border: #242c3d;
+      --border-light: rgba(255, 255, 255, 0.08);
+      --border-focus: #34d399;
+      --text: #cbd5e1;
+      --text-bright: #ffffff;
+      --text-dim: #94a3b8;
+      
+      --accent: #34d399;
+      --accent-rgb: 52, 211, 153;
+      --cyan: #38bdf8;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.35);
+
+      /* VS Code Dark+ Syntax Tokens */
+      --token-kw: #569cd6;
+      --token-var: #9cdcfe;
+      --token-num: #b5cea8;
+      --token-str: #ce9178;
+      --token-com: #6a9955;
+      --token-fn: #dcdcaa;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+
+    ::selection {
+      background: rgba(var(--accent-rgb), 0.35);
+      color: #ffffff;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Top Sticky Navigation Header */
+    header.lab-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 13, 19, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .nav-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .back-btn:hover {
+      color: var(--text-bright);
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-title-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .deck-badge {
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(var(--accent-rgb), 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(var(--accent-rgb), 0.3);
+    }
+
+    .nav-page-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 420px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text-bright);
+    }
+
+    .action-btn.primary {
+      background: rgba(var(--accent-rgb), 0.12);
+      border-color: rgba(var(--accent-rgb), 0.35);
+      color: var(--accent);
+    }
+
+    .action-btn.primary:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0b0d13;
+    }
+
+    /* Table of Contents Jump Bar */
+    .lab-toc {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-light);
+      padding: 0.5rem 1.5rem;
+    }
+
+    .toc-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding-bottom: 2px;
+    }
+
+    .toc-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      margin-right: 0.35rem;
+    }
+
+    .toc-pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+      transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .toc-pill:hover {
+      color: var(--text-bright);
+      border-color: var(--accent);
+      background: rgba(var(--accent-rgb), 0.08);
+    }
+
+    /* Main Container */
+    main.lab-content {
+      flex: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.75rem 1.5rem 5rem;
+      width: 100%;
+    }
+
+    /* Document Main Title */
+    .lab-main-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.35rem);
+      font-weight: 800;
+      color: var(--text-bright);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    /* Section Headings */
+    .part-header-wrapper {
+      margin-top: 3rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    .lab-part-heading {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      letter-spacing: -0.015em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .lab-task-heading {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-top: 1.85rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 0.4rem;
+    }
+
+    .pts-badge {
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 4px;
+      background: rgba(var(--accent-rgb), 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(var(--accent-rgb), 0.28);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    p {
+      margin-bottom: 1.1rem;
+      color: var(--text);
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.6rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    strong {
+      color: var(--text-bright);
+      font-weight: 700;
+    }
+
+    /* Inline Code */
+    code:not([class*="language-"]) {
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.88em;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--cyan);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    /* Code Card Component */
+    .code-card {
+      background: #181d2a;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin: 1.25rem 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .code-card-header {
+      background: #12151f;
+      border-bottom: 1px solid var(--border);
+      padding: 0.45rem 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .code-lang-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .code-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .code-lang-label {
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .copy-code-btn {
+      font-size: 0.72rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .copy-code-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border);
+      color: var(--text-bright);
+    }
+
+    .code-card pre {
+      padding: 1rem 1.15rem;
+      margin: 0;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #d4d4d4;
+    }
+
+    /* VS Code Syntax Colors */
+    .token-kw { color: var(--token-kw); font-weight: 600; }
+    .token-var { color: var(--token-var); }
+    .token-num { color: var(--token-num); }
+    .token-str { color: var(--token-str); }
+    .token-com { color: var(--token-com); font-style: italic; }
+    .token-fn { color: var(--token-fn); }
+
+    /* Table Component */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+    }
+
+    .lab-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .lab-table th {
+      background: var(--bg-surface);
+      color: var(--text-bright);
+      font-weight: 700;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: -0.01em;
+    }
+
+    .lab-table td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+
+    .lab-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .lab-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Mathematical Formulas */
+    .math-block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.15rem 1.5rem;
+      margin: 1.35rem 0;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: "Cambria Math", "STIX Two Math", "KaTeX_Math", "Times New Roman", serif;
+      font-size: 1.2rem;
+      color: var(--accent);
+      overflow-x: auto;
+    }
+
+    .math-inline {
+      font-family: "Cambria Math", "STIX Two Math", "KaTeX_Math", "Times New Roman", serif;
+      font-size: 1.05em;
+      color: var(--accent);
+      padding: 0 0.2em;
+    }
+
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0 0.35em;
+      font-size: 0.92em;
+      line-height: 1.15;
+    }
+
+    .num {
+      border-bottom: 1.5px solid currentColor;
+      padding-bottom: 2px;
+    }
+
+    .den {
+      padding-top: 2px;
+    }
+
+    .sqrt-wrap {
+      display: inline-flex;
+      align-items: baseline;
+      padding: 0 0.2em;
+    }
+
+    .radicand {
+      border-top: 1.5px solid currentColor;
+      padding-top: 1px;
+      margin-left: 1px;
+    }
+
+    .math-text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-style: normal;
+      font-size: 0.92em;
+      color: var(--text-bright);
+    }
+
+    /* Interactive Fill Blanks */
+    .fill-blank {
+      display: inline-block;
+      min-width: 140px;
+      border-bottom: 1.5px dashed var(--accent);
+      padding: 0 0.4rem;
+      margin: 0 0.2rem;
+      color: var(--text-bright);
+      background: rgba(var(--accent-rgb), 0.06);
+      border-radius: 2px;
+      outline: none;
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.95em;
+      transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      cursor: text;
+    }
+
+    .fill-blank:empty::before {
+      content: attr(data-placeholder);
+      color: var(--text-dim);
+      font-style: italic;
+      font-size: 0.85em;
+      pointer-events: none;
+    }
+
+    .fill-blank:focus {
+      background: rgba(var(--accent-rgb), 0.18);
+      border-bottom-style: solid;
+      box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.25);
+    }
+
+    .print-page-break {
+      height: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    /* Floating Save Status Toast */
+    .save-toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.85rem;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+      z-index: 90;
+    }
+
+    .save-toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .save-toast-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* Footer */
+    footer.lab-footer {
+      margin-top: auto;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-light);
+      padding: 1.75rem 1.5rem;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+    }
+
+    .footer-content {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-page-title {
+        display: none;
+      }
+      main.lab-content {
+        padding: 1.75rem 1rem 4rem;
+      }
+    }
+
+    /* PRINT STYLESHEET (Clean white ink-friendly handout for printing/PDF) */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 15mm 15mm 20mm 15mm;
+      }
+
+      body {
+        background: #ffffff !important;
+        color: #111111 !important;
+        font-size: 10pt;
+        line-height: 1.5;
+      }
+
+      header.lab-nav,
+      nav.lab-toc,
+      .copy-code-btn,
+      .save-toast,
+      footer.lab-footer {
+        display: none !important;
+      }
+
+      main.lab-content {
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+
+      .lab-main-title {
+        color: #000000 !important;
+        font-size: 18pt !important;
+        border-bottom: 2px solid #333333 !important;
+        margin-bottom: 12pt !important;
+        padding-bottom: 6pt !important;
+      }
+
+      .part-header-wrapper {
+        border-left: 4px solid #333333 !important;
+        margin-top: 18pt !important;
+        margin-bottom: 8pt !important;
+      }
+
+      .lab-part-heading {
+        color: #000000 !important;
+        font-size: 13pt !important;
+      }
+
+      .lab-task-heading {
+        color: #111111 !important;
+        font-size: 11pt !important;
+        border-bottom: 1px solid #cccccc !important;
+        margin-top: 12pt !important;
+      }
+
+      .pts-badge {
+        background: #eeeeee !important;
+        color: #222222 !important;
+        border: 1px solid #999999 !important;
+      }
+
+      .code-card {
+        background: #f8f9fa !important;
+        border: 1px solid #cccccc !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+
+      .code-card-header {
+        background: #eeeeee !important;
+        border-bottom: 1px solid #cccccc !important;
+      }
+
+      .code-card pre {
+        color: #222222 !important;
+        font-size: 8.5pt !important;
+      }
+
+      .token-kw { color: #0000bb !important; font-weight: bold; }
+      .token-var { color: #222222 !important; }
+      .token-num { color: #098658 !important; }
+      .token-str { color: #a31515 !important; }
+      .token-com { color: #008000 !important; font-style: italic; }
+      .token-fn { color: #795e26 !important; }
+
+      .table-container {
+        background: #ffffff !important;
+        border: 1px solid #333333 !important;
+        break-inside: avoid;
+      }
+
+      .lab-table th {
+        background: #f0f0f0 !important;
+        color: #000000 !important;
+        border-bottom: 1px solid #333333 !important;
+      }
+
+      .lab-table td {
+        border-bottom: 1px solid #dddddd !important;
+        color: #111111 !important;
+      }
+
+      .math-block {
+        background: #fdfdfd !important;
+        border: 1px solid #cccccc !important;
+        color: #111111 !important;
+        font-size: 11pt !important;
+        break-inside: avoid;
+      }
+
+      .math-inline {
+        color: #111111 !important;
+      }
+
+      .fill-blank {
+        background: transparent !important;
+        border-bottom: 1.5px solid #222222 !important;
+        color: #000000 !important;
+        min-width: 120px !important;
+      }
+
+      .fill-blank:empty::before {
+        display: none !important;
+      }
+
+      .print-page-break {
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <header class="lab-nav">
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="../index.html" class="back-btn" title="Return to Course Mind Map Portal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <span>Portal</span>
+        </a>
+        <div class="nav-title-group">
+          <div class="nav-badge-row">
+            <span class="deck-badge">Deck 03</span>
+            <span class="deck-badge" style="background: rgba(255,255,255,0.06); color: var(--text-dim); border-color: var(--border);">Lectures 5 & 6</span>
+          </div>
+          <span class="nav-page-title">Laboratory Exercise 3: Data Structures — Sequences, Mappings & Sets</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <a href="../python_presentation_03.html" class="action-btn" title="Launch companion presentation slides">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <span>Slides</span>
+        </a>
+        <a href="Lab_03_Exercise_L05_L06.md" class="action-btn" download="Lab_03_Exercise_L05_L06.md" title="Download raw Markdown source file">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Source (.md)</span>
+        </a>
+        <button onclick="window.print()" class="action-btn primary" title="Print document or save as PDF">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span>Print / PDF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Table of Contents Quick Navigation -->
+  <nav class="lab-toc" aria-label="Table of Contents Quick Jump">
+    <div class="toc-container">
+      <span class="toc-label">Jump to:</span>
+      <a href="#1-learning-objectives" class="toc-pill">1. Learning Objectives</a>
+        <a href="#2-exercise-structure-evaluation-amp-instructor-sign-off" class="toc-pill">2. Exercise Structure, Evaluation &amp; Instructor Sign-Off</a>
+        <a href="#part-1-sequence-manipulation-lists-vs-tuples" class="toc-pill">Part 1: Sequence Manipulation — Lists vs. Tuples</a>
+        <a href="#part-2-iteration-range-amp-list-accumulation" class="toc-pill">Part 2: Iteration, Range &amp; List Accumulation</a>
+        <a href="#part-3-dictionaries-key-value-mapping-amp-safe-lookups" class="toc-pill">Part 3: Dictionaries — Key-Value Mapping &amp; Safe Lookups</a>
+        <a href="#part-4-practical-modeling-weight-amp-balance-manifest" class="toc-pill">Part 4: Practical Modeling: Weight &amp; Balance Manifest</a>
+        <a href="#part-5-challenge-task-flight-waypoint-analyzer-with-sets" class="toc-pill">Part 5: Challenge Task — Flight Waypoint Analyzer with Sets</a>
+    </div>
+  </nav>
+
+  <!-- Main Document Content -->
+  <main class="lab-content">
+<h1 id="laboratory-exercise-3-data-structures-sequences-mappings-amp-sets" class="lab-main-title">Laboratory Exercise 3: Data Structures — Sequences, Mappings &amp; Sets</h1><div class="table-container"><table class="lab-table"><thead>
+<tr>
+  <th style="text-align:left">Student Details</th>
+  <th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Student Name:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_0" data-placeholder="Click to type..."></span></td>
+  <td style="text-align:left"><strong>Student ID:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_1" data-placeholder="Click to type..."></span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Duration:</strong> 2 Hours (120 Minutes)</td>
+  <td style="text-align:left"><strong>Total Points:</strong> 100 Points</td>
+</tr>
+</tbody>
+</table></div><hr />
+<div class="part-header-wrapper"><h2 id="1-learning-objectives" class="lab-part-heading"><span>1. Learning Objectives</span></h2></div><ul>
+<li><strong>Sequences (Lists vs. Tuples):</strong> Master indexing, slicing (<code>[start:stop:step]</code>), and mutability vs. immutability.</li>
+<li><strong>Iteration &amp; Dictionaries:</strong> Build accumulator loops with <code>range()</code>, manipulate key-value dictionaries (<code>dict</code>), and perform safe lookups with <code>.get()</code>.</li>
+<li><strong>Set Operations:</strong> Apply mathematical set operations (<code>&amp;</code>, <code>|</code>, <code>-</code>, <code>issubset()</code>) to eliminate duplicates and analyze route waypoints.</li>
+</ul>
+<hr />
+<div class="part-header-wrapper"><h2 id="2-exercise-structure-evaluation-amp-instructor-sign-off" class="lab-part-heading"><span>2. Exercise Structure, Evaluation &amp; Instructor Sign-Off</span></h2></div><p>This 120-minute laboratory session is divided into 5 sequential parts totaling 100 points: <strong>Part 1: Sequence Manipulation: Lists vs. Tuples</strong> (20 mins, 15 pts), <strong>Part 2: Iteration, Range &amp; List Accumulation Patterns</strong> (25 mins, 20 pts), <strong>Part 3: Dictionaries: Key-Value Mapping &amp; Safe Lookups</strong> (25 mins, 20 pts), <strong>Part 4: Practical Modeling: Aircraft Weight &amp; Balance Tracker</strong> (30 mins, 25 pts), and <strong>Part 5: Challenge: Flight Waypoint Route Analyzer with Sets</strong> (20 mins, 20 pts).</p>
+<div class="table-container"><table class="lab-table"><thead>
+<tr>
+  <th style="text-align:left">Instructor Verification</th>
+  <th style="text-align:left">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Score Awarded:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_2" data-placeholder="Click to type..."></span> / 100 Points</td>
+  <td style="text-align:left"><strong>Instructor Signature:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_3" data-placeholder="Click to type..."></span> &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; <strong>Date:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_4" data-placeholder="Click to type..."></span> / <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_5" data-placeholder="Click to type..."></span> / 20__</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Instructor Comments &amp; Feedback:</strong></td>
+  <td style="text-align:left"><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_6" data-placeholder="Click to type..."></span></td>
+</tr>
+</tbody>
+</table></div><p><div class="print-page-break" style="page-break-after: always;"></div></p>
+<div class="part-header-wrapper"><h2 id="part-1-sequence-manipulation-lists-vs-tuples" class="lab-part-heading"><span>Part 1: Sequence Manipulation — Lists vs. Tuples</span> <span class="pts-badge">15 Pts</span></h2></div><h3 id="task-1-1-indexing-amp-slicing-slices" class="lab-task-heading"><span>Task 1.1: Indexing &amp; Slicing Slices</span> <span class="pts-badge">8 Pts</span></h3><p>Given the following hourly flight altitude logs recorded in hundreds of feet (Flight Level):</p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Python 3</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-python">altitude_fl = [<span class="token-num">180</span>, <span class="token-num">240</span>, <span class="token-num">310</span>, <span class="token-num">350</span>, <span class="token-num">390</span>, <span class="token-num">390</span>, <span class="token-num">370</span>, <span class="token-num">220</span>, <span class="token-num">100</span>, <span class="token-num">30</span>]
+</code></pre>
+</div><ol>
+<li><p><strong>(2 Points)</strong> Using positive and negative indexing, extract and print the initial takeoff cruise level (<code>180</code>) and the final approach level (<code>30</code>).</p>
+<ul>
+<li><strong>Takeoff Cruise Level (Index 0):</strong> <code>altitude_fl[<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_7" data-placeholder="Click to type..."></span>]</code> = <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_8" data-placeholder="Click to type..."></span></li>
+<li><strong>Final Approach Level (Negative Index):</strong> <code>altitude_fl[<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_9" data-placeholder="Click to type..."></span>]</code> = <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_10" data-placeholder="Click to type..."></span></li>
+</ul>
+</li>
+<li><p><strong>(3 Points)</strong> Using slice notation <code>[start:stop]</code>, extract the cruise phase (from index 2 up to, but not including, index 6: <code>[310, 350, 390, 390]</code>).</p>
+<ul>
+<li><strong>Slice Expression:</strong> <code>altitude_fl[<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_11" data-placeholder="Click to type..."></span>:<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_12" data-placeholder="Click to type..."></span>]</code></li>
+<li><strong>Resulting Sub-list:</strong> <code><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_13" data-placeholder="Click to type..."></span></code></li>
+</ul>
+</li>
+<li><p><strong>(3 Points)</strong> Using step slicing <code>[::step]</code>, extract every second reading from the entire list.</p>
+<ul>
+<li><strong>Step Slice Expression:</strong> <code>altitude_fl[<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_14" data-placeholder="Click to type..."></span>]</code></li>
+<li><strong>Resulting List:</strong> <code><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_15" data-placeholder="Click to type..."></span></code></li>
+</ul>
+</li>
+</ol>
+<h3 id="task-1-2-mutability-vs-immutability" class="lab-task-heading"><span>Task 1.2: Mutability vs. Immutability</span> <span class="pts-badge">7 Pts</span></h3><p>Examine the following code:</p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Python 3</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-python">runway_list = [<span class="token-str">&quot;01L&quot;</span>, <span class="token-str">&quot;19R&quot;</span>, <span class="token-str">&quot;09L&quot;</span>]
+runway_tuple = (<span class="token-str">&quot;01L&quot;</span>, <span class="token-str">&quot;19R&quot;</span>, <span class="token-str">&quot;09L&quot;</span>)
+
+<span class="token-com"># 1. Modify the first runway of the list to &quot;01R&quot;</span>
+runway_list[<span class="token-num">0</span>] = <span class="token-str">&quot;01R&quot;</span>
+
+<span class="token-com"># 2. Attempt the same on the tuple:</span>
+<span class="token-com"># runway_tuple[0] = &quot;01R&quot;</span>
+</code></pre>
+</div><ol>
+<li><p>Explain in a comment why modifying <code>runway_list[0]</code> succeeds, but <code>runway_tuple[0] = &quot;01R&quot;</code> throws a <code>TypeError</code>.</p>
+<p><strong>Student Explanation:</strong></p>
+<p><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_16" data-placeholder="Click to type..."></span>
+<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_17" data-placeholder="Click to type..."></span></p>
+</li>
+<li><p>Demonstrate how to append <code>&quot;27R&quot;</code> to <code>runway_list</code> using <code>.append()</code> or <code>+=</code>.</p>
+<p><strong>Code Statement:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_18" data-placeholder="Click to type..."></span>
+<strong>Updated <code>runway_list</code>:</strong> <code><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_19" data-placeholder="Click to type..."></span></code></p>
+</li>
+</ol>
+<hr />
+<div class="part-header-wrapper"><h2 id="part-2-iteration-range-amp-list-accumulation" class="lab-part-heading"><span>Part 2: Iteration, Range &amp; List Accumulation</span> <span class="pts-badge">20 Pts</span></h2></div><h3 id="task-2-1-fuel-flow-consumption-accumulator" class="lab-task-heading"><span>Task 2.1: Fuel Flow Consumption Accumulator</span> <span class="pts-badge">10 Pts</span></h3><p>An aircraft engine fuel computer samples instantaneous fuel flow (in gallons per hour) every 15 minutes during a 2-hour flight:</p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Python 3</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-python">fuel_flows = [<span class="token-num">120.5</span>, <span class="token-num">118.0</span>, <span class="token-num">115.2</span>, <span class="token-num">112.0</span>, <span class="token-num">110.5</span>, <span class="token-num">110.0</span>, <span class="token-num">108.4</span>, <span class="token-num">95.0</span>]
+</code></pre>
+</div><p>Write a <code>for</code> loop that:</p>
+<ol>
+<li>Iterates through the list without using the built-in <code>sum()</code> function.</li>
+<li>Accumulates the sum of all fuel flows.</li>
+<li>Computes the average fuel flow rate.</li>
+<li>Finds the minimum and maximum fuel flow recorded using loop comparison statements.</li>
+</ol>
+<p><strong>Expected Output:</strong></p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Terminal Output</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-text">Total Flow Sum: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_20" data-placeholder="Click to type..."></span> GPH
+Average Fuel Flow: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_21" data-placeholder="Click to type..."></span> GPH
+Max Fuel Flow: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_22" data-placeholder="Click to type..."></span> GPH
+Min Fuel Flow: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_23" data-placeholder="Click to type..."></span> GPH
+</code></pre>
+</div><p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><p><strong>Total Flow Sum:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_24" data-placeholder="Click to type..."></span> GPH</p>
+</li>
+<li><p><strong>Average Fuel Flow:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_25" data-placeholder="Click to type..."></span> GPH</p>
+</li>
+<li><p><strong>Max Fuel Flow:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_26" data-placeholder="Click to type..."></span> GPH</p>
+</li>
+<li><p><strong>Min Fuel Flow:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_27" data-placeholder="Click to type..."></span> GPH</p>
+</li>
+<li></li>
+</ul>
+<h3 id="task-2-2-generating-coordinated-altitude-profiles-with-code-range-code" class="lab-task-heading"><span>Task 2.2: Generating Coordinated Altitude Profiles with <code>range()</code></span> <span class="pts-badge">10 Pts</span></h3><p>An aircraft performs a stepped climb from <span class="math-inline">10,000<span class="math-text"> ft</span></span> to <span class="math-inline">35,000<span class="math-text"> ft</span></span> in increments of <span class="math-inline">5,000<span class="math-text"> ft</span></span>.
+Use <code>range()</code> inside a loop to generate and append these altitude targets into a new empty list <code>step_climb = []</code>. Display the resulting list and its length using <code>len()</code>.</p>
+<p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong><code>range()</code> Parameters Used:</strong> <code>range(<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_28" data-placeholder="Click to type..."></span>, <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_29" data-placeholder="Click to type..."></span>, <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_30" data-placeholder="Click to type..."></span>)</code></li>
+<li><strong>Generated <code>step_climb</code> List:</strong> <code><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_31" data-placeholder="Click to type..."></span></code></li>
+<li><strong>List Length (<code>len(step_climb)</code>):</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_32" data-placeholder="Click to type..."></span> readings</li>
+</ul>
+<hr />
+<div class="part-header-wrapper"><h2 id="part-3-dictionaries-key-value-mapping-amp-safe-lookups" class="lab-part-heading"><span>Part 3: Dictionaries — Key-Value Mapping &amp; Safe Lookups</span> <span class="pts-badge">20 Pts</span></h2></div><h3 id="task-3-1-airport-fleet-registry" class="lab-task-heading"><span>Task 3.1: Airport Fleet Registry</span> <span class="pts-badge">10 Pts</span></h3><p>Create a Python dictionary representing an airline fleet at a base hub:</p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Python 3</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-python">fleet = {
+    <span class="token-str">&quot;TG-401&quot;</span>: {<span class="token-str">&quot;type&quot;</span>: <span class="token-str">&quot;A350-900&quot;</span>, <span class="token-str">&quot;seats&quot;</span>: <span class="token-num">321</span>, <span class="token-str">&quot;status&quot;</span>: <span class="token-str">&quot;In-Flight&quot;</span>},
+    <span class="token-str">&quot;TG-402&quot;</span>: {<span class="token-str">&quot;type&quot;</span>: <span class="token-str">&quot;B777-300ER&quot;</span>, <span class="token-str">&quot;seats&quot;</span>: <span class="token-num">348</span>, <span class="token-str">&quot;status&quot;</span>: <span class="token-str">&quot;Maintenance&quot;</span>},
+    <span class="token-str">&quot;TG-403&quot;</span>: {<span class="token-str">&quot;type&quot;</span>: <span class="token-str">&quot;B787-9&quot;</span>, <span class="token-str">&quot;seats&quot;</span>: <span class="token-num">298</span>, <span class="token-str">&quot;status&quot;</span>: <span class="token-str">&quot;Boarding&quot;</span>},
+}
+</code></pre>
+</div><p>Write code to:</p>
+<ol>
+<li>Change the status of <code>&quot;TG-402&quot;</code> from <code>&quot;Maintenance&quot;</code> to <code>&quot;Available&quot;</code>.</li>
+<li>Add a new aircraft <code>&quot;TG-404&quot;</code>: <code>{&quot;type&quot;: &quot;A321neo&quot;, &quot;seats&quot;: 192, &quot;status&quot;: &quot;Standby&quot;}</code>.</li>
+<li>Iterate over the dictionary and print each aircraft callsign and its current status in an aligned column format.</li>
+</ol>
+<p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong>Updated Status for TG-402:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_33" data-placeholder="Click to type..."></span></li>
+<li><strong>Added TG-404 Entry:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_34" data-placeholder="Click to type..."></span></li>
+</ul>
+<h3 id="task-3-2-safe-lookup-with-code-get-code" class="lab-task-heading"><span>Task 3.2: Safe Lookup with <code>.get()</code></span> <span class="pts-badge">10 Pts</span></h3><p>Write a prompt where the user inputs an aircraft callsign (e.g., <code>TG-999</code>). Use <code>fleet.get(callsign, None)</code> to look up the aircraft.</p>
+<ul>
+<li>If found, print its aircraft type and seat capacity.</li>
+<li>If not found, print <code>&quot;[ALERT] Aircraft callsign not found in active fleet manifest.&quot;</code> without raising a <code>KeyError</code>.</li>
+</ul>
+<p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong>Successful Lookup Output (e.g., TG-401):</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_35" data-placeholder="Click to type..."></span></li>
+<li><strong>Non-existent Lookup Output (e.g., TG-999):</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_36" data-placeholder="Click to type..."></span></li>
+</ul>
+<hr />
+<div class="part-header-wrapper"><h2 id="part-4-practical-modeling-weight-amp-balance-manifest" class="lab-part-heading"><span>Part 4: Practical Modeling: Weight &amp; Balance Manifest</span> <span class="pts-badge">25 Pts</span></h2></div><p>Before departure, flight dispatchers calculate the total payload and center-of-gravity moment for cargo zones.</p>
+<h3 id="given-data-structure" class="lab-task-heading"><span>Given Data Structure:</span></h3><div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Python 3</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-python">cargo_manifest = [
+    {<span class="token-str">&quot;zone&quot;</span>: <span class="token-str">&quot;Zone A (Forward)&quot;</span>, <span class="token-str">&quot;weight_kg&quot;</span>: <span class="token-num">1420.0</span>, <span class="token-str">&quot;arm_m&quot;</span>: <span class="token-num">8.5</span>},
+    {<span class="token-str">&quot;zone&quot;</span>: <span class="token-str">&quot;Zone B (Mid-Fwd)&quot;</span>, <span class="token-str">&quot;weight_kg&quot;</span>: <span class="token-num">2150.0</span>, <span class="token-str">&quot;arm_m&quot;</span>: <span class="token-num">14.2</span>},
+    {<span class="token-str">&quot;zone&quot;</span>: <span class="token-str">&quot;Zone C (Mid-Aft)&quot;</span>, <span class="token-str">&quot;weight_kg&quot;</span>: <span class="token-num">1890.0</span>, <span class="token-str">&quot;arm_m&quot;</span>: <span class="token-num">22.0</span>},
+    {<span class="token-str">&quot;zone&quot;</span>: <span class="token-str">&quot;Zone D (Aft)&quot;</span>, <span class="token-str">&quot;weight_kg&quot;</span>: <span class="token-num">980.0</span>, <span class="token-str">&quot;arm_m&quot;</span>: <span class="token-num">28.5</span>}
+]
+</code></pre>
+</div><h3 id="formulas" class="lab-task-heading"><span>Formulas:</span></h3><ul>
+<li><span class="math-inline"><span class="math-text">Zone Moment</span> = <span class="math-text">weight<sub>k</sub>g</span> &times; <span class="math-text">arm<sub>m</sub></span></span></li>
+<li><span class="math-inline"><span class="math-text">Total Cargo Weight</span> = &sum; <span class="math-text">weight<sub>k</sub>g</span></span></li>
+<li><span class="math-inline"><span class="math-text">Total Cargo Moment</span> = &sum; <span class="math-text">Zone Moment</span></span></li>
+<li><span class="math-inline"><span class="math-text">Center of Gravity (CG Arm)</span> = <span class="frac"><span class="num"><span class="math-text">Total Cargo Moment</span></span><span class="den"><span class="math-text">Total Cargo Weight</span></span></span></span></li>
+</ul>
+<h3 id="requirements" class="lab-task-heading"><span>Requirements:</span></h3><p>Write a Python program that:</p>
+<ol>
+<li>Iterates through <code>cargo_manifest</code>.</li>
+<li>Calculates the moment for each zone and prints a tabular loading sheet.</li>
+<li>Computes the total cargo weight and total cargo moment.</li>
+<li>Computes the composite CG position in meters.</li>
+<li>If the resulting CG position is outside the safe envelope (<span class="math-inline">14.0<span class="math-text"> m</span> &le; <span class="math-text">CG</span> &le; 18.0<span class="math-text"> m</span></span>), display an <code>&quot;[UNSAFE CG WARNING]&quot;</code>; otherwise display <code>&quot;[SAFE TRIM NORMAL]&quot;</code>.</li>
+</ol>
+<p><strong>Example Run:</strong></p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Terminal Output</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-text">Zone Loading Sheet:
+- Zone A (Forward): 1420.0 kg | Arm: 8.5 m | Moment: 12070.0 kg-m
+- Zone B (Mid-Fwd): 2150.0 kg | Arm: 14.2 m | Moment: 30530.0 kg-m
+- Zone C (Mid-Aft): 1890.0 kg | Arm: 22.0 m | Moment: 41580.0 kg-m
+- Zone D (Aft): 980.0 kg | Arm: 28.5 m | Moment: 27930.0 kg-m
+
+--- Load Summary ---
+Total Cargo Weight: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_37" data-placeholder="Click to type..."></span> kg
+Total Moment: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_38" data-placeholder="Click to type..."></span> kg-m
+Calculated CG Location: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_39" data-placeholder="Click to type..."></span> meters
+Trim Status: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_40" data-placeholder="Click to type..."></span>
+</code></pre>
+</div><p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong>Total Cargo Weight:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_41" data-placeholder="Click to type..."></span> kg</li>
+<li><strong>Total Cargo Moment:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_42" data-placeholder="Click to type..."></span> kg-m</li>
+<li><strong>Calculated CG Location:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_43" data-placeholder="Click to type..."></span> meters</li>
+<li><strong>Trim Status Evaluation:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_44" data-placeholder="Click to type..."></span></li>
+</ul>
+<div class="part-header-wrapper"><h2 id="part-5-challenge-task-flight-waypoint-analyzer-with-sets" class="lab-part-heading"><span>Part 5: Challenge Task — Flight Waypoint Analyzer with Sets</span> <span class="pts-badge">20 Pts</span></h2></div><p>Air navigation waypoints define flight paths across different Flight Information Regions (FIRs). Two flight plans share overlapping navigation corridors:</p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Python 3</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-python">flight_A_waypoints = [<span class="token-str">&quot;BKK&quot;</span>, <span class="token-str">&quot;LIMLA&quot;</span>, <span class="token-str">&quot;BETNO&quot;</span>, <span class="token-str">&quot;SALAX&quot;</span>, <span class="token-str">&quot;DOSEN&quot;</span>, <span class="token-str">&quot;CONOR&quot;</span>, <span class="token-str">&quot;HKG&quot;</span>]
+flight_B_waypoints = [<span class="token-str">&quot;CNX&quot;</span>, <span class="token-str">&quot;BETNO&quot;</span>, <span class="token-str">&quot;SURIN&quot;</span>, <span class="token-str">&quot;DOSEN&quot;</span>, <span class="token-str">&quot;CANTO&quot;</span>, <span class="token-str">&quot;HKG&quot;</span>, <span class="token-str">&quot;TPE&quot;</span>]
+</code></pre>
+</div><h3 id="requirements" class="lab-task-heading"><span>Requirements:</span></h3><p>Using Python <strong>sets</strong> and set methods/operators:</p>
+<ol>
+<li>Convert both lists into sets: <code>set_A</code> and <code>set_B</code>.</li>
+<li>Find and display all <strong>shared waypoints</strong> where both aircraft might cross paths (Intersection: <code>&amp;</code>).</li>
+<li>Find all <strong>unique waypoints used by Flight A but not Flight B</strong> (Difference: <code>-</code>).</li>
+<li>Find the <strong>complete combined network of waypoints</strong> across both flights with all duplicates eliminated (Union: <code>|</code>).</li>
+<li>Check if the set <code>{&quot;BETNO&quot;, &quot;DOSEN&quot;}</code> is a strict subset (<code>issubset()</code>) of both flight plans.</li>
+</ol>
+<p><strong>Example Run:</strong></p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Terminal Output</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-text">Shared Intersecting Waypoints: {<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_45" data-placeholder="Click to type..."></span>}
+Waypoints Unique to Flight A: {<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_46" data-placeholder="Click to type..."></span>}
+Total Consolidated Waypoints: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_47" data-placeholder="Click to type..."></span> waypoints
+Waypoint Pair {&#x27;BETNO&#x27;, &#x27;DOSEN&#x27;} in Flight A: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_48" data-placeholder="Click to type..."></span>
+Waypoint Pair {&#x27;BETNO&#x27;, &#x27;DOSEN&#x27;} in Flight B: <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_49" data-placeholder="Click to type..."></span>
+</code></pre>
+</div><p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong>Shared Waypoints (Intersection <code>&amp;</code>):</strong> <code><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_50" data-placeholder="Click to type..."></span></code></li>
+<li><strong>Unique to Flight A (Difference <code>-</code>):</strong> <code><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_51" data-placeholder="Click to type..."></span></code></li>
+<li><strong>Total Consolidated Waypoints (Union <code>|</code> Count):</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_52" data-placeholder="Click to type..."></span> waypoints</li>
+<li><strong>Subset Check <code>{&quot;BETNO&quot;, &quot;DOSEN&quot;}</code> in Flight A:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_53" data-placeholder="Click to type..."></span></li>
+<li><strong>Subset Check <code>{&quot;BETNO&quot;, &quot;DOSEN&quot;}</code> in Flight B:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_54" data-placeholder="Click to type..."></span></li>
+</ul>
+
+  </main>
+
+  <!-- Auto-Save Toast Feedback -->
+  <div id="save-toast" class="save-toast" aria-live="polite">
+    <div class="save-toast-dot"></div>
+    <span>Answer autosaved</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="lab-footer">
+    <div class="footer-content">
+      <div>&copy; 2026 Civil Aviation Training Center (CATC). Department of Aviation Engineering.</div>
+      <div>100% Offline Capable &bull; Standalone HTML5 Laboratory Sheets (Source: Markdown)</div>
+    </div>
+  </footer>
+
+  <script>
+    // Copy code snippet helper
+    function copyCode(btn) {
+      const card = btn.closest('.code-card');
+      const code = card.querySelector('code');
+      if (code) {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          const original = btn.innerHTML;
+          btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span style="color:#34d399">Copied!</span>';
+          setTimeout(() => {
+            btn.innerHTML = original;
+          }, 1800);
+        }).catch(err => console.error('Copy failed:', err));
+      }
+    }
+
+    // LocalStorage Auto-Save for student fill blanks
+    document.addEventListener('DOMContentLoaded', () => {
+      const storageKey = 'catc_lab_003_answers';
+      const blanks = document.querySelectorAll('.fill-blank');
+      const toast = document.getElementById('save-toast');
+      let toastTimer = null;
+
+      // Restore saved answers
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        blanks.forEach(b => {
+          const id = b.dataset.blankId;
+          if (id && saved[id]) {
+            b.innerText = saved[id];
+          }
+        });
+      } catch (e) {
+        console.warn('LocalStorage access restricted:', e);
+      }
+
+      // Auto-save on input
+      function saveAnswers() {
+        try {
+          const state = {};
+          blanks.forEach(b => {
+            const id = b.dataset.blankId;
+            if (id && b.innerText.trim()) {
+              state[id] = b.innerText;
+            }
+          });
+          localStorage.setItem(storageKey, JSON.stringify(state));
+          
+          if (toast) {
+            toast.classList.add('visible');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+              toast.classList.remove('visible');
+            }, 1400);
+          }
+        } catch (e) {
+          console.warn('Could not save to localStorage:', e);
+        }
+      }
+
+      blanks.forEach(b => {
+        b.addEventListener('input', saveAnswers);
+      });
+    });
+  </script>
+</body>
+</html>

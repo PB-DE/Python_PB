@@ -1,0 +1,1170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Laboratory Exercise 5: Data Persistence, Exception Handling & Object-Oriented Programming — CATC Course Portal</title>
+  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming — Laboratory Exercise 5: Data Persistence, Exception Handling & Object-Oriented Programming (Lectures 9 & 10). Standalone offline HTML lab sheet with interactive student blanks, syntax-highlighted code blocks, and print stylesheet.">
+
+  <style>
+    :root {
+      --bg: #0b0d13;
+      --bg-surface: #12151f;
+      --bg-card: #181d2a;
+      --bg-card-hover: #1f2637;
+      --border: #242c3d;
+      --border-light: rgba(255, 255, 255, 0.08);
+      --border-focus: #fb7185;
+      --text: #cbd5e1;
+      --text-bright: #ffffff;
+      --text-dim: #94a3b8;
+      
+      --accent: #fb7185;
+      --accent-rgb: 251, 113, 133;
+      --cyan: #38bdf8;
+      
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 16px;
+      --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.3);
+      --shadow-card: 0 4px 14px rgba(0, 0, 0, 0.35);
+
+      /* VS Code Dark+ Syntax Tokens */
+      --token-kw: #569cd6;
+      --token-var: #9cdcfe;
+      --token-num: #b5cea8;
+      --token-str: #ce9178;
+      --token-com: #6a9955;
+      --token-fn: #dcdcaa;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    }
+
+    ::selection {
+      background: rgba(var(--accent-rgb), 0.35);
+      color: #ffffff;
+    }
+
+    :focus-visible {
+      outline: 2px solid var(--accent);
+      outline-offset: 3px;
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border);
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    /* Top Sticky Navigation Header */
+    header.lab-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(11, 13, 19, 0.94);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .nav-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: var(--text-dim);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-weight: 600;
+      padding: 0.35rem 0.65rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      background: var(--bg-surface);
+      transition: color 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+    }
+
+    .back-btn:hover {
+      color: var(--text-bright);
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .nav-title-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .nav-badge-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .deck-badge {
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.1rem 0.45rem;
+      border-radius: 4px;
+      background: rgba(var(--accent-rgb), 0.15);
+      color: var(--accent);
+      border: 1px solid rgba(var(--accent-rgb), 0.3);
+    }
+
+    .nav-page-title {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 420px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .action-btn {
+      font-size: 0.82rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.4rem 0.75rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      color: var(--text);
+      text-decoration: none;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+      color: var(--text-bright);
+    }
+
+    .action-btn.primary {
+      background: rgba(var(--accent-rgb), 0.12);
+      border-color: rgba(var(--accent-rgb), 0.35);
+      color: var(--accent);
+    }
+
+    .action-btn.primary:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #0b0d13;
+    }
+
+    /* Table of Contents Jump Bar */
+    .lab-toc {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-light);
+      padding: 0.5rem 1.5rem;
+    }
+
+    .toc-container {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      padding-bottom: 2px;
+    }
+
+    .toc-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+      margin-right: 0.35rem;
+    }
+
+    .toc-pill {
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: var(--text-dim);
+      text-decoration: none;
+      padding: 0.2rem 0.6rem;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border);
+      white-space: nowrap;
+      transition: color 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+    }
+
+    .toc-pill:hover {
+      color: var(--text-bright);
+      border-color: var(--accent);
+      background: rgba(var(--accent-rgb), 0.08);
+    }
+
+    /* Main Container */
+    main.lab-content {
+      flex: 1;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 2.75rem 1.5rem 5rem;
+      width: 100%;
+    }
+
+    /* Document Main Title */
+    .lab-main-title {
+      font-size: clamp(1.8rem, 3.5vw, 2.35rem);
+      font-weight: 800;
+      color: var(--text-bright);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 1rem;
+    }
+
+    /* Section Headings */
+    .part-header-wrapper {
+      margin-top: 3rem;
+      margin-bottom: 1.25rem;
+      border-left: 4px solid var(--accent);
+      padding-left: 1rem;
+    }
+
+    .lab-part-heading {
+      font-size: 1.45rem;
+      font-weight: 800;
+      color: var(--text-bright);
+      letter-spacing: -0.015em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .lab-task-heading {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text-bright);
+      margin-top: 1.85rem;
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 0.4rem;
+    }
+
+    .pts-badge {
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.15rem 0.55rem;
+      border-radius: 4px;
+      background: rgba(var(--accent-rgb), 0.14);
+      color: var(--accent);
+      border: 1px solid rgba(var(--accent-rgb), 0.28);
+      font-variant-numeric: tabular-nums;
+      flex-shrink: 0;
+    }
+
+    p {
+      margin-bottom: 1.1rem;
+      color: var(--text);
+    }
+
+    ul, ol {
+      margin-bottom: 1.25rem;
+      padding-left: 1.6rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 2.5rem 0;
+    }
+
+    strong {
+      color: var(--text-bright);
+      font-weight: 700;
+    }
+
+    /* Inline Code */
+    code:not([class*="language-"]) {
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.88em;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--cyan);
+      padding: 0.15rem 0.4rem;
+      border-radius: 4px;
+    }
+
+    /* Code Card Component */
+    .code-card {
+      background: #181d2a;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      margin: 1.25rem 0;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .code-card-header {
+      background: #12151f;
+      border-bottom: 1px solid var(--border);
+      padding: 0.45rem 0.85rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .code-lang-meta {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .code-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    .code-lang-label {
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .copy-code-btn {
+      font-size: 0.72rem;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-dim);
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .copy-code-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: var(--border);
+      color: var(--text-bright);
+    }
+
+    .code-card pre {
+      padding: 1rem 1.15rem;
+      margin: 0;
+      overflow-x: auto;
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: #d4d4d4;
+    }
+
+    /* VS Code Syntax Colors */
+    .token-kw { color: var(--token-kw); font-weight: 600; }
+    .token-var { color: var(--token-var); }
+    .token-num { color: var(--token-num); }
+    .token-str { color: var(--token-str); }
+    .token-com { color: var(--token-com); font-style: italic; }
+    .token-fn { color: var(--token-fn); }
+
+    /* Table Component */
+    .table-container {
+      width: 100%;
+      overflow-x: auto;
+      margin: 1.25rem 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+    }
+
+    .lab-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.9rem;
+    }
+
+    .lab-table th {
+      background: var(--bg-surface);
+      color: var(--text-bright);
+      font-weight: 700;
+      padding: 0.75rem 1rem;
+      border-bottom: 1px solid var(--border);
+      letter-spacing: -0.01em;
+    }
+
+    .lab-table td {
+      padding: 0.7rem 1rem;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      color: var(--text);
+    }
+
+    .lab-table tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .lab-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Mathematical Formulas */
+    .math-block {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.15rem 1.5rem;
+      margin: 1.35rem 0;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      font-family: "Cambria Math", "STIX Two Math", "KaTeX_Math", "Times New Roman", serif;
+      font-size: 1.2rem;
+      color: var(--accent);
+      overflow-x: auto;
+    }
+
+    .math-inline {
+      font-family: "Cambria Math", "STIX Two Math", "KaTeX_Math", "Times New Roman", serif;
+      font-size: 1.05em;
+      color: var(--accent);
+      padding: 0 0.2em;
+    }
+
+    .frac {
+      display: inline-flex;
+      flex-direction: column;
+      vertical-align: middle;
+      text-align: center;
+      padding: 0 0.35em;
+      font-size: 0.92em;
+      line-height: 1.15;
+    }
+
+    .num {
+      border-bottom: 1.5px solid currentColor;
+      padding-bottom: 2px;
+    }
+
+    .den {
+      padding-top: 2px;
+    }
+
+    .sqrt-wrap {
+      display: inline-flex;
+      align-items: baseline;
+      padding: 0 0.2em;
+    }
+
+    .radicand {
+      border-top: 1.5px solid currentColor;
+      padding-top: 1px;
+      margin-left: 1px;
+    }
+
+    .math-text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-style: normal;
+      font-size: 0.92em;
+      color: var(--text-bright);
+    }
+
+    /* Interactive Fill Blanks */
+    .fill-blank {
+      display: inline-block;
+      min-width: 140px;
+      border-bottom: 1.5px dashed var(--accent);
+      padding: 0 0.4rem;
+      margin: 0 0.2rem;
+      color: var(--text-bright);
+      background: rgba(var(--accent-rgb), 0.06);
+      border-radius: 2px;
+      outline: none;
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.95em;
+      transition: background 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      cursor: text;
+    }
+
+    .fill-blank:empty::before {
+      content: attr(data-placeholder);
+      color: var(--text-dim);
+      font-style: italic;
+      font-size: 0.85em;
+      pointer-events: none;
+    }
+
+    .fill-blank:focus {
+      background: rgba(var(--accent-rgb), 0.18);
+      border-bottom-style: solid;
+      box-shadow: 0 0 0 2px rgba(var(--accent-rgb), 0.25);
+    }
+
+    .print-page-break {
+      height: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    /* Floating Save Status Toast */
+    .save-toast {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.5rem 0.85rem;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      box-shadow: var(--shadow-card);
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      pointer-events: none;
+      z-index: 90;
+    }
+
+    .save-toast.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .save-toast-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent);
+    }
+
+    /* Footer */
+    footer.lab-footer {
+      margin-top: auto;
+      background: var(--bg-surface);
+      border-top: 1px solid var(--border-light);
+      padding: 1.75rem 1.5rem;
+      color: var(--text-dim);
+      font-size: 0.82rem;
+    }
+
+    .footer-content {
+      max-width: 1080px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .nav-page-title {
+        display: none;
+      }
+      main.lab-content {
+        padding: 1.75rem 1rem 4rem;
+      }
+    }
+
+    /* PRINT STYLESHEET (Clean white ink-friendly handout for printing/PDF) */
+    @media print {
+      @page {
+        size: A4 portrait;
+        margin: 15mm 15mm 20mm 15mm;
+      }
+
+      body {
+        background: #ffffff !important;
+        color: #111111 !important;
+        font-size: 10pt;
+        line-height: 1.5;
+      }
+
+      header.lab-nav,
+      nav.lab-toc,
+      .copy-code-btn,
+      .save-toast,
+      footer.lab-footer {
+        display: none !important;
+      }
+
+      main.lab-content {
+        padding: 0 !important;
+        max-width: 100% !important;
+      }
+
+      .lab-main-title {
+        color: #000000 !important;
+        font-size: 18pt !important;
+        border-bottom: 2px solid #333333 !important;
+        margin-bottom: 12pt !important;
+        padding-bottom: 6pt !important;
+      }
+
+      .part-header-wrapper {
+        border-left: 4px solid #333333 !important;
+        margin-top: 18pt !important;
+        margin-bottom: 8pt !important;
+      }
+
+      .lab-part-heading {
+        color: #000000 !important;
+        font-size: 13pt !important;
+      }
+
+      .lab-task-heading {
+        color: #111111 !important;
+        font-size: 11pt !important;
+        border-bottom: 1px solid #cccccc !important;
+        margin-top: 12pt !important;
+      }
+
+      .pts-badge {
+        background: #eeeeee !important;
+        color: #222222 !important;
+        border: 1px solid #999999 !important;
+      }
+
+      .code-card {
+        background: #f8f9fa !important;
+        border: 1px solid #cccccc !important;
+        box-shadow: none !important;
+        break-inside: avoid;
+      }
+
+      .code-card-header {
+        background: #eeeeee !important;
+        border-bottom: 1px solid #cccccc !important;
+      }
+
+      .code-card pre {
+        color: #222222 !important;
+        font-size: 8.5pt !important;
+      }
+
+      .token-kw { color: #0000bb !important; font-weight: bold; }
+      .token-var { color: #222222 !important; }
+      .token-num { color: #098658 !important; }
+      .token-str { color: #a31515 !important; }
+      .token-com { color: #008000 !important; font-style: italic; }
+      .token-fn { color: #795e26 !important; }
+
+      .table-container {
+        background: #ffffff !important;
+        border: 1px solid #333333 !important;
+        break-inside: avoid;
+      }
+
+      .lab-table th {
+        background: #f0f0f0 !important;
+        color: #000000 !important;
+        border-bottom: 1px solid #333333 !important;
+      }
+
+      .lab-table td {
+        border-bottom: 1px solid #dddddd !important;
+        color: #111111 !important;
+      }
+
+      .math-block {
+        background: #fdfdfd !important;
+        border: 1px solid #cccccc !important;
+        color: #111111 !important;
+        font-size: 11pt !important;
+        break-inside: avoid;
+      }
+
+      .math-inline {
+        color: #111111 !important;
+      }
+
+      .fill-blank {
+        background: transparent !important;
+        border-bottom: 1.5px solid #222222 !important;
+        color: #000000 !important;
+        min-width: 120px !important;
+      }
+
+      .fill-blank:empty::before {
+        display: none !important;
+      }
+
+      .print-page-break {
+        page-break-after: always !important;
+        break-after: page !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Navigation -->
+  <header class="lab-nav">
+    <div class="nav-container">
+      <div class="nav-left">
+        <a href="../index.html" class="back-btn" title="Return to Course Mind Map Portal">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+          <span>Portal</span>
+        </a>
+        <div class="nav-title-group">
+          <div class="nav-badge-row">
+            <span class="deck-badge">Deck 05</span>
+            <span class="deck-badge" style="background: rgba(255,255,255,0.06); color: var(--text-dim); border-color: var(--border);">Lectures 9 & 10</span>
+          </div>
+          <span class="nav-page-title">Laboratory Exercise 5: Data Persistence, Exception Handling & Object-Oriented Programming</span>
+        </div>
+      </div>
+
+      <div class="nav-actions">
+        <a href="../python_presentation_05.html" class="action-btn" title="Launch companion presentation slides">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+          <span>Slides</span>
+        </a>
+        <a href="Lab_05_Exercise_L09_L10.md" class="action-btn" download="Lab_05_Exercise_L09_L10.md" title="Download raw Markdown source file">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span>Source (.md)</span>
+        </a>
+        <button onclick="window.print()" class="action-btn primary" title="Print document or save as PDF">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+          <span>Print / PDF</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Table of Contents Quick Navigation -->
+  <nav class="lab-toc" aria-label="Table of Contents Quick Jump">
+    <div class="toc-container">
+      <span class="toc-label">Jump to:</span>
+      <a href="#1-learning-objectives" class="toc-pill">1. Learning Objectives</a>
+        <a href="#2-exercise-structure-evaluation-amp-instructor-sign-off" class="toc-pill">2. Exercise Structure, Evaluation &amp; Instructor Sign-Off</a>
+        <a href="#part-1-robust-file-i-o-amp-defensive-exception-handling" class="toc-pill">Part 1: Robust File I/O &amp; Defensive Exception Handling</a>
+        <a href="#part-2-json-data-interchange-amp-state-serialization" class="toc-pill">Part 2: JSON Data Interchange &amp; State Serialization</a>
+        <a href="#part-3-oop-fundamentals-classes-amp-instance-variables" class="toc-pill">Part 3: OOP Fundamentals — Classes &amp; Instance Variables</a>
+        <a href="#part-5-challenge-task-flight-dispatch-manager" class="toc-pill">Part 5: Challenge Task — Flight Dispatch Manager</a>
+    </div>
+  </nav>
+
+  <!-- Main Document Content -->
+  <main class="lab-content">
+<h1 id="laboratory-exercise-5-data-persistence-exception-handling-amp-object-oriented-programming" class="lab-main-title">Laboratory Exercise 5: Data Persistence, Exception Handling &amp; Object-Oriented Programming</h1><div class="table-container"><table class="lab-table"><thead>
+<tr>
+  <th style="text-align:left">Student Details</th>
+  <th style="text-align:left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Student Name:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_0" data-placeholder="Click to type..."></span></td>
+  <td style="text-align:left"><strong>Student ID:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_1" data-placeholder="Click to type..."></span></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Duration:</strong> 2 Hours (120 Minutes)</td>
+  <td style="text-align:left"><strong>Total Points:</strong> 100 Points</td>
+</tr>
+</tbody>
+</table></div><hr />
+<div class="part-header-wrapper"><h2 id="1-learning-objectives" class="lab-part-heading"><span>1. Learning Objectives</span></h2></div><ul>
+<li><strong>File I/O &amp; Exception Handling:</strong> Read/write files using context managers (<code>with open</code>) and defensively handle exceptions (<code>try - except - finally</code>).</li>
+<li><strong>JSON Serialization:</strong> Serialize and deserialize complex nested data structures to/from disk using <code>json.dump()</code> and <code>json.load()</code>.</li>
+<li><strong>Object-Oriented Programming:</strong> Define classes with <code>__init__</code>, encapsulate state/methods, and manage multi-object fleet dispatching.</li>
+</ul>
+<hr />
+<div class="part-header-wrapper"><h2 id="2-exercise-structure-evaluation-amp-instructor-sign-off" class="lab-part-heading"><span>2. Exercise Structure, Evaluation &amp; Instructor Sign-Off</span></h2></div><p>This 120-minute laboratory session is divided into 5 sequential parts totaling 100 points: <strong>Part 1: Robust File I/O &amp; Defensive Exception Handling</strong> (20 mins, 15 pts), <strong>Part 2: JSON Data Interchange &amp; State Serialization</strong> (25 mins, 20 pts), <strong>Part 3: Object-Oriented Architecture: Classes &amp; Attributes</strong> (25 mins, 20 pts), <strong>Part 4: Practical Modeling: <code>Aircraft</code> Flight Telemetry Engine</strong> (30 mins, 25 pts), and <strong>Part 5: Challenge: Flight Operations Manager (OOP + JSON + Exceptions)</strong> (20 mins, 20 pts).</p>
+<div class="table-container"><table class="lab-table"><thead>
+<tr>
+  <th style="text-align:left">Instructor Verification</th>
+  <th style="text-align:left">Details</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>Score Awarded:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_2" data-placeholder="Click to type..."></span> / 100 Points</td>
+  <td style="text-align:left"><strong>Instructor Signature:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_3" data-placeholder="Click to type..."></span> &amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; <strong>Date:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_4" data-placeholder="Click to type..."></span> / <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_5" data-placeholder="Click to type..."></span> / 20__</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>Instructor Comments &amp; Feedback:</strong></td>
+  <td style="text-align:left"><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_6" data-placeholder="Click to type..."></span></td>
+</tr>
+</tbody>
+</table></div><hr />
+<p><div class="print-page-break" style="page-break-after: always;"></div></p>
+<div class="part-header-wrapper"><h2 id="part-1-robust-file-i-o-amp-defensive-exception-handling" class="lab-part-heading"><span>Part 1: Robust File I/O &amp; Defensive Exception Handling</span> <span class="pts-badge">15 Pts</span></h2></div><h3 id="task-1-1-flight-log-writer-amp-reader" class="lab-task-heading"><span>Task 1.1: Flight Log Writer &amp; Reader</span> <span class="pts-badge">8 Pts</span></h3><p>Write a Python script that:</p>
+<ol>
+<li>Opens (create) a file named <code>flight_log.txt</code> in write mode (<code>&quot;w&quot;</code>) using a <code>with</code> statement.</li>
+<li>Writes 3 lines of comma-separated waypoint entries:<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Terminal Output</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-text">WP01,10:15,FL180,250
+WP02,10:35,FL280,310
+WP03,11:05,FL350,420
+</code></pre>
+</div></li>
+<li>Re-opens <code>flight_log.txt</code> in read mode (<code>&quot;r&quot;</code>), loops through each line, and prints each entry cleanly formatted without extra blank lines.</li>
+</ol>
+<h3 id="task-1-2-defensive-exception-handling" class="lab-task-heading"><span>Task 1.2: Defensive Exception Handling</span> <span class="pts-badge">7 Pts</span></h3><p>Write a function <code>safe_read_altitude(filename)</code> that:</p>
+<ol>
+<li>Attempts to open and read an altitude value from a user-specified filename.</li>
+<li>Catches <code>FileNotFoundError</code> if the file does not exist and displays a user-friendly error: <code>&quot;[ERROR] Specified flight file not found on disk.&quot;</code>.</li>
+<li>Catches <code>ValueError</code> if the content cannot be converted to a float and displays: <code>&quot;[ERROR] Corrupted altitude record; non-numeric data encountered.&quot;</code>.</li>
+<li>Uses the <code>finally</code> block to display: <code>&quot;[LOG] File operation attempt concluded.&quot;</code>.</li>
+</ol>
+<p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><em>\</em><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_7" data-placeholder="Click to type..."></span>
+<span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_8" data-placeholder="Click to type..."></span></li>
+</ul>
+<hr />
+<div class="part-header-wrapper"><h2 id="part-2-json-data-interchange-amp-state-serialization" class="lab-part-heading"><span>Part 2: JSON Data Interchange &amp; State Serialization</span> <span class="pts-badge">20 Pts</span></h2></div><h3 id="task-2-1-exporting-flight-dispatch-plan-to-json" class="lab-task-heading"><span>Task 2.1: Exporting Flight Dispatch Plan to JSON</span> <span class="pts-badge">10 Pts</span></h3><p>Given the following flight operational plan:</p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Python 3</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-python">dispatch_plan = {
+    <span class="token-str">&quot;flight_number&quot;</span>: <span class="token-str">&quot;TG920&quot;</span>,
+    <span class="token-str">&quot;origin&quot;</span>: <span class="token-str">&quot;VTBS&quot;</span>,
+    <span class="token-str">&quot;destination&quot;</span>: <span class="token-str">&quot;EDDF&quot;</span>,
+    <span class="token-str">&quot;aircraft&quot;</span>: <span class="token-str">&quot;Airbus A350-900&quot;</span>,
+    <span class="token-str">&quot;cruising_alt_ft&quot;</span>: <span class="token-num">38000</span>,
+    <span class="token-str">&quot;passengers&quot;</span>: <span class="token-num">284</span>,
+    <span class="token-str">&quot;fuel_required_kg&quot;</span>: <span class="token-num">46500.0</span>,
+    <span class="token-str">&quot;alternate_airports&quot;</span>: [<span class="token-str">&quot;EDDM&quot;</span>, <span class="token-str">&quot;EDDL&quot;</span>]
+}
+</code></pre>
+</div><p>Write Python code using the <code>json</code> module to:</p>
+<ol>
+<li>Serialize and save <code>dispatch_plan</code> into a file named <code>flight_plan.json</code> with an indentation of 4 spaces (<code>indent=4</code>).</li>
+<li>Read <code>flight_plan.json</code> back into a new variable <code>loaded_plan</code>.</li>
+<li>Access and display the destination airport code and the list of alternate airports.</li>
+</ol>
+<p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong>JSON File Generated:</strong> <code>flight_plan.json</code></li>
+<li><strong>Destination Airport Code:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_9" data-placeholder="Click to type..."></span></li>
+<li><strong>Alternate Airports List:</strong> <code><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_10" data-placeholder="Click to type..."></span></code></li>
+</ul>
+<h3 id="task-2-2-updating-json-records" class="lab-task-heading"><span>Task 2.2: Updating JSON Records</span> <span class="pts-badge">10 Pts</span></h3><p>Write code to:</p>
+<ol>
+<li>Append <code>&quot;EDDK&quot;</code> into the <code>alternate_airports</code> list inside <code>loaded_plan</code>.</li>
+<li>Update <code>&quot;fuel_required_kg&quot;</code> by adding a contingency reserve of <code>2,500.0 kg</code>.</li>
+<li>Overwrite the updated plan back to <code>flight_plan.json</code>.</li>
+</ol>
+<p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong>Updated <code>alternate_airports</code>:</strong> <code><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_11" data-placeholder="Click to type..."></span></code></li>
+<li><strong>Updated <code>fuel_required_kg</code>:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_12" data-placeholder="Click to type..."></span> kg</li>
+</ul>
+<hr />
+<div class="part-header-wrapper"><h2 id="part-3-oop-fundamentals-classes-amp-instance-variables" class="lab-part-heading"><span>Part 3: OOP Fundamentals — Classes &amp; Instance Variables</span> <span class="pts-badge">20 Pts</span></h2></div><h3 id="task-3-1-defining-the-code-airport-code-class" class="lab-task-heading"><span>Task 3.1: Defining the <code>Airport</code> Class</span> <span class="pts-badge">10 Pts</span></h3><p>Define a class named <code>Airport</code> that represents a civil aerodrome:</p>
+<ol>
+<li>Define the constructor <code>__init__(self, icao_code, name, elevation_ft, num_runways)</code>.</li>
+<li>Initialize corresponding instance attributes: <code>self.icao_code</code>, <code>self.name</code>, <code>self.elevation_ft</code>, and <code>self.num_runways</code>.</li>
+<li>Add a method <code>get_info(self)</code> that returns a formatted descriptive string:<ul>
+<li>Example: <code>&quot;Suvarnabhumi Airport (VTBS) | Elevation: 5 ft | Runways: 2&quot;</code></li>
+</ul>
+</li>
+</ol>
+<h3 id="task-3-2-object-instantiation" class="lab-task-heading"><span>Task 3.2: Object Instantiation</span> <span class="pts-badge">10 Pts</span></h3><p>Create two distinct instances of the <code>Airport</code> class:</p>
+<ul>
+<li>Airport 1: <code>icao=&quot;VTBS&quot;</code>, <code>name=&quot;Suvarnabhumi Airport&quot;</code>, <code>elevation=5.0</code>, <code>runways=2</code></li>
+<li>Airport 2: <code>icao=&quot;VTCC&quot;</code>, <code>name=&quot;Chiang Mai International&quot;</code>, <code>elevation=1037.0</code>, <code>runways=1</code></li>
+</ul>
+<p>Call and print the <code>.get_info()</code> method for both objects. Demonstrate that modifying Airport 1 does not alter Airport 2.</p>
+<p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong>Airport 1 Info (<code>.get_info()</code>):</strong><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_13" data-placeholder="Click to type..."></span></li>
+<li><strong>Airport 2 Info (<code>.get_info()</code>):</strong><span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_14" data-placeholder="Click to type..."></span></li>
+</ul>
+<hr />
+<div class="part-header-wrapper"><h2 id="part-4-practical-modeling-code-aircraft-code-flight-telemetry-engine" class="lab-part-heading"><span>Part 4: Practical Modeling: <code>Aircraft</code> Flight Telemetry Engine</span> <span class="pts-badge">25 Pts</span></h2></div><p>Design an engineering class named <code>Aircraft</code> that models dynamic flight physics and fuel consumption.</p>
+<h3 id="class-specification" class="lab-task-heading"><span>Class Specification:</span></h3><ul>
+<li><p><strong>Constructor <code>__init__(self, callsign, model, fuel_kg, cruise_speed_kts)</code>:</strong></p>
+<ul>
+<li>Sets initial instance attributes:<ul>
+<li><code>self.callsign = callsign</code></li>
+<li><code>self.model = model</code></li>
+<li><code>self.fuel_kg = float(fuel_kg)</code></li>
+<li><code>self.cruise_speed_kts = float(cruise_speed_kts)</code></li>
+<li><code>self.altitude_ft = 0.0</code> (starts on the ground)</li>
+<li><code>self.is_airborne = False</code></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>Method <code>takeoff(self, target_altitude_ft)</code>:</strong></p>
+<ul>
+<li>Checks if <code>self.fuel_kg &lt; 1000.0</code>. If so, print <code>&quot;[ABORT] Insufficient fuel for takeoff!&quot;</code> and return <code>False</code>.</li>
+<li>Otherwise, sets <code>self.is_airborne = True</code>, <code>self.altitude_ft = target_altitude_ft</code>, deducts <code>800.0 kg</code> of fuel for the climb phase, and prints a success takeoff message.</li>
+</ul>
+</li>
+<li><p><strong>Method <code>fly(self, hours)</code>:</strong></p>
+<ul>
+<li>If the aircraft is not airborne, print <code>&quot;[ERROR] Aircraft cannot cruise while on ground.&quot;</code></li>
+<li>Computes fuel burn during cruise: <span class="math-inline"><span class="math-text">fuel<sub>b</sub>urn</span> = <span class="math-text">hours</span> &times; 2400.0<span class="math-text"> kg/hr</span></span>.</li>
+<li>If <span class="math-inline"><span class="math-text">fuel<sub>b</sub>urn</span> > <span class="math-text">self.fuel<sub>k</sub>g</span></span>, trigger an emergency: deduct all fuel to <span class="math-inline">0</span>, set <code>self.altitude_ft = 0</code>, and print <code>&quot;[EMERGENCY] Fuel exhaustion!&quot;</code>.</li>
+<li>Otherwise, deducts <span class="math-inline"><span class="math-text">fuel<sub>u</sub>sed</span></span> from <code>self.fuel_kg</code> and displays distance covered: <span class="math-inline"><span class="math-text">distance</span> = <span class="math-text">hours</span> &times; <span class="math-text">self.cruise<sub>s</sub>peed<sub>k</sub>ts</span></span>.</li>
+</ul>
+</li>
+<li><p><strong>Method <code>get_status(self)</code>:</strong></p>
+<ul>
+<li>Displays a clean formatted status report showing callsign, airborne status, current altitude, and remaining fuel.</li>
+</ul>
+</li>
+</ul>
+<h3 id="test-workflow" class="lab-task-heading"><span>Test Workflow:</span></h3><ol>
+<li>Instantiate: <code>plane = Aircraft(&quot;THA911&quot;, &quot;Boeing 777-300ER&quot;, fuel_kg=12500.0, cruise_speed_kts=480.0)</code>.</li>
+<li>Execute <code>plane.takeoff(target_altitude_ft=34000.0)</code>.</li>
+<li>Execute <code>plane.fly(hours=3.5)</code>.</li>
+<li>Display <code>plane.get_status()</code>.</li>
+</ol>
+<p><strong>Example Output:</strong></p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Terminal Output</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-text">[TAKEOFF] THA911 (Boeing 777-300ER) climbed to FL340. Fuel burn: 800.0 kg.
+[CRUISE] THA911 cruised for 3.5 hrs. Distance: 1680.0 NM | Fuel burned: 8400.0 kg.
+
+--- Aircraft Telemetry Status ---
+Callsign: THA911 (Boeing 777-300ER)
+Airborne: True
+Current Altitude: 34,000 ft
+Remaining Fuel: 3,300.0 kg
+</code></pre>
+</div><p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong>Climb Phase Fuel Burned:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_15" data-placeholder="Click to type..."></span> kg</li>
+<li><strong>Cruise Distance Covered:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_16" data-placeholder="Click to type..."></span> NM</li>
+<li><strong>Cruise Fuel Burned:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_17" data-placeholder="Click to type..."></span> kg</li>
+<li><strong>Remaining Fuel:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_18" data-placeholder="Click to type..."></span> kg</li>
+</ul>
+<hr />
+<div class="part-header-wrapper"><h2 id="part-5-challenge-task-flight-dispatch-manager" class="lab-part-heading"><span>Part 5: Challenge Task — Flight Dispatch Manager</span> <span class="pts-badge">20 Pts</span></h2></div><p>Combine <strong>OOP</strong>, <strong>File I/O</strong>, and <strong>Exception Handling</strong> by creating a class <code>FlightDispatcher</code>:</p>
+<h3 id="requirements" class="lab-task-heading"><span>Requirements:</span></h3><ol>
+<li><code>Instantiate:</code><ol>
+<li><code>plane1 = Aircraft(&quot;THA911&quot;, &quot;Boeing 777-300ER&quot;, fuel_kg=12500.0, cruise_speed_kts=480.0).</code></li>
+<li><code>plane2 = Aircraft(&quot;BKP202&quot;, &quot;ATR 72-600&quot;, fuel_kg=4500.0, cruise_speed_kts=280.0)</code></li>
+</ol>
+</li>
+<li><strong>Attributes:</strong><ul>
+<li><code>self.active_flights = []</code> (list of <code>Aircraft</code> objects).</li>
+</ul>
+</li>
+<li><strong>Method <code>add_aircraft(self, aircraft_obj)</code>:</strong><ul>
+<li>Appends an <code>Aircraft</code> object to the active fleet.</li>
+</ul>
+</li>
+<li><strong>Method <code>save_fleet_manifest(self, filepath)</code>:</strong><ul>
+<li>Loops through <code>self.active_flights</code> and builds a list of dictionaries capturing each plane's state (<code>callsign</code>, <code>model</code>, <code>altitude_ft</code>, <code>fuel_kg</code>, <code>is_airborne</code>).</li>
+<li>Saves the list as JSON into <code>filepath</code> using <code>try - except</code> to catch any <code>IOError</code>.</li>
+</ul>
+</li>
+<li><strong>Method <code>load_fleet_manifest(self, filepath)</code>:</strong><ul>
+<li>Loads the JSON file using <code>with open(...)</code> inside a <code>try - except</code> block.</li>
+<li>Recreates <code>Aircraft</code> instances and repopulates <code>self.active_flights</code>.</li>
+</ul>
+</li>
+</ol>
+<p><strong>Example Run:</strong></p>
+<div class="code-card">
+  <div class="code-card-header">
+    <div class="code-lang-meta">
+      <span class="code-dot"></span>
+      <span class="code-lang-label">Terminal Output</span>
+    </div>
+    <button class="copy-code-btn" onclick="copyCode(this)" title="Copy code snippet" aria-label="Copy code">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+      <span>Copy</span>
+    </button>
+  </div>
+  <pre><code class="language-text">[DISPATCH] Fleet manifest exported to &#x27;fleet_manifest.json&#x27; (2 aircraft).
+[DISPATCH] Fleet manifest successfully reloaded from disk.
+Active Track 1: THA911 | Alt: 34000 ft | Fuel: 3300.0 kg
+Active Track 2: BKP202 | Alt: 0 ft | Fuel: 4500.0 kg
+</code></pre>
+</div><p><strong>Student Answer / Program Output:</strong></p>
+<ul>
+<li><strong>Manifest Export Message:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_19" data-placeholder="Click to type..."></span></li>
+<li><strong>Manifest Reload Message:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_20" data-placeholder="Click to type..."></span></li>
+<li><strong>Active Track 1 Status:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_21" data-placeholder="Click to type..."></span></li>
+<li><strong>Active Track 2 Status:</strong> <span class="fill-blank" contenteditable="true" spellcheck="false" data-blank-id="blank_22" data-placeholder="Click to type..."></span></li>
+</ul>
+
+  </main>
+
+  <!-- Auto-Save Toast Feedback -->
+  <div id="save-toast" class="save-toast" aria-live="polite">
+    <div class="save-toast-dot"></div>
+    <span>Answer autosaved</span>
+  </div>
+
+  <!-- Footer -->
+  <footer class="lab-footer">
+    <div class="footer-content">
+      <div>&copy; 2026 Civil Aviation Training Center (CATC). Department of Aviation Engineering.</div>
+      <div>100% Offline Capable &bull; Standalone HTML5 Laboratory Sheets (Source: Markdown)</div>
+    </div>
+  </footer>
+
+  <script>
+    // Copy code snippet helper
+    function copyCode(btn) {
+      const card = btn.closest('.code-card');
+      const code = card.querySelector('code');
+      if (code) {
+        navigator.clipboard.writeText(code.innerText).then(() => {
+          const original = btn.innerHTML;
+          btn.innerHTML = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> <span style="color:#34d399">Copied!</span>';
+          setTimeout(() => {
+            btn.innerHTML = original;
+          }, 1800);
+        }).catch(err => console.error('Copy failed:', err));
+      }
+    }
+
+    // LocalStorage Auto-Save for student fill blanks
+    document.addEventListener('DOMContentLoaded', () => {
+      const storageKey = 'catc_lab_005_answers';
+      const blanks = document.querySelectorAll('.fill-blank');
+      const toast = document.getElementById('save-toast');
+      let toastTimer = null;
+
+      // Restore saved answers
+      try {
+        const saved = JSON.parse(localStorage.getItem(storageKey) || '{}');
+        blanks.forEach(b => {
+          const id = b.dataset.blankId;
+          if (id && saved[id]) {
+            b.innerText = saved[id];
+          }
+        });
+      } catch (e) {
+        console.warn('LocalStorage access restricted:', e);
+      }
+
+      // Auto-save on input
+      function saveAnswers() {
+        try {
+          const state = {};
+          blanks.forEach(b => {
+            const id = b.dataset.blankId;
+            if (id && b.innerText.trim()) {
+              state[id] = b.innerText;
+            }
+          });
+          localStorage.setItem(storageKey, JSON.stringify(state));
+          
+          if (toast) {
+            toast.classList.add('visible');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+              toast.classList.remove('visible');
+            }, 1400);
+          }
+        } catch (e) {
+          console.warn('Could not save to localStorage:', e);
+        }
+      }
+
+      blanks.forEach(b => {
+        b.addEventListener('input', saveAnswers);
+      });
+    });
+  </script>
+</body>
+</html>

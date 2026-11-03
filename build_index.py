@@ -1,4 +1,9 @@
 import json
+import os
+from build_labs import build_all_labs
+
+# Ensure all 5 lab HTML files are compiled from their markdown source
+build_all_labs()
 
 with open('decks_data.json', 'r', encoding='utf-8') as f:
     decks = json.load(f)
@@ -15,28 +20,33 @@ deck_accents = {
 # Fallback / canonical lab sheets mapping
 lab_sheets_fallback = {
     1: {
-        "file": "version 03/Lab_01_Exercise_L01_L02.pdf",
-        "filename": "Lab_01_Exercise_L01_L02.pdf",
+        "html_file": "version 03/Lab_01_Exercise_L01_L02.html",
+        "md_file": "version 03/Lab_01_Exercise_L01_L02.md",
+        "filename": "Lab_01_Exercise_L01_L02.html",
         "title": "Laboratory Exercise 1: Computing Foundations & Python Basics"
     },
     2: {
-        "file": "version 03/Lab_02_Exercise_L03_L04.pdf",
-        "filename": "Lab_02_Exercise_L03_L04.pdf",
+        "html_file": "version 03/Lab_02_Exercise_L03_L04.html",
+        "md_file": "version 03/Lab_02_Exercise_L03_L04.md",
+        "filename": "Lab_02_Exercise_L03_L04.html",
         "title": "Laboratory Exercise 2: Algorithms, Control Flow & Modular Functions"
     },
     3: {
-        "file": "version 03/Lab_03_Exercise_L05_L06.pdf",
-        "filename": "Lab_03_Exercise_L05_L06.pdf",
+        "html_file": "version 03/Lab_03_Exercise_L05_L06.html",
+        "md_file": "version 03/Lab_03_Exercise_L05_L06.md",
+        "filename": "Lab_03_Exercise_L05_L06.html",
         "title": "Laboratory Exercise 3: Data Structures — Sequences, Mappings & Sets"
     },
     4: {
-        "file": "version 03/Lab_04_Exercise_L07_L08.pdf",
-        "filename": "Lab_04_Exercise_L07_L08.pdf",
+        "html_file": "version 03/Lab_04_Exercise_L07_L08.html",
+        "md_file": "version 03/Lab_04_Exercise_L07_L08.md",
+        "filename": "Lab_04_Exercise_L07_L08.html",
         "title": "Laboratory Exercise 4: Numerical Computing with NumPy & Text Processing"
     },
     5: {
-        "file": "version 03/Lab_05_Exercise_L09_L10.pdf",
-        "filename": "Lab_05_Exercise_L09_L10.pdf",
+        "html_file": "version 03/Lab_05_Exercise_L09_L10.html",
+        "md_file": "version 03/Lab_05_Exercise_L09_L10.md",
+        "filename": "Lab_05_Exercise_L09_L10.html",
         "title": "Laboratory Exercise 5: Data Persistence, Exception Handling & Object-Oriented Programming"
     }
 }
@@ -57,8 +67,8 @@ for deck in decks:
     color = deck_meta.get('color', '#38bdf8')
     
     lab_meta = deck.get('lab_sheet') or lab_sheets_fallback.get(d_id, {})
-    lab_file = lab_meta.get('file', '').replace(' ', '%20')
-    lab_filename = lab_meta.get('filename', f"Lab_{deck_no}_Exercise.pdf")
+    lab_html_file = (lab_meta.get('html_file') or lab_meta.get('file', '')).replace(' ', '%20')
+    lab_md_file = lab_meta.get('md_file', '').replace(' ', '%20')
     lab_title = lab_meta.get('title', f"Laboratory Exercise {deck_no}")
     
     node_str = f'''        <div class="deck-node {accent_class}" data-deck="{d_id}" data-phase="{phase}" data-color="{color}" data-href="{file_name}" role="article" aria-label="Deck {deck_no}: {title} ({lectures}, {total_slides} slides)">
@@ -75,10 +85,11 @@ for deck in decks:
           <div class="node-action">
             <span class="slide-count-badge">{total_slides} Slides</span>
             <div class="action-buttons">
-              <a href="{lab_file}" class="lab-btn" download="{lab_filename}" target="_blank" rel="noopener" title="Download {lab_title} (PDF)" aria-label="Download Lab Sheet {deck_no} (PDF)">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+              <a href="{lab_html_file}" class="lab-btn" target="_blank" rel="noopener" title="Open {lab_title} (HTML style • Source: Markdown)" aria-label="Open Lab Sheet {deck_no} (HTML)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
                 <span>Lab Sheet</span>
               </a>
+              <a href="{lab_md_file}" class="md-chip" download title="Download raw Markdown (.md) source" aria-label="Download raw Markdown source for Lab {deck_no}">.md</a>
               <a href="{file_name}" class="launch-btn" aria-label="Launch Deck {deck_no} presentation">
                 <span>Launch</span>
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -96,7 +107,7 @@ html_content = f'''<!DOCTYPE html>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Programming — CATC Course Portal</title>
-  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation curriculum mind map launcher. 5 widescreen decks, 10 lectures, 179 interactive slides, and 5 laboratory exercise sheets.">
+  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation curriculum mind map launcher. 5 widescreen decks, 10 lectures, 179 interactive slides, and 5 interactive HTML laboratory sheets from Markdown source.">
 
   <style>
     :root {{
@@ -304,7 +315,7 @@ html_content = f'''<!DOCTYPE html>
     .hero-desc {{
       font-size: 1.02rem;
       color: var(--text-dim);
-      max-width: 620px;
+      max-width: 640px;
       margin: 0 auto 3.25rem;
       line-height: 1.6;
       text-align: center;
@@ -535,14 +546,14 @@ html_content = f'''<!DOCTYPE html>
     .node-action {{
       display: flex;
       align-items: center;
-      gap: 0.85rem;
+      gap: 0.75rem;
       flex-shrink: 0;
     }}
 
     .action-buttons {{
       display: flex;
       align-items: center;
-      gap: 0.5rem;
+      gap: 0.4rem;
     }}
 
     .slide-count-badge {{
@@ -559,7 +570,7 @@ html_content = f'''<!DOCTYPE html>
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.45rem 0.75rem;
+      padding: 0.42rem 0.72rem;
       border-radius: var(--radius-sm);
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border);
@@ -586,7 +597,7 @@ html_content = f'''<!DOCTYPE html>
 
     .lab-btn:hover svg {{
       color: var(--text-bright);
-      transform: translateY(1.5px);
+      transform: translateY(1px);
     }}
 
     .lab-btn:active {{
@@ -608,13 +619,39 @@ html_content = f'''<!DOCTYPE html>
     .deck-node.deck-5 .lab-btn:hover {{ border-color: rgba(var(--coral-rgb), 0.5); color: var(--coral); background: rgba(var(--coral-rgb), 0.1); }}
     .deck-node.deck-5 .lab-btn:hover svg {{ color: var(--coral); }}
 
+    /* Small .md chip for direct markdown source download */
+    .md-chip {{
+      font-family: ui-monospace, SFMono-Regular, "Cascadia Code", Menlo, monospace;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.38rem 0.45rem;
+      border-radius: var(--radius-sm);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      text-decoration: none;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }}
+
+    .md-chip:hover {{
+      background: rgba(255, 255, 255, 0.12);
+      border-color: rgba(255, 255, 255, 0.3);
+      color: var(--text-bright);
+      transform: translateY(-1px);
+    }}
+
     .launch-btn {{
       font-size: 0.82rem;
       font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 0.4rem;
-      padding: 0.45rem 0.85rem;
+      padding: 0.42rem 0.8rem;
       border-radius: var(--radius-sm);
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid var(--border);
@@ -640,13 +677,15 @@ html_content = f'''<!DOCTYPE html>
     .deck-node.deck-4:hover .launch-btn {{ background: var(--purple); color: #0b0d13; border-color: var(--purple); }}
     .deck-node.deck-5:hover .launch-btn {{ background: var(--coral); color: #0b0d13; border-color: var(--coral); }}
 
-    /* When directly hovering over the Lab Sheet button, keep Launch button clean */
-    .deck-node:has(.lab-btn:hover) .launch-btn {{
+    /* Keep launch button clean when hovering on lab button or md chip */
+    .deck-node:has(.lab-btn:hover) .launch-btn,
+    .deck-node:has(.md-chip:hover) .launch-btn {{
       background: rgba(255, 255, 255, 0.05);
       color: var(--text-bright);
       border-color: var(--border);
     }}
-    .deck-node:has(.lab-btn:hover) .launch-btn svg {{
+    .deck-node:has(.lab-btn:hover) .launch-btn svg,
+    .deck-node:has(.md-chip:hover) .launch-btn svg {{
       transform: none;
     }}
 
@@ -839,8 +878,8 @@ html_content = f'''<!DOCTYPE html>
         <span>through</span>
         <kbd class="kbd-chip" data-key="5">5</kbd>
         <span>to launch decks &bull; Click</span>
-        <span class="hint-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg> Lab Sheet</span>
-        <span>to download PDF exercises</span>
+        <span class="hint-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Lab Sheet</span>
+        <span>to view interactive HTML exercises (source: .md)</span>
       </div>
     </div>
   </main>
@@ -936,9 +975,9 @@ html_content = f'''<!DOCTYPE html>
           }}
         }});
 
-        // Click card background to launch deck (unless clicking lab download link or another link)
+        // Click card background to launch deck (unless clicking lab link or md download link)
         node.addEventListener('click', (e) => {{
-          if (e.target.closest('.lab-btn')) {{
+          if (e.target.closest('.lab-btn') || e.target.closest('.md-chip')) {{
             return;
           }}
           if (e.target.closest('a')) {{
@@ -997,4 +1036,4 @@ html_content = f'''<!DOCTYPE html>
 with open('index.html', 'w', encoding='utf-8') as f:
     f.write(html_content)
 
-print("Generated index.html successfully!")
+print("Generated index.html successfully with interactive HTML lab sheet links!")
