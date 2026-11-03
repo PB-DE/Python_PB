@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Python Programming — CATC Course Portal</title>
-  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation curriculum mind map launcher. 5 widescreen decks, 10 lectures, 179 interactive slides, and 5 interactive HTML laboratory sheets from Markdown source.">
+  <meta name="description" content="Civil Aviation Training Center (CATC) Python Programming presentation curriculum mind map launcher. 5 widescreen decks, 10 lectures, 179 interactive slides, 5 interactive HTML laboratory sheets, and online JupyterLab workspace.">
 
   <style>
     :root {
@@ -30,6 +30,8 @@
       --purple-rgb: 192, 132, 252;
       --coral: #fb7185;
       --coral-rgb: 251, 113, 133;
+      --jupyter: #f37626;
+      --jupyter-rgb: 243, 118, 38;
       
       --radius-sm: 6px;
       --radius-md: 10px;
@@ -181,6 +183,62 @@
       font-variant-numeric: tabular-nums;
     }
 
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-jupyter-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: var(--radius-sm);
+      background: rgba(243, 118, 38, 0.12);
+      border: 1px solid rgba(243, 118, 38, 0.4);
+      color: #ff9e58;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+      white-space: nowrap;
+    }
+
+    .nav-jupyter-btn svg.jupyter-icon {
+      color: #f37626;
+      transition: transform 0.2s ease;
+    }
+
+    .nav-jupyter-btn svg.ext-icon {
+      opacity: 0.7;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .nav-jupyter-btn:hover {
+      background: #f37626;
+      border-color: #f37626;
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 4px 14px rgba(243, 118, 38, 0.4);
+    }
+
+    .nav-jupyter-btn:hover svg.jupyter-icon {
+      color: #ffffff;
+      transform: rotate(15deg);
+    }
+
+    .nav-jupyter-btn:hover svg.ext-icon {
+      opacity: 1;
+      transform: translate(1px, -1px);
+    }
+
+    .nav-jupyter-btn:active {
+      transform: translateY(0);
+    }
+
     /* Main Section */
     main {
       flex: 1;
@@ -316,6 +374,61 @@
       color: var(--text-dim);
       font-variant-numeric: tabular-nums;
       transition: color 0.2s ease;
+    }
+
+    .core-action {
+      margin-top: auto;
+      padding-top: 0.4rem;
+    }
+
+    .core-jupyter-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      width: 100%;
+      padding: 0.58rem 0.85rem;
+      border-radius: var(--radius-sm);
+      background: rgba(243, 118, 38, 0.12);
+      border: 1px solid rgba(243, 118, 38, 0.35);
+      color: #ff9e58;
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .core-jupyter-btn svg.jupyter-icon {
+      color: #f37626;
+      transition: transform 0.2s ease;
+    }
+
+    .core-jupyter-btn svg.ext-icon {
+      opacity: 0.7;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .core-jupyter-btn:hover {
+      background: #f37626;
+      border-color: #f37626;
+      color: #ffffff;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(243, 118, 38, 0.4);
+    }
+
+    .core-jupyter-btn:hover svg.jupyter-icon {
+      color: #ffffff;
+      transform: rotate(15deg);
+    }
+
+    .core-jupyter-btn:hover svg.ext-icon {
+      opacity: 1;
+      transform: translate(1px, -1px);
+    }
+
+    .core-jupyter-btn:active {
+      transform: translateY(0);
     }
 
     /* Branches List (Right) */
@@ -642,6 +755,44 @@
       color: var(--cyan);
     }
 
+    .hint-jupyter-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(243, 118, 38, 0.12);
+      border: 1px solid rgba(243, 118, 38, 0.35);
+      padding: 0.16rem 0.55rem;
+      border-radius: 4px;
+      color: #ff9e58;
+      font-weight: 600;
+      font-size: 0.76rem;
+      text-decoration: none;
+      transition: all 0.15s ease;
+    }
+
+    .hint-jupyter-link svg.jupyter-icon {
+      color: #f37626;
+    }
+
+    .hint-jupyter-link svg.ext-icon {
+      opacity: 0.7;
+    }
+
+    .hint-jupyter-link:hover {
+      background: #f37626;
+      border-color: #f37626;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+
+    .hint-jupyter-link:hover svg.jupyter-icon {
+      color: #ffffff;
+    }
+
+    .hint-jupyter-link:hover svg.ext-icon {
+      opacity: 1;
+    }
+
     /* Footer */
     footer.portal-footer {
       margin-top: auto;
@@ -662,6 +813,44 @@
       flex-wrap: wrap;
     }
 
+    .footer-links {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-jupyter-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      color: #ff9e58;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.15s ease;
+    }
+
+    .footer-jupyter-link svg.jupyter-icon {
+      color: #f37626;
+    }
+
+    .footer-jupyter-link svg.ext-icon {
+      opacity: 0.7;
+    }
+
+    .footer-jupyter-link:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+
+    .footer-jupyter-link:hover svg.jupyter-icon {
+      color: #ffffff;
+    }
+
+    .footer-divider {
+      opacity: 0.35;
+    }
+
     @media (max-width: 850px) {
       .mindmap-container {
         grid-template-columns: 1fr;
@@ -675,9 +864,20 @@
       .core-node {
         text-align: left;
         display: flex;
+        flex-direction: row;
         align-items: center;
         justify-content: space-between;
+        flex-wrap: wrap;
         padding: 1.25rem 1.5rem;
+        gap: 1rem;
+      }
+      .core-action {
+        margin-top: 0;
+        padding-top: 0;
+        width: 100%;
+      }
+      .core-jupyter-btn {
+        width: 100%;
       }
     }
 
@@ -688,6 +888,18 @@
         gap: 0.85rem;
       }
       .node-action {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .portal-nav .nav-container {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+      .nav-actions {
         width: 100%;
         justify-content: space-between;
       }
@@ -706,6 +918,14 @@
       .action-buttons .lab-btn,
       .action-buttons .launch-btn {
         flex: 1;
+        justify-content: center;
+      }
+      .nav-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.6rem;
+      }
+      .nav-jupyter-btn {
         justify-content: center;
       }
     }
@@ -728,11 +948,18 @@
         </div>
       </a>
 
-      <div class="nav-stats" aria-label="Curriculum Statistics">
-        <span class="nav-badge">10 Lectures</span>
-        <span class="nav-badge">5 Decks</span>
-        <span class="nav-badge">5 Lab Sheets</span>
-        <span class="nav-badge">179 Slides</span>
+      <div class="nav-actions">
+        <div class="nav-stats" aria-label="Curriculum Statistics">
+          <span class="nav-badge">10 Lectures</span>
+          <span class="nav-badge">5 Decks</span>
+          <span class="nav-badge">5 Lab Sheets</span>
+          <span class="nav-badge">179 Slides</span>
+        </div>
+        <a href="https://jupyter.org/try-jupyter/lab/" target="_blank" rel="noopener noreferrer" class="nav-jupyter-btn" title="Open online JupyterLab sandbox in your browser">
+          <svg class="jupyter-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.157 22.201A1.784 1.799 0 0 1 5.374 24a1.784 1.799 0 0 1-1.784-1.799 1.784 1.799 0 0 1 1.784-1.799 1.784 1.799 0 0 1 1.783 1.799zM20.582 1.427a1.415 1.427 0 0 1-1.415 1.428 1.415 1.427 0 0 1-1.416-1.428A1.415 1.427 0 0 1 19.167 0a1.415 1.427 0 0 1 1.415 1.427zM4.992 3.336A1.047 1.056 0 0 1 3.946 4.39a1.047 1.056 0 0 1-1.047-1.055A1.047 1.056 0 0 1 3.946 2.28a1.047 1.056 0 0 1 1.046 1.056zm7.336 1.517c3.769 0 7.06 1.38 8.768 3.424a9.363 9.363 0 0 0-3.393-4.547 9.238 9.238 0 0 0-5.377-1.728A9.238 9.238 0 0 0 6.95 3.73a9.363 9.363 0 0 0-3.394 4.547c1.713-2.04 5.004-3.424 8.772-3.424zm.001 13.295c-3.768 0-7.06-1.381-8.768-3.425a9.363 9.363 0 0 0 3.394 4.547A9.238 9.238 0 0 0 12.33 21a9.238 9.238 0 0 0 5.377-1.729 9.363 9.363 0 0 0 3.393-4.547c-1.712 2.044-5.003 3.425-8.772 3.425Z"/></svg>
+          <span>Try JupyterLab</span>
+          <svg class="ext-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
       </div>
     </div>
   </header>
@@ -760,6 +987,13 @@
             <div class="core-title">Python Programming</div>
           </div>
           <div class="core-desc" id="core-desc">10 Lectures &bull; 5 Decks &bull; 5 Labs</div>
+          <div class="core-action">
+            <a href="https://jupyter.org/try-jupyter/lab/" target="_blank" rel="noopener noreferrer" class="core-jupyter-btn" title="Open online JupyterLab sandbox (runs in browser)">
+              <svg class="jupyter-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.157 22.201A1.784 1.799 0 0 1 5.374 24a1.784 1.799 0 0 1-1.784-1.799 1.784 1.799 0 0 1 1.784-1.799 1.784 1.799 0 0 1 1.783 1.799zM20.582 1.427a1.415 1.427 0 0 1-1.415 1.428 1.415 1.427 0 0 1-1.416-1.428A1.415 1.427 0 0 1 19.167 0a1.415 1.427 0 0 1 1.415 1.427zM4.992 3.336A1.047 1.056 0 0 1 3.946 4.39a1.047 1.056 0 0 1-1.047-1.055A1.047 1.056 0 0 1 3.946 2.28a1.047 1.056 0 0 1 1.046 1.056zm7.336 1.517c3.769 0 7.06 1.38 8.768 3.424a9.363 9.363 0 0 0-3.393-4.547 9.238 9.238 0 0 0-5.377-1.728A9.238 9.238 0 0 0 6.95 3.73a9.363 9.363 0 0 0-3.394 4.547c1.713-2.04 5.004-3.424 8.772-3.424zm.001 13.295c-3.768 0-7.06-1.381-8.768-3.425a9.363 9.363 0 0 0 3.394 4.547A9.238 9.238 0 0 0 12.33 21a9.238 9.238 0 0 0 5.377-1.729 9.363 9.363 0 0 0 3.393-4.547c-1.712 2.044-5.003 3.425-8.772 3.425Z"/></svg>
+              <span>Try JupyterLab</span>
+              <svg class="ext-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+            </a>
+          </div>
         </div>
 
         <!-- 5 Progressive Deck Nodes (Right) -->
@@ -903,7 +1137,15 @@
         <kbd class="kbd-chip" data-key="1">1</kbd>
         <span>through</span>
         <kbd class="kbd-chip" data-key="5">5</kbd>
-        <span>to launch decks &bull; Click</span>
+        <span>to launch decks &bull;</span>
+        <kbd class="kbd-chip" data-key="j" title="Press J to open JupyterLab in a new tab">J</kbd>
+        <span>or</span>
+        <a href="https://jupyter.org/try-jupyter/lab/" target="_blank" rel="noopener noreferrer" class="hint-jupyter-link" title="Open online JupyterLab sandbox in browser">
+          <svg class="jupyter-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.157 22.201A1.784 1.799 0 0 1 5.374 24a1.784 1.799 0 0 1-1.784-1.799 1.784 1.799 0 0 1 1.784-1.799 1.784 1.799 0 0 1 1.783 1.799zM20.582 1.427a1.415 1.427 0 0 1-1.415 1.428 1.415 1.427 0 0 1-1.416-1.428A1.415 1.427 0 0 1 19.167 0a1.415 1.427 0 0 1 1.415 1.427zM4.992 3.336A1.047 1.056 0 0 1 3.946 4.39a1.047 1.056 0 0 1-1.047-1.055A1.047 1.056 0 0 1 3.946 2.28a1.047 1.056 0 0 1 1.046 1.056zm7.336 1.517c3.769 0 7.06 1.38 8.768 3.424a9.363 9.363 0 0 0-3.393-4.547 9.238 9.238 0 0 0-5.377-1.728A9.238 9.238 0 0 0 6.95 3.73a9.363 9.363 0 0 0-3.394 4.547c1.713-2.04 5.004-3.424 8.772-3.424zm.001 13.295c-3.768 0-7.06-1.381-8.768-3.425a9.363 9.363 0 0 0 3.394 4.547A9.238 9.238 0 0 0 12.33 21a9.238 9.238 0 0 0 5.377-1.729 9.363 9.363 0 0 0 3.393-4.547c-1.712 2.044-5.003 3.425-8.772 3.425Z"/></svg>
+          <span>Try JupyterLab</span>
+          <svg class="ext-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+        <span>&bull; Click</span>
         <span class="hint-badge"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Lab Sheet</span>
         <span>to view interactive HTML exercises (source: .md)</span>
       </div>
@@ -914,7 +1156,15 @@
   <footer class="portal-footer">
     <div class="footer-content">
       <div>&copy; 2026 Civil Aviation Training Center (CATC). Department of Aviation Engineering.</div>
-      <div>100% Offline Capable &bull; Standalone HTML5 Presentations &amp; Materials</div>
+      <div class="footer-links">
+        <a href="https://jupyter.org/try-jupyter/lab/" target="_blank" rel="noopener noreferrer" class="footer-jupyter-link" title="Open online JupyterLab sandbox in browser">
+          <svg class="jupyter-icon" width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7.157 22.201A1.784 1.799 0 0 1 5.374 24a1.784 1.799 0 0 1-1.784-1.799 1.784 1.799 0 0 1 1.784-1.799 1.784 1.799 0 0 1 1.783 1.799zM20.582 1.427a1.415 1.427 0 0 1-1.415 1.428 1.415 1.427 0 0 1-1.416-1.428A1.415 1.427 0 0 1 19.167 0a1.415 1.427 0 0 1 1.415 1.427zM4.992 3.336A1.047 1.056 0 0 1 3.946 4.39a1.047 1.056 0 0 1-1.047-1.055A1.047 1.056 0 0 1 3.946 2.28a1.047 1.056 0 0 1 1.046 1.056zm7.336 1.517c3.769 0 7.06 1.38 8.768 3.424a9.363 9.363 0 0 0-3.393-4.547 9.238 9.238 0 0 0-5.377-1.728A9.238 9.238 0 0 0 6.95 3.73a9.363 9.363 0 0 0-3.394 4.547c1.713-2.04 5.004-3.424 8.772-3.424zm.001 13.295c-3.768 0-7.06-1.381-8.768-3.425a9.363 9.363 0 0 0 3.394 4.547A9.238 9.238 0 0 0 12.33 21a9.238 9.238 0 0 0 5.377-1.729 9.363 9.363 0 0 0 3.393-4.547c-1.712 2.044-5.003 3.425-8.772 3.425Z"/></svg>
+          <span>Try JupyterLab Online</span>
+          <svg class="ext-icon" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+        </a>
+        <span class="footer-divider">&bull;</span>
+        <span>100% Offline Capable &bull; Standalone HTML5 Presentations &amp; Materials</span>
+      </div>
     </div>
   </footer>
 
@@ -1039,18 +1289,28 @@
         }
       }
 
-      // Keyboard shortcuts: 1-5 to launch decks directly
+      // Keyboard shortcuts: 1-5 to launch decks directly, J for JupyterLab
       document.addEventListener('keydown', (e) => {
         if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
         if (['1', '2', '3', '4', '5'].includes(e.key) && !e.metaKey && !e.ctrlKey && !e.altKey) {
           launchDeck(e.key);
+        } else if ((e.key === 'j' || e.key === 'J') && !e.metaKey && !e.ctrlKey && !e.altKey) {
+          const kbdJ = document.querySelector('.kbd-chip[data-key="j"]');
+          if (kbdJ) kbdJ.classList.add('active');
+          window.open('https://jupyter.org/try-jupyter/lab/', '_blank', 'noopener,noreferrer');
+          if (kbdJ) setTimeout(() => kbdJ.classList.remove('active'), 250);
         }
       });
 
       // Click on keyboard chips
       kbdChips.forEach(chip => {
         chip.addEventListener('click', () => {
-          launchDeck(chip.dataset.key);
+          const key = chip.dataset.key;
+          if (key === 'j') {
+            window.open('https://jupyter.org/try-jupyter/lab/', '_blank', 'noopener,noreferrer');
+          } else {
+            launchDeck(key);
+          }
         });
       });
     });
