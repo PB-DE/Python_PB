@@ -1,0 +1,14 @@
+{
+    "flight_number": "TG920",
+    "origin": "VTBS",
+    "destination": "EDDF",
+    "aircraft": "Airbus A350-900",
+    "cruising_alt_ft": 38000,
+    "passengers": 284,
+    "fuel_required_kg": 49000.0,
+    "alternate_airports": [
+        "EDDM",
+        "EDDL",
+        "EDDK"
+    ]
+}
