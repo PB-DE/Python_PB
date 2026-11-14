@@ -114,6 +114,46 @@
       z-index: 10;
     }
 
+    /* Top-Left Back to Portal Navigation Button */
+    .portal-back-btn {
+      position: fixed;
+      top: 0.85rem;
+      left: 1.25rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.65rem;
+      border-radius: 6px;
+      background: rgba(20, 20, 20, 0.75);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      z-index: 100;
+      transition: all 0.15s ease;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+      line-height: 1;
+    }
+
+    .portal-back-btn svg {
+      transition: transform 0.15s ease;
+    }
+
+    .portal-back-btn:hover {
+      background: rgba(30, 30, 30, 0.95);
+      border-color: var(--accent);
+      color: var(--text-bright);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      transform: translateY(-1px);
+    }
+
+    .portal-back-btn:hover svg {
+      transform: translateX(-2px);
+    }
+
     /* Discreet Footer */
     .slide-footer {
       position: absolute;
@@ -345,6 +385,12 @@
 <body>
 
   <div id="stage">
+    <!-- Back to Portal Button -->
+    <a href="index.html" class="portal-back-btn" title="Back to Course Portal (Index) [Esc / H]" aria-label="Back to Course Portal (Index)">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      <span>Portal</span>
+    </a>
+
     <!-- Progress Indicator -->
     <div class="progress-bar-container">
       <div id="progress" class="progress-bar"></div>
@@ -1670,6 +1716,7 @@
     <div class="slide-footer">
       <div>Civil Aviation Training Center (CATC)</div>
       <div class="nav-hints">
+        <a href="index.html" class="nav-btn" title="Back to Course Portal (Index) [Esc / H]">⌂ Portal</a>
         <button class="nav-btn" onclick="SlideDeck.prev()">◀ Prev</button>
         <button class="nav-btn" onclick="SlideDeck.next()">Next ▶</button>
         <button class="nav-btn" onclick="SlideDeck.toggleFullscreen()">⛶ Fullscreen</button>
@@ -1742,6 +1789,17 @@
           case 'KeyF':
             e.preventDefault();
             toggleFullscreen();
+            break;
+          case 'KeyH':
+          case 'KeyP':
+            e.preventDefault();
+            window.location.href = 'index.html';
+            break;
+          case 'Escape':
+            if (!document.fullscreenElement) {
+              e.preventDefault();
+              window.location.href = 'index.html';
+            }
             break;
         }
       }

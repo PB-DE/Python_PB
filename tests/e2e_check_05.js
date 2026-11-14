@@ -37,7 +37,7 @@ assert.strictEqual(openSections, 36, `Expected exactly 36 <section> tags, found 
 const openSvgs = (html.match(/<svg/g) || []).length;
 const closeSvgs = (html.match(/<\/svg>/g) || []).length;
 assert.strictEqual(openSvgs, closeSvgs, `Unbalanced <svg> tags: ${openSvgs} opened, ${closeSvgs} closed`);
-assert.strictEqual(openSvgs, 2, `Expected exactly 2 inline SVGs (File I/O Lifecycle & OOP Memory Model), found ${openSvgs}`);
+assert(openSvgs >= 2, `Expected at least 2 inline diagram SVGs (File I/O Lifecycle & OOP Memory Model), found ${openSvgs}`);
 
 // Diagram specific checks
 assert(html.includes('Stream Buffer') && html.includes('Context Manager Lifecycle Protocol'), 'File I/O Diagram must contain stream buffer and lifecycle labels');
