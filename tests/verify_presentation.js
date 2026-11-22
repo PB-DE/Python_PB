@@ -2,14 +2,14 @@ const fs = require('fs');
 const path = require('path');
 const assert = require('assert');
 
-const filePath = path.join(__dirname, '..', 'python_presentation.html');
+const filePath = path.join(__dirname, '..', 'python_presentation_01.html');
 
 console.log('Testing Task 1: Presentation Engine Core & Styling...');
 
 // Check file exists
-assert(fs.existsSync(filePath), 'python_presentation.html must exist');
+assert(fs.existsSync(filePath), 'python_presentation_01.html must exist');
 const html = fs.readFileSync(filePath, 'utf8');
-assert(html.length > 200, 'python_presentation.html must not be empty');
+assert(html.length > 200, 'python_presentation_01.html must not be empty');
 
 // Check no external network dependencies
 assert(!html.includes('http://') && !html.includes('https://'), 'Must not contain external HTTP/HTTPS CDN references');
@@ -51,6 +51,11 @@ assert(html.includes('Why Python?'), 'Must include Why Python');
 // Inline SVGs
 assert(html.includes('<svg') && html.includes('CPU') && html.includes('RAM'), 'Must have inline vector SVG for Computer Architecture');
 assert(html.includes('Shallow') && html.includes('Deep') && html.includes('<svg'), 'Must have inline vector SVG for Shallow vs Deep Copy');
+const slide11Match = html.match(/<section[^>]*id="slide-11"[\s\S]*?<\/section>/);
+assert(slide11Match, 'Must find slide-11 section');
+const slide11Html = slide11Match[0];
+const pointerArrowMatches = slide11Html.match(/<path[^>]*marker-end="url\(#arrow\)"[^>]*>/g) || [];
+assert.strictEqual(pointerArrowMatches.length, 2, `Slide 11 must have exactly 2 pointer arrows with marker-end, found ${pointerArrowMatches.length}`);
 assert(html.includes('transistors') && html.includes('<svg') && html.includes('path'), "Must have inline vector SVG for Moore's Law curve");
 
 // NumPy code for plotting
